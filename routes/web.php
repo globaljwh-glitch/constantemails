@@ -1,92 +1,34 @@
-<?php /*
+<?php 
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\AuthController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\FrontAuthController;
 use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Admin\DashboardController;
 
-Route::middleware('guest')->group(function () {
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
-    Route::get('/login', [UserController::class, 'showLogin'])
-        ->name('login');
 
-    Route::post('/login', [UserController::class, 'login']);
+Route::get('/test-logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
 
-    Route::get('/register', [UserController::class, 'showRegister'])
-        ->name('register');
-
-    Route::post('/register', [UserController::class, 'register']);
-
-    Route::get('/forgot-password', [UserController::class, 'showForgotPassword'])
-        ->name('password.request');
-
-    Route::post('/forgot-password', [UserController::class, 'sendResetLink'])
-        ->name('password.email');
-
-    Route::get('/reset-password/{token}', [UserController::class, 'showResetPassword'])
-        ->name('password.reset');
-
-    Route::post('/reset-password', [UserController::class, 'resetPassword'])
-        ->name('password.update');
+    return redirect('/');
 });
+
 
 Route::middleware('auth')->group(function () {
 
-    Route::post('/logout', [UserController::class, 'logout'])
-        ->name('logout');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])
+        ->name('user.dashboard');
 
+    Route::post('/logout', [FrontAuthController::class, 'logout'])
+        ->name('user.logout');
 });
 
-Route::get('/', [HomeController::class,'index'])->name('home');
-
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
-});
-
-Route::get('/admin', function () {
-    return view('admin.dashboard.index');
-});
-
-Route::middleware('guest')->group(function () {
-
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-
-    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
-
-    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
-
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
-
-    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
-});
-
-// Protected Routes
-Route::prefix('admin')
-    ->middleware(['auth', 'admin'])
-    ->group(function () {
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
-
-    Route::post('/logout', [AuthController::class, 'logout'])
-        ->name('logout');
-
-});
-*/
-
-
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\UserController;
-use App\Http\Controllers\Admin\DashboardController;
-
+Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
 /*
 |--------------------------------------------------------------------------
 | Frontend
@@ -101,44 +43,31 @@ Route::get('/', [HomeController::class, 'index'])
 | Guest Routes
 |--------------------------------------------------------------------------
 */
-
 Route::middleware('guest')->group(function () {
 
-    Route::get('/login', [UserController::class, 'showLogin'])
+    Route::get('/login', [FrontAuthController::class, 'showLogin'])
         ->name('login');
 
-    Route::post('/login', [UserController::class, 'login'])
+    Route::post('/login', [FrontAuthController::class, 'login'])
         ->name('login.submit');
 
-    Route::get('/register', [UserController::class, 'showRegister'])
+    Route::get('/register', [FrontAuthController::class, 'showRegister'])
         ->name('register');
 
-    Route::post('/register', [UserController::class, 'register'])
+    Route::post('/register', [FrontAuthController::class, 'register'])
         ->name('register.submit');
 
-    Route::get('/forgot-password', [UserController::class, 'showForgotPassword'])
+    Route::get('/forgot-password', [FrontAuthController::class, 'showForgotPassword'])
         ->name('password.request');
 
-    Route::post('/forgot-password', [UserController::class, 'sendResetLink'])
+    Route::post('/forgot-password', [FrontAuthController::class, 'sendResetLink'])
         ->name('password.email');
 
-    Route::get('/reset-password/{token}', [UserController::class, 'showResetPassword'])
+    Route::get('/reset-password/{token}', [FrontAuthController::class, 'showResetPassword'])
         ->name('password.reset');
 
-    Route::post('/reset-password', [UserController::class, 'resetPassword'])
+    Route::post('/reset-password', [FrontAuthController::class, 'resetPassword'])
         ->name('password.update');
-});
-
-/*
-|--------------------------------------------------------------------------
-| Authenticated User
-|--------------------------------------------------------------------------
-*/
-
-Route::middleware('auth')->group(function () {
-
-    Route::post('/logout', [UserController::class, 'logout'])
-        ->name('logout');
 });
 
 /*
@@ -158,3 +87,26 @@ Route::prefix('admin')
 Route::get('/admin', function () {
     return redirect()->route('admin.dashboard');
 })->middleware(['auth', 'admin']);
+
+
+Route::prefix('admin')->middleware('guest')->group(function () {
+
+    Route::get('/login', [AdminAuthController::class, 'showLogin'])
+        ->name('admin.login');
+
+    Route::post('/login', [AdminAuthController::class, 'login'])
+        ->name('admin.login.submit');
+
+});
+
+Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
+    ->group(function () {
+
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('admin.dashboard');
+
+        Route::post('/logout', [AdminAuthController::class, 'logout'])
+            ->name('admin.logout');
+
+});

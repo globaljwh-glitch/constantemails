@@ -61,11 +61,11 @@
                     <li><a href="apps_mailbox.html"><i class="flaticon-mail-22"></i> Inbox</a></li>
                     <li><a href="user_profile.html"><i class="flaticon-user-11"></i> My Profile</a></li>
                     <li>
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
                             <i class="flaticon-power-off"></i> Logout
                         </a>
-                        <form id="logout-form"
-                            action="{{ route('logout') }}"
+                        <form id="admin-logout-form"
+                            action="{{ route('admin.logout') }}"
                             method="POST"
                             style="display:none;">
                             @csrf

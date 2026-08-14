@@ -6,9 +6,59 @@
       </div>
       <div class="col-lg-7 col-md-6 text-right"> 
   
-          <a href="/login" class="custom-btn1 transparent-btn">Customer Login</a> 
+        @guest
 
-        <a href="/register" class="custom-btn1 orangeBg">Register</a>
+            <a href="{{ route('login') }}" class="custom-btn1 transparent-btn">
+                Customer Login
+            </a>
+
+            <a href="{{ route('register') }}" class="custom-btn1 orangeBg">
+                Register
+            </a>
+
+        @endguest
+
+
+
+        @auth
+    @if(!auth()->user()->is_admin)
+
+        <div class="dropdown d-inline-block">
+
+            <button class="custom-btn1 transparent-btn dropdown-toggle"
+                    data-bs-toggle="dropdown">
+
+                {{ ucfirst(auth()->user()->username) }}
+
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-right">
+
+                <a class="dropdown-item"
+                   href="{{ route('user.dashboard') }}">
+                    Dashboard
+                </a>
+
+                <a class="dropdown-item"
+                   href="#">
+                    Profile
+                </a>
+
+                <form method="POST"
+                      action="{{ route('user.logout') }}">
+                    @csrf
+
+                    <button class="dropdown-item">
+                        Logout
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+    @endif
+@endauth
 
       </div>
     </div>

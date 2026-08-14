@@ -11,11 +11,29 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function ($middleware) {
+    ->withMiddleware(function (Middleware $middleware) {
+
         $middleware->alias([
             'admin' => AdminMiddleware::class,
         ]);
+
+        $middleware->redirectUsersTo(function () {
+
+            if (! auth()->check()) {
+                return route('home');
+            }
+
+            $user = auth()->user();
+
+            if ($user->is_admin) {
+                return route('admin.dashboard');
+            }
+
+            return route('user.dashboard');
+        });
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->create();
