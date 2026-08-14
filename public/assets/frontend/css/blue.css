@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*----------------------------- Color & Backgrounds ------------------------------------------*/
+.redBg {
+	background-color: #0868d2;
+}
+.orangeBg {
+	background: #b3c832
+}
+.text-white {
+	color: #ffffff;
+}
+.text-orange {
+	color: #b3c832;
+}
+.text-red {
+	color: #0868d2;
+}
+.gradient-bg {
+	background: url(../images/gradient-bg.jpg) repeat-x left top;
+}
+.homeBanner {
+	background: url(../images/banner-bg.png) no-repeat center bottom #b3c832;
+}
+.custom-btn1 {
+	border: 1px solid #b3c832;
+	background: #b3c832;
+}
+.navbar {
+	background-color: #0868d2;
+}
+.navbar-nav li.active a.nav-link {
+	color: #000000;
+	background: #b3c832;
+}
+.navbar-nav li a.nav-link:hover {
+	color: #000000;
+	background: #b3c832;
+}
+.callToAction {
+	background: url(../images/cta-bg-blue.jpg) no-repeat center bottom #0868d2;
+}
+h2 {
+	color: #0868d2;
+}
+.transparent-btn {
+	border: 1px solid #0868d2;
+}
+.background-01 {
+	background: url(../images/background-01.png) no-repeat center bottom #b3c832;
+}
+.listing02 li a {
+	color: #b3c832;
+}
+.socialMediaIcon .socialIcon {
+	background: #b3c832;
+}
+.copyRight {
+	background-color: #0868d2;
+}
+
+.priceBlock {
+	border:1px solid #0868d2;
+}
+.priceBlock h2 {
+	background:#0868d2;
+}
+.priceBlock p {
+	color:#93a429;
+}
+.signUpButton {
+	background:#b3c832;
+}
+
+.contactForm .submitButton {
+	border: 1px solid #b3c832;
+    background: #b3c832;
+}
+
