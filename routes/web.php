@@ -9,6 +9,20 @@ use App\Http\Controllers\Admin\DashboardController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
+Route::get('/privacy-policy', [HomeController::class, 'privacy'])
+    ->name('privacy');
+Route::get('/terms', [HomeController::class, 'terms'])
+    ->name('terms');
+Route::get('/pricing', [HomeController::class, 'pricing'])
+    ->name('pricing');
+Route::get('/antispam', [HomeController::class, 'antispam'])
+    ->name('antispam');
+Route::get('/contact', [HomeController::class, 'contact'])
+    ->name('contact');
+Route::get('/resource', [HomeController::class, 'resource'])
+    ->name('resource');
+Route::get('/feature', [HomeController::class, 'feature'])
+    ->name('feature');
 
 Route::get('/test-logout', function () {
     Auth::logout();

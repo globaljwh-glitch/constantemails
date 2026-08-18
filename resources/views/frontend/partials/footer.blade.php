@@ -2,7 +2,7 @@
   <div class="container">
     <div class="text-white">Constant Emails. Constant Connections.</div>
       <div class="ctaSmallHeading text-black">Start sharing your company’s voice today FOR FREE!</div>
-       <a href="pricing.html" class="ctaButton02">Pick A Plan</a> 
+       <a href="{{ route('pricing') }}" class="ctaButton02">Pick A Plan</a> 
   </div>
 </section>
 
@@ -12,23 +12,23 @@
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
           <ul class="footerNav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="feature_page.html">Features</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="{{ route('home') }}">Home</a></li>
+            <li><a href="{{ route('feature') }}">Features</a></li>
+            <li><a href="{{ route('pricing') }}">Pricing</a></li>
           </ul>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
           <ul class="footerNav">
             <li><a href="our_template.html">Templates</a></li>
-            <li><a href="resources.html">Resources</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="{{ route('resource') }}">Resources</a></li>
+            <li><a href="{{ route('contact') }}">Contact Us</a></li>
           </ul>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
           <ul class="footerNav">
-            <li><a href="privacy.html">Privacy Policy</a></li>
-            <li><a href="terms.html">Terms and Conditions</a></li>
-            <li><a href="antispam.html">Anti-Spam Policy</a></li>
+            <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
+            <li><a href="{{ route('terms') }}">Terms and Conditions</a></li>
+            <li><a href="{{ route('antispam') }}">Anti-Spam Policy</a></li>
           </ul>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
@@ -52,7 +52,7 @@
             </a> 
           </div>
           <div class="row">
-        <div class="col-lg-12 copyright-text">&copy; Copyright 2010-2016 Constant Emails. All Rights Reserved.</div>
+        <div class="col-lg-12 copyright-text">&copy; Copyright 2010-2026 Constant Emails. All Rights Reserved.</div>
       </div>
     </div>
         </div>

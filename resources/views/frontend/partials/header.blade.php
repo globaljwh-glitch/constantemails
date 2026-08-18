@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-5 col-md-6">
-        <div class="logo"> <a class="logo" href="index.html"><img src="{{ asset('assets/frontend/images/logo.jpg') }}" alt="Constant Email" class="imgResponsive"></a></div>
+        <div class="logo"> <a class="logo" href="{{ route('home') }}"><img src="{{ asset('assets/frontend/images/logo.jpg') }}" alt="Constant Email" class="imgResponsive"></a></div>
       </div>
       <div class="col-lg-7 col-md-6 text-right"> 
   
@@ -69,16 +69,16 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
           <li class="nav-item"> 
-            <a class="nav-link active" href="index.html">Home </a> 
+            <a class="nav-link active" href="{{ route('home') }}">Home </a> 
           </li>
           <li class="nav-item"> 
-            <a class="nav-link" href="feature_page.html">Features</a> 
+            <a class="nav-link" href="{{ route('feature') }}">Features</a> 
           </li>
-          <li class="nav-item"> <a class="nav-link" href="pricing.html">Pricing</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('pricing') }}">Pricing</a> </li>
           <li class="nav-item"> <a class="nav-link" href="managed_accounts_new.html">Managed Accounts</a></li>
           <li class="nav-item"> <a class="nav-link" href="our_template.html">Templates</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="resources.html">Resources</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="contact.html">Contact Us</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('resource') }}">Resources</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('contact') }}">Contact Us</a> </li>
         </ul>
       </div>
     </div>
