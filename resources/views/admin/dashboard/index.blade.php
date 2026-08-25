@@ -1,8 +1,8 @@
-@extends('admin.layouts.app')
+@extends('frontend.layouts.dashboard')
 
-@section('title', 'Dashboard')
+@section('title', 'My Account')
 
-@section('content')
+@section('dashboard-content')
 
 <!--  BEGIN CONTENT PART  -->
         <div id="content" class="main-content">

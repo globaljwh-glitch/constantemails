@@ -19,7 +19,7 @@
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
           <ul class="footerNav">
-            <li><a href="our_template.html">Templates</a></li>
+            <li><a href="{{ route('template') }}">Templates</a></li>
             <li><a href="{{ route('resource') }}">Resources</a></li>
             <li><a href="{{ route('contact') }}">Contact Us</a></li>
           </ul>

@@ -76,7 +76,7 @@
           </li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('pricing') }}">Pricing</a> </li>
           <li class="nav-item"> <a class="nav-link" href="managed_accounts_new.html">Managed Accounts</a></li>
-          <li class="nav-item"> <a class="nav-link" href="our_template.html">Templates</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('template') }}">Templates</a> </li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('resource') }}">Resources</a> </li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('contact') }}">Contact Us</a> </li>
         </ul>

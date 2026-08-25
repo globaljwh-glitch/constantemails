@@ -56,4 +56,9 @@ class HomeController extends Controller
         return view('frontend.pages.features');
     }
 
+    public function template()
+    {
+        return view('frontend.pages.our_templates');
+    }
+
 }

@@ -29,7 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 return route('admin.dashboard');
             }
 
-            return route('user.dashboard');
+            //return route('user.dashboard');
+            return redirect('/user/dashboard');
         });
 
     })

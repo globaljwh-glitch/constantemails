@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\FrontAuthController;
 use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\GroupController;
+use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -23,6 +25,31 @@ Route::get('/resource', [HomeController::class, 'resource'])
     ->name('resource');
 Route::get('/feature', [HomeController::class, 'feature'])
     ->name('feature');
+Route::get('/template', [HomeController::class, 'template'])
+    ->name('template');
+
+Route::middleware(['auth'])
+    ->prefix('user')
+    ->name('user.')
+    ->group(function () {
+
+    // Route::get('/dashboard', [DashboardController::class, 'index'])
+    //     ->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])
+    ->name('dashboard');
+
+    Route::resource('groups', GroupController::class);
+
+    // Route::get('/contacts/import', [ContactController::class,'createImport'])
+    //     ->name('user.contacts.import.create');
+
+    // Route::post('/contacts/import', [ContactController::class,'import'])
+    //     ->name('user.contacts.import');
+
+    Route::get('/contacts/import', [ContactController::class, 'createImport'])
+            ->name('contacts.import');
+
+});
 
 Route::get('/test-logout', function () {
     Auth::logout();
@@ -33,14 +60,56 @@ Route::get('/test-logout', function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', [UserController::class, 'dashboard'])
-        ->name('user.dashboard');
+//     Route::get('/dashboard', [UserController::class, 'dashboard'])
+//         ->name('user.dashboard');
 
-    Route::post('/logout', [FrontAuthController::class, 'logout'])
-        ->name('user.logout');
-});
+//     Route::post('/logout', [FrontAuthController::class, 'logout'])
+//         ->name('user.logout');
+// });
+
+Route::middleware('auth')
+    ->prefix('user')
+    ->name('user.')
+    ->group(function () {
+
+        Route::get('/dashboard', [UserController::class, 'dashboard'])
+            ->name('dashboard');
+
+        Route::post('/logout', [FrontAuthController::class, 'logout'])
+            ->name('logout');
+
+        Route::resource('groups', GroupController::class);
+
+        Route::get('/contacts/import', [ContactController::class, 'createImport'])
+            ->name('contacts.import');
+
+        // Route::post('/contacts/import', [ContactController::class, 'storeImport'])
+        //     ->name('contacts.import.store');
+
+        Route::post('/contacts/import', [ContactController::class, 'import'])
+            ->name('contacts.import.store');
+
+        Route::post('/groups/activate', [GroupController::class,'activate'])
+            ->name('groups.activate');
+
+        Route::post('/groups/deactivate', [GroupController::class,'deactivate'])
+            ->name('groups.deactivate');
+
+        Route::post('/groups/delete', [GroupController::class,'bulkDelete'])
+            ->name('groups.bulk-delete');
+        
+        Route::get('/groups/{group}/contacts', [ContactController::class,'index'])
+            ->name('groups.contacts');
+
+        Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])
+            ->name('groups.edit');
+
+        Route::put('/groups/{group}', [GroupController::class, 'update'])
+            ->name('groups.update');
+
+    });
 
 Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
 /*

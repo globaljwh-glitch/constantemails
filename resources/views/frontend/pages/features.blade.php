@@ -26,7 +26,7 @@
         <div class="col-md-4 col-lg-3">
           <div class="middleContentOuter">
             <div class="verticalMiddle">
-              <div class="imageThumb"><img src="images/feature-thumb-01.jpg" alt="" class="" /></div>
+              <div class="imageThumb"><img src="{{ asset('assets/frontend/images/feature-thumb-01.jpg') }}" alt="" class="" /></div>
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@
         <div class="col-md-4 col-lg-3 order-lg-2 order-md-2 order-sm-1">
           <div class="middleContentOuter">
             <div class="verticalMiddle">
-              <div class="imageThumb"><img src="images/feature-thumb-02.jpg" alt="" class="" /></div>
+              <div class="imageThumb"><img src="{{ asset('assets/frontend/images/feature-thumb-02.jpg') }}" alt="" class="" /></div>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
         <div class="col-md-4 col-lg-3">
           <div class="middleContentOuter">
             <div class="verticalMiddle">
-              <div class="imageThumb"><img src="images/feature-thumb-03.jpg" alt="" class="" /></div>
+              <div class="imageThumb"><img src="{{ asset('assets/frontend/images/feature-thumb-03.jpg') }}" alt="" class="" /></div>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@
         <div class="col-md-4 col-lg-3 order-lg-2 order-md-2 order-sm-1">
           <div class="middleContentOuter">
             <div class="verticalMiddle">
-              <div class="imageThumb"><img src="images/feature-thumb-04.jpg" alt="" class="" /></div>
+              <div class="imageThumb"><img src="{{ asset('assets/frontend/images/feature-thumb-04.jpg') }}" alt="" class="" /></div>
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@
         <div class="col-md-4 col-lg-3">
           <div class="middleContentOuter">
             <div class="verticalMiddle">
-              <div class="imageThumb"><img src="images/feature-thumb-05.jpg" alt="" class="" /></div>
+              <div class="imageThumb"><img src="{{ asset('assets/frontend/images/feature-thumb-05.jpg') }}" alt="" class="" /></div>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@
         <div class="col-md-4 col-lg-3 order-lg-2 order-md-2 order-sm-1">
           <div class="middleContentOuter">
             <div class="verticalMiddle">
-              <div class="imageThumb"><img src="images/feature-thumb-06.jpg" alt="" class="" /></div>
+              <div class="imageThumb"><img src="{{ asset('assets/frontend/images/feature-thumb-06.jpg') }}" alt="" class="" /></div>
             </div>
           </div>
         </div>
@@ -178,7 +178,7 @@
         <div class="col-md-4 col-lg-3">
           <div class="middleContentOuter">
             <div class="verticalMiddle">
-              <div class="imageThumb"><img src="images/feature-thumb-07.jpg" alt="" class="" /></div>
+              <div class="imageThumb"><img src="{{ asset('assets/frontend/images/feature-thumb-07.jpg') }}" alt="" class="" /></div>
             </div>
           </div>
         </div>

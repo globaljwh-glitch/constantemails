@@ -114,6 +114,10 @@ class FrontAuthController extends Controller
                 ->withInput($request->only('email'))
                 ->with('error', 'Invalid email or password.');
         }
+//         dd([
+//     'email'    => auth()->user()->email,
+//     'is_admin' => auth()->user()->is_admin,
+// ]);
 
         $request->session()->regenerate();
 
