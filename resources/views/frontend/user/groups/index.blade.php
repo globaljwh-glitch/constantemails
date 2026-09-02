@@ -22,24 +22,24 @@
 
         <div class="text-right mb-3">
 
-        <button
-    formaction="{{ route('user.groups.activate') }}"
-    class="btn btn-success">
-    Activate
-</button>
+            <button
+                formaction="{{ route('user.groups.activate') }}"
+                class="btn btn-success">
+                Activate
+            </button>
 
-<button
-    formaction="{{ route('user.groups.deactivate') }}"
-    class="btn btn-warning">
-    Deactivate
-</button>
+            <button
+                formaction="{{ route('user.groups.deactivate') }}"
+                class="btn btn-warning">
+                Deactivate
+            </button>
 
-<button
-    formaction="{{ route('user.groups.bulk-delete') }}"
-    onclick="return confirm('Delete selected groups?')"
-    class="btn btn-danger">
-    Delete
-</button>
+            <button
+                formaction="{{ route('user.groups.bulk-delete') }}"
+                onclick="return confirm('Delete selected groups?')"
+                class="btn btn-danger">
+                Delete
+            </button>
 
 
             <!-- <button type="submit" name="action" value="activate" class="btn btn-success">
@@ -66,7 +66,7 @@
             <thead class="bg84bfd8">
                 <tr>
                     <th width="5%">
-                        <input type="checkbox" id="checkAll">
+                        <!-- <input type="checkbox" id="checkAll"> -->
                         
                     </th>
                     <th>Group Name</th>
@@ -113,7 +113,7 @@
                         </td>
 
                         <td class="text-center">
-                            <a href="{{ route('user.groups.contacts', $group) }}">
+                            <a href="{{ route('user.groups.contacts.index', $group) }}">
                                 <i class="fa fa-users"></i>
                             </a>
                         </td>

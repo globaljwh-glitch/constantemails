@@ -9,23 +9,41 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Contact;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\DB;
+use App\Models\ContactList;
 
 class ContactController extends Controller
 {
     /**
      * Display contacts.
      */
-    public function index()
+    public function index(Group $group)
     {
-        //
+        abort_if($group->user_id != auth()->id(), 403);
+
+        $contacts = ContactList::where('group_id', $group->id)
+            ->orderBy('contact_first_name')
+            ->paginate(20);
+
+        return view(
+            'frontend.user.contacts.index',
+            compact('group', 'contacts')
+        );
     }
 
     /**
      * Show Add Contact form.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $groups = Group::where('user_id',auth()->id())
+            ->where('status',1)
+            ->orderBy('group_name')
+            ->get();
+
+        return view(
+            'frontend.user.contacts.create',
+            compact('groups')
+        );
     }
 
     /**
@@ -33,7 +51,58 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+
+            'group_id'=>'required|exists:contact_groups,id',
+
+            'contact_first_name'=>'required|max:255',
+
+            'contact_last_name'=>'nullable|max:255',
+
+            'contact_email'=>'required|email',
+
+            'contact_phone'=>'nullable|max:100',
+
+            'contact_company_name'=>'nullable|max:255',
+
+            'contact_address'=>'nullable',
+
+            'area_interest'=>'nullable',
+
+        ]);
+
+        Contact::create([
+
+            'user_id'=>auth()->id(),
+
+            'group_id'=>$request->group_id,
+
+            'contact_first_name'=>$request->contact_first_name,
+
+            'contact_last_name'=>$request->contact_last_name,
+
+            'contact_company_name'=>$request->contact_company_name,
+
+            'contact_address'=>$request->contact_address,
+
+            'area_interest'=>$request->area_interest,
+
+            'contact_email'=>$request->contact_email,
+
+            'contact_phone'=>$request->contact_phone,
+
+            'status'=>1,
+
+            'user_status'=>'opt-in',
+
+        ]);
+
+        return redirect()
+
+            ->route('user.groups.contacts.index',$request->group_id)
+
+            ->with('success','Contact added successfully.');
+
     }
 
     /**
@@ -227,24 +296,119 @@ class ContactController extends Controller
     /**
      * Show Edit Contact page.
      */
-    public function edit($id)
+    public function edit(Contact $contact)
     {
-        //
+        abort_if($contact->user_id != auth()->id(),403);
+
+        $groups = Group::where('user_id',auth()->id())
+            ->where('status',1)
+            ->get();
+
+        return view(
+            'frontend.user.contacts.edit',
+            compact(
+                'contact',
+                'groups'
+            )
+        );
     }
 
     /**
      * Update Contact.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Contact $contact)
     {
-        //
+        abort_if($contact->user_id != auth()->id(),403);
+
+        $request->validate([
+
+            'group_id'=>'required',
+
+            'contact_first_name'=>'required',
+
+            'contact_email'=>'required|email',
+
+        ]);
+
+        $contact->update([
+
+            'group_id'=>$request->group_id,
+
+            'contact_first_name'=>$request->contact_first_name,
+
+            'contact_last_name'=>$request->contact_last_name,
+
+            'contact_company_name'=>$request->contact_company_name,
+
+            'contact_address'=>$request->contact_address,
+
+            'area_interest'=>$request->area_interest,
+
+            'contact_email'=>$request->contact_email,
+
+            'contact_phone'=>$request->contact_phone,
+
+        ]);
+
+        return redirect()
+
+            ->route('user.groups.contacts.index',$contact->group_id)
+
+            ->with('success','Contact updated successfully.');
     }
 
     /**
      * Delete Contact.
      */
-    public function destroy($id)
+    public function destroy(Contact $contact)
     {
-        //
+        abort_if($contact->user_id != auth()->id(),403);
+
+        $groupId = $contact->group_id;
+
+        $contact->delete();
+
+        return redirect()
+
+            ->route('user.groups.contacts.index',$groupId)
+
+            ->with('success','Contact deleted successfully.');
+    }
+
+    public function activate(Request $request)
+    {
+        Contact::where('user_id',auth()->id())
+
+            ->whereIn('id',$request->contact_ids ?? [])
+
+            ->update([
+                'status'=>1
+            ]);
+
+        return back()->with('success','Contacts activated.');
+    }
+
+    public function deactivate(Request $request)
+    {
+        Contact::where('user_id',auth()->id())
+
+            ->whereIn('id',$request->contact_ids ?? [])
+
+            ->update([
+                'status'=>0
+            ]);
+
+        return back()->with('success','Contacts deactivated.');
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        Contact::where('user_id',auth()->id())
+
+            ->whereIn('id',$request->contact_ids ?? [])
+
+            ->delete();
+
+        return back()->with('success','Contacts deleted successfully.');
     }
 }

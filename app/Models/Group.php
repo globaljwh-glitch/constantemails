@@ -27,4 +27,14 @@ class Group extends Model
         return $this->hasMany(Contact::class, 'group_id');
     }
 
+    public function campaigns()
+    {
+        return $this->belongsToMany(
+            MailCampaign::class,
+            'campaign_group',
+            'group_id',
+            'campaign_id'
+        );
+    }
+
 }

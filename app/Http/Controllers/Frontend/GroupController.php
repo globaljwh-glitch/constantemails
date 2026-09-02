@@ -126,45 +126,53 @@ class GroupController extends Controller
         return back()->with('success','Group deleted successfully.');
     }
 
-    // public function createImport()
-    // {
-    //     $groups = Group::where('user_id', auth()->id())
-    //         ->where('status',1)
-    //         ->orderBy('group_name')
-    //         ->get();
-
-    //     return view('frontend.user.contacts.import', compact('groups'));
-    // }
-
     public function activate(Request $request)
     {
-        Group::whereIn('id', $request->groups ?? [])
+        if (!$request->filled('group_ids')) {
+            return back()->with('error', 'Please select at least one group.');
+        }
+
+        Group::whereIn('id', $request->group_ids)
             ->where('user_id', auth()->id())
             ->update([
-                'status' => 1
+                'status' => 1,
             ]);
 
-        return back()->with('success','Selected groups activated.');
+        return redirect()
+            ->route('user.groups.index')
+            ->with('success', 'Selected groups activated successfully.');
     }
 
     public function deactivate(Request $request)
     {
-        Group::whereIn('id', $request->groups ?? [])
+        if (!$request->filled('group_ids')) {
+            return back()->with('error', 'Please select at least one group.');
+        }
+
+        Group::whereIn('id', $request->group_ids)
             ->where('user_id', auth()->id())
             ->update([
-                'status' => 0
+                'status' => 0,
             ]);
 
-        return back()->with('success','Selected groups deactivated.');
+        return redirect()
+            ->route('user.groups.index')
+            ->with('success', 'Selected groups deactivated successfully.');
     }
 
     public function bulkDelete(Request $request)
     {
-        Group::whereIn('id', $request->groups ?? [])
+        if (!$request->filled('group_ids')) {
+            return back()->with('error', 'Please select at least one group.');
+        }
+
+        Group::whereIn('id', $request->group_ids)
             ->where('user_id', auth()->id())
             ->delete();
 
-        return back()->with('success','Selected groups deleted.');
+        return redirect()
+            ->route('user.groups.index')
+            ->with('success', 'Selected groups deleted successfully.');
     }
 
 }

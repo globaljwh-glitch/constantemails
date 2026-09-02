@@ -15,9 +15,15 @@ class Contact extends Model
         'contact_last_name',
         'contact_company_name',
         'contact_address',
+        'area_interest',
         'contact_email',
         'contact_phone',
         'status',
         'user_status',
     ];
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }

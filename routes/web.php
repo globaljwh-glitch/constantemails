@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\GroupController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Frontend\CampaignController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
@@ -101,13 +102,85 @@ Route::middleware('auth')
             ->name('groups.bulk-delete');
         
         Route::get('/groups/{group}/contacts', [ContactController::class,'index'])
-            ->name('groups.contacts');
+            ->name('groups.contacts.index');
 
         Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])
             ->name('groups.edit');
 
         Route::put('/groups/{group}', [GroupController::class, 'update'])
             ->name('groups.update');
+
+        Route::get('/contacts/{contact}/edit', [ContactController::class, 'edit'])
+            ->name('contacts.edit');
+
+        Route::put('/contacts/{contact}', [ContactController::class, 'update'])
+            ->name('contacts.update');
+
+        Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])
+            ->name('contacts.destroy');
+
+        Route::get('/contacts/create', [ContactController::class, 'create'])
+            ->name('contacts.create');
+
+        Route::post('/contacts', [ContactController::class, 'store'])
+            ->name('contacts.store');
+
+        // Route::get('/contacts/{contact}/edit', [ContactController::class, 'edit'])
+        //     ->name('contacts.edit');
+
+        // Route::put('/contacts/{contact}', [ContactController::class, 'update'])
+        //     ->name('contacts.update');
+
+        Route::post('/contacts/activate', [ContactController::class, 'activate'])
+            ->name('contacts.activate');
+
+        Route::post('/contacts/deactivate', [ContactController::class, 'deactivate'])
+            ->name('contacts.deactivate');
+
+        Route::post('/contacts/bulk-delete', [ContactController::class, 'bulkDelete'])
+            ->name('contacts.bulk-delete');
+
+        Route::resource('campaigns', CampaignController::class);
+
+        Route::get(
+            '/campaigns/{campaign}/groups',
+            [CampaignController::class,'groups']
+        )->name('campaigns.groups');
+
+        Route::post(
+            '/campaigns/{campaign}/groups',
+            [CampaignController::class,'saveGroups']
+        )->name('campaigns.groups.store');
+
+        Route::get(
+            '/campaigns/{campaign}/templates',
+            [CampaignController::class, 'templates']
+        )->name('campaigns.templates');
+
+        Route::post(
+            '/campaigns/{campaign}/templates',
+            [CampaignController::class, 'saveTemplate']
+        )->name('campaigns.templates.store');
+
+        Route::get(
+            '/campaigns/{campaign}/editor',
+            [CampaignController::class, 'editor']
+        )->name('campaigns.editor');
+
+        Route::post(
+            '/campaigns/{campaign}/editor',
+            [CampaignController::class, 'saveEditor']
+        )->name('campaigns.editor.store');
+
+        Route::get(
+            '/campaigns/{campaign}/send',
+            [CampaignController::class, 'send']
+        )->name('campaigns.send');
+
+        Route::post(
+            '/campaigns/{campaign}/send',
+            [CampaignController::class, 'sendCampaign']
+        )->name('campaigns.send.store');
 
     });
 

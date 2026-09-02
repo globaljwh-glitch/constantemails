@@ -23,7 +23,12 @@
               <a href="import.html" class="">Import Contact from database</a>
             </li>
             <li><a href="bad_email.html" class="">Bad Contacts Report</a></li>
-            <li><a href="email_details.html" class="">Create and Emails/Email Campaign</a></li>
+            <li>
+              <a href="{{ route('user.campaigns.create') }}"
+                class="{{ request()->routeIs('user.campaigns.*') ? 'activeclass' : '' }}">
+                  Create and Emails/Email Campaign
+              </a>
+            </li>
             <li><a href="email_stats.html" class="">Create Email History/Statistics</a></li>
             <li><a href="saved_template.html" class="">Manage Custom Templates</a></li>
             <li><a href="autoresponders.html" class="">My Auto Responders</a></li>
