@@ -1,0 +1,250 @@
+/*!
+ * Common CSS files
+ */
+* {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	font-family: 'Raleway', sans-serif;
+	color: #282828;
+}
+.contentContainer {
+	padding: 150px 0 150px 0;
+}
+.imgResponsive {
+	width: 100%;
+}
+a:hover {
+	color: inherit;
+	text-decoration: none;
+}
+.middleContentOuter {
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+.verticalMiddle {
+	width: 100%;
+}
+.text-black {
+	color: #282828;
+}
+/*----------------------------- Heading & Buttons ------------------------------------------*/
+h2 {
+	font-size: 40px;
+	font-weight: 500;
+	padding: 0 0 7px 0;
+}
+p {
+	font-size: 18px;
+	line-height: 30px;
+	margin-bottom: 15px;
+}
+.listing01 {
+	margin: 0 0 10px 0;
+}
+.listing01 li {
+	font-size: 17px;
+	line-height: 23px;
+	list-style-type: none;
+	padding: 5px 0 9px 44px;
+	background: url(../images/icons/list-icon.png) no-repeat 11px 11px;
+}
+.listing02 {
+	margin: 0 0 10px 0;
+}
+.listing02 li {
+	font-size: 18px;
+	line-height: 27px;
+	list-style-type: none;
+	padding: 20px 0 18px 35px;
+	background: url(../images/icons/tick.png) no-repeat 2px 27px;
+	border-bottom: 1px solid #fef5f5
+}
+ul.listing02 li:last-child {
+	border-bottom: 0px solid #fef5f5!important;
+}
+.listing02 li a {
+	font-size: 20px;
+	font-weight: 500;
+}
+.custom-btn1 {
+	color: #ffffff;
+	font-size: 17px;
+	display: inline-block;
+	padding: 11px 17px 14px 17px;
+	text-decoration: none;
+	border: none;
+	font-weight: 500;
+}
+.transparent-btn {
+	color: #262626;
+	background:none !important;
+}
+/*----------------------------- Navigation Block ------------------------------------------*/
+header {
+	padding: 35px 0 0 0;
+}
+.logo {
+	max-width: 361px;
+}
+header .custom-btn1 {
+	margin-left:7px;
+}
+.navbar {
+	padding: 0px;
+	margin-top: 35px;
+}
+a.nav-link {
+	font-size: 17px;
+	color: #ffffff;
+	padding: 19px 33px 19px 34px !important;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+/*----------------------------- Banner Block ------------------------------------------*/
+.homeBanner {
+	background-size: cover;
+	padding: 80px 0 80px 0;
+	position: relative;
+}
+.homeBanner h1 {
+	font-size: 50px;
+	color: #000000;
+	font-weight: 600;
+	margin: 0px;
+	line-height: 60px;
+}
+.homeBanner p {
+	font-size: 18px;
+	color: #1f1f1f;
+	line-height: 30px;
+	padding: 0 0 0 20px;
+	border-left: 2px solid #c1792c;
+	margin: 21px 0 0 3px;
+}
+.homeBanner .smallHeading {
+	font-size: 37px;
+	font-weight: 500;
+	color: #e62d29;
+}
+.bannerThumb {
+	float: right;
+/*	-webkit-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.21);
+	-moz-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.21);
+	box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.21);
+*/}
+.bannerThumb img {
+	width: 100%;
+	max-width: 548px;
+}
+/*----------------------------- Call To Actions ------------------------------------------*/
+.callToAction {
+	background-size: cover;
+	padding: 120px 0 126px 0;
+}
+.callToAction p {
+	font-size: 30px;
+	font-weight: 500;
+	padding: 0 25px;
+	line-height: 37px;
+}
+.ctaButton {
+	font-size: 23px;
+	margin-top: 7px;
+}
+.callToAction02 {
+	font-size: 68px;
+	font-weight: 500;
+	padding: 120px 0 126px 0;
+	border-bottom: 2px solid rgba(255, 255, 255, .1);
+}
+.ctaSmallHeading {
+	font-size: 30px;
+	padding: 17px 0 9px 0;
+}
+.ctaButton02 {
+	font-size: 18px;
+	background: none;
+	font-weight: 500;
+	border: 1px solid rgba(255, 255, 255, 1);
+	padding: 19px 35px 18px 35px;
+	color: #ffffff;
+}
+/*----------------------------- Content Block ------------------------------------------*/
+.contentBlock {
+	margin-top: 235px;
+}
+.imageThumb img {
+	width: 100%;
+	max-width: 519px;
+}
+#accordion .card {
+	background: none;
+	border-radius: 0px;
+	padding: 0 0 8px 0;
+	border: none;
+	border-bottom: 2px solid rgba(255, 255, 255, .1);
+}
+#accordion .card-header {
+	background: none;
+	border: none;
+	padding: 19px 0 12px 0;
+	font-size: 25px;
+	color: #ffffff;
+	font-weight: 600;
+}
+#accordion .card-header a {
+	color: #ffffff;
+	padding: 0 0 0 70px;
+	background: url(../images/icons/arrow-down.png) no-repeat 20px 8px;
+}
+#accordion .card-header a.collapsed {
+	background: url(../images/icons/arrow-up.png) no-repeat 20px 8px;
+}
+#accordion .card-body {
+	padding: 0 20px 0 70px;
+}
+#accordion div:last-child {
+	border-bottom: 0px solid rgba(255, 255, 255, .1);
+}
+/*----------------------------- Footer ------------------------------------------*/
+footer {
+	font-size: 18px;
+	color: #282828;
+}
+footer li {
+	list-style-type: none;
+	margin-bottom: 12px;
+	font-size: 18px;
+	line-height: 24px;
+}
+footer li a {
+	color: #282828;
+}
+.socialMediaIcon {
+	margin-top: 21px;
+}
+.socialMediaIcon .socialIcon {
+	color: #ffffff;
+	font-size: 22px;
+	margin-right: 1px;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+	text-align: center;
+	padding-top: 8px;
+}
+.footerContent {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding: 37px 0 18px 0;
+}
+.copyRight {
+	opacity: 1;
+	font-size: 14px;
+	padding: 15px 0;
+	background-color: #e62d29;
+	color: #ffffff;
+}

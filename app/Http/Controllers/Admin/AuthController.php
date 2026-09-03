@@ -25,7 +25,7 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
+ 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
 
             $request->session()->regenerate();
@@ -55,10 +55,9 @@ class AuthController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect('/admin/login');
     }
 
     /**

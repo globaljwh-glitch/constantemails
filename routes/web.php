@@ -2,7 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\FrontAuthController;
+use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\GroupController;
+use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
+
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\TemplateCategoryController;
@@ -11,63 +17,253 @@ use App\Http\Controllers\Admin\ContactCategoryController;
 use App\Http\Controllers\Admin\ResourceCategoryController;
 use App\Http\Controllers\Admin\ResourceArticleController;
 use App\Http\Controllers\Admin\CmsArticleController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\MailTemplateController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Auth;
 
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
+use App\Http\Controllers\Frontend\CampaignController;
+
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+
+Route::get('/privacy-policy', [HomeController::class, 'privacy'])
+    ->name('privacy');
+Route::get('/terms', [HomeController::class, 'terms'])
+    ->name('terms');
+Route::get('/pricing', [HomeController::class, 'pricing'])
+    ->name('pricing');
+Route::get('/antispam', [HomeController::class, 'antispam'])
+    ->name('antispam');
+Route::get('/contact', [HomeController::class, 'contact'])
+    ->name('contact');
+Route::get('/resource', [HomeController::class, 'resource'])
+    ->name('resource');
+Route::get('/feature', [HomeController::class, 'feature'])
+    ->name('feature');
+Route::get('/template', [HomeController::class, 'template'])
+    ->name('template');
+
+Route::middleware(['auth'])
+    ->prefix('user')
+    ->name('user.')
+    ->group(function () {
+
+        // Route::get('/dashboard', [DashboardController::class, 'index'])
+        //     ->name('dashboard');
+        Route::get('/dashboard', [UserController::class, 'dashboard'])
+            ->name('dashboard');
+
+        Route::resource('groups', GroupController::class);
+
+        // Route::get('/contacts/import', [ContactController::class,'createImport'])
+        //     ->name('user.contacts.import.create');
+    
+        // Route::post('/contacts/import', [ContactController::class,'import'])
+        //     ->name('user.contacts.import');
+    
+        Route::get('/contacts/import', [ContactController::class, 'createImport'])
+            ->name('contacts.import');
+
+
+    });
+
+Route::get('/test-logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+
+    return redirect('/');
 });
 
-Route::get('/admin', function () {
-    return view('admin.dashboard.index');
-});
 
-Route::get('/', function () {
+// Route::middleware('auth')->group(function () {
 
-    if (Auth::check()) {
+//     Route::get('/dashboard', [UserController::class, 'dashboard'])
+//         ->name('user.dashboard');
 
-        if (Auth::user()->is_admin) {
-            return redirect()->route('admin.dashboard');
-        }
+//     Route::post('/logout', [FrontAuthController::class, 'logout'])
+//         ->name('user.logout');
+// });
 
-        return abort(403);
-    }
+Route::middleware('auth')
+    ->prefix('user')
+    ->name('user.')
+    ->group(function () {
 
-    return redirect()->route('login');
-});
+        Route::get('/dashboard', [UserController::class, 'dashboard'])
+            ->name('dashboard');
 
+        Route::post('/logout', [FrontAuthController::class, 'logout'])
+            ->name('logout');
+
+        Route::resource('groups', GroupController::class);
+
+        Route::get('/contacts/import', [ContactController::class, 'createImport'])
+            ->name('contacts.import');
+
+        // Route::post('/contacts/import', [ContactController::class, 'storeImport'])
+        //     ->name('contacts.import.store');
+    
+        Route::post('/contacts/import', [ContactController::class, 'import'])
+            ->name('contacts.import.store');
+
+        Route::post('/groups/activate', [GroupController::class, 'activate'])
+            ->name('groups.activate');
+
+        Route::post('/groups/deactivate', [GroupController::class, 'deactivate'])
+            ->name('groups.deactivate');
+
+        Route::post('/groups/delete', [GroupController::class, 'bulkDelete'])
+            ->name('groups.bulk-delete');
+
+        Route::get('/groups/{group}/contacts', [ContactController::class, 'index'])
+            ->name('groups.contacts.index');
+
+        Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])
+            ->name('groups.edit');
+
+        Route::put('/groups/{group}', [GroupController::class, 'update'])
+            ->name('groups.update');
+
+        Route::get('/contacts/{contact}/edit', [ContactController::class, 'edit'])
+            ->name('contacts.edit');
+
+        Route::put('/contacts/{contact}', [ContactController::class, 'update'])
+            ->name('contacts.update');
+
+        Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])
+            ->name('contacts.destroy');
+
+        Route::get('/contacts/create', [ContactController::class, 'create'])
+            ->name('contacts.create');
+
+        Route::post('/contacts', [ContactController::class, 'store'])
+            ->name('contacts.store');
+
+        // Route::get('/contacts/{contact}/edit', [ContactController::class, 'edit'])
+        //     ->name('contacts.edit');
+    
+        // Route::put('/contacts/{contact}', [ContactController::class, 'update'])
+        //     ->name('contacts.update');
+    
+        Route::post('/contacts/activate', [ContactController::class, 'activate'])
+            ->name('contacts.activate');
+
+        Route::post('/contacts/deactivate', [ContactController::class, 'deactivate'])
+            ->name('contacts.deactivate');
+
+        Route::post('/contacts/bulk-delete', [ContactController::class, 'bulkDelete'])
+            ->name('contacts.bulk-delete');
+
+        Route::resource('campaigns', CampaignController::class);
+
+        Route::get(
+            '/campaigns/{campaign}/groups',
+            [CampaignController::class, 'groups']
+        )->name('campaigns.groups');
+
+        Route::post(
+            '/campaigns/{campaign}/groups',
+            [CampaignController::class, 'saveGroups']
+        )->name('campaigns.groups.store');
+
+        Route::get(
+            '/campaigns/{campaign}/templates',
+            [CampaignController::class, 'templates']
+        )->name('campaigns.templates');
+
+        Route::post(
+            '/campaigns/{campaign}/templates',
+            [CampaignController::class, 'saveTemplate']
+        )->name('campaigns.templates.store');
+
+        Route::get(
+            '/campaigns/{campaign}/editor',
+            [CampaignController::class, 'editor']
+        )->name('campaigns.editor');
+
+        Route::post(
+            '/campaigns/{campaign}/editor',
+            [CampaignController::class, 'saveEditor']
+        )->name('campaigns.editor.store');
+
+        Route::get(
+            '/campaigns/{campaign}/send',
+            [CampaignController::class, 'send']
+        )->name('campaigns.send');
+
+        Route::post(
+            '/campaigns/{campaign}/send',
+            [CampaignController::class, 'sendCampaign']
+        )->name('campaigns.send.store');
+
+    });
+
+Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
+/*
+|--------------------------------------------------------------------------
+| Frontend
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Guest Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware('guest')->group(function () {
 
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::get('/login', [FrontAuthController::class, 'showLogin'])
+        ->name('login');
 
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::post('/login', [FrontAuthController::class, 'login'])
+        ->name('login.submit');
 
-    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+    Route::get('/register', [FrontAuthController::class, 'showRegister'])
+        ->name('register');
 
-    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+    Route::post('/register', [FrontAuthController::class, 'register'])
+        ->name('register.submit');
 
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::get('/forgot-password', [FrontAuthController::class, 'showForgotPassword'])
+        ->name('password.request');
 
-    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+    Route::post('/forgot-password', [FrontAuthController::class, 'sendResetLink'])
+        ->name('password.email');
+
+    Route::get('/reset-password/{token}', [FrontAuthController::class, 'showResetPassword'])
+        ->name('password.reset');
+
+    Route::post('/reset-password', [FrontAuthController::class, 'resetPassword'])
+        ->name('password.update');
 });
 
 
 
 
 // Protected Routes
+
+/*
+|--------------------------------------------------------------------------
+| Admin
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])
             ->name('admin.dashboard');
-        
+
+
 
         Route::post('/logout', [AuthController::class, 'logout'])
+
             ->name('admin.logout');
 
 
@@ -111,7 +307,7 @@ Route::prefix('admin')
 
         Route::resource('cms-articles', CmsArticleController::class)->except(['show']);
 
-        Route::resource('users', UserController::class)->except(['show']);
+        Route::resource('users', AdminUserController::class)->except(['show']);
 
         Route::resource('email-templates', MailTemplateController::class)->except(['show']);
 
