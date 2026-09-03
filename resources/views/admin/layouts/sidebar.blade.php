@@ -151,7 +151,7 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="tables" data-parent="#accordionExample">
                     <li>
-                        <a href="{{ route('admin.createpackage') }}"> Create Package </a>
+                        <a href="{{ route('packages.store') }}"> Create Package </a>
                     </li>
                     <li>
                         <a href="{{ route('packages.index') }}"> All Packages </a>
@@ -162,7 +162,7 @@
                 </ul>
             </li>
 
-            <li class="menu">
+            <!-- <li class="menu">
                 <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-bar-chart-2"></i>
@@ -173,59 +173,21 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="charts" data-parent="#accordionExample">
-                    <li>
-                        <a href="#chart-amcharts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            amCharts <i class="flaticon-right-arrow"></i> </a>
-                        <ul class="collapse list-unstyled sub-submenu" id="chart-amcharts" data-parent="#charts">
-                            <li>
-                                <a href="am_column_and_barchart.html"> Column &amp; Bar </a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#chart-c3chart" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            C3 <i class="flaticon-right-arrow"></i> </a>
-                        <ul class="collapse list-unstyled sub-submenu" id="chart-c3chart" data-parent="#charts">
-                            <li>
-                                <a href="charts_c3_chart.html"> Simple</a>
-                            </li>
-                            <li>
-                                <a href="charts_c3_api.html"> Api </a>
-                            </li>
-                        </ul>
-                    </li>
+                    
+                    
                     <li>
                         <a href="charts_cssplot.html"> CSS Plot </a>
                     </li>
 
-                    <li>
-                        <a href="#chart-echart" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            eCharts <i class="flaticon-right-arrow"></i> </a>
-                        <ul class="collapse list-unstyled sub-submenu" id="chart-echart" data-parent="#charts">
-                            <li>
-                                <a href="charts_echart_basic.html"> Basic </a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#chart-chartist" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            Chartist <i class="flaticon-right-arrow"></i> </a>
-                        <ul class="collapse list-unstyled sub-submenu" id="chart-chartist" data-parent="#charts">
-                            <li>
-                                <a href="charts_chartist_bar.html"> Bar </a>
-                            </li>
-
-                        </ul>
-                    </li>
+                    
+                    
                     <li>
                         <a href="charts_google.html"> Google </a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
-            <!-- <li class="menu">
+            <li class="menu">
                 <a href="#maps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-map-1"></i>
@@ -246,7 +208,7 @@
                     </li>
 
                 </ul>
-            </li> -->
+            </li>
 
             <li class="menu">
                 <a href="#mailing" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">

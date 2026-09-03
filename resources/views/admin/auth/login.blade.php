@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Login | Constant Emails</title>
+    <title>Admin Login | Constant Emails</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/admin/assets/img/favicon.ico') }}" />
@@ -18,10 +18,8 @@
 
     <!-- Professional Enterprise Styles -->
     <style>
-        /* Ambient Background Effect */
         body.login {
             background-color: #f8f9fa;
-            /* Very clean, light background */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -32,14 +30,12 @@
             z-index: 1;
         }
 
-        /* Top Left Warm Glow */
         body.login::before {
             content: "";
             position: absolute;
             width: 500px;
             height: 500px;
             background: rgba(246, 153, 63, 0.12);
-            /* Matches your warning/orange theme */
             border-radius: 50%;
             top: -150px;
             left: -100px;
@@ -47,14 +43,12 @@
             z-index: -1;
         }
 
-        /* Bottom Right Cool Glow */
         body.login::after {
             content: "";
             position: absolute;
             width: 600px;
             height: 600px;
             background: rgba(56, 98, 245, 0.08);
-            /* Soft enterprise blue */
             border-radius: 50%;
             bottom: -200px;
             right: -150px;
@@ -65,7 +59,6 @@
         .login-card {
             background: #ffffff;
             border-radius: 12px;
-            /* Enhanced shadow for floating effect over the ambient background */
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.6);
             padding: 45px 40px;
@@ -82,7 +75,6 @@
             margin-bottom: 10px;
         }
 
-        /* Clean Input Styling */
         .custom-input-group {
             border: 1px solid #e2e8f0;
             border-radius: 6px;
@@ -132,23 +124,28 @@
 
 <body class="login">
 
-
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 text-center">
 
-
-                <!-- Login Card Wrapper -->
                 <div class="login-card text-left">
 
-                    <!-- Logo & Welcome Area -->
                     <div class="text-center mb-4">
                         <img alt="logo" src="{{ asset('assets/admin/assets/img/logo-3.jpg') }}" class="theme-logo">
-                        <h4 class="mt-3 font-weight-bold" style="color: #2d3748;">Sign In</h4>
+                        <h4 class="mt-3 font-weight-bold" style="color: #2d3748;">Admin Sign In</h4>
                         <p class="welcome-text">Access your admin dashboard</p>
                     </div>
 
-                    <form class="form-login" method="POST" action="{{ route('login.submit') }}">
+                    <!-- Show General Errors Here -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger font-weight-bold text-center"
+                            style="font-size: 14px; padding: 10px;">
+                            {{ $errors->first() }}
+                        </div>
+                    @endif
+
+                    <!-- FIXED ROUTE: admin.login.submit -->
+                    <form class="form-login" method="POST" action="{{ route('admin.login.submit') }}">
                         @csrf
 
                         <!-- Email Input -->
@@ -163,11 +160,6 @@
                                 <input type="email" id="inputEmail" name="email" value="{{ old('email') }}"
                                     class="form-control" placeholder="Enter your email" required autofocus>
                             </div>
-                            @error('email')
-                                <div class="text-danger small mt-2 d-block font-weight-bold">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
 
                         <!-- Password Input -->
@@ -182,11 +174,6 @@
                                 <input type="password" id="inputPassword" name="password" class="form-control"
                                     placeholder="Enter your password" required>
                             </div>
-                            @error('password')
-                                <div class="text-danger small mt-2 d-block font-weight-bold">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
 
                         <!-- Remember Me & Forgot Password Row -->
@@ -197,7 +184,7 @@
                                     for="customCheck1">Remember me</label>
                             </div>
                             <div class="forgot-pass">
-                                <a href="{{ route('password.request') }}"
+                                <a href="{{ route('admin.password.request') }}"
                                     class="text-primary text-decoration-none font-weight-bold" style="font-size: 14px;">
                                     Forgot Password?
                                 </a>
@@ -212,18 +199,15 @@
 
                     </form>
                 </div>
-                <!-- End Login Card -->
 
             </div>
         </div>
     </div>
 
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="{{ asset('assets/admin/assets/js/libs/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('assets/admin/assets/js/loader.js') }}"></script>
     <script src="{{ asset('assets/admin/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('assets/admin/bootstrap/js/bootstrap.min.js') }}"></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 </body>
 
