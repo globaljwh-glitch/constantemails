@@ -15,12 +15,12 @@
 .accounts-widgets .accounts-income .value {
     font-weight: 600;
     margin-bottom: 0;
-    color: #1a73e9;
+    color: #1f212d;
 }
 .accounts-widgets .accounts-income p {
     font-weight: 600;
     margin-bottom: 0;
-    color: #1f212d;
+    color: #1a73e9;
 }
 .accounts-widgets .accounts-income div.progress {
     height: 8px;
@@ -33,19 +33,19 @@
     padding: 10px;
     font-size: 28px;
     border-radius: 4px;
-    color: #1a73e9;
-    background-color: #c2d5ff;
+    color: #1abc9c;
+    background-color: #b6fff1;
     vertical-align: text-top;
 }
 .accounts-widgets .accounts-cogs .value {
     font-weight: 600;
     margin-bottom: 0;
-    color: #1a73e9;
+    color: #1f212d;
 }
 .accounts-widgets .accounts-cogs p {
     font-weight: 600;
     margin-bottom: 0;
-    color: #1f212d;
+    color: #1abc9c;
 }
 .accounts-widgets .accounts-cogs div.progress {
     height: 8px;
@@ -59,19 +59,19 @@
     padding: 10px;
     font-size: 28px;
     border-radius: 4px;
-    color: #1a73e9;
-    background-color: #c2d5ff;
+    color: #e9b02b;
+    background-color: #ffeccb;
     vertical-align: text-top;
 }
 .accounts-widgets .accounts-profit .value {
     font-weight: 600;
     margin-bottom: 0;
-    color: #1a73e9;
+    color: #1f212d;
 }
 .accounts-widgets .accounts-profit p {
     font-weight: 600;
     margin-bottom: 0;
-    color: #1f212d;
+    color: #e9b02b;
 }
 .accounts-widgets .accounts-profit div.progress {
     height: 8px;
@@ -84,25 +84,23 @@
     padding: 10px;
     font-size: 28px;
     border-radius: 4px;
-    color: #1a73e9;
-    background-color: #c2d5ff;
+    color: #e7515a;
+    background-color: #ffe1e2;
     vertical-align: text-top;
 }
 .accounts-widgets .accounts-expenses .value {
     font-weight: 600;
     margin-bottom: 0;
-    color: #1a73e9;
+    color: #1f212d;
 }
 .accounts-widgets .accounts-expenses p {
     font-weight: 600;
     margin-bottom: 0;
-    color: #1f212d;
+    color: #e7515a;
 }
 .accounts-widgets .accounts-expenses div.progress {
     height: 8px;
 }
-
-
 
 
 
@@ -121,12 +119,12 @@
 }
 .product-sales-list .product-sales-header .nav.product-sales .nav-link {
     padding: 6px 17px;
-    font-size: 13px;
+    font-size: 14px;
     border-radius: 30px;
 }
 .product-sales-list .product-sales-header .nav.product-sales .nav-link.active,
 .product-sales-list .product-sales-header .nav.product-sales .show>.nav-link {
-    background-image: linear-gradient(to right, #434343 0%, #4f5163 100%);;
+    background-image: linear-gradient(to right, #6156ce 0%, #07e0c4 100%);
 }
 .product-sales-list .product-sales-body .table > thead > tr > th {
     padding: 20px;
@@ -146,17 +144,17 @@
     padding-left: 12px;
 }
 .product-sales-list .product-sales-body .table > tbody > tr > td .d-m-pro-name-1 {
-    background-color: #1a73e9;
+    background-color: #5247bd;
     height: 15px;
     width: 15px;
 }
 .product-sales-list .product-sales-body .table > tbody > tr > td .d-m-pro-name-2 {
-    background-color: #4f5163;
+    background-color: #f58b22;
     height: 15px;
     width: 15px;
 }
 .product-sales-list .product-sales-body .table > tbody > tr > td .d-m-pro-name-3 {
-    background-color: #1abc9c;
+    background-color: #07dabf;
     height: 15px;
     width: 15px;
 }
@@ -164,13 +162,13 @@
     cursor: pointer;
 }
 .product-sales-list .product-sales-body .table > tbody > tr > td p.montly-inc-1 {
-    color: #1a73e9;
+    color: #5247bd;
 }
 .product-sales-list .product-sales-body .table > tbody > tr > td p.montly-inc-2 {
-    color: #4f5163;
+    color: #f58b22;
 }
 .product-sales-list .product-sales-body .table > tbody > tr > td p.montly-inc-3 {
-    color: #1abc9c;
+    color: #07dabf;
 }
 .product-list-tooltip.tooltip.show {
     opacity: 1;
@@ -211,7 +209,7 @@
 }
 .vendor-expenses-list .vendor-expenses-header .nav.vendor-expenses .nav-link.active,
 .vendor-expenses-list .vendor-expenses-header .nav.vendor-expenses .show>.nav-link {
-    background-image: linear-gradient(to right, #434343 0%, #4f5163 100%);;
+    background-image: linear-gradient(to right, #9960ea 0%, #3862f5 100%);
 }
 .vendor-expenses-list .vendor-expenses-body .table > thead > tr > th {
     padding: 20px;
@@ -267,7 +265,7 @@
 }
 .revenue-content .revenue-header .nav.revenue .nav-link.active,
 .revenue-content .revenue-header .nav.revenue .show>.nav-link {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(to right, #816cfd 0%, #24ccda 100%);
 }
 .revenue-content .revenue-body .r-meta-date {
     font-size: 15px;
@@ -300,7 +298,7 @@
 }
 .expanditure-content .expanditure-header .nav.expanditure .nav-link.active,
 .expanditure-content .expanditure-header .nav.expanditure .show>.nav-link {
-        background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+        background-image: linear-gradient(to right, #00d1c1 0%, #24ccda 100%);
 }
 .expanditure-content .expanditure-body .e-meta-date {
     font-size: 15px;
@@ -455,7 +453,7 @@
     box-sizing: border-box;
 }
 .pignose-calendar-unit.pignose-calendar-unit-su a {
-    color: #1a73e9;
+    color: #ee3d50;
 }
 .pignose-calendar-unit .pignose-calendar-button-schedule-container {
     line-height: .5em;
@@ -516,7 +514,7 @@
     color: #cccccc !important;
 }
 .pignose-calendar-unit.pignose-calendar-unit-active a {
-    background-color: #4f5163;
+    background-color: #ee3d50;
     color: #ffffff!important;
     font-weight: 600;
 }
@@ -529,7 +527,7 @@
     color: #ffffff;
 }
 .pignose-calendar-unit a:hover {
-    color: #1a73e9;
+    color: #ee3d50;
     font-weight: 600;
 }
 .pignose-calendar-unit:last-child {
@@ -718,14 +716,14 @@
 }
 .customer-bal-summary .c-b-s-header .nav.c-b-s-tab .nav-link.active,
 .customer-bal-summary .c-b-s-header .nav.c-b-s-tab .show>.nav-link {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(to right, #6156ce 0%, #9960ea 100%);
 }
 .customer-bal-summary .c-b-s-body .table > thead > tr > th {
-    color: #1a73e9;
+    color: #5247bd;
     font-size: 18px;
 }
 .customer-bal-summary .c-b-s-body .table > tbody > tr > td.customer-name {
-    color: #4f5163;
+    color: #e95f2b;
     font-weight: 600;
     font-size: 16px;
 }
@@ -736,7 +734,7 @@
     padding: 0px;
 }
 .customer-bal-summary .c-b-s-body .table > tbody > tr > td.customer-price {
-    color: #3232b7;
+    color: #3862f5;
     font-weight: 600;
     font-size: 16px;
 }
@@ -773,7 +771,7 @@
     font-weight: 600;
 }
 .customer-bal-summary .c-b-s-body .c-b-s-bottom ul.pagination li a:hover:not(.active) {
-    background-color: #4f5163;
+    background-color: #805dca;
     color: #fff;
 }
 .customer-bal-summary .table-responsive::-webkit-scrollbar {
@@ -817,7 +815,7 @@
 
 .file-uploader {
     position: relative;
-    background-image: linear-gradient(-20deg, #c2d5ff 0%, #bae7ff 100%);
+    background-image: linear-gradient(-20deg, #5247bd 0%, #24ccda 100%);
     height: 100%;
 }
 .file-uploader .dropzone {
@@ -833,22 +831,20 @@
 }
 .dropzone .dz-message h3 {
     font-size: 22px;
-    color: #1a73e9;
+    color: #fff;
 }
 .dropzone .dz-message i {
     font-size: 90px;
-    color: #1a73e9;
+    color: #fff;
 }
 .dropzone .dz-message button {
-    border: 2px solid #1a73e9!important;
-    color: #1a73e9!important;
+    border: 2px solid #fff!important;
+    color: #fff!important;
     padding: 10px 35px;
     border-radius: 6px;
 }
 .dropzone .dz-message button:hover {
-    color: #fff!important;
-    background-color: #1a73e9!important;
-    border-color: #1a73e9!important;
+    color: #4f5163!important;
 }
 .file-uploader .dropzone .dz-preview {
     position: absolute;
@@ -879,12 +875,12 @@
 .todo-list .todo-list-header h5 span.badge {
     padding: 5px 16px;
     font-size: 13px;
-    background-image: linear-gradient(to right, #00b1f4 0%, #1a73e9 100%);
+    background-image: linear-gradient(-20deg, #ee3d50 0%, #f58b22 100%);
 }
 .todo-list .todo-list-header i {
     vertical-align: middle;
     font-size: 30px;
-    color: #1a73e9;
+    color: #fc6076;
     cursor: pointer;
 }
 .todo-list .todo-list-body .table tbody tr td {
@@ -899,7 +895,7 @@
     border: 1px solid #e9ecef;
 }
 .todo-list .todo-list-body .new-control.new-checkbox.checkbox-danger>input:checked~span.new-control-indicator {
-    background-color: #4f5163;
+    background-color: #e7515a;
     border: none;
 }
 .todo-list .todo-list-body .new-control.new-checkbox.checkbox-danger span.todo-text {
@@ -914,7 +910,7 @@
     color: #e9ecef;
 }
 .todo-list .todo-list-body .new-control.new-checkbox.checkbox-danger>input:checked~.remove-task {
-    color: #4f5163;
+    color: #e7515a;
 }
 .todo-list .todo-list-body .task-edit {
     font-size: 26px;
@@ -938,7 +934,7 @@
 }
 .todo-list .todo-list-bottom button {
     padding: 8px 46px;
-    border: 2px solid #1a73e9 !important;
+    border: 2px solid #ee3d50 !important;
     font-weight: 600;
     font-size: 16px;
 }
@@ -966,7 +962,7 @@
 }
 .r-p-summary .r-p-summary-header .nav.r-p-summary .nav-link.active,
 .r-p-summary .r-p-summary-header .nav.r-p-summary .show>.nav-link {
-        background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+        background-image: linear-gradient(to left, #00b1f4 0%, #3232b7 100%);
 }
 .r-p-summary .r-p-summary-body .c3-chart-arcs-title {
     font-size: 2.5em;
@@ -984,17 +980,17 @@
     padding: 20px;
 }
 .r-p-summary .r-p-summary-body .r-p-summary-legend .d-m-r_p_sales  {
-    background-color: #c2d5ff;
+    background-color: #00d1c1;
     height: 13px;
     width: 13px;
 }
 .r-p-summary .r-p-summary-body .r-p-summary-legend .d-m-r_p_revenue  {
-    background-color: #4f5163;
+    background-color: #6156ce;
     height: 13px;
     width: 13px;
 }
 .r-p-summary .r-p-summary-body .r-p-summary-legend .d-m-r_p_expanditure  {
-    background-color: #00b1f4;
+    background-color: #f8538d;
     height: 13px;
     width: 13px;
 }
@@ -1041,13 +1037,13 @@
 }
 
 #social-card-1.card {
-    background-image: linear-gradient(to top, #00b1f4 0%, #1a73e9 100%);
+    background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
     border: none;
 }
 #social-card-1.card .wrapper .usr-meta-info .media img {
     width: 70px;
-    border: solid 4px #c2d5ff;
-    background: #1a73e9;
+    border: solid 4px #ee3d5075;
+    background: #f1bd45;
 }
 #social-card-1.card .wrapper .usr-meta-info .media .media-body .usr-name  {
     color: #ffffff;
@@ -1062,7 +1058,7 @@
 }
 #social-card-1.card .wrapper .usr-meta-info .media .twitter-icon i  {
     font-size: 50px;
-    color: #e9ecef;
+    color: #fff;
     margin-left: 20px;
 }
 #social-card-1.card .wrapper .usr-tweet {
@@ -1081,7 +1077,7 @@
     border: none;
 }
 #weather-card-1.card .day-weather {
-    background-color: #4f5163;
+    background-color: #f7ba2d;
     padding: 27px 0 18px;
     height: 100%;
     border-top-right-radius: 0!important;
@@ -1155,11 +1151,11 @@
     font-size: 19px;
     border: none;
     color: #1d1d1d;
-    background-color: #c2d5ff;
+    background-color: #f2f1f1;
 }
 #event-card-1.card .card-event-icon i {
     font-size: 81px;
-    color: #3232b7;
+    color: #816cfb;
 }
 #event-card-1.card .card-event-list p {
     font-size: 18px;
@@ -1173,15 +1169,15 @@
     left: 0;
 }
 #event-card-1.card .card-bottom-section button.btn {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(135deg, #816cfc 0%, #6055ce 100%);
     border: none;
-    box-shadow: 2px 3px 15px 0px #1a73e9;
+    box-shadow: 2px 3px 15px 0px #6055ce;
     padding: 12px 29px;
     font-size: 17px;
     font-weight: normal;
 }
 #event-card-1.card .card-bottom-section button.btn:hover {
-    background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%);
+    background-image: linear-gradient(135deg, #6055ce 0%, #816cfc 100%);
 }
 
 
@@ -1201,7 +1197,7 @@
     padding: 20px;
 }
 .latest-activities .latest-activities-body span.badge {
-    background-image: linear-gradient(to right, #00b1f4 0%, #1a73e9 100%);
+    background-image: linear-gradient(to right, #816cfc 0%, #00d1c1 100%);
     padding: 5px 16px;
     font-size: 13px;
 }
@@ -1236,13 +1232,13 @@
     font-size: 18px;
 }
 .latest-activities .latest-activities-body table.table tr:hover td p.latest-activities-txt {
-    color: #1a73e9;
+    color: #00d1c1;
 }
 .latest-activities .latest-activities-body table.table tr:hover td .remove-latest-activities {
-    color: #1a73e9;
+    color: #00d1c1;
 }
 .latest-activities .latest-activities-body table.table tr td div.d-m-latest-activities {
-    background-color: #1a73e9;
+    background-color: #00d1c1;
     border-radius: 5px;
     width: 15px;
     height: 15px;

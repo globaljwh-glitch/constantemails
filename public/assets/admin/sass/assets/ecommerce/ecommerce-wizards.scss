@@ -48,7 +48,7 @@
 			}
 			input {
 				border: none;
-				border-bottom: $b-width-1 $solid $light-gray;
+				border-bottom: $b-width-1 $solid $color_622;
 				border-radius: $br-0;
 				width: 80%;
 				margin: $m-0 auto;
@@ -150,7 +150,7 @@
 						vertical-align: $v-align-middle;
 						text-align: $align-center;
 						border: none;
-						border-bottom: $solid $b-width-1 $color_6;
+						border-bottom: $solid $b-width-1 $light-gray-3;
 						color: $additional-color-11;
 						text-transform: $transform-upper;
 						span {
@@ -234,21 +234,22 @@
 			padding: 9px 25px;
 			border-radius: $br-30;
 			margin-right: $m-10;
-		    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-		    background-color: $additional-color-2;
+			background-image: $gradient-danger;
+			background-color: $color_373;
 			&:hover {
 				padding: 9px 25px;
 				border-radius: $br-30;
 				margin-right: $m-10;
-				background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%);
-			    background-color: $additional-color-2;
+				background-image: $gradient-danger;
+				background-color: $color_373;
+				background-image: $additional-gradient-color-40;
 			}
 			&:active {
 				padding: 9px 25px;
 				border-radius: $br-30;
 				margin-right: $m-10;
-			    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-			    background-color: $additional-color-2;
+				background-image: $gradient-danger;
+				background-color: $color_373;
 			}
 		}
 	}

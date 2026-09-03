@@ -413,7 +413,7 @@ $(".b-p-weekly-chart-1").sparkline([ [2, 1], [3, 1.3], [2.5, 1], [2.2, 1.2], [2.
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $(".b-p-weekly-chart-2").sparkline([ [2.4, 1.7], [2, 1.3], [1.5, 1.6], [2.9, 1], [2.3, 1.4], [1.4, 1.6], [3.6, 2.2], [2.1, 1.4], [2.6, 1.4], [2, 1.2], [4.3, 1.2], [2.5, 1.5] ], {
@@ -423,7 +423,7 @@ $(".b-p-weekly-chart-2").sparkline([ [2.4, 1.7], [2, 1.3], [1.5, 1.6], [2.9, 1],
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $(".b-p-weekly-chart-3").sparkline([ [3, 0.7], [2, 1.3], [2.5, 1.5], [3.2, 1.2], [5.0, 1.5], [2.0, 1.7], [2.6, 1.2], [2.1, 1.4], [2, 1.0], [3, 1.6], [6.3, 1.3], [2.7, 3.5] ], {
@@ -433,7 +433,7 @@ $(".b-p-weekly-chart-3").sparkline([ [3, 0.7], [2, 1.3], [2.5, 1.5], [3.2, 1.2],
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $(".b-p-weekly-chart-4").sparkline([ [1, 1.6], [3, 1.0], [2.6, 1.8], [2.2, 1.2], [2.9, 1.7], [3.4, 2.9], [2.6, 1.2], [1.1, 1.8], [2, 1.3], [2, 1.2], [1.3, 2.3], [2.5, 1.5] ], {
@@ -443,7 +443,7 @@ $(".b-p-weekly-chart-4").sparkline([ [1, 1.6], [3, 1.0], [2.6, 1.8], [2.2, 1.2],
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $(".b-p-weekly-chart-5").sparkline([ [2.3, 1.9], [2.4, 0.8], [3.5, 2.8], [2.6, 1.2], [2.3, 1.4], [2.4, 2.3], [2.6, 1.2], [2.1, 1.4], [2.1, 1.3], [2, 1.2], [2, 1.3], [2, 1] ], {
@@ -453,7 +453,7 @@ $(".b-p-weekly-chart-5").sparkline([ [2.3, 1.9], [2.4, 0.8], [3.5, 2.8], [2.6, 1
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
@@ -465,7 +465,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
 
   $(".b-p-weekly-chart-7").sparkline([ [3, 0.7], [2, 1.3], [2.5, 1.5], [3.2, 1.2], [5.0, 1.5], [2.0, 1.7], [2.6, 1.2], [2.1, 1.4], [2, 1.0], [3, 1.6], [6.3, 1.3], [2.7, 3.5] ], {
@@ -475,7 +475,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
   
   $(".b-p-weekly-chart-8").sparkline([ [2.3, 1.9], [2.4, 0.8], [3.5, 2.8], [2.6, 1.2], [2.3, 1.4], [2.4, 2.3], [2.6, 1.2], [2.1, 1.4], [2.1, 1.3], [2, 1.2], [2, 1.3], [2, 1] ], {
@@ -485,7 +485,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
 
   $(".b-p-weekly-chart-9").sparkline([ [1, 1.6], [3, 1.0], [2.6, 1.8], [2.2, 1.2], [2.9, 1.7], [3.4, 2.9], [2.6, 1.2], [1.1, 1.8], [2, 1.3], [2, 1.2], [1.3, 2.3], [2.5, 1.5] ], {
@@ -495,7 +495,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
 
   $(".b-p-weekly-chart-10").sparkline([ [2, 1.1], [2, 1.3], [2.5, 1.5], [2.2, 1.2], [2.3, 1.4], [2.4, 1.3], [2.6, 1.2], [2.1, 1.4], [2, 1.3], [2, 1.2], [2.3, 1.3], [2.5, 1.5] ], {
@@ -505,7 +505,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
 
 });

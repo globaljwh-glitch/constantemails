@@ -19,7 +19,7 @@
 }
 .ns-box a:hover, .ns-box a:focus { color: #fff; }
 .ns-box p { margin: 0; }
-.ns-box.ns-show, .ns-box.ns-visible { pointer-events: auto; z-index: 1072; }
+.ns-box.ns-show, .ns-box.ns-visible { pointer-events: auto; z-index: 1031; }
 .ns-close {
 	width: 20px;
 	height: 20px;

@@ -21,7 +21,7 @@
 				img {
 					border-radius: 50%;
 					margin-top: 0px;
-					border: $solid $b-width-5 #e3deff;
+					border: $solid $b-width-5 $color_167;
 				}
 			}
 			.usr-name {
@@ -98,7 +98,7 @@
 						h5 {
 							font-weight: 600;
 							margin-top: 8px !important;
-							color: $additional-color-2;
+							color: $color_57;
 							font-size: 0.875rem;
 						}
 						p {
@@ -110,7 +110,7 @@
 					&:hover {
 						.media-body {
 							h5 {
-								color: $primary;
+								color: $additional-color-5;
 							}
 						}
 					}
@@ -163,7 +163,7 @@
 					cursor: pointer;
 					position: $pos-rel;
 					&:hover {
-						border-left: $b-width-2 $solid $primary;
+						border-left: $b-width-2 $solid $additional-color-5;
 						.media-body {
 							h5 {
 								color: $black;
@@ -186,7 +186,7 @@
 						padding: 2px;
 						font-size: 10px;
 						padding-top: 1px;
-						background-color: $primary;
+						background-color: $color_55;
 						color: $white;
 						line-height: 1.4;
 					}
@@ -293,8 +293,8 @@
 				font-size: 20px;
 				padding: 8px;
 				color: $white;
-			    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-			    background-color: $additional-color-2;
+				background-image: $additional-gradient-color-40;
+				background-color: $color_166;
 				border-radius: 50%;
 				margin-left: 12px;
 				vertical-align: middle;
@@ -349,8 +349,8 @@
 			position: $pos-rel;
 			.text {
 				margin-right: 38px;
-			    background-color: $light-primary;
-			    color: $primary;
+				background-color: $color_86;
+				color: $white;
 				border-radius: 1.875rem !important;
 				border-top-right-radius: 0px !important;
 				padding: 12px;
@@ -461,8 +461,7 @@
 			}
 			.input-group-append {
 				>.input-group-text {
-				    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-				    background-color: #3232b7;;
+					background-image: $gradient-danger;
 					padding: 12px;
 					border: none;
 					color: $white;

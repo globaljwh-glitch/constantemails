@@ -24,8 +24,8 @@ var bar = new ProgressBar.Circle(".cogs", {
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#4f5163', width: 10 },
-  to: { color: '#4f5163', width: 10 },
+  from: { color: '#3862f5', width: 10 },
+  to: { color: '#3862f5', width: 10 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -114,8 +114,8 @@ var chart = AmCharts.makeChart("sale-statistics", {
   "graphs": [{
     "id": "g3",
     "valueAxis": "v1",
-    "lineColor": "#c2d5ff",
-    "fillColors": "#c2d5ff",
+    "lineColor": "#24ccda",
+    "fillColors": "#24ccda",
     "fillAlphas": 1,
     "type": "column",
     "title": "Monthly Revenue",
@@ -127,8 +127,8 @@ var chart = AmCharts.makeChart("sale-statistics", {
   }, {
     "id": "g4",
     "valueAxis": "v1",
-    "lineColor": "#1a73e9",
-    "fillColors": "#1a73e9",
+    "lineColor": "#805dca",
+    "fillColors": "#805dca",
     "fillAlphas": 1,
     "type": "column",
     "title": "Yearly Revenue",
@@ -282,8 +282,8 @@ var chart = AmCharts.makeChart( "radarchartdiv", {
       "bullet": "round",
       "lineThickness": 2,
       "valueField": "litres",
-      "bulletColor": "#1a73e9",
-      "lineColor": "#1a73e9",
+      "bulletColor": "#07e0c4",
+      "lineColor": "#07e0c4",
     } ],
     "categoryField": "productsName"
 } );
@@ -292,14 +292,14 @@ $(".total-visits-charts").sparkline([0,3,4,8,6,7,4,7,4,0], {
   type: 'line',
   width: '100',
   height: '100%',
-  lineColor: '#c2d5ff',
+  lineColor: '#e9b02b',
   lineWidth: 1,
   spotRadius: 3.5,
-  fillColor: '#c2d5ff',
+  fillColor: '#e9b02b',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#c2d5ff',
-  maxSpotColor: '#c2d5ff'
+  minSpotColor: '#e9b02b',
+  maxSpotColor: '#e9b02b'
 });
 
 
@@ -310,7 +310,7 @@ $("#unique-visits-charts").sparkline([5,6,7,2,1,4,2,4,5,6,7,2,1,4,2], {
     barWidth: 3,
     barSpacing: 4,
     zeroAxis: false,
-    barColor: '#00b1f4'
+    barColor: '#f8538d'
 });
 
 $("#unique-visits-charts").sparkline([2,3,5,6,6,2,2,1,1,2,4,5], {
@@ -325,7 +325,7 @@ $("#page-views").sparkline([2,4,2,6,3,4,1,12,3,8,6,5,4,6,0,1], {
     type: 'line',
     width: '100',
     height: '100%',
-    lineColor: '#4f5163',
+    lineColor: '#e95f2b',
     lineWidth: 1.5,
     spotRadius: 3.5,
     fillColor: 'transparent',
@@ -536,19 +536,19 @@ var chart = AmCharts.makeChart( "visitor-engagement-chart", {
   "dataProvider": [ {
     "title": "Electronic",
     "value": 4852,
-    "color": "#00b1f4"
+    "color": "#805dca"
   }, {
     "title": "News & Media",
     "value": 3899,
-    "color": "#1a73e9"
+    "color": "#00b1f4"
   }, {
     "title": "Software",
     "value": 2899,
-    "color": "#4f5163"
+    "color": "#f8538d"
   }, {
     "title": "Home Appliances",
     "value": 8590,
-    "color": "#3232b7"
+    "color": "#e9b02b"
   } ],
   "titleField": "title",
   "valueField": "value",

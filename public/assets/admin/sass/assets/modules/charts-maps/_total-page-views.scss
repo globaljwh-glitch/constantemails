@@ -1,3 +1,7 @@
+$color_76: #1d1d1d;
+$additional-color-11: #3b3f5c;
+$color_55: #00d1c1;
+
 /*
   Total Page Views
 */
@@ -24,11 +28,11 @@
 				border-radius: 30px;
 			}
 			.nav-link.active {
-				background-color: $dark;
+				background-color: $color_55;
 			}
 			.show {
 				>.nav-link {
-					background-color: $dark;
+					background-color: $color_55;
 				}
 			}
 		}
@@ -41,10 +45,10 @@
 				font-weight: 600;
 				font-size: 15px;
 				padding-left: 2px;
-				color: $primary;
+				color: $additional-color-11;
 			}
 			.d-m-rate {
-				background-color: $dark;
+				background-color: $color_55;
 				height: 12px;
 				width: 12px;
 			}

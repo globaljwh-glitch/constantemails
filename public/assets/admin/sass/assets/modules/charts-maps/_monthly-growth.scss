@@ -27,21 +27,21 @@
 		}
 		.ct-series-a {
 			.ct-bar {
-				stroke: $dark;
+				stroke: $primary;
 				&:nth-child(1) {
-					stroke: $light-primary;
+					stroke: $color_88;
 				}
 				&:nth-child(7) {
-					stroke: $light-primary;
+					stroke: $color_88;
 				}
 				&:nth-child(10) {
-					stroke: $light-primary;
+					stroke: $color_88;
 				}
 				&:nth-child(11) {
-					stroke: $light-primary;
+					stroke: $color_88;
 				}
 				&:nth-child(12) {
-					stroke: $light-primary;
+					stroke: $color_88;
 				}
 			}
 		}
@@ -61,12 +61,12 @@
 		font-weight: 600;
 	}
 	.d-m-positive-stats {
-		background-color: $dark;
+		background-color: $primary;
 		width: 12px;
 		height: 12px;
 	}
 	.d-m-negative-stats {
-		background-color: $light-primary;
+		background-color: $color_88;
 		width: 12px;
 		height: 12px;
 	}

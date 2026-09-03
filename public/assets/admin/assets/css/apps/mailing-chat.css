@@ -87,11 +87,11 @@
 .chat-section .card.usr-profile .usr-group-status ul li.media .media-body h5 {
     font-weight: 600;
     margin-top: 8px !important;
-    color: #3232b7;
+    color: #3862f5;
     font-size: 0.875rem;
 }
 .chat-section .card.usr-profile .usr-group-status ul li.media:hover .media-body h5 {
-    color: #1a73e9;
+    color: #e95f2b;
 }
 .chat-section .card.usr-profile .usr-group-status ul li.media .media-body p {
     font-size: 12px;
@@ -151,7 +151,7 @@
     position: relative;
 }
 .chat-section .card .status-list-section ul li.media:hover {
-    border-left: 2px solid #1a73e9;
+    border-left: 2px solid #e95f2b;
 }
 .chat-section .card .status-list-section ul li.media .message-badge.single-value {
     padding: 5px;
@@ -169,7 +169,7 @@
     padding: 2px;
     font-size: 10px;
     padding-top: 1px;
-    background-color: #1a73e9;
+    background-color: #00d1c1;
     color: #fff;
     line-height: 1.4;
 }
@@ -279,8 +279,8 @@
     font-size: 20px;
     padding: 8px;
     color: #fff;
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-    background-color: #3232b7;
+    background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
+    background-color: #fe5196;
     border-radius: 50%;
     margin-left: 12px;
     vertical-align: middle;
@@ -315,7 +315,7 @@
     top: -50px;
     left: 12px;
     border-radius: 50%;
-    background-image: url(../../../assets/img/profile-1.jpeg);
+    background-image: url(../../../assets/img/90x90.jpg);
     float: left;
     background-repeat: no-repeat;
     background-size: cover;
@@ -327,8 +327,8 @@
 }
 .mail-chat-system .chat-messages .message.right .text {
     margin-right: 38px;
-    background-color: #c2d5ff;
-    color: #1a73e9;
+    background-color: #816cfd;
+    color: #fff;
     border-radius: 1.875rem !important;
     border-top-right-radius: 0px !important;
     padding: 12px;
@@ -338,7 +338,7 @@
 .mail-chat-system .chat-messages .message.right .avatar {
     position: absolute;
     float: right;
-    background-image: url(../../../assets/img/profile-16.jpeg);
+    background-image: url(../../../assets/img/90x90.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     right: 22px;
@@ -369,8 +369,7 @@
     font-size: 18px;
 }
 .mail-chat-system .chat-bottom-section .message_input_wrapper .input-group-append>.input-group-text {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-    background-color: #3232b7;
+    background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
     padding: 12px;
     border: none;
     color: #fff;

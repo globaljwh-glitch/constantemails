@@ -453,9 +453,9 @@ select.form-control.form-custom {
 		background: transparent;
 		box-shadow: none;
 		h4 {
-			font-size: 21px!important;
-			padding-top: 0!important;
-			color: $color_57!important;
+			font-size: 21px;
+			padding-top: 0;
+			color: $color_57;
 		}
 	}
 }
@@ -480,6 +480,8 @@ select.form-control.form-custom {
 	background-color: $white;
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
+	-webkit-box-shadow: 0px 2px 4px rgba(126,142,177,0.12);
+    box-shadow: 0px 2px 4px rgba(126,142,177,0.12);
 }
 .statbox {
 	.widget-content {

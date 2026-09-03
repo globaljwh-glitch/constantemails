@@ -9,6 +9,52 @@ $('.scrollTop').click(function() {
     $("html, body").animate({scrollTop: 0});
 });
 
+/*
+=========================================
+|                                       |
+|       Control Sidebar Scroll Script   |
+|                                       |
+=========================================
+*/
+
+var hRe = $(".tasks").height();
+var aRe = $("aside.control-sidebar").height();
+
+var winHei = $(window).height();
+
+
+$(".control-sidebar").mCustomScrollbar({
+    advanced:{
+    updateOnContentResize: true
+    },
+    theme: "minimal"
+});
+
+
+/*
+=========================================
+|                                       |
+|      Notification Dropdown Scroll     |
+|                                       |
+=========================================
+*/ 
+
+$(".nav-item.notification-dropdown .notification-list").mCustomScrollbar({
+    advanced:{
+        updateOnContentResize: true
+    },
+    theme: "minimal",
+    dir: "rtl",
+    setHeight: 290
+});
+
+$('.navbar .dropdown.notification-dropdown > .dropdown-menu, .navbar .dropdown.message-dropdown > .dropdown-menu ').click(function(e) {
+    e.stopPropagation();
+});
+
+$(window).on('resize', function(event) {
+    $('.control-sidebar .tab-content #feeds-tab').mCustomScrollbar("update");
+});
 
 /*
 =========================================
@@ -198,50 +244,50 @@ $('.t-dot').tooltip({
     template: '<div class="tooltip status rounded-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
 })
 
-/*
-================================================
-|                                              |
-|                       sidebar                |
-|                                              |
-================================================
-*/
+// Custom Dropdown
 
-function sidebarCloser() {
-
-    if ($(window).width() <= 991 ) {
-        $("#container").addClass("sidebar-closed");
-        $('.overlay').removeClass('show');
-    } else if ($(window).width() > 991 ) {
-        $("#container").removeClass("sidebar-closed");
-        $(".navbar").removeClass("expand-header");
-        $('.overlay').removeClass('show');
-        $('#container').addClass('sbar-open');
-    }
-
+function cDropdown(e) {
+  var dropdowns = document.getElementsByClassName("c-dropdown-content");
+  for(var i = 0; i < dropdowns.length; i++) {
+    dropdowns[i].classList.remove("show");
+  }
+  e.classList.toggle("show");
 }
 
-function sidebarMobCheck() {
-    if ($(window).width() <= 991 ) {
+var classname = document.getElementsByClassName("c-dropbtn");
 
-        if ( $('.main-container').hasClass('sbar-open') ) {
-            return;
-        } else {
-            sidebarCloser()
-        }
-    } else if ($(window).width() > 991 ) {
-        sidebarCloser();
-    }
+for (var i = 0; i < classname.length; i++) {
+  classname[i].addEventListener("click", function() {
+    cDropdown(this.nextElementSibling);
+  });
 }
 
-sidebarCloser();
-
-$(window).resize(function(event) {
-    sidebarMobCheck();
+$('.c-dropdown-item').on('click', function(event) {
+    event.preventDefault();
+    $(this).parent().removeClass('show');
 });
 
+// Close the dropdown menu if the user clicks outside of it
+
+window.onclick = function(event) {
+  if (!$(event.target).hasClass('c-dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("c-dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+
+}
+
+
 /*
 ================================================
-|            IE VERSION Detector               |
+|            IE VERSION Dector                 |
 ================================================
 */
 
@@ -269,7 +315,7 @@ function GetIEVersion() {
 */
 
 // Note :- Fn hideDropdown is a fix for iOS where dropdown is not closed when clicked outside of the div i.e. on any element which lies on the document.
-function hideDropdown( $dropdown, $dropdownmenu, $removeClass ) {
+function hideDropdown($dropdown, $dropdownmenu, $removeClass) {
     var dropdown = $dropdown;
     var dropdownmenu = $dropdownmenu;
     var removeClass = $removeClass;

@@ -29,8 +29,7 @@
 					.badge {
 						font-size: 10px;
 						padding: 5px 6px;
-					    background-color: #c2d5ff;
-					    color: #1a73e9;
+						background-color: $additional-color-5;
 					}
 				}
 			}
@@ -50,7 +49,7 @@
 				font-weight: 600;
 			}
 			p {
-				color: #1a73e9;
+				color: $additional-color-5;
 				font-weight: 600;
 			}
 		}
@@ -62,6 +61,7 @@
 				margin-top: 1.3rem;
 				.progress-bar {
 					border-radius: 30px;
+					background-color: $additional-color-5 !important;
 				}
 			}
 		}
@@ -69,7 +69,7 @@
 			.p-t-p-txt {
 				font-size: 14px;
 				font-weight: 600;
-				color: #1a73e9;
+				color: $additional-color-5;
 			}
 			.p-t-p-value {
 				color: $additional-color-11;

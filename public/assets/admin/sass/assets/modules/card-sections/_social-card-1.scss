@@ -4,15 +4,15 @@
 #social-card-1.card {
     height: 334px;
     padding: 0 20px 20px 20px;
-    background-image: linear-gradient(to top, #00b1f4 0%, #1a73e9 100%);
+    background-image: $additional-gradient-color-3;
     border: none;
     .wrapper {
         .usr-meta-info {
             .media {
                 img {
                     width: 70px;
-                    border: solid 4px #c2d5ff;
-                    background: #1a73e9;
+                    border: solid 4px $color_78;
+                    background: $color_77;
                 }
                 .media-body {
                     .usr-name {
@@ -30,7 +30,7 @@
                 .twitter-icon {
                     i {
                         font-size: 50px;
-                        color: #e9ecef;
+                        color: $white;
                         margin-left: 20px;
                     }
                 }

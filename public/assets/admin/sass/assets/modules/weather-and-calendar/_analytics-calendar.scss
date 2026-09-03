@@ -33,7 +33,7 @@
 				display: inline-block;
 				text-align: center;
 				font-size: 140%;
-				color: $dark;
+				color: $color_55;
 				font-size: 22px;
 				font-weight: 600;
 			}
@@ -42,7 +42,7 @@
 				text-align: center;
 				font-size: 120%;
 				font-weight: 600;
-				color: $dark;
+				color: $color_53;
 				font-size: 20px;
 				border-bottom: solid 1px #fff;
 			}
@@ -67,7 +67,7 @@
 					top: 4px;
 					position: relative;
 					vertical-align: middle;
-					color: $light-dark;
+					color: $additional-color-5;
 				}
 			}
 			.pignose-calendar-top-nav.pignose-calendar-top-prev {
@@ -95,7 +95,7 @@
 			font-weight: 600;
 			overflow: hidden;
 			color: $additional-color-11;
-			background-color: $light-primary;
+			background-color: $color_6;
 			margin-top: 18px;
 			margin-bottom: 10px;
 			padding: 0 25px;
@@ -110,7 +110,7 @@
 				-moz-box-sizing: border-box;
 				box-sizing: border-box;
 				font-weight: normal;
-				color: $primary;
+				color: $color_53;
 				&:last-child {
 					width: 14.32%;
 				}
@@ -172,8 +172,8 @@
 				background-color: $color_108;
 			}
 			&:hover {
-				background-color: $light-primary;
-				color: $primary !important;
+				background-color: $additional-color-4;
+				color: $white !important;
 				font-weight: 600;
 				border-radius: 10px;
 			}
@@ -237,7 +237,7 @@
 	}
 	.pignose-calendar-unit.pignose-calendar-unit-active {
 		a {
-			background-color: $primary;
+			background-color: $color_53;
 			color: $white !important;
 			font-weight: 600;
 			border-radius: 10px;

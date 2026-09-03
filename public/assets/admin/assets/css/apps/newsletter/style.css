@@ -3,9 +3,9 @@
             Header
     =======================
 */
-.newsletter {
+.container.newsletter {
     background-color: #fff;
-    border-top: 3px solid #1a73e9;
+    border-top: 3px solid #e95f2b;
 }
 .newsletter #headerWrapper h3 {
     font-size: 30px;
@@ -48,7 +48,7 @@ h2 {
 }
 .newsletter #ourthoughtsWrapper p {
     font-size: 17px;
-    color: #4f5163;
+    color: #3b3f5c;
     margin: 0 66px;
 }
 .newsletter #ourthoughtsWrapper h3 {
@@ -143,10 +143,10 @@ h1 {
 #contactWrapper .contact-services i {
     font-size: 22px;
     border-radius: 50%;
-    background-color: #c2d5ff;
+    background-color: #ee3d50;
     padding: 10px;
-    border: 2px solid #c2d5ff;
-    color: #1a73e9;
+    border: 2px solid #ee3d50;
+    color: #fff;
     margin-bottom: 10px;
     margin-top: 20px;
 }
@@ -173,15 +173,15 @@ h1 {
 */
 
 #followusWrapper {
-    background-color: #c2d5ff;
+    background-color: #5247bd;
     padding: 37px 0;
 }
 #followusWrapper p {
-    color: #1a73e9;
+    color: #fff;
     font-size: 18px;
 }
 #followusWrapper ul {
-    color: #1a73e9;
+    color: #fff;
     font-size: 24px;
     font-weight: normal !important;
 }

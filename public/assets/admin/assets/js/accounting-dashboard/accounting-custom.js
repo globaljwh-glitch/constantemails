@@ -20,7 +20,7 @@ function profitMonthlyRendered() {
           onmouseout: function (d, i) { console.log("onmouseout", d, i); }
       },
       color: {
-        pattern: ['#00b1f4', '#4f5163', '#c2d5ff']
+        pattern: ['#f8538d', '#6156ce', '#00d1c1']
       },
       donut: {
         title: "Profit 21k",
@@ -46,42 +46,42 @@ $(".product-sales-list .product-sales-body #ps1").sparkline([4,6,7,5,4,5,7,3,4,9
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#1a73e9',
+  lineColor: '#5247bd',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#1a73e9',
-  maxSpotColor: '#1a73e9'
+  minSpotColor: '#5247bd',
+  maxSpotColor: '#5247bd'
 });
 
 $(".product-sales-list .product-sales-body #ps2").sparkline([3,4,5,3,4,6,4,2,8,7,8,6], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#f58b22',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#f58b22',
+  maxSpotColor: '#f58b22'
 });
 
 $(".product-sales-list .product-sales-body #ps3").sparkline([4,6,2,5,4,6,5,3,4,3,2,8], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#1abc9c',
+  lineColor: '#07dabf',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#1abc9c',
-  maxSpotColor: '#1abc9c'
+  minSpotColor: '#07dabf',
+  maxSpotColor: '#07dabf'
 });
 
 $('.product-sales li a').on('shown.bs.tab', function(event) {
@@ -89,40 +89,40 @@ $('.product-sales li a').on('shown.bs.tab', function(event) {
       type: 'line',
       width: '100',
       height: '30',
-      lineColor: '#1a73e9',
+      lineColor: '#5247bd',
       lineWidth: 1,
       spotRadius: 3.5,
       fillColor: 'transparent',
       spotColor: '#1ad271',
       spotRadius: 0,
-      minSpotColor: '#1a73e9',
-      maxSpotColor: '#1a73e9'
+      minSpotColor: '#5247bd',
+      maxSpotColor: '#5247bd'
     });
     $(".product-sales-list .product-sales-body #ps5").sparkline([4,6,5,8,6,5,5,3,4,7,6,2], {
       type: 'line',
       width: '100',
       height: '30',
-      lineColor: '#4f5163',
+      lineColor: '#f58b22',
       lineWidth: 1,
       spotRadius: 3.5,
       fillColor: 'transparent',
       spotColor: '#1ad271',
       spotRadius: 0,
-      minSpotColor: '#4f5163',
-      maxSpotColor: '#4f5163'
+      minSpotColor: '#f58b22',
+      maxSpotColor: '#f58b22'
     });
     $(".product-sales-list .product-sales-body #ps6").sparkline([4,6,7,5,4,5,6,9,4,6,6,3], {
       type: 'line',
       width: '100',
       height: '30',
-      lineColor: '#1abc9c',
+      lineColor: '#07dabf',
       lineWidth: 1,
       spotRadius: 3.5,
       fillColor: 'transparent',
       spotColor: '#1ad271',
       spotRadius: 0,
-      minSpotColor: '#1abc9c',
-      maxSpotColor: '#1abc9c'
+      minSpotColor: '#07dabf',
+      maxSpotColor: '#07dabf'
     });  
 });
 
@@ -132,7 +132,7 @@ $("#r-chart").sparkline([1,2,3,3,0,2,1,2,3,4,2,3], {
     barWidth: 14,
     barSpacing: 3,
     zeroAxis: false,
-    barColor: '#acb0c3'
+    barColor: '#24ccda'
 });
 
 $("#r-chart").sparkline([2,3,5,6,6,2,2,1,1,2,4,5], {
@@ -150,7 +150,7 @@ $("#e-chart").sparkline([ [2, 1.1], [2, 1.3], [2.5, 1.5], [2.2, 1.2], [2.3, 1.4]
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#1abc9c',
-    stackedBarColor: ['#4f5163', '#e9ecef']
+    stackedBarColor: ['#1abc9c', '#e9ecef']
 });
 
 $('.revenue li a, .expanditure li a, .r-p-summary li a').on('shown.bs.tab', function(event) {
@@ -160,7 +160,7 @@ $('.revenue li a, .expanditure li a, .r-p-summary li a').on('shown.bs.tab', func
       barWidth: 14,
       barSpacing: 3,
       zeroAxis: false,
-      barColor: '#c2d5ff'
+      barColor: '#816cfd'
   });
   $("#ry-chart").sparkline([2,3,5,6,6,2,2,1,1,2,4,5], {
       type: 'line',
@@ -177,7 +177,7 @@ $('.revenue li a, .expanditure li a, .r-p-summary li a').on('shown.bs.tab', func
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#1abc9c',
-      stackedBarColor: ['#38a9ff', '#e9ecef']
+      stackedBarColor: ['#00d1c1', '#e9ecef']
   });
 
   var chart = c3.generate({
@@ -194,7 +194,7 @@ $('.revenue li a, .expanditure li a, .r-p-summary li a').on('shown.bs.tab', func
           onmouseout: function (d, i) { console.log("onmouseout", d, i); }
       },
       color: {
-        pattern: ['#00b1f4', '#4f5163', '#c2d5ff']
+        pattern: ['#f8538d', '#6156ce', '#00d1c1']
       },
       donut: {
         title: "Profit 243k",

@@ -31,7 +31,7 @@
 	line-height: 50px;
 	padding: $p-0 7px;
 	margin: $m-0;
-	background-color: $light-primary;
+	background-color: $additional-color-7;
 }
 .fc {
 	.fc-toolbar {
@@ -49,7 +49,7 @@
 	}
 	th {
 		background-color: $color_54;
-		color: $primary;
+		color: $color_53;
 		padding: $p-5;
 	}
 }
@@ -72,25 +72,21 @@
 		border-bottom: $b-width-2 $solid $color_88;
 		border-radius: $br-0;
 		background-color: $color_none;
-	    background-image: none!important;
 	}
 	.fc-agendaWeek-button.fc-state-active {
 		border-bottom: $b-width-2 $solid $color_88;
 		border-radius: $br-0;
 		background-color: $color_none;
-	    background-image: none!important;
 	}
 	.fc-button.fc-state-active {
 		border-bottom: $b-width-2 $solid $color_88;
 		border-radius: $br-0;
 		background-color: $color_none;
-	    background-image: none!important;
 	}
 	.fc-state-default.fc-state-active {
-		border-bottom: $b-width-2 $solid $light-gray;
+		border-bottom: $b-width-2 $solid $color_88;
 		border-radius: $br-0;
 		background-color: $color_none;
-	    background-image: none!important;
 	}
 	.fc-agendaDay-button {
 		padding: $p-0 $p-20 !important;
@@ -186,7 +182,7 @@
 			h2 {
 				font-size: 14px;
 				padding: 17px $p-0 $p-0 $p-0;
-				color: $black;
+				color: $white;
 			}
 		}
 	}
@@ -230,21 +226,6 @@
 			font-weight: normal;
 		}
 	}
-}
-.fc-state-down {
-    background-image: none!important;
-}
-.fc-event {
-    color: $white!important;
-    .fc-bg {
-	    background: $primary;
-	}
-}
-.fc-event:hover {
-    color: $white!important;
-}
-.ui-widget .fc-event {
-    color: $white!important;
 }
 @media (max-width: 575px) {
 	#c {

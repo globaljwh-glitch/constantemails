@@ -1,3 +1,276 @@
+function triggerProgressbar( $option ) {
+    
+    var $triggerOption = $option;    
+
+    if ($triggerOption === "modernBrowser") {
+        var bar = new ProgressBar.Circle(".income", {
+          color: '#6156ce',
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 5,
+          trailWidth: 1,
+          easing: 'easeInOut',
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: '#6156ce', width: 5 },
+          to: { color: '#6156ce', width: 5 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText('');
+            } else {
+              circle.setText(value+'%');
+            }
+
+          }
+        });
+        bar.text.style.fontSize = '1.1rem';
+
+        bar.animate(0.9);  // Number from 0.0 to 1.0
+
+        var bar = new ProgressBar.Circle(".cogs", {
+          color: '#00b1f4',
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 5,
+          trailWidth: 1,
+          easing: 'easeInOut',
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: '#00b1f4', width: 5 },
+          to: { color: '#00b1f4', width: 5 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText('');
+            } else {
+              circle.setText(value+'%');
+            }
+          }
+        });
+        bar.text.style.fontSize = '1.1rem';
+
+        bar.animate(0.85);  // Number from 0.0 to 1.0
+
+        var bar = new ProgressBar.Circle(".net-profit", {
+          color: '#f8538d',
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 5,
+          trailWidth: 1,
+          easing: 'easeInOut',
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: '#f8538d', width: 5 },
+          to: { color: '#f8538d', width: 5 },
+ 
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText('');
+            } else {
+              circle.setText(value+'%');
+            }
+
+          }
+        });
+        bar.text.style.fontSize = '1.1rem';
+
+        bar.animate(0.95);  // Number from 0.0 to 1.0
+
+        var bar = new ProgressBar.Circle(".expenses", {
+          color: '#ffbb44',
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 5,
+          trailWidth: 1,
+          easing: 'easeInOut',
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: '#ffbb44', width: 5 },
+          to: { color: '#ffbb44', width: 5 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText('');
+            } else {
+              circle.setText(value+'%');
+            }
+
+          }
+        });
+        bar.text.style.fontSize = '1.1rem';
+
+        bar.animate(0.75);  // Number from 0.0 to 1.0
+
+    } else if ( $triggerOption === "ie" ) {
+        
+        var bar = new ProgressBar.Circle(".income", {
+          color: '#5247bd',
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 5,
+          trailWidth: 1,
+          easing: 'easeInOut',
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: '#5247bd', width: 5 },
+          to: { color: '#5247bd', width: 5 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText('');
+            } else {
+              circle.setText(value+'%');
+            }
+          }
+        });
+        bar.text.style.fontSize = '1.1rem';
+
+        bar.set(0.9);  // Number from 0.0 to 1.0
+
+        var bar = new ProgressBar.Circle(".cogs", {
+          color: '#38a9ff',
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 5,
+          trailWidth: 1,
+          easing: 'easeInOut',
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: '#38a9ff', width: 5 },
+          to: { color: '#38a9ff', width: 5 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText('');
+            } else {
+              circle.setText(value+'%');
+            }
+
+          }
+        });
+        bar.text.style.fontSize = '1.1rem';
+
+        bar.set(0.85);  // Number from 0.0 to 1.0
+
+
+        var bar = new ProgressBar.Circle(".net-profit", {
+          color: '#f8538d',
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 5,
+          trailWidth: 1,
+          easing: 'easeInOut',
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: '#f8538d', width: 5 },
+          to: { color: '#f8538d', width: 5 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText('');
+            } else {
+              circle.setText(value+'%');
+            }
+
+          }
+        });
+        bar.text.style.fontSize = '1.1rem';
+
+        bar.set(0.95);  // Number from 0.0 to 1.0
+
+        var bar = new ProgressBar.Circle(".expenses", {
+          color: '#07dabf',
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 5,
+          trailWidth: 1,
+          easing: 'easeInOut',
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: '#07dabf', width: 5 },
+          to: { color: '#07dabf', width: 5 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText('');
+            } else {
+              circle.setText(value+'%');
+            }
+          }
+        });
+        bar.text.style.fontSize = '1.1rem';
+
+        bar.set(0.75);  // Number from 0.0 to 1.0
+    }
+}
+
+function msieversion() {
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))
+    {
+        triggerProgressbar("ie");
+    }
+    else  {
+        triggerProgressbar("modernBrowser");
+    }
+
+    return false;
+}
+msieversion();
+
 var chart = new Chartist.Line('#t-s-chart', {
     labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
       series: [  {
@@ -216,7 +489,7 @@ AmCharts.makeChart( "t-order-chart", {
 
 
 var bar = new ProgressBar.Circle("#t-profit-chart", {
-  color: '#3232b7',
+  color: '#6156ce',
   // This has to be the same size as the maximum width to
   // prevent clipping
   strokeWidth: 6,
@@ -227,8 +500,8 @@ var bar = new ProgressBar.Circle("#t-profit-chart", {
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#3232b7', width: 6 },
-  to: { color: '#3232b7', width: 6 },
+  from: { color: '#6156ce', width: 6 },
+  to: { color: '#6156ce', width: 6 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -251,7 +524,7 @@ bar.set(0.65);  // Number from 0.0 to 1.0
 // Shipments
 
 var bar = new ProgressBar.Circle("#t-shipments-chart", {
-  color: '#3232b7',
+  color: '#6156ce',
   // This has to be the same size as the maximum width to
   // prevent clipping
   strokeWidth: 6,
@@ -262,8 +535,8 @@ var bar = new ProgressBar.Circle("#t-shipments-chart", {
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#3232b7', width: 6 },
-  to: { color: '#3232b7', width: 6 },
+  from: { color: '#6156ce', width: 6 },
+  to: { color: '#6156ce', width: 6 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -431,7 +704,7 @@ AmCharts.makeChart( "linec2", {
     "bulletField": "bullet",
     "lineThickness": 2,
     "showBalloon": false,
-    "lineColor": "#00b1f4"
+    "lineColor": "#f8538d"
   } ],
   "valueAxes": [ {
     "gridAlpha": 0,
@@ -524,7 +797,7 @@ AmCharts.makeChart( "linec3", {
     "bulletField": "bullet",
     "lineThickness": 2,
     "showBalloon": false,
-    "lineColor": "#1a73e9"
+    "lineColor": "#00b1f4"
   } ],
   "valueAxes": [ {
     "gridAlpha": 0,
@@ -617,7 +890,7 @@ AmCharts.makeChart( "linec4", {
     "bulletField": "bullet",
     "lineThickness": 2,
     "showBalloon": false,
-    "lineColor": "#00b1f4"
+    "lineColor": "#e95f2b"
   } ],
   "valueAxes": [ {
     "gridAlpha": 0,
@@ -828,56 +1101,56 @@ $("#balance-btc").sparkline([5,6,5,7,9,7,3,3,9,4,6,4], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#1a73e9',
+  lineColor: '#fff',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#1a73e9',
-  maxSpotColor: '#1a73e9'
+  minSpotColor: '#fff',
+  maxSpotColor: '#fff'
 });
 
 $("#received-btc").sparkline([2,6,3,9,5,9,3,6,4,4,6,7], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#fff',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#fff',
+  maxSpotColor: '#fff'
 });
 
 $("#sent-btc").sparkline([5,6,6,9,5,9,3,4,4,3,6,4], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#805dca',
+  lineColor: '#fff',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#805dca',
-  maxSpotColor: '#805dca'
+  minSpotColor: '#fff',
+  maxSpotColor: '#fff'
 });
 
 $("#transaction-btc").sparkline([5,6,7,9,9,5,3,3,4,4,6,7], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#0081e6',
+  lineColor: '#fff',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#0081e6',
-  maxSpotColor: '#0081e6'
+  minSpotColor: '#fff',
+  maxSpotColor: '#fff'
 });
 
 $(".bit-chart-volume").sparkline([5,6,8,9,3,4,3,4,5,6,7,2,3,4,4,4,3], {
@@ -921,8 +1194,8 @@ function triggerOnBrowser(browser) {
         text: {
           autoStyleContainer: false
         },
-        from: { color: '#4f5163', width: 10 },
-        to: { color: '#4f5163', width: 10 },
+        from: { color: '#3862f5', width: 10 },
+        to: { color: '#3862f5', width: 10 },
         // Set default step function for all animate calls
         step: function(state, circle) {
           circle.path.setAttribute('stroke', state.color);
@@ -955,8 +1228,8 @@ function triggerOnBrowser(browser) {
         text: {
           autoStyleContainer: false
         },
-        from: { color: '#4f5163', width: 10 },
-        to: { color: '#4f5163', width: 10 },
+        from: { color: '#3862f5', width: 10 },
+        to: { color: '#3862f5', width: 10 },
         // Set default step function for all animate calls
         step: function(state, circle) {
           circle.path.setAttribute('stroke', state.color);
@@ -1058,8 +1331,8 @@ var chart = AmCharts.makeChart( "radarchartdiv", {
       "bullet": "round",
       "lineThickness": 2,
       "valueField": "litres",
-      "bulletColor": "#1a73e9",
-      "lineColor": "#1a73e9",
+      "bulletColor": "#07e0c4",
+      "lineColor": "#07e0c4",
     } ],
     "categoryField": "productsName"
 } );
@@ -1068,14 +1341,14 @@ $(".total-visits-charts").sparkline([0,3,4,8,6,7,4,7,4,0], {
   type: 'line',
   width: '100',
   height: '100%',
-  lineColor: '#c2d5ff',
+  lineColor: '#e9b02b',
   lineWidth: 1,
   spotRadius: 3.5,
-  fillColor: '#c2d5ff',
+  fillColor: '#e9b02b',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#c2d5ff',
-  maxSpotColor: '#c2d5ff'
+  minSpotColor: '#e9b02b',
+  maxSpotColor: '#e9b02b'
 });
 
 $("#unique-visits-charts").sparkline([5,6,7,2,1,4,2,4,5,6,7,2,1,4,2], {
@@ -1085,7 +1358,7 @@ $("#unique-visits-charts").sparkline([5,6,7,2,1,4,2,4,5,6,7,2,1,4,2], {
     barWidth: 3,
     barSpacing: 4,
     zeroAxis: false,
-    barColor: '#00b1f4'
+    barColor: '#f8538d'
 });
 
 $("#unique-visits-charts").sparkline([2,3,5,6,6,2,2,1,1,2,4,5], {
@@ -1100,7 +1373,7 @@ $("#page-views").sparkline([2,4,2,6,3,4,1,12,3,8,6,5,4,6,0,1], {
     type: 'line',
     width: '100',
     height: '100%',
-    lineColor: '#4f5163',
+    lineColor: '#e95f2b',
     lineWidth: 1.5,
     spotRadius: 3.5,
     fillColor: 'transparent',
@@ -1144,7 +1417,7 @@ $("#r-chart").sparkline([1,2,3,3,0,2,1,2,3,4,2,3], {
     barWidth: 14,
     barSpacing: 3,
     zeroAxis: false,
-    barColor: '#acb0c3'
+    barColor: '#24ccda'
 });
 
 $("#r-chart").sparkline([2,3,5,6,6,2,2,1,1,2,4,5], {
@@ -1162,7 +1435,7 @@ $("#e-chart").sparkline([ [2, 1.1], [2, 1.3], [2.5, 1.5], [2.2, 1.2], [2.3, 1.4]
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#1abc9c',
-    stackedBarColor: ['#4f5163', '#e9ecef']
+    stackedBarColor: ['#1abc9c', '#e9ecef']
 });
 
 var bar = new ProgressBar.Circle("#daily", {
@@ -1171,14 +1444,14 @@ var bar = new ProgressBar.Circle("#daily", {
   // prevent clipping
   strokeWidth: 5,
   trailWidth: 3,
-  trailColor: '#f2f2f2',
+  trailColor: '#f3f3f3',
   easing: 'easeInOut',
   duration: 1400,
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#24ccda', width: 5 },
-  to: { color: '#24ccda', width: 5 },
+  from: { color: '#00d1c1', width: 5 },
+  to: { color: '#00d1c1', width: 5 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -1203,14 +1476,14 @@ var bar = new ProgressBar.Circle("#weekly", {
   // prevent clipping
   strokeWidth: 5,
   trailWidth: 3,
-  trailColor: '#f2f2f2',
+  trailColor: '#f3f3f3',
   easing: 'easeInOut',
   duration: 1400,
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#1a73e9', width: 5 },
-  to: { color: '#1a73e9', width: 5 },
+  from: { color: '#e95f2b', width: 5 },
+  to: { color: '#e95f2b', width: 5 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -1235,14 +1508,14 @@ var bar = new ProgressBar.Circle("#month", {
   // prevent clipping
   strokeWidth: 5,
   trailWidth: 3,
-  trailColor: '#f2f2f2',
+  trailColor: '#f3f3f3',
   easing: 'easeInOut',
   duration: 1400,
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#00b1f4', width: 5 },
-  to: { color: '#00b1f4', width: 5 },
+  from: { color: '#0081e6', width: 5 },
+  to: { color: '#0081e6', width: 5 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -1268,7 +1541,7 @@ $('.revenue li a, .expanditure li a, .r-p-summary li a').on('shown.bs.tab', func
       barWidth: 14,
       barSpacing: 3,
       zeroAxis: false,
-      barColor: '#c2d5ff'
+      barColor: '#816cfd'
   });
   $("#ry-chart").sparkline([2,3,5,6,6,2,2,1,1,2,4,5], {
       type: 'line',
@@ -1285,7 +1558,7 @@ $('.revenue li a, .expanditure li a, .r-p-summary li a').on('shown.bs.tab', func
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#1abc9c',
-      stackedBarColor: ['#38a9ff', '#e9ecef']
+      stackedBarColor: ['#00d1c1', '#e9ecef']
   });
 
 })

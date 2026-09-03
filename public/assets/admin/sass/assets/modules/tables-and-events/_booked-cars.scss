@@ -22,14 +22,14 @@
 		p {
 			display: inline-block;
 			padding: 12px 10px 0 10px;
-			color: $additional-color-2;
+			color: $color_57;
 			font-weight: 600;
 			font-size: 16px;
 		}
 		span.badge {
 			padding: 4px 30px;
 			font-size: 14px;
-			background-image: linear-gradient(to right, #00b1f4 0%, #1a73e9 100%);
+			background-image: $additional-gradient-color-27;
 		}
 		table.table {
 			thead {
@@ -68,10 +68,10 @@
 		}
 		.c-f-load-more {
 			button {
-				background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+				background-image: $additional-gradient-color-21;
 				border: none;
 				&:hover {
-					background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%);
+					background-image: linear-gradient(to right, #3862f5 0%, #9960ea 100%);
 				}
 			}
 		}

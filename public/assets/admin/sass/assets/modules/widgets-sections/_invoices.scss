@@ -21,19 +21,19 @@
 		font-size: 17px;
 	}
 	.d-m-i-due {
-		background-color: $dark;
+		background-color: $color_59;
 	}
 	.d-m-i-overdue {
-		background-color: $additional-color-2;
+		background-color: $additional-color-3;
 	}
 	p {
 		font-size: 28px;
 		font-weight: 600;
 	}
 	p.i-due-value {
-		color: $dark;
+		color: $color_59;
 	}
 	p.i-overdue-value {
-		color: $additional-color-2;
+		color: $additional-color-3;
 	}
 }

@@ -6,7 +6,7 @@
    position: fixed;
    display: block;
    opacity: 1;
-   background-color: #1f212d;
+   background-color: #fff;
    z-index: 999999;
    text-align: center;
 }
@@ -20,14 +20,14 @@
     right: 0;
 }
 .eq-loading {
-    border: 3px solid #1f212d;
+    border: 3px solid #fff;
     border-radius: 50%;
-    border-top: 3px solid #e9ecef;
+    border-top: 3px solid #1f212d;
     width: 75px;
     height: 75px;
     -webkit-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
 }
 .eq-loading.dual-loader {
-    border-bottom: 3px solid #e9ecef;
+    border-bottom: 3px solid #1f212d;
 }

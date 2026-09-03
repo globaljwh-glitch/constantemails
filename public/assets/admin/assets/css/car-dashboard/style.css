@@ -3,7 +3,7 @@
 */
 
 #top-sale #t-s-chart .ct-series-a .ct-line {
-    stroke: #3232b7;
+    stroke: #1abc9c;
     stroke-width: 2px;
 }
 #top-sale #t-s-chart .ct-grid {
@@ -19,7 +19,7 @@
     font-size: 22px;
 }
 #top-sale .media i {
-    color: #3232b7;
+    color: #1abc9c;
     font-size: 20px;
 }
 #top-sale .media .media-body p {
@@ -131,11 +131,11 @@
     stroke: transparent;
 }
 #total-services #t-services-chart .ct-series-a .ct-bar {
-    stroke: #1a73e9;
+    stroke: #f8538d;
     stroke-width: 6px;
 }
 #total-services #t-services-chart .ct-series-b .ct-bar {
-    stroke: #1a73e9;
+    stroke: #f8538d;
     stroke-width: 6px;
 }
 
@@ -157,32 +157,32 @@
     color: #1d1d1d;
 }
 #revenue-stats .ct-series-a .ct-slice-donut {
-    stroke: #c2d5ff;
+    stroke: #6156ce;
     stroke-width: 32px;
 }
 #revenue-stats .ct-series-b .ct-slice-donut {
-    stroke: #1a73e9;
+    stroke: #25d5e4;
     stroke-width: 32px;
 }
 #revenue-stats .ct-series-c .ct-slice-donut {
-    stroke: #4f5163;
+    stroke: #ffbb44;
     stroke-width: 32px;
 }
 #revenue-stats .ct-label {
     fill: #fff;
 }
 .r-s-bottom-section .r-s-car-sales .d-m-r-s-car {
-    border: 2px solid #c2d5ff;
+    border: 2px solid #805dca;
     height: 18px;
     width: 17px;
 }
 .r-s-bottom-section .r-s-car-services .d-m-r-s-services {
-    border: 2px solid #1a73e9;
+    border: 2px solid #25d5e4;
     height: 18px;
     width: 17px;
 }
 .r-s-bottom-section .r-s-car-rental .d-m-r-s-rental {
-    border: 2px solid #4f5163;
+    border: 2px solid #ffbb44;
     height: 18px;
     width: 17px;
 }
@@ -206,7 +206,7 @@
 }
 .top-seller-container .top-seller-header .t-s-rating i.flaticon-star-fill {
     font-size: 20px;
-    color: #acb0c3;
+    color: #ff3743;
 }
 .top-seller-container .top-seller-header .t-s-rating i.flaticon-star-outline {
     font-size: 20px;
@@ -224,13 +224,13 @@
     font-size: 18px;
 }
 .top-seller-container .top-seller-body button.btn {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(-20deg, #fc6076 0%, #ff9a44 100%);
     border: none;
     padding: 7px 30px;
 }
 
 .top-seller-container .top-seller-body button.btn:hover {
-    background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%);
+    background-image: linear-gradient(-20deg, #ff9a44 0%, #fc6076 100%);
     border: none;
 }
 
@@ -275,7 +275,7 @@
     font-size: 25px;
 }
 .top-rented-cars-container .top-rented-cars-body table.table td .media .media-body .t-r-rating .t-r-rating-star i.flaticon-star-fill {
-    color: #acb0c3;
+    color: #ff3743;
     font-size: 17px;
     vertical-align: text-top;
 }
@@ -286,7 +286,7 @@
 }
 .top-rented-cars-container .top-rented-cars-body table.table td div.t-r-usr i {
     font-size: 20px;
-    color: #1a73e9;
+    color: #816cfd;
 }
 .top-rented-cars-container .top-rented-cars-body table.table td div.t-r-usr span {
     font-size: 18px;
@@ -370,8 +370,8 @@
 }
 .top-sales-person.widget-card .progress .progress-bar {
     border-radius: 30px;
-    background-color: #00b1f4!important;
-    border-color: #00b1f4!important;
+    background-color: #25d5e4!important;
+    border-color: #25d5e4!important;
 }
 .top-sales-person.widget-card .t-s-p-rating {
     color: #000;
@@ -420,10 +420,10 @@
     font-size: 16px;
 }
 .top-drivers.widget-card .t-d-total-rev span {
-    color: #1a73e9;
+    color: #e95f2b;
 }
 .top-drivers.widget-card .t-d-rating i {
-    color: #acb0c3;
+    color: #e95f2b;
     font-size: 17px;
 }
 
@@ -640,9 +640,6 @@
     font-weight: 600;
     border-radius: 10px;
 }
-.pignose-calendar-unit.pignose-calendar-unit-active a:hover {
-    color: #ffffff!important;
-}
 .pignose-calendar-unit.pignose-calendar-unit-sun a,
 .pignose-calendar-unit.pignose-calendar-unit-sat a {
     color: gray;
@@ -652,8 +649,8 @@
     color: #ffffff;
 }
 .pignose-calendar-unit a:hover {
-    background-color: #c2d5ff;
-    color: #1a73e9!important;
+    background-color: #6156ce;
+    color: #fff!important;
     font-weight: 600;
 }
 .pignose-calendar-unit:last-child {
@@ -809,8 +806,8 @@
 .underline-content .nav-tabs .nav-link.active,
 .underline-content .nav-tabs .show>.nav-link {
     border-color: transparent;
-    border-bottom: 1px solid #1a73e9;
-    color: #1a73e9;
+    border-bottom: 1px solid #e7515a;
+    color: #e7515a;
     background-color: transparent;
     font-size: 18px;
 }
@@ -818,7 +815,7 @@
 .underline-content .nav-tabs .show>.nav-link:hover,
 .underline-content .nav-tabs .nav-link.active:focus,
 .underline-content .nav-tabs .show>.nav-link:focus {
-    border-bottom: 1px solid #1a73e9;
+    border-bottom: 1px solid #e7515a;
 }
 .underline-content .nav-tabs .nav-link:focus,
 .underline-content .nav-tabs .nav-link:hover {
@@ -885,7 +882,7 @@
     background-color: #888ea8;
 }
 .driver-list table.table tbody tr td .t-d-rating i {
-    color: #acb0c3;
+    color: #e9b02b;
     font-size: 14px;
 }
 .driver-list table.table tbody tr td .t-d-rating i.flaticon-star-outline {
@@ -946,7 +943,7 @@
     border: 1px solid #e9ecef;
 }
 .todo-list .todo-list-body table.table tbody tr td label.new-control.new-checkbox.checkbox-success>input:checked~span.new-control-indicator {
-    background: #4f5163;
+    background: #25d5e4;
     border: none;
 }
 .todo-list .todo-list-body .new-control.new-checkbox.checkbox-success>input:checked~div.todo-item .todo-text,
@@ -1000,20 +997,20 @@
 
 #social-card-2.card {
     border: none;
-    background-color: #bae7ff;
+    background-color: #00b1f4;
     padding: 46px 30px;
     border-radius: 6px;
 }
 #social-card-2.card .media i {
-    color: #00b1f4;
+    color: #fff;
     font-size: 63px;
 }
 #social-card-2.card .media .media-body h5 {
-    color: #4f5163;
+    color: #fff;
     font-size: 23px;
 }
 #social-card-2.card .media .media-body p {
-    color: #4f5163;
+    color: #fff;
     font-size: 15px;
 }
 
@@ -1024,36 +1021,36 @@
 
 #social-card-3.card {
     border: none;
-    background-color: #c2d5ff;
+    background-color: #1a73e9;
     padding: 40px 25px;
 }
 #social-card-3.card .media i {
-    color: #1a73e9;
+    color: #fff;
     font-size: 65px;
 }
 #social-card-3.card .media .media-body h5 {
-    color: #1a73e9;
+    color: #fff;
 }
 #social-card-3.card .media .media-body p {
-    color: #1a73e9;
+    color: #fff;
     font-size: 25px;
 }
 #social-card-3.card .media .media-body p i {
-    color: #1a73e9;
+    color: #fff;
     font-size: 50px;
     vertical-align: sub;
     margin-left: 10px;
 }
 #social-card-3.card .media .media-body button {
-    border: 2px solid #1a73e9!important;
-    color: #1a73e9!important;
+    border: 2px solid #fff!important;
+    color: #fff!important;
     padding: 11px 65px;
     font-size: 16px;
 }
 #social-card-3.card .media .media-body button:hover {
-    border: 1px solid #1a73e9!important;
-    color: #fff!important;
-    background-color: #1a73e9!important;
+    border: 1px solid #fff!important;
+    color: #1a73e9!important;
+    background-color: #fff!important;
 }
 
 
@@ -1072,14 +1069,14 @@
 .booked-cars-list .booked-cars-list-body p {
     display: inline-block;
     padding: 12px 10px 0 10px;
-    color: #3232b7;
+    color: #3862f5;
     font-weight: 600;
     font-size: 16px;
 }
 .booked-cars-list .booked-cars-list-body span.badge {
     padding: 4px 30px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #00b1f4 0%, #1a73e9 100%);
+    background-image: linear-gradient(to right, #3862f5 0%, #25d5e4 100%);
 }
 .booked-cars-list .booked-cars-list-body .booked-car-scroll .mCSB_horizontal.mCSB_inside > .mCSB_container {
     margin-bottom: 2px;
@@ -1107,11 +1104,11 @@
     border-bottom: 1px solid #e9ecef;
 }
 .booked-cars-list .booked-cars-list-body .c-f-load-more button {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(to right, #9960ea 0%, #3862f5 100%);
     border: none;    
 }
 .booked-cars-list .booked-cars-list-body .c-f-load-more button:hover {
-    background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%);
+    background-image: linear-gradient(to right, #3862f5 0%, #9960ea 100%);
 }
 /*
     Available Cars List
@@ -1128,11 +1125,11 @@
 .available-cars-list .available-cars-list-header span.badge {
     padding: 4px 30px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #00b1f4 0%, #1a73e9 100%);
+    background-image: linear-gradient(to right, #6156ce 0%, #07e0c4 100%);
 }
 .available-cars-list .available-cars-list-body p.a-c-l-text {
     padding: 12px 10px 0px 20px;
-    color: #3232b7;
+    color: #00d1c1;
     font-weight: 600;
     font-size: 16px;
 }
@@ -1157,12 +1154,12 @@
 }
 .available-cars-list .available-cars-list-body table.table tbody tr td .media span {
     padding: 3px 0;
-    background-color: #c2d5ff;
+    background-color: #6156ce;
     border-radius: 50%;
     height: 35px;
     width: 35px;
     text-align: center;
-    color: #1a73e9;
+    color: #fff;
     font-size: 20px;
 }
 .available-cars-list .available-cars-list-body table.table tbody tr td .media .media-body p {
@@ -1197,7 +1194,7 @@
     border: 2px solid #acb0c3;
 }
 .customer-feedback-list .customer-feedback-list-body table.table tbody tr td .d-sm-flex .f-body h6 {
-    color: #1a73e9;
+    color: #ff3743;
     font-weight: 600;
     font-size: 18px;
 }
@@ -1207,7 +1204,7 @@
     color: #888ea8;
 }
 .customer-feedback-list .customer-feedback-list-body table.table tbody tr td .d-sm-flex .f-body .c-f-rating i {
-    color: #acb0c3;
+    color: #e9b02b;
 }
 .customer-feedback-list .customer-feedback-list-body table.table tbody tr td .d-sm-flex .f-body .c-f-rating i.flaticon-star-outline {
     color: #888ea8;
@@ -1226,13 +1223,13 @@
     border-top: 1px solid #e9ecef;
 }
 .customer-feedback-list .customer-feedback-list-body .c-f-load-more button {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(to right, #6156ce 0%, #ff3743 100%);
     color: #fff;
     border: none;
     padding: 8px 34px;
 }
 .customer-feedback-list .customer-feedback-list-body .c-f-load-more button:hover {
-    background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%);
+    background-image: linear-gradient(to right, #ff3743 0%, #6156ce 100%);
 }
 @media (min-width: 1200px) {
     .r-s-bottom-section {

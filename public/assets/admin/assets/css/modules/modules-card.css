@@ -5,33 +5,22 @@
 .card-1 {
     max-width: 100%;
     height: 458px;
-    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
-    color: #1a73e9;
+    background-image: linear-gradient(to top, rgba(38, 112, 138, 0.43137254901960786) 0%, #6d8ec7 100%);
+    color: #fff;
     padding: 30px 25px;
 }
-.card-1 .card-text {
-    color: #6c757d;
-}
 .card-1 button {
+    color: #fff !important;
     border-width: 2px!important;
 }
-.card-1 button:hover, .card-1 button:focus {
-    color: #fff !important;
-    border: none;
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-}
+.card-1 button:hover, .card-1 button:focus { color: #3b3f5c !important; }
 .card-1 .badge-collapsed-img {
     position: absolute;
     bottom: 10px;
     right: 0;
     left: 0;
 }
-.card-1 .badge-collapsed-img img {
-    width: 42px;
-    height: 42px;
-    border-color: #acb0c3;
-    box-shadow: 0px 0px 15px 1px #e6e6e6;
-}
+.card-1 .badge-collapsed-img img { width: 42px; height: 42px; }
 
 
 /*
@@ -57,7 +46,7 @@
     position: absolute;
     content: "";
     padding: 10px;
-    background-color: #1a73e9;
+    background-color: #00d1c1;
     border-radius: 50%;
     bottom: 104px;
     right: 8px;
@@ -66,7 +55,7 @@
 #user-profile-card-1 .card-body .usr-img-meta img {
     width: 100%;
     height: 100%;
-    border: 4px solid #c2d5ff;
+    border: 4px solid #d3d3d3;
 }
 #user-profile-card-1 .card-body .usr-info-meta { margin-top: 3rem; }
 #user-profile-card-1 .card-body .usr-info-meta .usr-name {
@@ -82,8 +71,7 @@
     font-size: 15px;
     margin-top: 4rem;
     padding: 10px 28px;
-    box-shadow: 2px 2px 13px 1px #c2d5ff;
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    box-shadow: 2px 2px 13px 1px rgb(164, 139, 217);
 }
 
 
@@ -96,11 +84,13 @@
 .social-likes .card .icon i {
     font-size: 30px;
     border-radius: 50%;
-    color: #1a73e9;
+    color: #fff;
     padding: 14px;
     letter-spacing: 0;
-    background-color: #c2d5ff;
 }
+.social-likes .card.facebook .icon i { background-image: linear-gradient(to right, #6424c9 0%, #5e8bf7 100%); }
+.social-likes .card.dribbble .icon i { background-image: linear-gradient(120deg, #ee3d50 0%, #f8538d 100%); }
+.social-likes .card.twitter .icon i { background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); }
 .social-likes .card .card-content h5 {
     color: #1d1d1d;
     font-size: 25px;
@@ -116,13 +106,32 @@
     margin: 0;
     font-weight: 600;
     cursor: pointer;
-    color: #1a73e9;
+}
+.social-likes .card.facebook .card-btn-section p {
+    color: #5247bd;
     font-size: 15px;
 }
-.social-likes .card .card-btn-section p:hover {
-    color: #1a73e9;
-    background-color: #c2d5ff;
+.social-likes .card.dribbble .card-btn-section p {
+    color: #f8538d;
+    font-size: 15px;
 }
+.social-likes .card.twitter .card-btn-section p {
+    color: #00b1f4;
+    font-size: 15px;
+}
+.social-likes .card.facebook .card-btn-section p:hover {
+    background-image: linear-gradient(to right, #6424c9 0%, #5e8bf7 100%);
+    color: #fff;
+}
+.social-likes .card.dribbble .card-btn-section p:hover {
+    background-image: linear-gradient(120deg, #ee3d50 0%, #f8538d 100%);
+    color: #fff;
+}
+.social-likes .card.twitter .card-btn-section p:hover {
+    background-image: linear-gradient(to right, #3862f5 0%, #25d5e4 100%);
+    color: #fff;
+}
+
 
 /*
     Social Card
@@ -133,13 +142,13 @@
     padding: 0 20px 20px 20px;
 }
 #social-card-1.card {
-    background-image: linear-gradient(to top, #00b1f4 0%, #1a73e9 100%);
+    background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
     border: none;
 }
 #social-card-1.card .wrapper .usr-meta-info .media img {
     width: 70px;
-    border: solid 4px #c2d5ff;
-    background: #1a73e9;
+    border: solid 4px #ee3d5075;
+    background: #f1bd45;
 }
 #social-card-1.card .wrapper .usr-meta-info .media .media-body .usr-name  {
     color: #ffffff;
@@ -154,7 +163,7 @@
 }
 #social-card-1.card .wrapper .usr-meta-info .media .twitter-icon i  {
     font-size: 50px;
-    color: #e9ecef;
+    color: #fff;
     margin-left: 20px;
 }
 #social-card-1.card .wrapper .usr-tweet {
@@ -238,20 +247,20 @@
 
 #social-card-2.card {
     border: none;
-    background-color: #bae7ff;
+    background-color: #00b1f4;
     padding: 46px 30px;
     border-radius: 6px;
 }
 #social-card-2.card .media i {
-    color: #00b1f4;
+    color: #fff;
     font-size: 63px;
 }
 #social-card-2.card .media .media-body h5 {
-    color: #4f5163;
+    color: #fff;
     font-size: 23px;
 }
 #social-card-2.card .media .media-body p {
-    color: #4f5163;
+    color: #fff;
     font-size: 15px;
 }
 
@@ -261,33 +270,33 @@
 
 #social-card-3.card {
     border: none;
-    background-color: #c2d5ff;
+    background-color: #1a73e9;
     padding: 40px 25px;
 }
 #social-card-3.card .media i {
-    color: #1a73e9;
+    color: #fff;
     font-size: 65px;
 }
-#social-card-3.card .media .media-body h5 { color: #1a73e9; }
+#social-card-3.card .media .media-body h5 { color: #fff; }
 #social-card-3.card .media .media-body p {
-    color: #1a73e9;
+    color: #fff;
     font-size: 25px;
 }
 #social-card-3.card .media .media-body p i {
-    color: #1a73e9;
+    color: #fff;
     font-size: 50px;
     vertical-align: sub;
     margin-left: 10px;
 }
 #social-card-3.card .media .media-body button {
-    border: 2px solid #1a73e9!important;
-    color: #1a73e9!important;
+    border: 2px solid #fff!important;
+    color: #fff!important;
     font-size: 16px;
 }
 #social-card-3.card .media .media-body button:hover {
-    border: 1px solid #1a73e9!important;
-    color: #fff!important;
-    background-color: #1a73e9!important;
+    border: 1px solid #fff!important;
+    color: #1a73e9!important;
+    background-color: #fff!important;
 }
 
 
@@ -305,8 +314,8 @@
   vertical-align: middle;
   color: #3b3f5c;
 }
-#user-profile-card-4.card .card-body .dropdown.custom-dropdown .dropdown-toggle i:hover { color: #3232b7; }
-#user-profile-card-4.card .card-body .dropdown.custom-dropdown.show .dropdown-toggle i { color: #3232b7; }
+#user-profile-card-4.card .card-body .dropdown.custom-dropdown .dropdown-toggle i:hover { color: #e7515a; }
+#user-profile-card-4.card .card-body .dropdown.custom-dropdown.show .dropdown-toggle i { color: #e7515a; }
 #user-profile-card-4.card .card-body .dropdown.custom-dropdown .dropdown-menu {
     min-width: 7rem;
     box-shadow: 0px 0px 15px 1px rgba(113, 106, 202, 0.2);
@@ -345,13 +354,12 @@
 }
 #user-profile-card-4.card .card-body .sales-meta #profile-chart .amcharts-main-div a { display: none!important; }
 #user-profile-card-4.card .card-body button {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-    background-color: #3232b7;
-    border: none;
-    padding: 10px 45px;
-    box-shadow: 4px 2px 10px 0px #3862f5;
+  background-image: linear-gradient(to right, #07e0c4 7%, #3862f5 100%);
+  border: none;
+  padding: 10px 45px;
+  box-shadow: 4px 2px 10px 0px #3862f5;
 }
-#user-profile-card-4.card .card-body button:hover { background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%); }
+#user-profile-card-4.card .card-body button:hover { background-image: linear-gradient(to right, #3862f5 7%, #07e0c4 100%); }
 #user-profile-card-4.card .card-body ul.action-btn li { padding: 0 11px; }
 #user-profile-card-4.card .card-body ul.action-btn i {
     padding: 12px;
@@ -432,8 +440,7 @@
 #user-profile-card-3.card .card-header ul li.badge-notify .notification .badge {
     font-size: 10px;
     padding: 5px 6px;
-    background-color: #c2d5ff;
-    color: #1a73e9;
+    background-color: #e95f2b;
 }
 #user-profile-card-3.card .card-body .usr-img-meta img {
     width: 93px;
@@ -445,7 +452,7 @@
     font-weight: 600;
 }
 #user-profile-card-3.card .card-body .usr-info-meta p {
-    color: #1a73e9;
+    color: #e95f2b;
     font-weight: 600;
 }
 #user-profile-card-3.card .card-body .profile-task-progress .progress {
@@ -456,11 +463,12 @@
 }
 #user-profile-card-3.card .card-body .profile-task-progress .progress .progress-bar {
     border-radius: 30px;
+    background-color: #e95f2b!important;
 }
 #user-profile-card-3.card .card-body .profile-task-percentage .p-t-p-txt {
     font-size: 14px;
     font-weight: 600;
-    color: #1a73e9;
+    color: #e95f2b;
 }
 #user-profile-card-3.card .card-body .profile-task-percentage .p-t-p-value {
     color: #3b3f5c;
@@ -480,13 +488,13 @@
 
 #card-2.card {
     border: none;
+    background-image: linear-gradient(to right, #ec4480 -6%, #7f74f4 100%);
     padding: 32px 30px 32px 30px;
-    color: #1a73e9;
-    background-image: linear-gradient(-20deg, #c2d5ff 0%, #bae7ff 100%);
+    color: #fff;
 }
 #card-2.card img { width: 115px; }
 #card-2.card .card-meta-date {
-    color: #1a73e9;
+    color: #ffeccb;
     font-weight: 600;
 }
 
@@ -498,12 +506,12 @@
 */
 
 #card-4 {
+    background-image: linear-gradient(to right, #6156ce 0%, #f8538d 100%);
     padding: 35px 13px;
-    color: #1a73e9;
-    background-image: linear-gradient(-20deg, #c2d5ff 0%, #bae7ff 100%);
+    color: #fff;
 }
 #card-4 .card-img-container {
-    background-color: #1a73e9;
+    background-color: #6556cc;
     width: 70px;
     padding: 14px;
     border-radius: 50%;
@@ -548,7 +556,7 @@
 
 #card-5 {
     padding: 35px 35px 30px 35px;
-    background: #acb0c3;
+    background-image: linear-gradient(to top, #3a62f5 0%, #6156ce 100%);
 }
 #card-5 .img-container img {
     border-radius: 50%;
@@ -564,7 +572,7 @@
     font-weight: 600;
 }
 #card-5 .f-body p.card-text.txt-2 span.primary-txt { color: #fff; }
-#card-5 .f-body p.card-text.txt-2 span.secondary-txt { color: #3232b7; }
+#card-5 .f-body p.card-text.txt-2 span.secondary-txt { color: #00d1c1; }
 #card-5 .tip {
     font-size: 20px;
     color: #fff;
@@ -579,7 +587,7 @@
 
 .product-cat8 .card {
     border: none;
-    background: #c2d5ff;
+    background: #6156ce;
 }
 .product-cat8 .product_inner .card-title {
     position: absolute;
@@ -589,7 +597,7 @@
     top: 22px;
 }
 .product-cat8 .product_inner .card-title p {
-    color: #1a73e9;
+    color: #ffffff;
     font-size: 20px;
     margin-bottom: 6px;
     text-align: center;
@@ -597,14 +605,14 @@
 .product-cat8 .product_inner .card-title p .product-name { font-size: 32px; }
 .product-cat8 .product_inner .card-title p .product-quality { font-size: 22px; }
 .product-cat8 .product_inner p.product-price {
-  color: #1a73e9;
+  color: #ffffff;
     font-size: 24px;
     margin-bottom: 8px;
     padding: 32px;
 }
 .product-cat8 .product_inner span.badge {
     padding: 11px 16px;
-    background-color: #4f5163;
+    background-color: #5247bd;
     font-size: 14px;
 }
 .product-cat8 .product_inner i.add-to-fav {
@@ -643,7 +651,7 @@
 }
 #user-profile-card-5.card .card-body .usr-info-meta .usr-name {
    font-size: 16px;
-    color: #1a73e9;
+    color: #ee3d50;
     font-weight: 600;
 }
 #user-profile-card-5.card .card-body span { padding: 6px 13px; }
@@ -658,7 +666,7 @@
     right: 0;
     bottom: 20px;
 }
-#user-profile-card-5.card .card-body .card-bottom-section button { margin-bottom: 7px !important; background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%); }
+#user-profile-card-5.card .card-body .card-bottom-section button { margin-bottom: 7px !important; }
 
 
 /*
@@ -704,8 +712,8 @@
 
 .card#card-6 {
     border: none;    
-    background-image: linear-gradient(-20deg, #c2d5ff 0%, #bae7ff 100%);    
-    color: #1a73e9;
+    background-image: linear-gradient(199deg, #6a11cb 29%, #2575fc 100%);
+    color: #fff;
 }
 .card#card-6 .card-body {
     padding: 82px 35px;

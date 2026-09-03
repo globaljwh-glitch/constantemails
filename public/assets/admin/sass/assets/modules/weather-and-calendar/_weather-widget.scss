@@ -18,7 +18,7 @@
 	}
 	.w-temperature {
 		font-size: 68px;
-		color: $primary;
+		color: $color_57;
 		.w-t-value {
 			position: $pos-rel;
 			&:before {
@@ -33,7 +33,7 @@
 	.w-icon-locator {
 		i {
 			font-size: 88px;
-			color: $primary;
+			color: $color_57;
 			font-size: 100px;
 		}
 	}
@@ -46,7 +46,7 @@
 		}
 		.wind-speed {
 			i {
-				color: #3232b7;
+				color: $color_55;
 			}
 			span {
 				color: $black;
@@ -54,7 +54,7 @@
 		}
 		.stats {
 			i {
-				color: #3232b7;
+				color: $color_55;
 			}
 			span {
 				color: $black;
@@ -82,16 +82,18 @@
 		}
 	}
 }
-
 .weather-calendar {
-    background: $light-primary;
+	background: -webkit-linear-gradient(#6156ce, #5247bd);
+	background: -o-linear-gradient(#6156ce, #5247bd);
+	background: -moz-linear-gradient(#6156ce, #5247bd);
+	background: linear-gradient(#6156ce, #5247bd);
 	.weather-grids.weather-mdl {
 		text-align: center;
 	}
 	.weather-grids {
 		h3 {
 			font-size: 30px;
-			color: $dark;
+			color: $white;
 			font-weight: 100;
 			line-height: 1.2;
 		}
@@ -102,11 +104,11 @@
 		h2 {
 			font-size: 2.5em;
 			font-weight: 300;
-			color: $dark;
+			color: $white;
 		}
 		h4 {
 			font-size: 1em;
-			color: $dark;
+			color: $white;
 		}
 	}
 	.weather-bottom {
@@ -114,7 +116,7 @@
 		margin-top: 2em;
 		ul {
 			li {
-				color: $dark;
+				color: $white;
 			}
 			li.bg {
 				background: #314277;
@@ -122,7 +124,7 @@
 		}
 		h4 {
 			font-size: 1em;
-			color: $dark;
+			color: $white;
 			font-weight: 100;
 		}
 		figure {
@@ -130,17 +132,17 @@
 			width: 55px;
 			height: 55px;
 			border-radius: 50%;
-			background-color: $white;
+			background-color: $color_59;
 			line-height: 6.3;
 		}
 		h5 {
 			font-size: 1.2em;
-			color: $dark;
+			color: $white;
 			font-weight: 600;
 		}
 		h6 {
 			font-size: 1em;
-			color: $dark;
+			color: $color_84;
 			margin-top: 0.5em;
 		}
 	}

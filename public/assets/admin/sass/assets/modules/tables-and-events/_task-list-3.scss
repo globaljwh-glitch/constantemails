@@ -85,7 +85,7 @@
                         label.new-control.new-checkbox.checkbox-success {
                             >input {
                                 &:checked~span.new-control-indicator {
-                                    background: $dark;
+                                    background: $color_59;
                                     border: none;
                                 }
                             }

@@ -5,7 +5,7 @@ body {
     color: #888da8;
     height: 100%;
     font-size: 0.875rem;
-    background: #f0f0f0;
+    background: #e9ecef;
     overflow-x: hidden;
     overflow-y: auto;
     letter-spacing: 0.0312rem;
@@ -274,9 +274,9 @@ select.form-control.form-custom {
     margin-top: 56px
 }
 #content {
-    /*width: 50%;*/
-    /*flex-grow: 8;*/
-    /*margin-top: 59px;*/
+    width: 50%;
+    flex-grow: 8;
+    margin-top: 59px;
     margin-bottom: 67px;
 }
 .main-container-fluid > .main-content > .container {
@@ -343,7 +343,7 @@ select.form-control.form-custom {
 .page-title {
     float: left;
     margin-bottom: 35px;
-    margin-top: 35px;
+    margin-top: 35px
 }
 
 .page-title h3 {
@@ -600,7 +600,7 @@ ul.inline-ordered-list li:before {
 .crumbs .breadcrumb {
     display: inline-flex;
     padding: 8px;
-    background-color: #f1f3f1;
+    background-color: transparent;
 }
 .crumbs .breadcrumb li {
     font-size: 12px
@@ -619,7 +619,8 @@ ul.inline-ordered-list li:before {
     vertical-align: baseline;
 }
 .crumbs .breadcrumb li.active a {
-    color: #949494!important
+    color: #000!important;
+    font-weight: 600;
 }
 .crumbs .crumb-buttons {
     list-style: none;
@@ -738,7 +739,6 @@ ul.inline-ordered-list li:before {
 .widget.box .widget-header.widget-heading {
     background: transparent;
     box-shadow: none;
-    margin-top: 20px;
 }
 .widget.box .widget-header.widget-heading h4 {
     font-size: 21px;
@@ -3929,10 +3929,14 @@ label.custom-control-label { margin-bottom: .5rem; margin-bottom: 16px; }
 .new-control.new-radio.new-radio-line-through.radio-dark>input:checked~span.new-radio-content,
 .new-control.new-radio.new-radio-line-through.radio-classic-dark>input:checked~span.new-radio-content { color: #4f5163; }
 
+
+
 .mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
     background-color: #dedfdf!important;
     width: 5px;
 }
+
+
 
 /*  Media Queries   */
 

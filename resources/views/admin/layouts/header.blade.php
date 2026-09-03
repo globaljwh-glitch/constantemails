@@ -1,170 +1,258 @@
-<div id="eq-loader">
-      <div class="eq-loader-div">
-          <div class="eq-loading dual-loader mx-auto mb-5"></div>
-      </div>
+<!-- Tab Mobile View Header -->
+<header class="tabMobileView header navbar fixed-top d-lg-none">
+    <div class="nav-toggle">
+        <a href="javascript:void(0);" class="nav-link sidebarCollapse" data-placement="bottom">
+            <i class="flaticon-menu-line-2"></i>
+        </a>
+        <a href="index.html" class=""> <img src="{{  asset('assets/admin/assets/img/logo-3.jpg') }}" class="img-fluid"
+                alt="logo"></a>
     </div>
-    <!--  BEGIN NAVBAR  -->
-    <header class="desktop-nav header navbar fixed-top">
-        <div class="nav-logo mr-sm-5 ml-sm-4">
-            <a href="javascript:void(0);" class="nav-link sidebarCollapse d-inline-block mr-sm-5" data-placement="bottom">
-                <i class="flaticon-menu-line-3"></i>
+    <ul class="nav navbar-nav">
+        <li class="nav-item d-lg-none">
+            <form class="form-inline justify-content-end" role="search">
+                <input type="text" class="form-control search-form-control mr-3">
+            </form>
+        </li>
+    </ul>
+</header>
+<!-- Tab Mobile View Header -->
+
+<!--  BEGIN NAVBAR  -->
+<header class="header navbar fixed-top navbar-expand-sm">
+    <a href="javascript:void(0);" class="sidebarCollapse d-none d-lg-block" data-placement="bottom"><i
+            class="flaticon-menu-line-2"></i></a>
+
+
+
+    <!-- <ul class="navbar-nav flex-row mr-lg-auto ml-lg-0  ml-auto">
+        <li class="nav-item dropdown message-dropdown ml-lg-4">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="flaticon-mail-10"></span><span class="badge badge-primary">13</span>
             </a>
-            <a href="index.html" class=""> <img src="{{ asset('assets/admin/assets/img/1.png') }}" class="img-fluid" alt="logo"></a>
-        </div>
-        <ul class="navbar-nav flex-row mr-auto">
-            <li class="nav-item ml-4 d-lg-none d-sm-block d-none">
-                <form class="form-inline search-full form-inline search animated-search" role="search">
-                    <i class="flaticon-search-1 d-lg-none d-block"></i>
-                    <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Search...">
+            <div class="dropdown-menu  position-absolute" aria-labelledby="messageDropdown">
+                <a class="dropdown-item title" href="javascript:void(0);">
+                    <i class="flaticon-chat-line mr-3"></i><span>You have 13 new messages</span>
+                </a>
+                <a class="dropdown-item" href="javascript:void(0);">
+                    <div class="media">
+                        <div class="usr-img online mr-3">
+                            <img class="usr-img rounded-circle" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}"
+                                alt="Generic placeholder image">
+                        </div>
+                        <div class="media-body">
+                            <div class="mt-0">
+                                <p class="text mb-0">Browse latest projects...</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <p class="meta-user-name mb-0">Kara Young</p>
+                                <p class="meta-time mb-0  align-self-center">1 min ago</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="media">
+                        <div class="usr-img mr-3">
+                            <img class="usr-img rounded-circle" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}"
+                                alt="Generic placeholder image">
+                        </div>
+                        <div class="media-body">
+                            <div class="mt-0">
+                                <p class="text mb-0">Design, Development and...</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <p class="meta-user-name mb-0">Amy Diaz</p>
+                                <p class="meta-time mb-0  align-self-center">5 mins ago</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="media">
+                        <div class="usr-img online mr-3">
+                            <img class="usr-img rounded-circle" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}"
+                                alt="Generic placeholder image">
+                        </div>
+                        <div class="media-body">
+                            <div class="mt-0">
+                                <p class="text mb-0">We can ensure...</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <p class="meta-user-name mb-0">Shaun Park</p>
+                                <p class="meta-time mb-0  align-self-center">1 day ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="footer dropdown-item" href="javascript:void(0);">
+                    <div class="btn btn-info mb-3 mr-2 btn-rounded"><i class="flaticon-arrow-right mr-3"></i> View more
+                    </div>
+                </a>
+            </div>
+        </li>
+
+        <li class="nav-item dropdown notification-dropdown ml-3">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="flaticon-bell-4"></span><span class="badge badge-success">15</span>
+            </a>
+            <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                <a class="dropdown-item title" href="javascript:void(0);">
+                    <i class="flaticon-bell-13 mr-3"></i> <span>You have 15 new notifications</span>
+                </a>
+
+                <a class="dropdown-item text-center  p-1" href="javascript:void(0);">
+
+                    <div class="notification-list ">
+
+                        <div class="notification-item position-relative  mb-3">
+                            <div class="c-dropdown text-right">
+                                <span id="c-dropdonbtn" class="c-dropbtn mr-2"><i class="flaticon-dots"></i></span>
+                                <div class="c-dropdown-content">
+                                    <div class="c-dropdown-item">View</div>
+                                    <div class="c-dropdown-item">Delete</div>
+                                </div>
+                            </div>
+
+                            <h6 class="mb-1">5 new members joined today</h6>
+                            <p><span class="meta-time">1 minute ago</span> . <span class="meta-member-notification">4
+                                    members</span></p>
+                            <ul class="list-inline badge-collapsed-img mt-3">
+                                <li class="list-inline-item chat-online-usr">
+                                    <img src="{{  asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile"
+                                        class="ml-0">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img src="{{  asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img src="{{  asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img src="{{  asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile">
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="notification-item position-relative  mb-3">
+
+                            <div class="c-dropdown text-right">
+                                <span id="c-dropdonbtn2" class="c-dropbtn mr-2"><i class="flaticon-dots"></i></span>
+                                <div class="c-dropdown-content">
+                                    <div class="c-dropdown-item">View</div>
+                                    <div class="c-dropdown-item">Delete</div>
+                                </div>
+                            </div>
+
+                            <h6 class="mb-1">Very long description...</h6>
+                            <p><span class="meta-time">5 minutes ago</span> . <span class="meta-member-notification">5
+                                    members</span></p>
+                            <ul class="list-inline badge-collapsed-img mt-3">
+                                <li class="list-inline-item chat-online-usr">
+                                    <img alt="admin-profile" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}"
+                                        class="ml-0">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img alt="admin-profile" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img alt="admin-profile" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img alt="admin-profile" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img alt="admin-profile" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}">
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="notification-item position-relative  mb-3">
+                            <div class="c-dropdown text-right">
+                                <span class="c-dropbtn mr-2"><i class="flaticon-dots"></i></span>
+                                <div class="c-dropdown-content">
+                                    <div class="c-dropdown-item">View</div>
+                                    <div class="c-dropdown-item">Delete</div>
+                                </div>
+                            </div>
+
+                            <h6 class="mb-1">New item are in queue</h6>
+                            <p><span class="meta-time">25 minutes ago</span> . <span class="meta-member-notification">3
+                                    members</span></p>
+                            <ul class="list-inline badge-collapsed-img mt-3">
+                                <li class="list-inline-item chat-online-usr">
+                                    <img alt="admin-profile" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}"
+                                        class="ml-0">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img alt="admin-profile" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}">
+                                </li>
+                                <li class="list-inline-item chat-online-usr">
+                                    <img alt="admin-profile" src="{{  asset('assets/admin/assets/img/90x90.jpg') }}">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+                <a class="footer dropdown-item text-center p-2">
+                    <span class="mr-1">View All</span>
+                    <div class="btn btn-gradient-warning rounded-circle"><i
+                            class="flaticon-arrow-right flaticon-circle-p"></i></div>
+                </a>
+            </div>
+        </li>
+    </ul> -->
+
+
+    <ul class="navbar-nav flex-row ml-lg-auto">
+
+
+
+
+
+        <li class="nav-item dropdown user-profile-dropdown ml-lg-0 mr-lg-2 ml-3 order-lg-0 order-1">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="flaticon-user-12"></span>
+            </a>
+            <div class="dropdown-menu  position-absolute" aria-labelledby="userProfileDropdown">
+                <a class="dropdown-item" href="{{ route('admin.profile') }}">
+                    <i class="mr-1 flaticon-user-6"></i> <span>My Profile</span>
+                </a>
+                <!-- <a class="dropdown-item" href="apps_scheduler.html">
+                    <i class="mr-1 flaticon-calendar-bold"></i> <span>My Schedule</span>
+                </a>
+                <a class="dropdown-item" href="apps_mailbox.html">
+                    <i class="mr-1 flaticon-email-fill-1"></i> <span>My Inbox</span>
+                </a> -->
+
+                <div class="dropdown-divider"></div>
+
+                <!-- The new Logout Link using Javascript to submit the hidden form -->
+                <a class="dropdown-item" href="{{ route('admin.logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="mr-1 flaticon-power-button"></i> <span>Log Out</span>
+                </a>
+
+                <!-- The Hidden POST Form -->
+                <form id="logout-form" action="{{ url('admin/logout') }}" method="POST" class="d-none"
+                    style="display: none;">
+                    @csrf
                 </form>
-            </li>
-            <li class="nav-item d-lg-block d-none">
-                <form class="form-inline form-inline search animated-search" role="search">
-                    <i class="flaticon-search-1 d-lg-none d-block"></i>
-                    <input type="text" class="form-control search-form-control" placeholder="Search here...">
-                </form>
-            </li>
-        </ul>
+            </div>
+        </li>
 
-        <ul class="navbar-nav flex-row ml-lg-auto">
-
-            <li class="nav-item dropdown language-dropdown ml-4 mr-4 pr-3 pl-3 align-self-center d-lg-inline-block d-none">
-                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="flagDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="">EN</span>
-                </a>
-                <div class="dropdown-menu position-absolute eq-animated eq-fadeInUp" aria-labelledby="flagDropdown">
-                    <a class="dropdown-item" href="javascript:void(0);"><img src="{{ asset('assets/admin/assets/img/fr.svg') }}" class="flag-width" alt=""> &nbsp;FR</a>
-                    <a class="dropdown-item" href="javascript:void(0);"><img src="{{ asset('assets/admin/assets/img/jp.svg') }}" class="flag-width" alt=""> &nbsp;JP</a>
-                    <a class="dropdown-item" href="javascript:void(0);"><img src="{{ asset('assets/admin/assets/img/ru.svg') }}" class="flag-width" alt=""> &nbsp;RU</a>
-                    <a class="dropdown-item" href="javascript:void(0);"><img src="{{ asset('assets/admin/assets/img/ca.svg') }}" class="flag-width" alt=""> &nbsp;EN</a>
-                </div>
-            </li>
-
-           
-            <li class="nav-item dropdown message-dropdown ml-lg-4 mr-lg-4 d-sm-block d-none align-self-center">
-                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="message-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="icon flaticon-mail-25"></span><span class="badge badge-primary">13</span>
-                </a>
-                <div class="dropdown-menu  position-absolute p-0 eq-animated eq-fadeInUp" aria-labelledby="message-dropdown">
-                    <div class="">
-                        <a class="dropdown-item">
-                            <div class="">
-                                <div class="media notification-new">
-                                    <div class="usr-img align-self-center mr-3">
-                                        <img class="usr-img rounded-circle" src="{{ asset('assets/admin/assets/img/90x90.jpg') }}" alt="profile">
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex justify-content-between">
-                                            <p class="meta-user-name mr-3 mb-0">Kara Young</p>
-                                            <p class="meta-time align-self-center mb-0">04.02.19</p>
-                                        </div>
-                                        <p class="message-text mb-0 ">Simple and clean! Nice I'd like to </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item">
-                            <div class="">
-                                <div class="media notification-new">
-                                    <div class="notification-icon align-self-center mr-3">
-                                        <i class="flaticon-mailbox"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex justify-content-between">
-                                            <p class="meta-title mr-3 mb-0">1 new email</p>
-                                            <p class="meta-time align-self-center mb-0">04.02.19</p>
-                                        </div>
-                                        <p class="message-text mb-0 ">Anderson.Daisy@mail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item">
-                            <div class="">
-                                <div class="media">
-                                    <div class="usr-img align-self-center mr-3">
-                                        <img class="usr-img rounded-circle" src="{{ asset('assets/admin/assets/img/90x90.jpg') }}" alt="profile">
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex justify-content-between">
-                                            <p class="meta-user-name mr-3 mb-0">Oscar Garner</p>
-                                            <p class="meta-time align-self-center mb-0">04.02.19</p>
-                                        </div>
-                                        <p class="message-text mb-0 ">Simple and clean! Nice I'd like to </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown notification-dropdown ml-3 mr-lg-4 align-self-center">
-                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notification-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="icon flaticon-bell-4"></span><span class="badge badge-success">15</span>
-                </a>
-                <div class="dropdown-menu position-absolute eq-animated eq-fadeInUp" aria-labelledby="notification-dropdown">
-                    <div class="notification-scroll">
-                        <div class="dropdown-item">
-                            <a href="">
-                                <div class="media">
-                                    <div class="user-profile">
-                                        <img src="{{ asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile" class="img-fluid">
-                                    </div>
-                                    <div class="media-body">
-                                        <span>Alan Green</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a href="">
-                                <div class="media">
-                                    <div class="user-profile">
-                                        <img src="{{ asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile" class="img-fluid">
-                                    </div>
-                                    <div class="media-body">
-                                        <span>Irene Collins</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a href="">
-                                <div class="media">
-                                    <div class="user-profile">
-                                        <img src="{{ asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile" class="img-fluid">
-                                    </div>
-                                    <div class="media-body">
-                                        <span>Sonia Shaw</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a href="">
-                                <div class="media">
-                                    <div class="user-profile">
-                                        <img src="{{ asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile" class="img-fluid">
-                                    </div>
-                                    <div class="media-body">
-                                        <span>Xavier</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown user-profile-dropdown pl-4 pr-lg-0 pr-2 ml-lg-2 mr-lg-4  align-self-center">
-                <a href="javascript:void(0);" class="nav-link dropdown-toggle user">
-                    <div class="user-profile d-lg-block d-none">
-                        <img src="{{ asset('assets/admin/assets/img/90x90.jpg') }}" alt="admin-profile" class="img-fluid">
-                    </div>
-                    <i class="flaticon-user-7 d-lg-none d-block"></i>
-                </a>
-            </li>
-        </ul>
-    </header>
-    <!--  END NAVBAR  -->
+        <!-- <li class="nav-item dropdown cs-toggle order-lg-0 order-3">
+            <a href="#" class="nav-link toggle-control-sidebar suffle">
+                <span class="flaticon-menu-dot-fill d-lg-inline-block d-none"></span>
+                <span class="flaticon-dots d-lg-none"></span>
+            </a>
+        </li> -->
+    </ul>
+</header>
+<!--  END NAVBAR  -->

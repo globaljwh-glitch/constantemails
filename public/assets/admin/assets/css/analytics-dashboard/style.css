@@ -44,16 +44,16 @@
     height: 14px;
 }
 .top-keyword .top-keyword-body .top-keyword-label .d-m-top-keyword-1 {
-    background-color: #c2d5ff;
+    background-color: #7d56ce;
 }
 .top-keyword .top-keyword-body .top-keyword-label .d-m-top-keyword-2 {
-    background-color: #3232b7;
+    background-color: #989ebf;
 }
 .top-keyword .top-keyword-body .top-keyword-label .d-m-top-keyword-3 {
-    background-color: #1a73e7;
+    background-color: #0cc2aa;
 }
 .top-keyword .top-keyword-body .top-keyword-label .d-m-top-keyword-4 {
-    background-color: #4f5163;
+    background-color: #f8538d;
 }
 
 
@@ -137,7 +137,7 @@
 */
 
 .direct { padding: 35px 20px 35px 5px; }
-.direct .direct-stats { font-weight: 700; color: #00b1f4; }
+.direct .direct-stats { font-weight: 700; color: #f8538d; }
 .direct .direct-title h6 {
     color: #989ebf;
     font-size: 18px;
@@ -162,7 +162,7 @@
 */
 
 .referral { padding: 35px 20px 35px 5px; }
-.referral .referral-stats { font-weight: 700; color: #1d73e9; }
+.referral .referral-stats { font-weight: 700; color: #00b1f4; }
 .referral .referral-title h6 {
     color: #989ebf;
     font-size: 18px;
@@ -186,7 +186,7 @@
 */
 
 .social { padding: 35px 20px 35px 5px; }
-.social .social-stats { font-weight: 700; color: #00b1f4; }
+.social .social-stats { font-weight: 700; color: #e95f2b; }
 .social .social-title h6 {
     color: #989ebf;
     font-size: 18px;
@@ -209,7 +209,10 @@
 /*  Weather Calendar    */
 
 .weather-calendar {
-    background: #c2d5ff;
+    background: -webkit-linear-gradient(#6156ce, #5247bd);
+    background: -o-linear-gradient(#6156ce, #5247bd);
+    background: -moz-linear-gradient(#6156ce, #5247bd);
+    background: linear-gradient(#6156ce, #5247bd);
 }
 
 
@@ -218,7 +221,7 @@
 }
 .weather-calendar .weather-grids h3 {
     font-size: 30px;
-    color: #4f5163;
+    color: #fff;
     font-weight: 100;
     line-height: 1.2;
     margin-top: 0.7em;
@@ -226,25 +229,25 @@
 .weather-calendar .weather-grids h2 {
     font-size: 2.5em;
     font-weight: 300;
-    color: #4f5163;
+    color: #fff;
 }
 .weather-calendar .weather-grids h4 {
     font-size: 1em;
-    color: #4f5163;
+    color: #fff;
 }
 .weather-calendar .weather-bottom {
     text-align: center;
     margin-top: 2em;
 }
 .weather-calendar .weather-bottom ul li {
-    color: #4f5163;
+    color: #fff;
 }
 .weather-calendar .weather-bottom ul li.bg{
     background: #314277;
 }
 .weather-calendar .weather-bottom h4 {
     font-size: 1em;
-    color: #4f5163;
+    color: #fff;
     font-weight: 100;
 }
 .weather-calendar .weather-bottom figure {
@@ -252,17 +255,17 @@
     width: 55px;
     height: 55px;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: #25d5e4;
     line-height: 6.3;
 }
 .weather-calendar .weather-bottom h5 {
     font-size: 1.2em;
-    color: #4f5163;
+    color: #fff;
     font-weight: 600;
 }
 .weather-calendar .weather-bottom h6 {
     font-size: 1em;
-    color: #4f5163;
+    color: #07e0c4;
     margin-top: 0.5em;
 }
 
@@ -338,7 +341,7 @@
     color: #e7515a;
 }
 .todo-list-advance .todo-list-header i.add-task {
-    background-color: #1a73e9;
+    background-color: #f58b22;
     border-radius: 50%;
     position: absolute;
     bottom: -40px;
@@ -424,7 +427,7 @@
     border-radius: 50%;
 }
 .todo-list-advance .todo-list-bottom button:hover {
-    background-color: #1a73e9;
+    background-color: #e7515a;
     color: #fff!important;
 }
 
@@ -479,9 +482,8 @@
 
 .card#card-6 {
     border: none;    
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-    background-image: linear-gradient(-20deg, #c2d5ff 0%, #bae7ff 100%);
-    color: #1a73e9;
+    background-image: linear-gradient(199deg, #6a11cb 29%, #2575fc 100%);
+    color: #fff;
 }
 .card#card-6 .card-body {
     padding: 82px 35px;
@@ -542,14 +544,14 @@
 }
 .analytics .pignose-calendar .pignose-calendar-top .pignose-calendar-top-year {
     font-size: 140%;
-    color: #4f5163;
+    color: #00d1c1;
     font-size: 22px;
     font-weight: 600;
 }
 .analytics .pignose-calendar .pignose-calendar-top .pignose-calendar-top-month {
     font-size: 120%;
     font-weight: 600;
-    color: #4f5163;
+    color: #5247bd;
     font-size: 20px;
     border-bottom: solid 1px #fff;
 }
@@ -575,7 +577,7 @@
     top: 4px;
     position: relative;
     vertical-align: middle;
-    color: #acb0c3;
+    color: #e95f2b;
 }
 .analytics .pignose-calendar .pignose-calendar-top .pignose-calendar-top-nav.pignose-calendar-top-prev .pignose-calendar-top-icon {
     left: 8px;
@@ -602,7 +604,7 @@
     font-weight: 600;
     overflow: hidden;
     color: #3b3f5c;
-    background-color: #c2d5ff;
+    background-color: #f1f3f1;
     margin-top: 18px;
     margin-bottom: 10px;
     padding: 0 25px;
@@ -623,7 +625,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     font-weight: normal;
-    color: #1a73e9;
+    color: #5247bd;
 }
 .analytics .pignose-calendar .pignose-calendar-header .pignose-calendar-week.pignose-calendar-week-sun,
 .analytics .pignose-calendar .pignose-calendar-header .pignose-calendar-week.pignose-calendar-week-sat {
@@ -705,7 +707,7 @@
     color: #cccccc !important;
 }
 .analytics .pignose-calendar-unit.pignose-calendar-unit-active a {    
-    background-color: #1a73e9;
+    background-color: #5247bd;
     color: #ffffff!important;
     font-weight: 600;
     border-radius: 10px;
@@ -719,8 +721,8 @@
     color: #ffffff;
 }
 .analytics .pignose-calendar-unit a:hover {
-    background-color: #c2d5ff;
-    color: #1a73e9!important;
+    background-color: #07dabf;
+    color: #fff!important;
     font-weight: 600;
     border-radius: 10px;
 }
@@ -864,7 +866,7 @@
     border-top: 1px solid #e9ecef;
 }
 .usr-list .usr-list-body .u-l-add-new button {
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
     font-size: 14px;
     padding: 12px 30px;
@@ -899,7 +901,6 @@
 }
 .news-feeds .news-feeds-body table td .new-control.new-checkbox.checkbox-danger>input:checked~span.new-control-indicator {
     border: #e7515a;
-    background-color: #4f5163;
 }
 .news-feeds .news-feeds-body table td .new-control.new-checkbox.checkbox-danger>input:checked~span.new-control-indicator:after {
     margin-left: -3px;
@@ -964,7 +965,7 @@
 .browser-statistics .browser-statistics-body table .d-flex .progress {
     border-radius: 20px;
     height: 10px;
-    border: 1px solid #d3d3d3;
+    border: 1px solid #e9ecef;
     background-color: #f1f3f1;
 }
 .browser-statistics .browser-statistics-body table .d-flex .progress .progress-bar {

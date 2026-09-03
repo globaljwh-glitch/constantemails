@@ -14,12 +14,12 @@
 		.value {
 			font-weight: 600;
 			margin-bottom: $m-0;
-			color: $primary;
+			color: $color_74;
 		}
 		p {
 			font-weight: 600;
 			margin-bottom: $m-0;
-			color: $color_74;
+			color: $primary;
 		}
 		div.progress {
 			height: 8px;
@@ -30,19 +30,19 @@
 			padding: $p-10;
 			font-size: 28px;
 			border-radius: $br-4;
-			color: $primary;
-			background-color: $light-primary;
+			color: $success;
+			background-color: $light-success;
 			vertical-align: $v-align-text-top;
 		}
 		.value {
 			font-weight: 600;
 			margin-bottom: $m-0;
-			color: $primary;
+			color: $color_74;
 		}
 		p {
 			font-weight: 600;
 			margin-bottom: $m-0;
-			color: $color_74;
+			color: $success;
 		}
 		div.progress {
 			height: 8px;
@@ -53,19 +53,19 @@
 			padding: $p-10;
 			font-size: 28px;
 			border-radius: $br-4;
-			color: $primary;
-			background-color: $light-primary;
+			color: $warning;
+			background-color: $light-warning;
 			vertical-align: $v-align-text-top;
 		}
 		.value {
 			font-weight: 600;
 			margin-bottom: $m-0;
-			color: $primary;
+			color: $color_74;
 		}
 		p {
 			font-weight: 600;
 			margin-bottom: $m-0;
-			color: $color_74;
+			color: $warning;
 		}
 		div.progress {
 			height: 8px;
@@ -76,19 +76,19 @@
 			padding: $p-10;
 			font-size: 28px;
 			border-radius: $br-4;
-			color: $primary;
-			background-color: $light-primary;
+			color: $danger;
+			background-color: $light-danger;
 			vertical-align: $v-align-text-top;
 		}
 		.value {
 			font-weight: 600;
 			margin-bottom: $m-0;
-			color: $primary;
+			color: $color_74;
 		}
 		p {
 			font-weight: 600;
 			margin-bottom: $m-0;
-			color: $color_74;
+			color: $danger;
 		}
 		div.progress {
 			height: 8px;

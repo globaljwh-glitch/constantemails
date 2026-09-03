@@ -15,7 +15,7 @@
     border: solid 1px #ee3d50;
 }
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-    background-color: #4f5163;
+    background-color: #ee3d50;
     border: none;
 }
 .title-heading {
@@ -227,14 +227,14 @@
     padding: 12px;
     border-radius: 6px;
     height: 230px;
-    background-color: #c2d5ff;
+    background-image: linear-gradient(to top, #07e0c4 0%, #24ccda 100%);
 }
 .btc-balance .widget-wrapper .col-md-12:nth-child(2)  {
     padding-left: 10px;
     padding-right: 10px;
 }
 .btc-balance .widget-wrapper .widget-title {
-    color: #1a73e9;
+    color: #fff;
     font-size: 21px;
     border-bottom: none;
     margin-bottom: 0;
@@ -242,7 +242,7 @@
     text-align: center;
 }
 .btc-balance .widget-wrapper .widget-value {
-    color: #1a73e9;
+    color: #fff;
     font-size: 26px;
     font-weight: 600;
     text-align: center;
@@ -261,14 +261,14 @@
     padding: 12px;
     border-radius: 6px;
     height: 230px;
-    background-color: #acb0c3;
+    background-image: linear-gradient(to top, #3232b7 0%, #24ccda 100%);
 }
 .btc-received .widget-wrapper .col-md-12:nth-child(2)  {
     padding-left: 10px;
     padding-right: 10px;
 }
 .btc-received .widget-wrapper .widget-title {
-    color: #4f5163;
+    color: #fff;
     font-size: 21px;
     border-bottom: none;
     margin-bottom: 0;
@@ -276,7 +276,7 @@
     text-align: center;
 }
 .btc-received .widget-wrapper .widget-value {
-    color: #4f5163;
+    color: #fff;
     font-size: 26px;
     font-weight: 600;
     text-align: center;
@@ -294,14 +294,14 @@
     padding: 12px;
     border-radius: 6px;
     height: 226px;
-    background-color: #dccff7;
+    background-image: linear-gradient(to top, #6156ce 0%, #3826f5 100%);
 }
 .btc-sent .widget-wrapper .col-md-12:nth-child(2)  {
     padding-left: 10px;
     padding-right: 10px;
 }
 .btc-sent .widget-wrapper .widget-title {
-    color: #805dca;
+    color: #fff;
     font-size: 21px;
     border-bottom: none;
     margin-bottom: 0;
@@ -309,7 +309,7 @@
     text-align: center;
 }
 .btc-sent .widget-wrapper .widget-value {
-    color: #805dca;
+    color: #fff;
     font-size: 26px;
     font-weight: 600;
     text-align: center;
@@ -328,14 +328,14 @@
     padding: 12px;
     border-radius: 6px;
     height: 226px;
-    background-color: #bae7ff;
+    background-image: linear-gradient(to top, #00b1f4 0%, #0081e6 100%);
 }
 .btc-total-transacts .widget-wrapper .col-md-12:nth-child(2)  {
     padding-left: 10px;
     padding-right: 10px;
 }
 .btc-total-transacts .widget-wrapper .widget-title {
-    color: #0081e6;
+    color: #fff;
     font-size: 21px;
     border-bottom: none;
     margin-bottom: 0;
@@ -343,7 +343,7 @@
     text-align: center;
 }
 .btc-total-transacts .widget-wrapper .widget-value {
-    color: #0081e6;
+    color: #fff;
     font-size: 26px;
     font-weight: 600;
     text-align: center;
@@ -376,7 +376,7 @@
     height: 200px;
 }
 .volume .card-title {
-    color: #4f5163;
+    color: #ee3d50;
     font-weight: 600;
     font-size: 19px;
 }
@@ -402,7 +402,7 @@
     height: 200px;
 }
 .market-cap .card-title {
-    color: #4f5163;
+    color: #ee3d50;
     font-weight: 600;
     font-size: 19px;
 }
@@ -427,7 +427,7 @@
     height: 200px;
 }
 .max-supply .card-title {
-    color: #4f5163;
+    color: #ee3d50;
     font-weight: 600;
     font-size: 19px;
 }
@@ -716,7 +716,7 @@
 }
 .all-coins .table > thead:first-child > tr:first-child > th {
     border-top: none;
-    color: #3232b7;
+    color: #3862f5;
     font-size: 15px;
     font-weight: 600;
 }
@@ -797,12 +797,12 @@ div.dataTables_length label {
     padding: 0px 15px 2px 15px;
 }
 .todo-list .todo-title {
-    background-image: linear-gradient(-20deg, #bae7ff 0%, #c2d5ff 100%);
+    background-image: linear-gradient(to left, #ed6ea0 0%, #ec8c69 100%);
     border-bottom-left-radius: 0!important;
     border-bottom-right-radius: 0!important;
 }
 .todo-list .todo-title .title-heading {
-    color: #1a73e9;
+    color: #fff;
     margin-bottom: 0;
     padding: 10px;
 }
@@ -832,7 +832,7 @@ p.usr-deal-number {
     color: #888ea8;
 }
 .todo-list .usr-btc {
-    color: #3232b7;
+    color: #5247bd;
 }
 .todo-list .usr-deal {
     font-size: 13px;
@@ -859,8 +859,7 @@ p.usr-deal-number {
 
 #card-5 {
     padding: 35px 35px 30px 35px;
-    /*background-image: linear-gradient(to top, #3a62f5 0%, #6156ce 100%);*/
-    background: #acb0c3;
+    background-image: linear-gradient(to top, #3a62f5 0%, #6156ce 100%);
 }
 #card-5 .img-container img {
     border-radius: 50%;
@@ -883,7 +882,7 @@ p.usr-deal-number {
     color: #fff;
 }
 #card-5 .f-body p.card-text.txt-2 span.secondary-txt {
-    color: #3232b7;
+    color: #00d1c1;
 }
 #card-5 .tip {
     font-size: 20px;
@@ -901,11 +900,10 @@ p.usr-deal-number {
 #card-4 {
     background-image: linear-gradient(to right, #6156ce 0%, #f8538d 100%);
     padding: 35px 13px;
-    color: #1a73e9;
-    background-image: linear-gradient(-20deg, #c2d5ff 0%, #bae7ff 100%);
+    color: #fff;
 }
 #card-4 .card-img-container {
-    background-color: #1a73e9;
+    background-color: #6556cc;
     width: 70px;
     padding: 14px;
     border-radius: 50%;
@@ -951,7 +949,7 @@ p.usr-deal-number {
 */
 
 .underline-content {
-    background-color: #fff;
+    background-color: #6156ce;
 }
 .underline-content .nav-tabs {
     border-bottom: none;
@@ -960,12 +958,12 @@ p.usr-deal-number {
     border-bottom-right-radius: 0!important;
 }
 .form-control{
-    color: #1a73e9;
-    background-color: #c2d5ff;
-    border: 1px solid #1a73e9;
+    color: #ffffff;
+    background-color: #4b42a5;
+    border: 1px solid #4b42a5;
 }
 .tab-content label {
-    color: #1a73e9;
+    color: #fff;
 }
 .underline-content .nav-tabs li a {
     padding-top: 15px;

@@ -37,42 +37,42 @@ $(".product-sales-list .product-sales-body #ps1").sparkline([4,6,7,5,4,5,7,3,4,9
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#1a73e9',
+  lineColor: '#5247bd',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#1a73e9',
-  maxSpotColor: '#1a73e9'
+  minSpotColor: '#5247bd',
+  maxSpotColor: '#5247bd'
 });
 
 $(".product-sales-list .product-sales-body #ps2").sparkline([4,6,7,5,4,5,7,3,4,9,6,3], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#f58b22',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#f58b22',
+  maxSpotColor: '#f58b22'
 });
 
 $(".product-sales-list .product-sales-body #ps3").sparkline([4,6,7,5,4,5,7,3,4,9,6,3], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#1abc9c',
+  lineColor: '#07dabf',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#1abc9c',
-  maxSpotColor: '#1abc9c'
+  minSpotColor: '#07dabf',
+  maxSpotColor: '#07dabf'
 });
 
 $('.product-sales li a').on('shown.bs.tab', function(event) {
@@ -80,42 +80,42 @@ $('.product-sales li a').on('shown.bs.tab', function(event) {
       type: 'line',
       width: '100',
       height: '30',
-      lineColor: '#1a73e9',
+      lineColor: '#5247bd',
       lineWidth: 1,
       spotRadius: 3.5,
       fillColor: 'transparent',
       spotColor: '#1ad271',
       spotRadius: 0,
-      minSpotColor: '#1a73e9',
-      maxSpotColor: '#1a73e9'
+      minSpotColor: '#5247bd',
+      maxSpotColor: '#5247bd'
     });
 
     $(".product-sales-list .product-sales-body #ps5").sparkline([4,6,7,5,4,5,7,3,4,9,6,3], {
       type: 'line',
       width: '100',
       height: '30',
-      lineColor: '#4f5163',
+      lineColor: '#f58b22',
       lineWidth: 1,
       spotRadius: 3.5,
       fillColor: 'transparent',
       spotColor: '#1ad271',
       spotRadius: 0,
-      minSpotColor: '#4f5163',
-      maxSpotColor: '#4f5163'
+      minSpotColor: '#f58b22',
+      maxSpotColor: '#f58b22'
     });
 
     $(".product-sales-list .product-sales-body #ps6").sparkline([4,6,7,5,4,5,7,3,4,9,6,3], {
       type: 'line',
       width: '100',
       height: '30',
-      lineColor: '#1abc9c',
+      lineColor: '#07dabf',
       lineWidth: 1,
       spotRadius: 3.5,
       fillColor: 'transparent',
       spotColor: '#1ad271',
       spotRadius: 0,
-      minSpotColor: '#1abc9c',
-      maxSpotColor: '#1abc9c'
+      minSpotColor: '#07dabf',
+      maxSpotColor: '#07dabf'
     });  
 });
 
@@ -137,6 +137,7 @@ $(".best-performers .best-performers-body .best-performers-scroll").mCustomScrol
   axis:"x", // vertical and horizontal scrollbar
   autoHideScrollbar:true,
 });
+
 scrollbar(".worst-performers .worst-performers-body .worst-performers-scroll1", true)
 $('.worst-performers-tab a#worst-performers-weekly-tab').on('shown.bs.tab', function (e) {
   scrollbar(".worst-performers .worst-performers-body .worst-performers-scroll1", true)
@@ -339,7 +340,7 @@ $(".b-p-weekly-chart-1").sparkline([ [2, 1], [3, 1.3], [2.5, 1], [2.2, 1.2], [2.
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $(".b-p-weekly-chart-2").sparkline([ [2.4, 1.7], [2, 1.3], [1.5, 1.6], [2.9, 1], [2.3, 1.4], [1.4, 1.6], [3.6, 2.2], [2.1, 1.4], [2.6, 1.4], [2, 1.2], [4.3, 1.2], [2.5, 1.5] ], {
@@ -349,7 +350,7 @@ $(".b-p-weekly-chart-2").sparkline([ [2.4, 1.7], [2, 1.3], [1.5, 1.6], [2.9, 1],
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $(".b-p-weekly-chart-3").sparkline([ [3, 0.7], [2, 1.3], [2.5, 1.5], [3.2, 1.2], [5.0, 1.5], [2.0, 1.7], [2.6, 1.2], [2.1, 1.4], [2, 1.0], [3, 1.6], [6.3, 1.3], [2.7, 3.5] ], {
@@ -359,7 +360,7 @@ $(".b-p-weekly-chart-3").sparkline([ [3, 0.7], [2, 1.3], [2.5, 1.5], [3.2, 1.2],
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $(".b-p-weekly-chart-4").sparkline([ [1, 1.6], [3, 1.0], [2.6, 1.8], [2.2, 1.2], [2.9, 1.7], [3.4, 2.9], [2.6, 1.2], [1.1, 1.8], [2, 1.3], [2, 1.2], [1.3, 2.3], [2.5, 1.5] ], {
@@ -369,7 +370,7 @@ $(".b-p-weekly-chart-4").sparkline([ [1, 1.6], [3, 1.0], [2.6, 1.8], [2.2, 1.2],
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $(".b-p-weekly-chart-5").sparkline([ [2.3, 1.9], [2.4, 0.8], [3.5, 2.8], [2.6, 1.2], [2.3, 1.4], [2.4, 2.3], [2.6, 1.2], [2.1, 1.4], [2.1, 1.3], [2, 1.2], [2, 1.3], [2, 1] ], {
@@ -379,7 +380,7 @@ $(".b-p-weekly-chart-5").sparkline([ [2.3, 1.9], [2.4, 0.8], [3.5, 2.8], [2.6, 1
     barSpacing: 4,
     zeroAxis: false,
     barColor: '#f58b22',
-    stackedBarColor: ['#1a73e9', '#989ebf']
+    stackedBarColor: ['#6424c9', '#989ebf']
 });
 
 $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
@@ -391,7 +392,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
 
   $(".b-p-weekly-chart-7").sparkline([ [3, 0.7], [2, 1.3], [2.5, 1.5], [3.2, 1.2], [5.0, 1.5], [2.0, 1.7], [2.6, 1.2], [2.1, 1.4], [2, 1.0], [3, 1.6], [6.3, 1.3], [2.7, 3.5] ], {
@@ -401,7 +402,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
   
   $(".b-p-weekly-chart-8").sparkline([ [2.3, 1.9], [2.4, 0.8], [3.5, 2.8], [2.6, 1.2], [2.3, 1.4], [2.4, 2.3], [2.6, 1.2], [2.1, 1.4], [2.1, 1.3], [2, 1.2], [2, 1.3], [2, 1] ], {
@@ -411,7 +412,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
 
   $(".b-p-weekly-chart-9").sparkline([ [1, 1.6], [3, 1.0], [2.6, 1.8], [2.2, 1.2], [2.9, 1.7], [3.4, 2.9], [2.6, 1.2], [1.1, 1.8], [2, 1.3], [2, 1.2], [1.3, 2.3], [2.5, 1.5] ], {
@@ -421,7 +422,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
 
   $(".b-p-weekly-chart-10").sparkline([ [2, 1.1], [2, 1.3], [2.5, 1.5], [2.2, 1.2], [2.3, 1.4], [2.4, 1.3], [2.6, 1.2], [2.1, 1.4], [2, 1.3], [2, 1.2], [2.3, 1.3], [2.5, 1.5] ], {
@@ -431,7 +432,7 @@ $('.best-performers-tab li a').on('shown.bs.tab', function(event) {
       barSpacing: 4,
       zeroAxis: false,
       barColor: '#f58b22',
-      stackedBarColor: ['#00b1f4', '#989ebf']
+      stackedBarColor: ['#1abc9c', '#989ebf']
   });
 
 });
@@ -530,70 +531,70 @@ $(".all-coins #btc").sparkline([4,6,7,5,4,5,7,3,4,9,6,3], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 $(".all-coins #eth").sparkline([5,6,7,9,8,5,2,3,9,4,6,7], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 $(".all-coins #xrp").sparkline([3,6,5,2,4,5,8,3,4,7,6,2], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 $(".all-coins #bch").sparkline([2,4,7,4,9,5,6,2,4,6,6,1], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 $(".all-coins #ada").sparkline([5,6,7,9,4,5,2,8,4,3,6,4], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 // Latest Activities scroll

@@ -37,7 +37,7 @@ h4 {
 			i {
 				font-weight: 600;
 				font-size: 15px;
-				color: $dark;
+				color: $color_169;
 			}
 		}
 	}
@@ -450,8 +450,8 @@ ul.pagination {
 			position: $pos-rel;
 			.text {
 				margin-right: 38px;
-				background-color: $light-primary;
-			    color: $primary;
+				background-color: $color_86;
+				color: $white;
 				border-radius: 1.875rem !important;
 				border-top-right-radius: 0px !important;
 				padding: 12px;
@@ -583,15 +583,4 @@ ul.pagination {
 	.read-section {
 		border: none;
 	}
-}
-
-@media (max-width: 1652px) {
-    .mail-chat-system .chat-messages {
-        height: 1120px;
-    }
-}
-@media (min-width: 1653px) {
-    .mail-chat-system .chat-messages {
-        height: 822px;
-    }
 }

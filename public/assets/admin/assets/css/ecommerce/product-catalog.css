@@ -609,10 +609,10 @@ h5.card-small-title {
     font-size: 13px;
 }
 .product-cat10 .card .wrapper {
-    background: url(../../img/table.jpg);
+    background: url(../../img/520x520.jpg);
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-size: contain;
+    background-size: auto;
 }
 .product-cat10 .card .title {
     margin-top: 10px;

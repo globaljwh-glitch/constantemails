@@ -11,11 +11,11 @@
 		}
 		.total-shared-traded-tab.nav-pills {
 			.nav-link.active {
-				background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+				background-image: $additional-gradient-color-16;
 			}
 			.show {
 				>.nav-link {
-					background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+					background-image: $additional-gradient-color-16;
 				}
 			}
 			.nav-link {
@@ -45,7 +45,7 @@
 			}
 			.tab-pane#total-shared-traded-monthly {
 				.d-m-total-stats {
-					background-color: $primary;
+					background-color: $additional-color-3;
 					height: 12px;
 					width: 12px;
 				}
@@ -53,15 +53,15 @@
 			#total-shared-traded-monthly {
 				.ct-series-a {
 					.ct-point {
-						stroke: $primary;
+						stroke: $additional-color-3;
 						stroke-width: 9px;
 					}
 					.ct-line {
-						stroke: $primary;
+						stroke: $additional-color-3;
 						stroke-width: 3px;
 					}
 					.ct-area {
-						fill: $primary;
+						fill: $color_89;
 					}
 				}
 				.ct-label.ct-vertical.ct-start {
@@ -75,7 +75,7 @@
 			}
 			.tab-pane#total-shared-traded-yearly {
 				.d-m-total-stats {
-					background-color: $info;
+					background-color: $color_86;
 					height: 12px;
 					width: 12px;
 				}
@@ -83,15 +83,15 @@
 			#total-shared-traded-yearly {
 				.ct-series-a {
 					.ct-point {
-						stroke: $info;
+						stroke: $color_86;
 						stroke-width: 9px;
 					}
 					.ct-line {
-						stroke: $info;
+						stroke: $color_86;
 						stroke-width: 3px;
 					}
 					.ct-area {
-						fill: $info;
+						fill: $color_79;
 					}
 				}
 				.ct-label.ct-vertical.ct-start {

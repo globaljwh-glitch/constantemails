@@ -3,7 +3,7 @@
 */
 .file-uploader {
 	position: $pos-rel;
-	background-color: $light-primary;
+	background-image: $additional-gradient-color-24;
 	height: 100%;
 	.dropzone {
 		min-height: 290px;
@@ -29,21 +29,19 @@
 	.dz-message {
 		h3 {
 			font-size: 22px;
-			color: $primary;
+			color: $white;
 		}
 		i {
 			font-size: 90px;
-			color: $primary;
+			color: $white;
 		}
 		button {
-			border: $b-width-2 $solid $primary !important;
-			color: $primary !important;
+			border: $b-width-2 $solid $white !important;
+			color: $white !important;
 			padding: 10px 35px;
 			border-radius: 6px;
 			&:hover {
-				color: $white !important;
-			    background-color: $primary!important;
-			    border-color: $primary!important;
+				color: $dark !important;
 			}
 		}
 	}

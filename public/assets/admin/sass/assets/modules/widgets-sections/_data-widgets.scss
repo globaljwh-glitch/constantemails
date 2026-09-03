@@ -33,26 +33,26 @@
 	}
 	.widget.t-sales-widget {
 		i {
-			background-color: $light-primary;
-			color: $primary;
+			background-color: $light-secondary;
+			color: $secondary;
 		}
 	}
 	.widget.t-order-widget {
 		i {
-			background-color: $light-primary;
-			color: $primary;
+			background-color: $additional-color-17;
+			color: $additional-color-3;
 		}
 	}
 	.widget.t-customer-widget {
 		i {
-			background-color: $light-primary;
-			color: $primary;
+			background-color: $light-success;
+			color: $success;
 		}
 	}
 	.widget.t-income-widget {
 		i {
-			background-color: $light-primary;
-			color: $primary;
+			background-color: $light-warning;
+			color: $warning;
 		}
 	}
 }

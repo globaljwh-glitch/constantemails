@@ -400,7 +400,7 @@ $(function() {
             
             // create the notification
             var notification = new NotificationFx({
-                message : '<div class="ns-thumb"><img src="assets/img/user1.jpeg"/></div><div class="ns-content"><p><a href="#">Zoe Moulder</a> accepted your invitation.</p></div>',
+                message : '<div class="ns-thumb"><img src="assets/img/64x64.jpg"/></div><div class="ns-content"><p><a href="#">Zoe Moulder</a> accepted your invitation.</p></div>',
                 layout : 'other',
                 ttl : 6000,
                 effect : 'thumbslider',
@@ -505,7 +505,7 @@ function notify(style) {
     $.notify({
         title: 'Email Notification',
         text: 'You received an e-mail from your boss. You should read it right now!',
-        image: "<img src='assets/img/boy.png'/>"
+        image: "<img src='assets/img/90x90.jpg'/>"
     }, {
         style: 'metro',
         className: style,

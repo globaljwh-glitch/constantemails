@@ -4,7 +4,7 @@
 	.breadcrumb {
 		display: inline-flex;
 		padding: 8px;
-		background-color: $color_6;
+		background-color: $color_none;
 		li {
 			font-size: 12px;
 			a {
@@ -23,7 +23,8 @@
 		}
 		li.active {
 			a {
-				color: $color_4 !important;
+				color: $black !important;
+				font-weight: 600;
 			}
 		}
 	}

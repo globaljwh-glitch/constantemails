@@ -16,7 +16,6 @@ $(".traffic-country .traffic-country-scroll").mCustomScrollbar({
   axis:"x", // horizontal scrollbar
   autoHideScrollbar:true,
 });
-
 // Monthly Charts
 function weaklychart() {
   var data = {
@@ -153,11 +152,11 @@ $('#world-map').vectorMap({
       series: {
           regions: [{
               values: {
-                  US:'#1a73e9',
-                  AU:'#acb0c3',
-                  ES:'#3232b7',
-                  FR:'#25d5d4',
-                  IN:'#00b1f4',
+                  US:'#38a9ff',
+                  AU:'#816cfd',
+                  ES:'#00d1c1',
+                  FR:'#f8538d',
+                  IN:'#ffb88e',
               }
           }]
       },
@@ -182,6 +181,50 @@ $('#world-map').vectorMap({
 
 });
 
+
+// basic echarts charts script
+
+var chart = c3.generate({
+    bindto: '#basic_chart',
+    data: {
+      columns: [
+        ['Aged Payables', 5000, 10000, 15000, 14000, 20000, 5000, 10000, 15000, 14000, 20000, 5000, 10000],
+        ['Aged Recieveables', 6000, 11000, 17000, 15000, 22000, 6000, 11000, 17000, 15000, 22000, 6000, 11000]
+      ],
+      types: {
+        'Aged Payables': 'bar',
+      }
+    },
+    size: {
+      height: 485
+    },
+    color: {
+      pattern: ["#07e0c4", "#f58b22"]
+    },
+    bar: {
+        space: 0.2,
+        // or
+        width: 13 // this makes bar width 100px
+    },
+    legend: {
+        position: 'inset'
+    },
+    axis : {
+        y: {
+            tick: {
+                count: 6,
+                format: function (d) { return (d)/1000+'k'; },
+                outer: false
+            }
+        },
+        x: {
+            type: 'category',
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        }
+    }
+});
+
+
 function profitMonthlyRendered() {
   var chart = c3.generate({
     bindto: '#r_p_summary',
@@ -197,7 +240,7 @@ function profitMonthlyRendered() {
           onmouseout: function (d, i) { console.log("onmouseout", d, i); }
       },
       color: {
-        pattern: ['#00b1f4', '#4f5163', '#c2d5ff']
+        pattern: ['#f8538d', '#6156ce', '#00d1c1']
       },
       donut: {
         title: "Profit 21k",
@@ -230,7 +273,7 @@ $('.r-p-summary li a').on('shown.bs.tab', function(event) {
             onmouseout: function (d, i) { console.log("onmouseout", d, i); }
         },
         color: {
-          pattern: ['#00b1f4', '#4f5163', '#c2d5ff']
+          pattern: ['#f8538d', '#6156ce', '#00d1c1']
         },
         donut: {
           title: "Profit 243k",
@@ -261,15 +304,15 @@ var map = AmCharts.makeChart( "total-visits", {
   "projection": "winkel3",
   "theme": "light",
   "imagesSettings": {
-    "rollOverColor": "#1a73e9",
+    "rollOverColor": "#515365",
     "rollOverScale": 3,
     "selectedScale": 3,
-    "selectedColor": "#1a73e9",
-    "color": "#1a73e9"
+    "selectedColor": "#515365",
+    "color": "#3b3f5c"
   },
 
   "areasSettings": {
-    "unlistedAreasColor": "#acb0c3",
+    "unlistedAreasColor": "#a9b8fa",
     "outlineThickness": 0.1
   },
 
@@ -333,7 +376,7 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
       "radius": "100%",
       "innerRadius": "85%"
     }, {
-      "color": "#4f5163",
+      "color": "#f8538d",
       "startValue": 0,
       "endValue": 80,
       "radius": "100%",
@@ -346,7 +389,7 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
       "radius": "80%",
       "innerRadius": "65%"
     }, {
-      "color": "#1a73e9",
+      "color": "#0cc2aa",
       "startValue": 0,
       "endValue": 35,
       "radius": "80%",
@@ -359,7 +402,7 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
       "radius": "60%",
       "innerRadius": "45%"
     }, {
-      "color": "#c2d5ff",
+      "color": "#7d56ce",
       "startValue": 0,
       "endValue": 92,
       "radius": "60%",
@@ -372,7 +415,7 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
       "radius": "40%",
       "innerRadius": "25%"
     }, {
-      "color": "#3232b7",
+      "color": "#989ebf",
       "startValue": 0,
       "endValue": 68,
       "radius": "40%",
@@ -383,6 +426,199 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
   "export": {
     "enabled": true
   }
+});
+
+var chart = AmCharts.makeChart( "visitors-stats-chart", {
+  "type": "pie",
+  "theme": "light",
+  "dataProvider": [ {
+    "title": "New",
+    "value": 2200,
+  }, {
+    "title": "Returning",
+    "value": 9899,
+  } ],
+  "titleField": "title",
+  "valueField": "value",
+  "labelRadius": 5,
+  "colors": [ "#e9ecef", "#1abc9c" ],
+  "radius": "42%",
+  "innerRadius": "60%",
+  "labelText": "[[title]]",
+  "export": {
+    "enabled": true
+  }
+} );
+
+
+// Main Analytics Chart
+
+var chart = AmCharts.makeChart("chartdiv", {
+    "type": "serial",
+    "legend": {
+        "equalWidths": false,
+        "useGraphSettings": true,
+        "valueAlign": "left",
+        "valueWidth": 120
+    },
+    "dataProvider": [{
+        "date": "2018-12-01",
+        "visits": 227,
+        "townName": "New York",
+        "townSize": 25,
+        "latitude": 40.71,
+        "page views": 408
+    }, {
+        "date": "2018-12-02",
+        "visits": 371,
+        "townName": "Washington",
+        "townSize": 14,
+        "latitude": 38.89,
+        "page views": 482
+    }, {
+        "date": "2018-12-03",
+        "visits": 433,
+        "townName": "Wilmington",
+        "townSize": 6,
+        "latitude": 34.22,
+        "page views": 562
+    }, {
+        "date": "2018-12-04",
+        "visits": 345,
+        "townName": "Jacksonville",
+        "townSize": 7,
+        "latitude": 30.35,
+        "page views": 379
+    }, {
+        "date": "2018-12-05",
+        "visits": 480,
+        "townName": "Miami",
+        "townSize": 10,
+        "latitude": 25.83,
+        "page views": 501
+    }, {
+        "date": "2018-12-06",
+        "visits": 386,
+        "townName": "Tallahassee",
+        "townSize": 7,
+        "latitude": 30.46,
+        "page views": 443
+    }, {
+        "date": "2018-12-07",
+        "visits": 348,
+        "townName": "New Orleans",
+        "townSize": 10,
+        "latitude": 29.94,
+        "page views": 405
+    }, {
+        "date": "2018-12-08",
+        "visits": 238,
+        "townName": "Houston",
+        "townSize": 16,
+        "latitude": 29.76,
+        "page views": 309
+    }, {
+        "date": "2018-12-09",
+        "visits": 218,
+        "townName": "Dalas",
+        "townSize": 17,
+        "latitude": 32.8,
+        "page views": 287
+    }, {
+        "date": "2018-12-10",
+        "visits": 349,
+        "townName": "Oklahoma City",
+        "townSize": 11,
+        "latitude": 35.49,
+        "page views": 485
+    }, {
+        "date": "2018-12-11",
+        "visits": 603,
+        "townName": "Kansas City",
+        "townSize": 10,
+        "latitude": 39.1,
+        "page views": 890
+    }, {
+        "date": "2018-12-12",
+        "visits": 534,
+        "townName": "Denver",
+        "townSize": 18,
+        "latitude": 39.74,
+        "page views": 810
+    }, {
+        "date": "2018-12-13",
+        "townName": "Salt Lake City",
+        "townSize": 12,
+        "visits": 425,
+        "page views": 670,
+        "latitude": 40.75,
+        "dashLength": 8,
+        "alpha": 0.4
+    }],
+    "valueAxes": [{
+        "id": "visitsAxis",
+        "axisAlpha": 0,
+        "gridAlpha": 0,
+        "position": "left",
+        "title": "visits"
+    }],
+    "graphs": [{
+        "alphaField": "alpha",
+        "balloonText": "[[value]]",
+        "dashLengthField": "dashLength",
+        "fillAlphas": 1,
+        "legendPeriodValueText": "total: [[value.sum]]",
+        "legendValueText": "[[value]]",
+        "title": "visits",
+        "fillColors":"#c3ab76",
+        "lineColor":"#c3ab76",
+        "type": "column",
+        "valueField": "visits",
+        "valueAxis": "visitsAxis"
+    }, {
+        "bullet": "square",
+        "bulletBorderAlpha": 1,
+        "bulletBorderThickness": 1,
+        "dashLengthField": "dashLength",
+        "legendPeriodValueText": "[[value.sum]]",
+        "legendValueText": "[[value]]",
+        "title": "page views",
+        "lineColor": "#d84141",
+        "fillAlphas": 0,
+        "valueField": "page views",
+        "valueAxis": "pageViewsAxis"
+    }],
+    "chartCursor": {
+        "categoryBalloonDateFormat": "DD",
+        "cursorAlpha": 0.1,
+        "cursorColor":"#000000",
+         "fullWidth":true,
+        "valueBalloonsEnabled": false,
+        "zoomable": false
+    },
+    "dataDateFormat": "YYYY-MM-DD",
+    "categoryField": "date",
+    "categoryAxis": {
+        "dateFormats": [{
+            "period": "DD",
+            "format": "D"
+        }, {
+            "period": "WW",
+            "format": "MMM DD"
+        }, {
+            "period": "MM",
+            "format": "MMM"
+        }, {
+            "period": "YYYY",
+            "format": "YYYY"
+        }],
+        "parseDates": true,
+        "autoGridCount": false,
+        "axisColor": "#555555",
+        "gridAlpha": 0.1,
+        "gridColor": "#FFFFFF",
+        "gridCount": 50
+    }
 });
 
 // Revenue Stats
@@ -831,51 +1067,51 @@ var chart = AmCharts.makeChart( "page-views-monthly", {
   "dataProvider": [ {
     "date": "Jan",
     "value": 21000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Feb",
     "value": 22000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Mar",
     "value": 60000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Apr",
     "value": 80000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "May",
     "value": 20000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Jun",
     "value": 70000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Jul",
     "value": 22000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Aug",
     "value": 25000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Sep",
     "value": 30000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Oct",
     "value": 33000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Nov",
     "value": 95000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "Dec",
     "value": 99000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }]
 } );
 
@@ -944,755 +1180,755 @@ var chart = AmCharts.makeChart( "page-views-yearly", {
  "dataProvider": [ {
     "date": "2018-07-27",
     "value": 13000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-07-28",
     "value": 11000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-07-29",
     "value": 15000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-07-30",
     "value": 16000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-07-31",
     "value": 18000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-01",
     "value": 13000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-02",
     "value": 22000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-03",
     "value": 23000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-04",
     "value": 20000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-05",
     "value": 17000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-06",
     "value": 16000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-07",
     "value": 18000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-08",
     "value": 21000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-09",
     "value": 26000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-10",
     "value": 24000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-11",
     "value": 29000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-12",
     "value": 32000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-13",
     "value": 18000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-14",
     "value": 24000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-15",
     "value": 22000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-16",
     "value": 18000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-17",
     "value": 19000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-18",
     "value": 14000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-19",
     "value": 15000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-20",
     "value": 12000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-21",
     "value": 8000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-22",
     "value": 9000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-23",
     "value": 8000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-24",
     "value": 7000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-25",
     "value": 5000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-26",
     "value": 11000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-27",
     "value": 13000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-28",
     "value": 18000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-29",
     "value": 20000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-30",
     "value": 29000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-08-31",
     "value": 33000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-01",
     "value": 42000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-02",
     "value": 35000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-03",
     "value": 31000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-04",
     "value": 47000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-05",
     "value": 52000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-06",
     "value": 46000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-07",
     "value": 41000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-08",
     "value": 43000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-09",
     "value": 40000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-10",
     "value": 39000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-11",
     "value": 34000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-12",
     "value": 29000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-13",
     "value": 34000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-14",
     "value": 37000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-15",
     "value": 42000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-16",
     "value": 49000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-17",
     "value": 46000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-18",
     "value": 47000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-19",
     "value": 55000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-20",
     "value": 59000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-21",
     "value": 58000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-22",
     "value": 57000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-23",
     "value": 61000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-24",
     "value": 59000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-25",
     "value": 67000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-26",
     "value": 65000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-27",
     "value": 61000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-28",
     "value": 66000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-29",
     "value": 69000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-09-30",
     "value": 71000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-01",
     "value": 67000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-02",
     "value": 63000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-03",
     "value": 46000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-04",
     "value": 32000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-05",
     "value": 21000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-06",
     "value": 18000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-07",
     "value": 21000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-08",
     "value": 28000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-09",
     "value": 27000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-10",
     "value": 36000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-11",
     "value": 33000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-12",
     "value": 31000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-13",
     "value": 30000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-14",
     "value": 34000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-15",
     "value": 38000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-16",
     "value": 37000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-17",
     "value": 44000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-18",
     "value": 49000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-19",
     "value": 53000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-20",
     "value": 57000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-21",
     "value": 60000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-22",
     "value": 61000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-23",
     "value": 69000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-24",
     "value": 67000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-25",
     "value": 72000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-26",
     "value": 77000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-27",
     "value": 75000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-28",
     "value": 70000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-29",
     "value": 72000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-30",
     "value": 70000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-10-31",
     "value": 72000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-01",
     "value": 73000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-02",
     "value": 67000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-03",
     "value": 68000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-04",
     "value": 65000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-05",
     "value": 71000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-06",
     "value": 75000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-07",
     "value": 74000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-08",
     "value": 71000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-09",
     "value": 76000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-10",
     "value": 77000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-11",
     "value": 81000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-12",
     "value": 83000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-13",
     "value": 80000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-14",
     "value": 81000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-15",
     "value": 87000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-16",
     "value": 82000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-17",
     "value": 86000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-18",
     "value": 80000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-19",
     "value": 87000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-20",
     "value": 83000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-21",
     "value": 85000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-22",
     "value": 84000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-23",
     "value": 82000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-24",
     "value": 73000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-25",
     "value": 71000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-26",
     "value": 75000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-27",
     "value": 79000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-28",
     "value": 70000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-29",
     "value": 73000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-11-30",
     "value": 61000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-01",
     "value": 62000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-02",
     "value": 66000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-03",
     "value": 65000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-04",
     "value": 73000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-05",
     "value": 79000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-06",
     "value": 78000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-07",
     "value": 78000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-08",
     "value": 78000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-09",
     "value": 74000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-10",
     "value": 73000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-11",
     "value": 75000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-12",
     "value": 70000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-13",
     "value": 77000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-14",
     "value": 67000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-15",
     "value": 62000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-16",
     "value": 64000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-17",
     "value": 61000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-18",
     "value": 59000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-19",
     "value": 53000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-20",
     "value": 54000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-21",
     "value": 56000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-22",
     "value": 59000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-23",
     "value": 58000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-24",
     "value": 55000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-25",
     "value": 52000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-26",
     "value": 54000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-27",
     "value": 50000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-28",
     "value": 50000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-29",
     "value": 51000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-30",
     "value": 52000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2018-12-31",
     "value": 58000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-01",
     "value": 60000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-02",
     "value": 67000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-03",
     "value": 64000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-04",
     "value": 66000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-05",
     "value": 60000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-06",
     "value": 63000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-07",
     "value": 61000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-08",
     "value": 60000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-09",
     "value": 65000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-10",
     "value": 75000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-11",
     "value": 77000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-12",
     "value": 78000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-13",
     "value": 70000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-14",
     "value": 70000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-15",
     "value": 73000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-16",
     "value": 71000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-17",
     "value": 74000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-18",
     "value": 78000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-19",
     "value": 85000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-20",
     "value": 82000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-21",
     "value": 83000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-22",
     "value": 88000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-23",
     "value": 85000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-24",
     "value": 85000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-25",
     "value": 80000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-26",
     "value": 87000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-27",
     "value": 84000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-28",
     "value": 83000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-29",
     "value": 84000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }, {
     "date": "2019-01-30",
     "value": 81000,
-    "lineColor": "#4f5163"
+    "lineColor": "#00d1c1"
   }]
 } );
 
@@ -1887,8 +2123,8 @@ var chart = AmCharts.makeChart("activity-chart", {
   }, {
     "id": "g4",
     "valueAxis": "v1",
-    "lineColor": "#4f5163",
-    "fillColors": "#4f5163",
+    "lineColor": "#e95f2b",
+    "fillColors": "#e95f2b",
     "fillAlphas": 1,
     "type": "column",
     "title": "Target Sales",
@@ -1906,7 +2142,7 @@ var chart = AmCharts.makeChart("activity-chart", {
     "bulletSize": 5,
     "hideBulletsCount": 50,
     "lineThickness": 2,
-    "lineColor": "#1abc9c",
+    "lineColor": "#6156ce",
     "type": "smoothedLine",
     "title": "Market Days",
     "useLineColorForBulletBorder": true,
@@ -1921,7 +2157,7 @@ var chart = AmCharts.makeChart("activity-chart", {
     "bulletSize": 5,
     "hideBulletsCount": 50,
     "lineThickness": 2,
-    "lineColor": "#1a73e9",
+    "lineColor": "#04b331",
     "type": "smoothedLine",
     "dashLength": 5,
     "title": "Market Days ALL",
@@ -2056,7 +2292,7 @@ var chart = AmCharts.makeChart( "today-volume", {
     "labelText": "[[title]]  ",
     "valueText": " $[[value]]"
   },
-  "colors" : ["#1a73e9","#acb0c3"],
+  "colors" : ["#f8538d","#6156ce"],
   "dataProvider": [ {
     "title": "Total Change",
     "value": 915.83
@@ -2079,7 +2315,7 @@ var chart = AmCharts.makeChart("traders-per-exchange-chart", {
   "type": "pie",
   "startDuration": 0,
    "theme": "light",
-   "colors": [ "#00b1f4", "#acb0c3", "#4f5163", "#bae7ff", "#1a73e9", "#c2d5ff", "#3232b7" ],
+   "colors": [ "#f8538d", "#00b1f4", "#e9b02b", "#00d1c1", "#6156ce", "#e95f2b", "#1a73e9" ],
   "addClassNames": true,
   "legend":{
     "position":"left",
@@ -2170,8 +2406,8 @@ var chart = AmCharts.makeChart("sale-statistics", {
   "graphs": [{
     "id": "g3",
     "valueAxis": "v1",
-    "lineColor": "#c2d5ff",
-    "fillColors": "#c2d5ff",
+    "lineColor": "#24ccda",
+    "fillColors": "#24ccda",
     "fillAlphas": 1,
     "type": "column",
     "title": "Monthly Revenue",
@@ -2183,8 +2419,8 @@ var chart = AmCharts.makeChart("sale-statistics", {
   }, {
     "id": "g4",
     "valueAxis": "v1",
-    "lineColor": "#1a73e9",
-    "fillColors": "#1a73e9",
+    "lineColor": "#805dca",
+    "fillColors": "#805dca",
     "fillAlphas": 1,
     "type": "column",
     "title": "Yearly Revenue",
@@ -2339,8 +2575,8 @@ var chart = AmCharts.makeChart( "radarchartdiv", {
       "bullet": "round",
       "lineThickness": 2,
       "valueField": "litres",
-      "bulletColor": "#1a73e9",
-      "lineColor": "#1a73e9",
+      "bulletColor": "#07e0c4",
+      "lineColor": "#07e0c4",
     } ],
     "categoryField": "productsName"
 } );
@@ -2352,19 +2588,19 @@ var chart = AmCharts.makeChart( "visitor-engagement-chart", {
   "dataProvider": [ {
     "title": "Electronic",
     "value": 4852,
-    "color": "#00b1f4"
+    "color": "#805dca"
   }, {
     "title": "News & Media",
     "value": 3899,
-    "color": "#1a73e9"
+    "color": "#00b1f4"
   }, {
     "title": "Software",
     "value": 2899,
-    "color": "#4f5163"
+    "color": "#f8538d"
   }, {
     "title": "Home Appliances",
     "value": 8590,
-    "color": "#3232b7"
+    "color": "#e9b02b"
   } ],
   "titleField": "title",
   "valueField": "value",
@@ -2514,7 +2750,7 @@ var chart = AmCharts.makeChart("bitcoin-chart", {
         "bullet": "round",
         "bulletBorderAlpha": 1,
         "bulletColor": "#FFFFFF",
-        "lineColor": "#3232b7",
+        "lineColor": "#ee3d50",
         "hideBulletsCount": 50,
         "title": "red line",
         "valueField": "visits",

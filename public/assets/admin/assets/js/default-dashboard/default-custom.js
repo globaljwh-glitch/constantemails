@@ -49,14 +49,14 @@ var bar = new ProgressBar.Circle("#daily", {
   // prevent clipping
   strokeWidth: 5,
   trailWidth: 3,
-  trailColor: '#f2f2f2',
+  trailColor: '#f3f3f3',
   easing: 'easeInOut',
   duration: 1400,
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#24ccda', width: 5 },
-  to: { color: '#24ccda', width: 5 },
+  from: { color: '#00d1c1', width: 5 },
+  to: { color: '#00d1c1', width: 5 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -81,14 +81,14 @@ var bar = new ProgressBar.Circle("#weekly", {
   // prevent clipping
   strokeWidth: 5,
   trailWidth: 3,
-  trailColor: '#f2f2f2',
+  trailColor: '#f3f3f3',
   easing: 'easeInOut',
   duration: 1400,
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#1a73e9', width: 5 },
-  to: { color: '#1a73e9', width: 5 },
+  from: { color: '#e95f2b', width: 5 },
+  to: { color: '#e95f2b', width: 5 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -113,14 +113,14 @@ var bar = new ProgressBar.Circle("#month", {
   // prevent clipping
   strokeWidth: 5,
   trailWidth: 3,
-  trailColor: '#f2f2f2',
+  trailColor: '#f3f3f3',
   easing: 'easeInOut',
   duration: 1400,
   text: {
     autoStyleContainer: false
   },
-  from: { color: '#00b1f4', width: 5 },
-  to: { color: '#00b1f4', width: 5 },
+  from: { color: '#0081e6', width: 5 },
+  to: { color: '#0081e6', width: 5 },
   // Set default step function for all animate calls
   step: function(state, circle) {
     circle.path.setAttribute('stroke', state.color);
@@ -158,17 +158,17 @@ $('#world-map').vectorMap({
       color: '#f4f3f0',
       regionStyle: {
               initial: {
-                  fill: '#e6e6e6'
+                  fill: '#f3f3f3'
               }
       },
       series: {
           regions: [{
               values: {
-                  US:'#1a73e9',
-                  AU:'#acb0c3',
-                  ES:'#3232b7',
-                  FR:'#25d5d4',
-                  IN:'#00b1f4',
+                  US:'#38a9ff',
+                  AU:'#816cfd',
+                  ES:'#00d1c1',
+                  FR:'#f8538d',
+                  IN:'#ffb88e',
               }
           }]
       },

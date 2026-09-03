@@ -48,8 +48,8 @@ var chart = AmCharts.makeChart("activity-chart", {
   }, {
     "id": "g4",
     "valueAxis": "v1",
-    "lineColor": "#4f5163",
-    "fillColors": "#4f5163",
+    "lineColor": "#e95f2b",
+    "fillColors": "#e95f2b",
     "fillAlphas": 1,
     "type": "column",
     "title": "Target Sales",
@@ -67,7 +67,7 @@ var chart = AmCharts.makeChart("activity-chart", {
     "bulletSize": 5,
     "hideBulletsCount": 50,
     "lineThickness": 2,
-    "lineColor": "#1abc9c",
+    "lineColor": "#6156ce",
     "type": "smoothedLine",
     "title": "Market Days",
     "useLineColorForBulletBorder": true,
@@ -82,7 +82,7 @@ var chart = AmCharts.makeChart("activity-chart", {
     "bulletSize": 5,
     "hideBulletsCount": 50,
     "lineThickness": 2,
-    "lineColor": "#1a73e9",
+    "lineColor": "#04b331",
     "type": "smoothedLine",
     "dashLength": 5,
     "title": "Market Days ALL",
@@ -208,56 +208,56 @@ $("#balance-btc").sparkline([5,6,5,7,9,7,3,3,9,4,6,4], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#1a73e9',
+  lineColor: '#fff',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#1a73e9',
-  maxSpotColor: '#1a73e9'
+  minSpotColor: '#fff',
+  maxSpotColor: '#fff'
 });
 
 $("#received-btc").sparkline([2,6,3,9,5,9,3,6,4,4,6,7], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#fff',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#fff',
+  maxSpotColor: '#fff'
 });
 
 $("#sent-btc").sparkline([5,6,6,9,5,9,3,4,4,3,6,4], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#805dca',
+  lineColor: '#fff',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#805dca',
-  maxSpotColor: '#805dca'
+  minSpotColor: '#fff',
+  maxSpotColor: '#fff'
 });
 
 $("#transaction-btc").sparkline([5,6,7,9,9,5,3,3,4,4,6,7], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#0081e6',
+  lineColor: '#fff',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#0081e6',
-  maxSpotColor: '#0081e6'
+  minSpotColor: '#fff',
+  maxSpotColor: '#fff'
 });
 
 // Today Volume 
@@ -272,7 +272,7 @@ var chart = AmCharts.makeChart( "today-volume", {
     "labelText": "[[title]]  ",
     "valueText": " $[[value]]"
   },
-  "colors" : ["#1a73e9","#acb0c3"],
+  "colors" : ["#f8538d","#6156ce"],
   "dataProvider": [ {
     "title": "Total Change",
     "value": 915.83
@@ -295,8 +295,7 @@ var chart = AmCharts.makeChart("traders-per-exchange-chart", {
   "type": "pie",
   "startDuration": 0,
    "theme": "light",
-   "colors": [ "#00b1f4", "#acb0c3", "#4f5163", "#bae7ff", "#1a73e9", "#c2d5ff", "#3232b7" ],
-   // "colors": [ "#f8538d", "#00b1f4", "#e9b02b", "#00d1c1", "#6156ce", "#e95f2b", "#1a73e9" ],
+   "colors": [ "#f8538d", "#00b1f4", "#e9b02b", "#00d1c1", "#6156ce", "#e95f2b", "#1a73e9" ],
   "addClassNames": true,
   "legend":{
     "position":"left",
@@ -373,70 +372,70 @@ $(".all-coins #btc").sparkline([4,6,7,5,4,5,7,3,4,9,6,3], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 $(".all-coins #eth").sparkline([5,6,7,9,8,5,2,3,9,4,6,7], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 $(".all-coins #xrp").sparkline([3,6,5,2,4,5,8,3,4,7,6,2], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 $(".all-coins #bch").sparkline([2,4,7,4,9,5,6,2,4,6,6,1], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 $(".all-coins #ada").sparkline([5,6,7,9,4,5,2,8,4,3,6,4], {
   type: 'line',
   width: '100',
   height: '30',
-  lineColor: '#4f5163',
+  lineColor: '#e95f2b',
   lineWidth: 1,
   spotRadius: 3.5,
   fillColor: 'transparent',
   spotColor: '#1ad271',
   spotRadius: 0,
-  minSpotColor: '#4f5163',
-  maxSpotColor: '#4f5163'
+  minSpotColor: '#e95f2b',
+  maxSpotColor: '#e95f2b'
 });
 
 // Bitcoin Chart
@@ -460,7 +459,7 @@ var chart = AmCharts.makeChart("bitcoin-chart", {
         "bullet": "round",
         "bulletBorderAlpha": 1,
         "bulletColor": "#FFFFFF",
-        "lineColor": "#3232b7",
+        "lineColor": "#ee3d50",
         "hideBulletsCount": 50,
         "title": "red line",
         "valueField": "visits",

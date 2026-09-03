@@ -18,11 +18,11 @@
 				border-radius: 30px;
 			}
 			.nav-link.active {
-				background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+				background-image: $additional-gradient-color-23;
 			}
 			.show {
 				>.nav-link {
-					background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+					background-image: $additional-gradient-color-23;
 				}
 			}
 		}
@@ -32,7 +32,7 @@
 			>thead {
 				>tr {
 					>th {
-						color: $primary;
+						color: $color_53;
 						font-size: 18px;
 					}
 				}
@@ -40,7 +40,7 @@
 			>tbody {
 				>tr {
 					>td.customer-name {
-						color: $dark;
+						color: $additional-color-5;
 						font-weight: 600;
 						font-size: 16px;
 					}
@@ -51,7 +51,7 @@
 						padding: $p-0;
 					}
 					>td.customer-price {
-						color: $additional-color-2;
+						color: $color_57;
 						font-weight: 600;
 						font-size: 16px;
 					}
@@ -96,7 +96,7 @@
 						font-weight: 600;
 						&:hover {
 							&:not(.active) {
-								background-color: $dark;
+								background-color: $secondary;
 								color: $white;
 							}
 						}

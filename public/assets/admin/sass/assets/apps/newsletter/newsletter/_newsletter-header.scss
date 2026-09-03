@@ -3,9 +3,11 @@
             Header
     =======================
 */
-.newsletter {
+.container.newsletter {
 	background-color: $white;
-	border-top: $b-width-3 $solid $primary;
+	border-top: $b-width-3 $solid $additional-color-5;
+}
+.newsletter {
 	#headerWrapper {
 		h3 {
 			font-size: 30px;

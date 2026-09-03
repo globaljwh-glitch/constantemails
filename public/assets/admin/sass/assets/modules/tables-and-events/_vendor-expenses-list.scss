@@ -18,11 +18,11 @@
 				border-radius: 30px;
 			}
 			.nav-link.active {
-				background-image: linear-gradient(to right, #434343 0%, #4f5163 100%);
+				background-image: $additional-gradient-color-21;
 			}
 			.show {
 				>.nav-link {
-					background-image: linear-gradient(to right, #434343 0%, #4f5163 100%);
+					background-image: $additional-gradient-color-21;
 				}
 			}
 		}

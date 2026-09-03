@@ -13,11 +13,11 @@
 	}
 	.monthly-chart-tab.nav-pills {
 		.nav-link.active {
-			background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+			background-image: linear-gradient(to right, #25d5e4 0%, #6156ce 100%);
 		}
 		.show {
 			>.nav-link {
-				background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+				background-image: linear-gradient(to right, #25d5e4 0%, #6156ce 100%);
 			}
 		}
 		.nav-link {
@@ -29,38 +29,38 @@
 }
 .ct-series-a {
 	.ct-bar {
-		stroke: $primary;
+		stroke: $color_47;
 		stroke-width: 6px;
 	}
 	.ct-point {
-		stroke: $primary;
+		stroke: $color_47;
 	}
 	.ct-line {
-		stroke: $primary;
+		stroke: $color_47;
 		stroke-width: 2px;
 	}
 	.ct-area {
-		fill: $primary;
+		fill: $color_47;
 	}
 }
 .ct-series-b {
 	.ct-bar {
-		stroke: $light-primary;
+		stroke: $color_59;
 		stroke-width: 4px;
 	}
 	.ct-point {
-		stroke: $light-primary;
+		stroke: $color_59;
 	}
 	.ct-line {
-		stroke: $light-primary;
+		stroke: $color_59;
 		stroke-width: 2px;
 	}
 	.ct-area {
-		fill: $light-primary;
+		fill: $color_59;
 	}
 }
 .d-m-visitors {
-	background-color: $light-primary;
+	background-color: $color_59;
 	height: 8px;
 	width: 8px;
 }
@@ -72,7 +72,7 @@
 	margin-left: 10px;
 }
 .d-m-page-view {
-	background-color: $primary;
+	background-color: $color_47;
 	height: 8px;
 	width: 8px;
 }

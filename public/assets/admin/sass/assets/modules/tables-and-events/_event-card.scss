@@ -11,13 +11,13 @@
 			font-size: 19px;
 			border: none;
 			color: $color_76;
-			background-color: $light-primary;
+			background-color: $color_123;
 		}
 	}
 	.card-event-icon {
 		i {
 			font-size: 81px;
-			color: $additional-color-2;
+			color: $color_122;
 		}
 	}
 	.card-event-list {
@@ -33,14 +33,14 @@
 		right: 0;
 		left: 0;
 		button.btn {
-		    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
-		    border: none;
-		    box-shadow: 2px 3px 15px 0px #1a73e9;
+			background-image: $additional-gradient-color-25;
+			border: none;
+			box-shadow: 2px 3px 15px 0px #6055ce;
 			padding: 12px 29px;
 			font-size: 17px;
 			font-weight: normal;
 			&:hover {
-			    background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%);
+				background-image: $additional-gradient-color-26;
 			}
 		}
 	}

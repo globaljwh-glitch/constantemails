@@ -5,7 +5,7 @@
 */
 #card-5 {
 	padding: 35px 35px 30px 35px;
-    background: #acb0c3;
+	background-image: $additional-gradient-color-8;
 	.img-container {
 		img {
 			border-radius: 50%;
@@ -19,7 +19,7 @@
 				color: $white;
 			}
 			span.secondary-txt {
-				color: #3232b7;
+				color: $color_55;
 			}
 		}
 		p.card-text.txt-2 {
@@ -29,7 +29,7 @@
 				color: $white;
 			}
 			span.secondary-txt {
-				color: #3232b7;
+				color: $color_55;
 			}
 		}
 	}

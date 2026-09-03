@@ -17,11 +17,11 @@
 				border-radius: 20px;
 			}
 			.nav-link.active {
-				background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+				background-image: $additional-gradient-color-15;
 			}
 			.show {
 				>.nav-link {
-					background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+					background-image: $additional-gradient-color-15;
 				}
 			}
 		}
@@ -54,17 +54,17 @@
 		.r-p-summary-legend {
 			padding: 20px;
 			.d-m-r_p_sales {
-				background-color: $light-primary;
+				background-color: $color_55;
 				height: 13px;
 				width: 13px;
 			}
 			.d-m-r_p_revenue {
-				background-color: $dark;
+				background-color: $color_47;
 				height: 13px;
 				width: 13px;
 			}
 			.d-m-r_p_expanditure {
-				background-color: $info;
+				background-color: $additional-color-3;
 				height: 13px;
 				width: 13px;
 			}

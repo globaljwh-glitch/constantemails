@@ -31,7 +31,6 @@
 					>input {
 						&:checked~span.new-control-indicator {
 							border: #e7515a;
-						    background-color: $dark;
 							&:after {
 								margin-left: -3px;
 								margin-top: -6px;

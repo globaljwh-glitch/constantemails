@@ -14,7 +14,7 @@
 			background: $url_15;
 			background-repeat: no-repeat;
 			background-position: 50% 50%;
-			background-size: contain;
+			background-size: auto;
 			&:hover {
 				.card-content-container {
 					-ms-transform: translateY(13px) translateY(1em);

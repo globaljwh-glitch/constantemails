@@ -50,51 +50,50 @@ $(document).ready(function() {
             {
                 title: 'All Day Event',
                 start: '2019-02-01T14:30:00',
-                className: "bg-light-danger"
+                className: "bg-danger"
             },
             {
                 title: 'Long Event',
                 start: '2019-02-07T19:30:00',
                 end: '2019-02-10T14:30:00',
-                className: "bg-light-info"
+                className: "bg-info"
             },
             {
                 title: 'Conference',
                 start: '2019-02-17T14:30:00',
                 end: '2019-02-13T14:30:00',
-                className: "bg-light-warning"
+                className: "bg-warning"
             },
             {
                 title: 'Meeting',
                 start: '2019-02-12T10:30:00',
-                end: '2019-02-12T12:30:00',
-                className: "bg-light-primary"
+                end: '2019-02-12T12:30:00'
             },
             {
                 title: 'Lunch',
                 start: '2019-02-12T15:00:00',
-                className: "bg-light-secondary"
+                className: "bg-secondary"
             },
             {
                 title: 'Meeting',
                 start: '2019-02-12T21:30:00',
-                className: "bg-light-success"
+                className: "bg-success"
             },
             {
                 title: 'Happy Hour',
                 start: '2019-02-12T05:30:00',
-                className: "bg-light-warning"
+                className: "bg-warning"
             },
             {
                 title: 'Dinner',
                 start: '2019-02-12T20:00:00',
-                className: "bg-light-dark"
+                className: "bg-dark"
             },
             {
                 title: 'Click for Google',
                 url: 'http://google.com/',
                 start: '2019-02-28',
-                className: "bg-light-success"
+                className: "bg-success"
             }
         ],
         editable: true,

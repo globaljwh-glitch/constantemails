@@ -1,13 +1,14 @@
+
 // weather script
 
-var icons = new Skycons({"color": "#1a73e9"}),
+var icons = new Skycons({"color": "#FFD700"}),
     list  = ["clear-day"],
     i;
  for(i = list.length; i--; )
     icons.set(list[i], list[i]);
     icons.play();
 
-var icons = new Skycons({"color": "#1a73e9"}),
+var icons = new Skycons({"color": "#6156ce"}),
     list  = ["clear-night", "partly-cloudy-day","partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind","fog"],
     i;
  for(i = list.length; i--; )
@@ -31,15 +32,15 @@ var map = AmCharts.makeChart( "total-visits", {
   "projection": "winkel3",
   "theme": "light",
   "imagesSettings": {
-    "rollOverColor": "#1a73e9",
+    "rollOverColor": "#515365",
     "rollOverScale": 3,
     "selectedScale": 3,
-    "selectedColor": "#1a73e9",
-    "color": "#1a73e9"
+    "selectedColor": "#515365",
+    "color": "#3b3f5c"
   },
 
   "areasSettings": {
-    "unlistedAreasColor": "#acb0c3",
+    "unlistedAreasColor": "#a9b8fa",
     "outlineThickness": 0.1
   },
 
@@ -230,7 +231,7 @@ AmCharts.makeChart( "linec2", {
     "bulletField": "bullet",
     "lineThickness": 2,
     "showBalloon": false,
-    "lineColor": "#00b1f4"
+    "lineColor": "#f8538d"
   } ],
   "valueAxes": [ {
     "gridAlpha": 0,
@@ -323,7 +324,7 @@ AmCharts.makeChart( "linec3", {
     "bulletField": "bullet",
     "lineThickness": 2,
     "showBalloon": false,
-    "lineColor": "#1d73e9"
+    "lineColor": "#00b1f4"
   } ],
   "valueAxes": [ {
     "gridAlpha": 0,
@@ -416,7 +417,7 @@ AmCharts.makeChart( "linec4", {
     "bulletField": "bullet",
     "lineThickness": 2,
     "showBalloon": false,
-    "lineColor": "#00b1f4"
+    "lineColor": "#e95f2b"
   } ],
   "valueAxes": [ {
     "gridAlpha": 0,
@@ -476,7 +477,7 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
       "radius": "100%",
       "innerRadius": "85%"
     }, {
-      "color": "#4f5163",
+      "color": "#f8538d",
       "startValue": 0,
       "endValue": 80,
       "radius": "100%",
@@ -489,7 +490,7 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
       "radius": "80%",
       "innerRadius": "65%"
     }, {
-      "color": "#1a73e9",
+      "color": "#0cc2aa",
       "startValue": 0,
       "endValue": 35,
       "radius": "80%",
@@ -502,7 +503,7 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
       "radius": "60%",
       "innerRadius": "45%"
     }, {
-      "color": "#c2d5ff",
+      "color": "#7d56ce",
       "startValue": 0,
       "endValue": 92,
       "radius": "60%",
@@ -515,7 +516,7 @@ var gaugeChart = AmCharts.makeChart("top-keyword", {
       "radius": "40%",
       "innerRadius": "25%"
     }, {
-      "color": "#3232b7",
+      "color": "#989ebf",
       "startValue": 0,
       "endValue": 68,
       "radius": "40%",

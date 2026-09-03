@@ -88,14 +88,14 @@ $(function(){
 							if ($(window).width() >= 992  ) {
 								$stickyHead.add($stickyInsct).css({
 									opacity: 1,
-									top: $w.scrollTop() - $t.offset().top + 92
+									top: $w.scrollTop() - $t.offset().top + 57
 									// top: $w.scrollTop() - $t.offset().top + 103
 								});
 							} else if($(window).width() <= 991) {
 								$stickyHead.add($stickyInsct).css({
 									opacity: 1,
 									// top: $w.scrollTop() - $t.offset().top + 57
-									top: $w.scrollTop() - $t.offset().top + 91
+									top: $w.scrollTop() - $t.offset().top + 103
 								});
 							}
 

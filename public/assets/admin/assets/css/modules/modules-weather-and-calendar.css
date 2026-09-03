@@ -34,13 +34,13 @@
     text-align: center;
 }
 .default .pignose-calendar .pignose-calendar-top .pignose-calendar-top-year {
-    color: #3232b7;
+    color: #292977;
     font-size: 22px;
     font-weight: 600;
 }
 .default .pignose-calendar .pignose-calendar-top .pignose-calendar-top-month {
     font-weight: 600;
-    color: #3232b7;
+    color: #292977;
     font-size: 22px;
     border-bottom: solid 1px #fff;
 }
@@ -184,7 +184,7 @@
 .default .pignose-calendar-unit.pignose-calendar-unit-active a:before {
     content: '';
     position: absolute;
-    background-color: #3232b7;
+    background-color: #805dca;
     padding: 3px;
     border-radius: 50%;
     bottom: 4px;
@@ -193,7 +193,7 @@
 .default .pignose-calendar-unit.pignose-calendar-unit-active a:after {
     content: '';
     position: absolute;
-    background-color: #00b1f4;
+    background-color: #f8538d;
     padding: 3px;
     border-radius: 50%;
     bottom: 4px;
@@ -412,7 +412,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-.accounting .pignose-calendar-unit.pignose-calendar-unit-su a { color: #1a73e9; }
+.accounting .pignose-calendar-unit.pignose-calendar-unit-su a { color: #ee3d50; }
 .accounting .pignose-calendar-unit .pignose-calendar-button-schedule-container { line-height: .5em; }
 .accounting .pignose-calendar-unit .pignose-calendar-button-schedule-container .pignose-calendar-button-schedule-pin {
     display: inline-block;
@@ -466,7 +466,7 @@
     color: #cccccc !important;
 }
 .accounting .pignose-calendar-unit.pignose-calendar-unit-active a {
-    background-color: #4f5163;
+    background-color: #ee3d50;
     color: #ffffff!important;
     font-weight: 600;
 }
@@ -475,7 +475,7 @@
 .accounting .pignose-calendar-unit.pignose-calendar-unit-active.pignose-calendar-unit-sun a,
 .accounting .pignose-calendar-unit.pignose-calendar-unit-active.pignose-calendar-unit-sat a { color: #ffffff; }
 .accounting .pignose-calendar-unit a:hover {
-    color: #1a73e9;
+    color: #ee3d50;
     font-weight: 600;
 }
 .accounting .pignose-calendar-unit:last-child { width: 14.32%; }
@@ -745,16 +745,13 @@
     font-weight: 600;
     border-radius: 10px;
 }
-.car .pignose-calendar-unit.pignose-calendar-unit-active a:hover {
-    color: #ffffff!important;
-}
 .car .pignose-calendar-unit.pignose-calendar-unit-sun a,
 .car .pignose-calendar-unit.pignose-calendar-unit-sat a { color: gray; }
 .car .pignose-calendar-unit.pignose-calendar-unit-active.pignose-calendar-unit-sun a,
 .car .pignose-calendar-unit.pignose-calendar-unit-active.pignose-calendar-unit-sat a { color: #ffffff; }
 .car .pignose-calendar-unit a:hover {
-    background-color: #c2d5ff;
-    color: #1a73e9!important;
+    background-color: #6156ce;
+    color: #fff!important;
     font-weight: 600;
 }
 .car .pignose-calendar-unit:last-child { width: 14.32%; }
@@ -913,7 +910,7 @@
     top: 5px;
     position: relative;
     vertical-align: middle;
-    color: #4f5163;
+    color: #d3d3d3;
     padding: 5px;
     border-radius: 50%;
 }
@@ -1040,7 +1037,7 @@
 .stock .pignose-calendar-unit.pignose-calendar-unit-active.pignose-calendar-unit-sat a { color: #ffffff; }
 .stock .pignose-calendar-unit a:hover {
     background-color: transparent;
-    color: #3232b7;
+    color: #ee3d50;
     font-weight: 600;
 }
 .stock .pignose-calendar-unit:last-child { width: 14.32%; }
@@ -1163,14 +1160,14 @@
 }
 .analytics .pignose-calendar .pignose-calendar-top .pignose-calendar-top-year {
     font-size: 140%;
-    color: #4f5163;
+    color: #00d1c1;
     font-size: 22px;
     font-weight: 600;
 }
 .analytics .pignose-calendar .pignose-calendar-top .pignose-calendar-top-month {
     font-size: 120%;
     font-weight: 600;
-    color: #4f5163;
+    color: #5247bd;
     font-size: 20px;
     border-bottom: solid 1px #fff;
 }
@@ -1196,7 +1193,7 @@
     top: 4px;
     position: relative;
     vertical-align: middle;
-    color: #acb0c3;
+    color: #e95f2b;
 }
 .analytics .pignose-calendar .pignose-calendar-top .pignose-calendar-top-nav.pignose-calendar-top-prev .pignose-calendar-top-icon {
     left: 8px;
@@ -1223,7 +1220,7 @@
     font-weight: 600;
     overflow: hidden;
     color: #3b3f5c;
-    background-color: #c2d5ff;
+    background-color: #f1f3f1;
     margin-top: 18px;
     margin-bottom: 10px;
     padding: 0 25px;
@@ -1244,7 +1241,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     font-weight: normal;
-    color: #1a73e9;
+    color: #5247bd;
 }
 .analytics .pignose-calendar .pignose-calendar-header .pignose-calendar-week.pignose-calendar-week-sun,
 .analytics .pignose-calendar .pignose-calendar-header .pignose-calendar-week.pignose-calendar-week-sat {
@@ -1326,7 +1323,7 @@
     color: #cccccc !important;
 }
 .analytics .pignose-calendar-unit.pignose-calendar-unit-active a {    
-    background-color: #1a73e9;
+    background-color: #5247bd;
     color: #ffffff!important;
     font-weight: 600;
     border-radius: 10px;
@@ -1340,8 +1337,8 @@
     color: #ffffff;
 }
 .analytics .pignose-calendar-unit a:hover {
-    background-color: #c2d5ff;
-    color: #1a73e9!important;
+    background-color: #07dabf;
+    color: #fff!important;
     font-weight: 600;
     border-radius: 10px;
 }
@@ -1441,7 +1438,7 @@
 
 #weather-card-1.card { border: none; }
 #weather-card-1.card .day-weather {
-    background-color: #4f5163;
+    background-color: #f7ba2d;
     padding: 27px 0 18px;
     height: 100%;
     border-top-right-radius: 0!important;
@@ -1500,9 +1497,9 @@
 /*Timer*/
 
 .date {
-  background: #c2d5ff;
-  padding: 26px 10px;
-  color: #1a73e9;
+  background-image: linear-gradient(to top, #ff6f00 0%, #e95f2b 100%);
+  padding: 25px 10px;
+  color: #fff;
   border-top-right-radius: 0!important;
   border-bottom-right-radius: 0!important;
 }
@@ -1525,7 +1522,7 @@
 }
 .time #date {
   font-size: 24px;
-  color: #1a73e9;
+  color: #e95f2b;
 }
 
 
@@ -1540,7 +1537,7 @@
 .weather-widget .w-condition { font-size: 14px; }
 .weather-widget .w-temperature {
   font-size: 68px;
-  color: #1a73e9;
+  color: #3862f5;
 }
 .weather-widget .w-temperature .w-t-value { position: relative; }
 .weather-widget .w-temperature .w-t-value:before {
@@ -1552,7 +1549,7 @@
 }
 .weather-widget .w-icon-locator i {
   font-size: 88px;
-  color: #1a73e9;
+  color: #3862f5;
   font-size: 100px;
 }
 .weather-widget .weather-stats {
@@ -1563,8 +1560,8 @@
   font-size: 30px;
   vertical-align: middle;
 }
-.weather-widget .weather-stats .wind-speed i { color: #3232b7; }
-.weather-widget .weather-stats .stats i { color: #3232b7; }
+.weather-widget .weather-stats .wind-speed i { color: #00d1c1; }
+.weather-widget .weather-stats .stats i { color: #00d1c1; }
 .weather-widget .weather-stats span { font-size: 15px; }
 .weather-widget .weather-stats .wind-speed span { color: #000; }
 .weather-widget .weather-stats .stats span { color: #000; }
@@ -1583,12 +1580,15 @@
     top: -10px;
 }
 .weather-calendar {
-    background: #c2d5ff;
+    background: -webkit-linear-gradient(#6156ce, #5247bd);
+    background: -o-linear-gradient(#6156ce, #5247bd);
+    background: -moz-linear-gradient(#6156ce, #5247bd);
+    background: linear-gradient(#6156ce, #5247bd);
 }
 .weather-calendar .weather-grids.weather-mdl { text-align: center; }
 .weather-calendar .weather-grids h3 {
     font-size: 30px;
-    color: #4f5163;
+    color: #fff;
     font-weight: 100;
     line-height: 1.2;
 }
@@ -1599,21 +1599,21 @@
 .weather-calendar .weather-grids h2 {
     font-size: 2.5em;
     font-weight: 300;
-    color: #4f5163;
+    color: #fff;
 }
 .weather-calendar .weather-grids h4 {
     font-size: 1em;
-    color: #4f5163;
+    color: #fff;
 }
 .weather-calendar .weather-bottom {
     text-align: center;
     margin-top: 2em;
 }
-.weather-calendar .weather-bottom ul li { color: #4f5163; }
+.weather-calendar .weather-bottom ul li { color: #fff; }
 .weather-calendar .weather-bottom ul li.bg { background: #314277; }
 .weather-calendar .weather-bottom h4 {
     font-size: 1em;
-    color: #4f5163;
+    color: #fff;
     font-weight: 100;
 }
 .weather-calendar .weather-bottom figure {
@@ -1621,17 +1621,17 @@
     width: 55px;
     height: 55px;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: #25d5e4;
     line-height: 6.3;
 }
 .weather-calendar .weather-bottom h5 {
     font-size: 1.2em;
-    color: #4f5163;
+    color: #fff;
     font-weight: 600;
 }
 .weather-calendar .weather-bottom h6 {
     font-size: 1em;
-    color: #4f5163;
+    color: #07e0c4;
     margin-top: 0.5em;
 }
 

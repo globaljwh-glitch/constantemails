@@ -94,7 +94,7 @@
 .widget.t-sales-widget .icon {
     font-size: 94px;
     vertical-align: middle;
-    color: #d3d3d3;
+    color: #e9ecef;
 }
 
 
@@ -115,7 +115,7 @@
     color: #3b3f5c;
 }
 .total-visits .t-v-txt i {
-    color: #1abc9c;
+    color: #e9b02b;
     font-size: 17px;
     vertical-align: middle;
 }
@@ -144,7 +144,7 @@
     color: #3b3f5c;
 }
 .unique-visits .u-v-txt i {
-    color: #00b1f4;
+    color: #1abc9c;
     font-size: 14px;
     font-weight: 600;
     vertical-align: middle;
@@ -168,7 +168,7 @@
     color: #3b3f5c;
 }
 .page-views .p-v-txt i {
-    color: #4f5163;
+    color: #e95f2b;
     font-size: 14px;
     font-weight: 600;
     vertical-align: middle;
@@ -267,7 +267,7 @@
 .traffic-country .locator {
     width: 14px;
     height: 14px;
-    border: 2px solid #3232b7;
+    border: 2px solid #ff6f00;
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
@@ -276,7 +276,7 @@
   position: absolute;
 }
 .map-marker .dot {
-  border: 10px solid #3232b7;
+  border: 10px solid #ff6f00;
   background: transparent;
   -webkit-border-radius: 60px;
   -moz-border-radius: 60px;
@@ -376,7 +376,7 @@
     padding-left: 8px;
 }
 .traffic-country .table-data table tbody tr td .d-m-traffic-country {
-    border: 2px solid #3232b7;
+    border: 2px solid #ff6f00;
     height: 13px;
     width: 13px;
 }
@@ -429,7 +429,7 @@
 }
 .newsletter-performance p.email-count span.badge {
     padding: 5px 24px;
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(to left, #00b1f4 0%, #5247bd 100%);
     vertical-align: bottom;
 }
 .newsletter-performance h6 {
@@ -440,7 +440,7 @@
 .newsletter-performance p.n-p-views-count {
     font-size: 46px;
     font-weight: 600;
-    color: #1a73e9;
+    color: #6156ce;
 }
 .newsletter-performance p.n-p-views-count i {
     color: #00d1c1;
@@ -454,7 +454,7 @@
 .newsletter-performance p.n-p-conversions {
       font-size: 46px;
     font-weight: 600;
-    color: #1a73e9;
+    color: #6156ce;
 }
 .newsletter-performance p.n-p-conversions i {
     color: #00d1c1;
@@ -488,16 +488,16 @@
     font-size: 14px;
 }
 .visitor-engagement .v-e-product-name.pn-1 {
-    color: #00b1f4;
+    color: #805dca;
 }
 .visitor-engagement .v-e-product-name.pn-2 {
-    color: #1a73e9;
+    color: #00b1f4;
 }
 .visitor-engagement .v-e-product-name.pn-3 {
-    color: #4f5163;
+    color: #f8538d;
 }
 .visitor-engagement .v-e-product-name.pn-4 {
-    color: #3232b7;
+    color: #e9b02b;
 }
 .visitor-engagement .v-e-product-stats {
     color: #000;
@@ -536,7 +536,7 @@
     border-radius: 20px;
 }
 .customer-satisfaction .progress .progress-bar {
-  background-color: #1a73e9!important;
+  background-color: #07e0c4!important;
   border-radius: 20px;
 }
 .customer-satisfaction .c-s-stats-data p {
@@ -580,20 +580,20 @@
   font-size: 17px;
 }
 .invoices .d-m-i-due {
-  background-color: #4f5163;
+  background-color: #25d5e4;
 }
 .invoices .d-m-i-overdue {
-  background-color: #3232b7;
+  background-color: #f8538d;
 }
 .invoices p {
   font-size: 28px;
   font-weight: 600;
 }
 .invoices p.i-due-value {
-  color: #4f5163;
+  color: #25d5e4;
 }
 .invoices p.i-overdue-value {
-  color: #3232b7;
+  color: #f8538d;
 }
 
 
@@ -614,7 +614,7 @@
 }
 .weather-widget .w-temperature {
   font-size: 68px;
-  color: #1a73e9;
+  color: #3862f5;
 }
 .weather-widget .w-temperature .w-t-value {
   position: relative;
@@ -628,7 +628,7 @@
 }
 .weather-widget .w-icon-locator i {
   font-size: 88px;
-  color: #1a73e9;
+  color: #3862f5;
   font-size: 100px;
 }
 .weather-widget .weather-stats {
@@ -640,10 +640,10 @@
   vertical-align: middle;
 }
 .weather-widget .weather-stats .wind-speed i {
-    color: #3232b7;
+    color: #00d1c1;
 }
 .weather-widget .weather-stats .stats i {
-    color: #3232b7;
+    color: #00d1c1;
 }
 .weather-widget .weather-stats span {
   font-size: 15px;
@@ -713,12 +713,12 @@
 .recent-activity .recent-activity-body table .d-flex .f-body p.meta-info span.a-f-meta-usr-name {
     font-size: 15px;
     font-weight: 600;
-    color: #1a73e9;
+    color: #6156ce;
 }
 .recent-activity .recent-activity-body table .d-flex .f-body p.meta-info span.a-f-meta-usr-name i {
     font-size: 18px;
     vertical-align: text-bottom;
-      color: #1a73e9;
+      color: #6156ce;
     font-weight: 600;
     margin-right: 3px!important;
 }
@@ -735,13 +735,13 @@
     margin-left: 4px!important;
     margin-right: 3px!important;
 }
-.recent-activity .recent-activity-body button.btn-primary {
+.recent-activity .recent-activity-body button.btn-secondary {
     padding: 10px 38px;
     font-size: 15px;
-    background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
+    background-image: linear-gradient(to right, #6156ce 19%, #805dca 100%);
 }
-.recent-activity .recent-activity-body button.btn-primary:hover {
-    background-image: linear-gradient(-20deg, #1a73e9 0%, #3232b7 100%);
+.recent-activity .recent-activity-body button.btn-secondary:hover {
+    background-image: linear-gradient(to right, #805dca 0%, #6424c9 100%);
 }
 
 
@@ -769,7 +769,7 @@
 
 .recent-sales .recent-sales-body .table thead tr th {
     border-top: none;
-    color: #3232b7;
+    color: #6156ce;
     vertical-align: middle;
     padding: 18px 20px;
     font-size: 15px;
@@ -788,7 +788,7 @@
 }
 .recent-sales .recent-sales-body .r-s-bottom-section a {
     font-size: 17px;
-    color: #1a73e9;
+    color: #6156ce;
 }
 .recent-sales .recent-sales-body .r-s-bottom-section a:hover {
   color: #6424c9;
@@ -814,7 +814,7 @@
 .chat .chat-header .chat-usr-img > div:before {
     content: "";
     position: absolute;
-    background-color: #1a73e9;
+    background-color: #1abc9c;
     padding: 4px;
     border-radius: 50%;
     top: 1px;
@@ -848,10 +848,10 @@
 .chat .chat-header .chat-usr-img ul li.badge-notify .notification span {
     font-size: 16px;
     padding: 10px 11px;
-    background-color: #c2d5ff;
+    background-color: #e95f2b;
     border: solid 2px #fff;
     border-radius: 50%;
-    color: #1a73e9;
+    color: #fff;
 }
 .chat .chat-body .chat-usr-img  {
     padding: 16px 15px;
@@ -936,14 +936,14 @@
 }
 .chat .chat-body .chat-system .chat_window .chat-bottom-section .message_input_wrapper .message_input {
     border: none;
-    background-color: #1a73e9;
+    background-color: #00d1c1;
     color: #fff;
     font-weight: normal;
     padding:  11px 10px 11px 20px;
 }
 .chat .chat-body .chat-system .chat_window .chat-bottom-section .message_input_wrapper .input-group-append .input-group-text {
     border: none;
-    background-color: #1a73e9;
+    background-color: #00d1c1;
     color: #fff;
     font-weight: normal;
     cursor: pointer;
@@ -1025,7 +1025,7 @@
 */
 .product-cat8 .card {
     border: none;
-    background: #c2d5ff;
+    background: #6156ce;
 }
 .product-cat8 .product_inner .card-title {
     position: absolute;
@@ -1035,7 +1035,7 @@
     top: 22px;
 }
 .product-cat8 .product_inner .card-title p {
-    color: #1a73e9;
+    color: #ffffff;
     font-size: 20px;
     margin-bottom: 6px;
     text-align: center;
@@ -1047,14 +1047,14 @@
     font-size: 22px;
 }
 .product-cat8 .product_inner p.product-price {
-  color: #1a73e9;
+  color: #ffffff;
     font-size: 24px;
     margin-bottom: 8px;
     padding: 32px;
 }
 .product-cat8 .product_inner span.badge {
     padding: 11px 16px;
-    background-color: #4f5163;
+    background-color: #5247bd;
     font-size: 14px;
 }
 .product-cat8 .product_inner i.add-to-fav {
@@ -1164,7 +1164,7 @@
 }
 #user-profile-card-2.card .card-body .usr-info-meta .usr-name {
    font-size: 16px;
-    color: #1a73e9;
+    color: #ee3d50;
     font-weight: 600;
 }
 #user-profile-card-2.card .card-body span {
@@ -1185,5 +1185,4 @@
 }
 #user-profile-card-2.card .card-body .card-bottom-section button {
   margin-bottom: 7px !important;
-  background-image: linear-gradient(-20deg, #3232b7 0%, #1a73e9 100%);
 }

@@ -6,7 +6,7 @@
 		padding: 12px;
 		border-radius: 6px;
 		height: 230px;
-		background-color: $light-primary;
+		background-image: $additional-gradient-color-11;
 		.col-md-12 {
 			&:nth-child(2) {
 				padding-left: 10px;
@@ -14,7 +14,7 @@
 			}
 		}
 		.widget-title {
-			color: $primary;
+			color: $white;
 			font-size: 21px;
 			border-bottom: none;
 			margin-bottom: 0;
@@ -22,7 +22,7 @@
 			text-align: center;
 		}
 		.widget-value {
-			color: $primary;
+			color: $white;
 			font-size: 26px;
 			font-weight: 600;
 			text-align: center;
@@ -39,7 +39,7 @@
 		padding: 12px;
 		border-radius: 6px;
 		height: 230px;
-		background-color: $light-dark;
+		background-image: $additional-gradient-color-12;
 		.col-md-12 {
 			&:nth-child(2) {
 				padding-left: 10px;
@@ -47,7 +47,7 @@
 			}
 		}
 		.widget-title {
-			color: $dark;
+			color: $white;
 			font-size: 21px;
 			border-bottom: none;
 			margin-bottom: 0;
@@ -55,7 +55,7 @@
 			text-align: center;
 		}
 		.widget-value {
-			color: $dark;
+			color: $white;
 			font-size: 26px;
 			font-weight: 600;
 			text-align: center;
@@ -74,7 +74,7 @@
 		padding: 12px;
 		border-radius: 6px;
 		height: 230px;
-		background-color: $light-secondary;
+		background-image: $additional-gradient-color-13;
 		.col-md-12 {
 			&:nth-child(2) {
 				padding-left: 10px;
@@ -82,7 +82,7 @@
 			}
 		}
 		.widget-title {
-			color: $secondary;
+			color: $white;
 			font-size: 21px;
 			border-bottom: none;
 			margin-bottom: 0;
@@ -90,7 +90,7 @@
 			text-align: center;
 		}
 		.widget-value {
-			color: $secondary;
+			color: $white;
 			font-size: 26px;
 			font-weight: 600;
 			text-align: center;
@@ -109,7 +109,7 @@
 		padding: 12px;
 		border-radius: 6px;
 		height: 226px;
-		background-color: $light-info;
+		background-image: $additional-gradient-color-14;
 		.col-md-12 {
 			&:nth-child(2) {
 				padding-left: 10px;
@@ -117,7 +117,7 @@
 			}
 		}
 		.widget-title {
-			color: $info;
+			color: $white;
 			font-size: 21px;
 			border-bottom: none;
 			margin-bottom: 0;
@@ -125,7 +125,7 @@
 			text-align: center;
 		}
 		.widget-value {
-			color: $info;
+			color: $white;
 			font-size: 26px;
 			font-weight: 600;
 			text-align: center;

@@ -16,7 +16,7 @@
 				&:before {
 					content: "";
 					position: $pos-abs;
-					background-color: $primary;
+					background-color: $success;
 					padding: 4px;
 					border-radius: 50%;
 					top: 1px;
@@ -43,10 +43,10 @@
 						span {
 							font-size: 16px;
 							padding: 10px 11px;
-							background-color: $light-primary;
+							background-color: $additional-color-5;
 							border: $solid $b-width-2 $white;
 							border-radius: 50%;
-							color: $primary;
+							color: $white;
 						}
 					}
 				}
@@ -143,7 +143,7 @@
 					.message_input_wrapper {
 						.message_input {
 							border: none;
-							background-color: $primary;
+							background-color: $color_55;
 							color: $white;
 							font-weight: normal;
 							padding: 11px 10px 11px 20px;
@@ -163,7 +163,7 @@
 						.input-group-append {
 							.input-group-text {
 								border: none;
-								background-color: $primary;
+								background-color: $color_55;
 								color: $white;
 								font-weight: normal;
 								i {

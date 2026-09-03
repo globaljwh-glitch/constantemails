@@ -25,7 +25,7 @@
 			}
 		}
 		i.add-task {
-			background-color: $primary;
+			background-color: $additional-color-8;
 			border-radius: 50%;
 			position: $pos-abs;
 			bottom: -40px;
@@ -141,7 +141,7 @@
 			font-size: 16px;
 			border-radius: 50%;
 			&:hover {
-				background-color: $primary;
+				background-color: $danger;
 				color: $white !important;
 			}
 		}

@@ -14,7 +14,7 @@
 		span.badge {
 			padding: 4px 30px;
 			font-size: 14px;
-			background-image: linear-gradient(to right, #00b1f4 0%, #1a73e9 100%);
+			background-image: $additional-gradient-color-20;
 		}
 	}
 	.available-cars-list-body {
@@ -27,7 +27,7 @@
 		}
 		p.a-c-l-text {
 			padding: 12px 10px 0px 20px;
-			color: $additional-color-2;
+			color: $color_55;
 			font-weight: 600;
 			font-size: 16px;
 		}
@@ -53,12 +53,12 @@
 						.media {
 							span {
 								padding: 3px 0;
-								background-color: $light-primary;
+								background-color: $color_47;
 								border-radius: 50%;
 								height: 35px;
 								width: 35px;
 								text-align: center;
-								color: $primary;
+								color: $white;
 								font-size: 20px;
 							}
 							.media-body {

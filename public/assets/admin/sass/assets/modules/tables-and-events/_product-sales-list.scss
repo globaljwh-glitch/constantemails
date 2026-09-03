@@ -18,11 +18,11 @@
 				border-radius: 30px;
 			}
 			.nav-link.active {
-				background-image: linear-gradient(to right, #434343 0%, #4f5163 100%);
+				background-image: $additional-gradient-color-20;
 			}
 			.show {
 				>.nav-link {
-					background-image: linear-gradient(to right, #434343 0%, #4f5163 100%);
+					background-image: $additional-gradient-color-20;
 				}
 			}
 		}
@@ -52,17 +52,17 @@
 							padding-left: 12px;
 						}
 						.d-m-pro-name-1 {
-							background-color: $primary;
+							background-color: $color_53;
 							width: 15px;
+							background-color: $additional-color-8;
 							height: 15px;
 						}
 						.d-m-pro-name-2 {
 							height: 15px;
-							background-color: $dark;
 							width: 15px;
 						}
 						.d-m-pro-name-3 {
-							background-color: $success;
+							background-color: $additional-color-4;
 							height: 15px;
 							width: 15px;
 						}
@@ -70,13 +70,13 @@
 							cursor: pointer;
 						}
 						p.montly-inc-1 {
-							color: $primary;
+							color: $color_53;
 						}
 						p.montly-inc-2 {
-							color: $dark;
+							color: $additional-color-8;
 						}
 						p.montly-inc-3 {
-							color: $success;
+							color: $additional-color-4;
 						}
 					}
 				}

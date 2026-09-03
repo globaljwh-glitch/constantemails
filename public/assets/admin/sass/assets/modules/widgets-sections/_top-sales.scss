@@ -5,7 +5,7 @@
 	#t-s-chart {
 		.ct-series-a {
 			.ct-line {
-				stroke: #3232b7;
+				stroke: $success;
 				stroke-width: 2px;
 			}
 		}
@@ -24,7 +24,7 @@
 	}
 	.media {
 		i {
-			color: #3232b7;
+			color: $success;
 			font-size: 20px;
 		}
 		.media-body {

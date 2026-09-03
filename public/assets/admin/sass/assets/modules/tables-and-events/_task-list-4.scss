@@ -75,13 +75,13 @@
 		.task-load-more {
 			padding: 24px;
 			button {
-			    background-image: linear-gradient(to right, #434343 0%, #4f5163 100%);
-			    border: none;
-			    box-shadow: 2px 2px 13px 1px #4f5163;
+				background-image: $additional-gradient-color-32;
+				border: none;
+				box-shadow: 2px 2px 13px 1px rgb(164, 139, 217);
 				font-size: 13px;
 				padding: 10px 26px;
 				&:hover {
-					background-image: linear-gradient(to right, #4f5163 0%, #434343 100%);
+					background-image: $additional-gradient-color-33;
 				}
 			}
 		}

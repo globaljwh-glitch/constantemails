@@ -127,15 +127,15 @@
 		}
 		.nav-link.active {
 			border-color: $color_none;
-			border-bottom: $b-width-1 $solid $primary;
-			color: $primary;
+			border-bottom: $b-width-1 $solid $danger;
+			color: $danger;
 			background-color: $color_none;
 			font-size: 18px;
 			&:hover {
-				border-bottom: $b-width-1 $solid $primary;
+				border-bottom: $b-width-1 $solid $danger;
 			}
 			&:focus {
-				border-bottom: $b-width-1 $solid $primary;
+				border-bottom: $b-width-1 $solid $danger;
 			}
 		}
 		.show {

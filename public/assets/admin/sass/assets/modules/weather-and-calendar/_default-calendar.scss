@@ -29,7 +29,7 @@
 			.pignose-calendar-top-year {
 				display: inline-block;
 				text-align: $align-center;
-				color: #3232b7;
+				color: $color_107;
 				font-size: 22px;
 				font-weight: 600;
 			}
@@ -37,7 +37,7 @@
 				display: inline-block;
 				text-align: $align-center;
 				font-weight: 600;
-				color: #3232b7;
+				color: $color_107;
 				font-size: 22px;
 				border-bottom: solid 1px #fff;
 			}
@@ -225,7 +225,7 @@
 			&:before {
 				content: '';
 				position: $pos-abs;
-				background-color: #3232b7;
+				background-color: $secondary;
 				padding: 3px;
 				border-radius: 50%;
 				bottom: 4px;
@@ -234,7 +234,7 @@
 			&:after {
 				content: '';
 				position: $pos-abs;
-				background-color: $info;
+				background-color: $additional-color-3;
 				padding: 3px;
 				border-radius: 50%;
 				bottom: 4px;
