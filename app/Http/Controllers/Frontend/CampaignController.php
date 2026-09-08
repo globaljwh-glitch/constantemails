@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MailCampaign;
 use Illuminate\Http\Request;
 use App\Models\Group;
-use App\Models\DefaultTemplate;
+use App\Models\Template;
 use App\Models\MailTemplate;
 use Illuminate\Support\Facades\DB;
 use App\Models\CampaignRecipient;
@@ -170,7 +170,7 @@ class CampaignController extends Controller
     {
         abort_if($campaign->user_id != auth()->id(), 403);
 
-        $defaultTemplates = DefaultTemplate::where('status', 'Active')->get();
+        $defaultTemplates = Template::where('status', 'Active')->get();
 
         $userTemplates = MailTemplate::where('status', 'Active')
             ->where('user_id', auth()->id()) // if your table has user_id
@@ -256,7 +256,7 @@ class CampaignController extends Controller
             ->get();
 //dd($campaign);
         if ($campaign->template_type === 'default') {
-            $template = DefaultTemplate::find($campaign->template_id);
+            $template = Template::find($campaign->template_id);
         } else {
             $template = MailTemplate::find($campaign->template_id);
         }

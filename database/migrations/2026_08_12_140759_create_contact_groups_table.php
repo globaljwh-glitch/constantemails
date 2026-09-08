@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->foreignId('category_id')
                 ->nullable()
-                ->constrained('mail_campaign_categories')
+                ->constrained('contact_categories')
                 ->nullOnDelete();
 
             $table->foreignId('user_id')

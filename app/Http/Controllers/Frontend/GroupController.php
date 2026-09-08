@@ -31,7 +31,7 @@ class GroupController extends Controller
     public function create()
     {
         $categories = ContactCategory::where('status', 1)
-                        ->orderBy('category_name')
+                        ->orderBy('name')
                         ->get();
 
         return view('frontend.user.groups.create', compact('categories'));
@@ -81,7 +81,7 @@ class GroupController extends Controller
         abort_if($group->user_id != auth()->id(), 403);
 
         $categories = ContactCategory::where('status',1)
-            ->orderBy('category_name')
+            ->orderBy('name')
             ->get();
 
         return view('frontend.user.groups.edit', compact('group', 'categories'));

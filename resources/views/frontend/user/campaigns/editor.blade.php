@@ -106,7 +106,7 @@
                             name="message"
                             rows="18"
                             class="form-control">
-                            {{ old('message', $template->template_content ?? '') }}
+                            {{ old('message', $template->content ?? '') }}
                         </textarea>
 
                 </div>

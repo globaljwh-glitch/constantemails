@@ -92,7 +92,7 @@
 
                         <td>{{ $group->group_name }}</td>
 
-                        <td>{{ $group->category->category_name ?? '-' }}</td>
+                        <td>{{ $group->category->name ?? '-' }}</td>
 
                         <td class="text-center">
                             @if($group->status)

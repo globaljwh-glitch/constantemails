@@ -36,7 +36,7 @@
                             <option value="{{ $category->id }}"
                                 {{ old('category_id', $group->category_id) == $category->id ? 'selected' : '' }}>
 
-                                {{ $category->category_name }}
+                                {{ $category->name }}
 
                             </option>
 

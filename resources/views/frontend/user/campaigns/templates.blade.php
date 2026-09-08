@@ -33,8 +33,8 @@
 
                     <div class="card h-100">
 
-                        @if($template->template_image)
-                            <img src="{{ asset('uploads/default_templates/'.$template->template_image) }}"
+                        @if($template->thumbnail)
+                            <img src="{{ asset('uploads/default_templates/'.$template->thumbnail) }}"
                                  class="card-img-top"
                                  style="height:180px;object-fit:cover;">
                         @endif
@@ -56,7 +56,7 @@
                                 <label class="form-check-label"
                                        for="default{{ $template->id }}">
 
-                                    <strong>{{ $template->template_name }}</strong>
+                                    <strong>{{ $template->name }}</strong>
 
                                 </label>
 
