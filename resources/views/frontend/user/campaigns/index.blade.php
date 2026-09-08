@@ -19,11 +19,11 @@
         </div>
     </div>
 
-    @if(session('success'))
+    <!-- @if(session('success'))
         <div class="alert alert-success mt-3">
             {{ session('success') }}
         </div>
-    @endif
+    @endif -->
 
     <p class="mt-4">
         Here you can manage all your email campaigns.
@@ -58,8 +58,8 @@
                 <td>{{ $campaign->from_name }}</td>
 
                 <td>
-
-                    @if($campaign->send_status)
+                    {{ $campaign->campaign_status }}
+                    <!-- @if($campaign->send_status)
                         <span class="badge badge-success">
                             Sent
                         </span>
@@ -67,7 +67,7 @@
                         <span class="badge badge-warning">
                             Draft
                         </span>
-                    @endif
+                    @endif -->
 
                 </td>
 

@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\DefaultTemplate;
 use App\Models\MailTemplate;
+use Illuminate\Support\Facades\DB;
+use App\Models\CampaignRecipient;
+use Carbon\Carbon;
+use App\Jobs\SendCampaignJob;
 
 class CampaignController extends Controller
 {
@@ -323,6 +327,34 @@ class CampaignController extends Controller
         return view('frontend.user.campaigns.send', compact('campaign'));
     }
 
+    // public function sendCampaign(Request $request, MailCampaign $campaign)
+    // {
+    //     abort_if($campaign->user_id != auth()->id(), 403);
+
+    //     $rules = [
+    //         'scheduler' => 'required|in:send_now,schedule_now',
+    //     ];
+
+    //     if ($request->scheduler == 'schedule_now') {
+
+    //         $rules['schedule_date'] = 'required|date|after_or_equal:today';
+    //         $rules['schedule_hour'] = 'required|integer|min:0|max:23';
+    //         $rules['schedule_minute'] = 'required|integer|min:0|max:59';
+    //     }
+
+    //     $validated = $request->validate($rules);
+
+    //     $campaign->update($validated);
+
+    //     // TODO:
+    //     // If send_now -> dispatch email job immediately.
+    //     // If schedule_now -> schedule the job using queue.
+
+    //     return redirect()
+    //         ->route('user.campaigns.index')
+    //         ->with('success', 'Campaign saved successfully.');
+    // }
+
     public function sendCampaign(Request $request, MailCampaign $campaign)
     {
         abort_if($campaign->user_id != auth()->id(), 403);
@@ -342,13 +374,138 @@ class CampaignController extends Controller
 
         $campaign->update($validated);
 
-        // TODO:
-        // If send_now -> dispatch email job immediately.
-        // If schedule_now -> schedule the job using queue.
+        if ($validated['scheduler'] == 'send_now') {
+
+            // Build recipient snapshot
+            DB::transaction(function () use ($campaign, $validated) {
+
+                $this->processCampaign($campaign);
+
+                $campaign->update([
+                    'campaign_status' => 'queued',
+                ]);
+
+                // Queue sending
+            
+                SendCampaignJob::dispatch($campaign);
+            });
+
+            return redirect()
+                ->route('user.campaigns.index')
+                ->with('success', 'Campaign has been queued for sending.');
+        }
+
+        $this->processCampaign($campaign);
+
+        // Schedule
+        $campaign->update([
+            'campaign_status' => 'queued',
+        ]);
 
         return redirect()
             ->route('user.campaigns.index')
-            ->with('success', 'Campaign saved successfully.');
+            ->with('success', 'Campaign has been scheduled successfully.');
+    }
+
+    // protected function processCampaign(MailCampaign $campaign): void
+    // {
+    //     //abort_if($campaign->user_id != auth()->id(), 403);
+
+    //     $campaign->load('groups.contacts');
+
+    //     if ($campaign->groups->isEmpty()) {
+    //         throw ValidationException::withMessages([
+    //             'groups' => 'Please select at least one contact group.',
+    //         ]);
+    //     }
+
+    //     DB::transaction(function () use ($campaign) {
+
+    //         $campaign->recipients()->delete();
+
+    //         $recipients = [];
+
+    //         foreach ($campaign->groups as $group) {
+
+    //             foreach ($group->contacts as $contact) {
+
+    //                 if (empty($contact->email)) {
+    //                     continue;
+    //                 }
+
+    //                 // Prevent duplicates
+    //                 $recipients[strtolower($contact->email)] = $contact;
+    //             }
+    //         }
+
+    //         foreach ($recipients as $contact) {
+
+    //             CampaignRecipient::create([
+    //                 'campaign_id' => $campaign->id,
+    //                 'contact_id'  => $contact->id,
+    //                 'email'       => $contact->email,
+    //                 'first_name'  => $contact->first_name,
+    //                 'last_name'   => $contact->last_name,
+    //                 'status'      => 'queued',
+    //                 'queued_at'   => now(),
+    //             ]);
+    //         }
+
+    //         // $campaign->update([
+    //         //     'campaign_status' => 'queued',
+    //         // ]);
+    //     });
+
+    //     // return redirect()
+    //     //     ->route('user.campaigns.index')
+    //     //     ->with('success', 'Campaign has been queued successfully.');
+    // }
+
+    protected function processCampaign(MailCampaign $campaign): void
+    {
+        $campaign->load('groups.contacts');
+
+        if ($campaign->groups->isEmpty()) {
+            throw ValidationException::withMessages([
+                'groups' => 'Please select at least one contact group.',
+            ]);
+        }
+
+        DB::transaction(function () use ($campaign) {
+
+            // Remove old recipient snapshot
+            $campaign->recipients()->delete();
+
+            $recipients = [];
+
+            foreach ($campaign->groups as $group) {
+
+                foreach ($group->contacts as $contact) {
+
+                    if (empty($contact->contact_email)) {
+                        continue;
+                    }
+
+                    // Prevent duplicate email addresses
+                    $email = strtolower(trim($contact->contact_email));
+
+                    $recipients[$email] = $contact;
+                }
+            }
+
+            foreach ($recipients as $contact) {
+
+                CampaignRecipient::create([
+                    'campaign_id' => $campaign->id,
+                    'contact_id'  => $contact->id,
+                    'email'       => $contact->contact_email,
+                    'first_name'  => $contact->contact_first_name,
+                    'last_name'   => $contact->contact_last_name,
+                    'status'      => 'queued',
+                    'queued_at'   => now(),
+                ]);
+            }
+        });
     }
 
 }

@@ -11,6 +11,7 @@ class MailCampaign extends Model
     protected $fillable = [
         'user_id',
         'template_id',
+        'template_type',
         'payment_id',
         'group_id',
         'email_title',
@@ -44,4 +45,13 @@ class MailCampaign extends Model
             'group_id'
         );
     }
+
+    public function recipients()
+    {
+        return $this->hasMany(
+            CampaignRecipient::class,
+            'campaign_id'
+        );
+    }
+    
 }
