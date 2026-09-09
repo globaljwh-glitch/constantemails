@@ -3,29 +3,17 @@
 namespace App\Jobs;
 
 use App\Models\MailCampaign;
-use Illuminate\Bus\Queueable;
+use App\Models\ContactList;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendCampaignJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Queueable;
 
     public MailCampaign $campaign;
-
-    /**
-     * Number of times Laravel should retry the job.
-     */
-    public int $tries = 3;
-
-    /**
-     * Seconds between retries.
-     */
-    public int $backoff = 30;
 
     public function __construct(MailCampaign $campaign)
     {
@@ -36,159 +24,114 @@ class SendCampaignJob implements ShouldQueue
     {
         $campaign = $this->campaign;
 
-        // Mark campaign as sending
-        $campaign->update([
-            'status' => 'sending',
-        ]);
+        $contacts = ContactList::where('group_id', $campaign->group_id)
+            ->whereNotNull('contact_email')
+            ->chunkById(100, function ($contacts) use ($campaign) {
 
-        /*
-         * Get recipients.
-         *
-         * Change this according to your actual relationship/table.
-         *
-         * Example:
-         * $recipients = $campaign->recipients;
-         */
-        $recipients = $campaign->recipients;
+                foreach ($contacts as $contact) {
 
-        foreach ($recipients as $recipient) {
+                    try {
 
-            try {
+                        /*
+                         * Replace template variables
+                         */
+                        $replacements = [
+                            '[name]'    => trim(
+                                ($contact->contact_first_name ?? '') . ' ' .
+                                ($contact->contact_last_name ?? '')
+                            ),
 
-                /*
-                 * ----------------------------------------
-                 * Replacement variables
-                 * ----------------------------------------
-                 */
+                            '[first_name]' => $contact->contact_first_name ?? '',
 
-                $replacements = [
-                    '[name]'    => $recipient->name ?? '',
-                    '[email]'   => $recipient->email ?? '',
-                    '[company]' => $recipient->company_name ?? '',
-                    '[phone]'   => $recipient->phone ?? '',
-                ];
+                            '[last_name]' => $contact->contact_last_name ?? '',
 
-                /*
-                 * ----------------------------------------
-                 * Email subject
-                 * ----------------------------------------
-                 */
+                            '[email]' => $contact->contact_email ?? '',
 
-                $subject = strtr(
-                    $campaign->subject,
-                    $replacements
-                );
+                            '[company]' => $contact->contact_company_name ?? '',
 
-                /*
-                 * ----------------------------------------
-                 * Email HTML
-                 * ----------------------------------------
-                 */
+                            '[address]' => $contact->contact_address ?? '',
 
-                $html = strtr(
-                    $campaign->content,
-                    $replacements
-                );
+                            '[area_interest]' => $contact->area_interest ?? '',
+                        ];
 
-                /*
-                 * ----------------------------------------
-                 * Convert relative image URLs
-                 * ----------------------------------------
-                 *
-                 * /images/example.png
-                 *
-                 * becomes
-                 *
-                 * https://yourdomain.com/images/example.png
-                 */
 
-                $html = preg_replace_callback(
-                    '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
-                    function ($matches) {
-                        return $matches[1]
-                            . asset($matches[2])
-                            . $matches[3];
-                    },
-                    $html
-                );
+                        /*
+                         * Subject
+                         */
+                        $subject = strtr(
+                            $campaign->subject,
+                            $replacements
+                        );
 
-                /*
-                 * ----------------------------------------
-                 * Send email
-                 * ----------------------------------------
-                 */
 
-                Mail::html($html, function ($message) use (
-                    $recipient,
-                    $subject
-                ) {
-                    $message
-                        ->to($recipient->email, $recipient->name ?? null)
-                        ->subject($subject);
-                });
+                        /*
+                         * Email content
+                         */
+                        $html = strtr(
+                            $campaign->content,
+                            $replacements
+                        );
 
-                /*
-                 * ----------------------------------------
-                 * Mark recipient as sent
-                 * ----------------------------------------
-                 *
-                 * Only use this if your recipient model
-                 * contains these fields.
-                 */
 
-                $recipient->update([
-                    'status' => 'sent',
-                    'sent_at' => now(),
-                ]);
+                        /*
+                         * Convert relative image URLs
+                         *
+                         * /images/img_waves.png
+                         *
+                         * to
+                         *
+                         * https://yourdomain.com/images/img_waves.png
+                         */
+                        $html = preg_replace_callback(
+                            '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
+                            function ($matches) {
+                                return $matches[1]
+                                    . asset($matches[2])
+                                    . $matches[3];
+                            },
+                            $html
+                        );
 
-            } catch (\Throwable $e) {
 
-                /*
-                 * Don't stop the complete campaign because
-                 * one email failed.
-                 */
+                        /*
+                         * Send email
+                         */
+                        Mail::html($html, function ($message) use (
+                            $contact,
+                            $subject
+                        ) {
+                            $message
+                                ->to(
+                                    $contact->contact_email,
+                                    trim(
+                                        ($contact->contact_first_name ?? '') . ' ' .
+                                        ($contact->contact_last_name ?? '')
+                                    )
+                                )
+                                ->subject($subject);
+                        });
 
-                Log::error('Campaign email failed', [
-                    'campaign_id' => $campaign->id,
-                    'email'       => $recipient->email ?? null,
-                    'error'       => $e->getMessage(),
-                ]);
 
-                /*
-                 * Mark this recipient as failed.
-                 */
+                        Log::info('Campaign email sent', [
+                            'campaign_id' => $campaign->id,
+                            'contact_id' => $contact->id,
+                            'email' => $contact->contact_email,
+                        ]);
 
-                $recipient->update([
-                    'status' => 'failed',
-                    'error_message' => $e->getMessage(),
-                ]);
-            }
-        }
+                    } catch (\Throwable $e) {
 
-        /*
-         * ----------------------------------------
-         * Campaign completed
-         * ----------------------------------------
-         */
-
-        $campaign->update([
-            'status' => 'completed',
-            'completed_at' => now(),
-        ]);
-    }
-
-    /**
-     * Called when the whole job fails after all retries.
-     */
-    public function failed(?\Throwable $exception): void
-    {
-        $this->campaign->update([
-            'status' => 'failed',
-        ]);
-
-        Log::error('Mail campaign job failed', [
-            'campaign_id' => $this->campaign->id,
-            'error' => $exception?->getMessage(),
-        ]);
+                        /*
+                         * Don't stop the complete campaign
+                         * if one email fails.
+                         */
+                        Log::error('Campaign email failed', [
+                            'campaign_id' => $campaign->id,
+                            'contact_id' => $contact->id,
+                            'email' => $contact->contact_email,
+                            'error' => $e->getMessage(),
+                        ]);
+                    }
+                }
+            });
     }
 }

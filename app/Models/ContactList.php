@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactList extends Model
 {
-    //
+    protected $table = 'contact_lists';
+
+    protected $guarded = [];
 }
