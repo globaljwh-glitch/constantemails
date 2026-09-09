@@ -8,7 +8,7 @@
                   <div id="collapseOne"  aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                       <ul>
-                        <li><a href="/user/dashboard" class="">My Account</a></li>
+                        <li><a href="/user/dashboard" class="{{ request()->is('user/dashboard') ? 'activeclass' : '' }}">My Account</a></li>
                         <li><a href="#" class="">Edit your Contact and Billing Information</a></li>
                         <li><a href="#" class="">Change your Password</a></li>
                         <li><a href="#" class="">Upgrade My Package</a></li>
