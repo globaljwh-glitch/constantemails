@@ -79,7 +79,7 @@ class SendCampaignJob implements ShouldQueue
                          * Subject
                          */
                         $subject = strtr(
-                            $campaign->subject,
+                            $campaign->email_subject,
                             $replacements
                         );
 
@@ -88,7 +88,7 @@ class SendCampaignJob implements ShouldQueue
                          * Email content
                          */
                         $html = strtr(
-                            $campaign->content,
+                            $campaign->message,
                             $replacements
                         );
 
