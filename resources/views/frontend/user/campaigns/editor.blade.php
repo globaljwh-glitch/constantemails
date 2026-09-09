@@ -1,3 +1,5 @@
+
+
 @extends('frontend.layouts.dashboard')
 
 @section('dashboard-content')
@@ -105,9 +107,8 @@
                             id="editor"
                             name="message"
                             rows="18"
-                            class="form-control">
-                            {{ old('message', $template->content ?? '') }}
-                        </textarea>
+                            class="form-control"
+                        >{{ old('message', $editorContent) }}</textarea>
 
                 </div>
 
@@ -244,15 +245,62 @@
 @endsection
 
 @push('scripts')
-
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
 
 <script>
+$(document).ready(function () {
 
-ClassicEditor
-    .create(document.querySelector('#editor'))
-    .catch(error => console.error(error));
+    $('#editor').summernote({
+        height: 700,
 
+        toolbar: [
+            ['style', ['style']],
+
+            ['font', [
+                'bold',
+                'italic',
+                'underline',
+                'strikethrough',
+                'superscript',
+                'subscript',
+                'clear'
+            ]],
+
+            ['fontname', ['fontname']],
+
+            ['fontsize', ['fontsize']],
+
+            ['color', ['color']],
+
+            ['para', [
+                'ul',
+                'ol',
+                'paragraph',
+                'height'
+            ]],
+
+            ['table', ['table']],
+
+            ['insert', [
+                'link',
+                'picture',
+                'video',
+                'hr'
+            ]],
+
+            ['view', [
+                'fullscreen',
+                'codeview',
+                'help'
+            ]],
+
+            ['history', [
+                'undo',
+                'redo'
+            ]]
+        ]
+    });
+
+});
 </script>
-
 @endpush

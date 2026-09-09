@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\CampaignRecipient;
 use Carbon\Carbon;
 use App\Jobs\SendCampaignJob;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class CampaignController extends Controller
 {
@@ -244,24 +245,114 @@ class CampaignController extends Controller
     //     );
     // }
 
+//     public function editor(MailCampaign $campaign)
+//     {
+//         abort_if($campaign->user_id != auth()->id(), 403);
+
+//         $template = null;
+
+//         $groups = Group::where('user_id', auth()->id())
+//             ->where('status', 1)
+//             ->orderBy('group_name')
+//             ->get();
+// //dd($campaign);
+//         if ($campaign->template_type === 'default') {
+//             $template = Template::find($campaign->template_id);
+//         } else {
+//             $template = MailTemplate::find($campaign->template_id);
+//         }
+
+//         return view('frontend.user.campaigns.editor', compact('campaign', 'groups', 'template'));
+//     }
+
     public function editor(MailCampaign $campaign)
     {
         abort_if($campaign->user_id != auth()->id(), 403);
 
         $template = null;
 
+        if ($campaign->template_type === 'default') {
+            $template = Template::find($campaign->template_id);
+        } elseif ($campaign->template_type === 'user') {
+            $template = MailTemplate::find($campaign->template_id);
+        }
+
+        if (!$template) {
+            abort(404, 'Template not found.');
+        }
+
+        $templateContent = $template->content ?? '';
+
+        /*
+        |--------------------------------------------------------------------------
+        | Convert CSS to inline styles
+        |--------------------------------------------------------------------------
+        */
+
+        // $cssToInline = new CssToInlineStyles();
+
+        // $inlinedHtml = $cssToInline->convert($templateContent);
+// dd([
+//     'template_id' => $campaign->template_id,
+//     'template_type' => $campaign->template_type,
+//     'content_length' => strlen($templateContent),
+//     'content' => $templateContent,
+// ]);
+        
+
+$templateContent = $template->content ?? '';
+
+$editorContent = '';
+
+if (!empty(trim($templateContent))) {
+
+    $cssToInline = new CssToInlineStyles();
+
+    // Convert CSS rules into inline styles
+    $inlinedHtml = $cssToInline->convert($templateContent);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Extract BODY while preserving BODY attributes/style
+    |--------------------------------------------------------------------------
+    */
+
+    if (preg_match(
+        '/<body\b([^>]*)>(.*?)<\/body>/is',
+        $inlinedHtml,
+        $matches
+    )) {
+
+        $bodyAttributes = $matches[1];
+        $bodyContent    = $matches[2];
+
+        // Preserve body attributes/style inside editor
+        $editorContent =
+            '<div' . $bodyAttributes . '>' .
+                $bodyContent .
+            '</div>';
+
+    } else {
+
+        $editorContent = $inlinedHtml;
+    }
+}
+
+
+
         $groups = Group::where('user_id', auth()->id())
             ->where('status', 1)
             ->orderBy('group_name')
             ->get();
-//dd($campaign);
-        if ($campaign->template_type === 'default') {
-            $template = Template::find($campaign->template_id);
-        } else {
-            $template = MailTemplate::find($campaign->template_id);
-        }
 
-        return view('frontend.user.campaigns.editor', compact('campaign', 'groups', 'template'));
+        return view(
+            'frontend.user.campaigns.editor',
+            compact(
+                'campaign',
+                'template',
+                'editorContent', 'groups'
+            )
+        );
     }
 
     public function saveEditor(Request $request, MailCampaign $campaign)
