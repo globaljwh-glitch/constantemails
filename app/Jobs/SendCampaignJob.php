@@ -24,7 +24,26 @@ class SendCampaignJob implements ShouldQueue
     {
         $campaign = $this->campaign;
 
-        $contacts = ContactList::where('group_id', $campaign->group_id)
+        $groupIds = DB::table('campaign_group')
+            ->where('campaign_id', $campaign->id)
+            ->pluck('group_id');
+
+        \Log::info('Campaign groups', [
+            'campaign_id' => $campaign->id,
+            'group_ids' => $groupIds->toArray(),
+        ]);
+
+        $contacts = ContactList::whereIn('group_id', $groupIds)
+            ->whereNotNull('contact_email')
+            ->get();
+
+        \Log::info('Campaign contacts', [
+            'campaign_id' => $campaign->id,
+            'count' => $contacts->count(),
+        ]);
+
+        //$contacts = ContactList::where('group_id', $campaign->group_id)
+        $contacts = ContactList::whereIn('group_id', $groupIds)
             ->whereNotNull('contact_email')
             ->chunkById(100, function ($contacts) use ($campaign) {
 
