@@ -52,6 +52,15 @@ class SendCampaignJob implements ShouldQueue
 
                     try {
 
+                        \Log::info('Campaign email content debug', [
+                            'campaign_id'     => $campaign->id,
+                            'message_length'  => strlen($campaign->message ?? ''),
+                            'message'         => $campaign->message,
+                            'email_subject'   => $campaign->email_subject,
+                            'recipient_email' => $contact->contact_email,
+                            'recipient_name'  => $contact->contact_first_name,
+                        ]);
+
                         /*
                          * Replace template variables
                          */
