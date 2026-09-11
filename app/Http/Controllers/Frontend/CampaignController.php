@@ -30,24 +30,6 @@ class CampaignController extends Controller
         return view('frontend.user.campaigns.create');
     }
 
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'subject'        => 'required|max:255',
-    //         'from_name'      => 'required|max:255',
-    //         'campaign_name'  => 'required|max:255',
-    //         'from_email'     => 'required|email|max:255',
-    //     ]);
-
-    //     $validated['user_id'] = auth()->id();
-
-    //     MailCampaign::create($validated);
-
-    //     return redirect()
-    //         ->route('user.campaigns.index')
-    //         ->with('success', 'Campaign created successfully.');
-    // }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -69,9 +51,6 @@ class CampaignController extends Controller
             'save_option'     => 1,
         ]);
 
-        // return redirect()
-        //     ->route('user.campaigns.index')
-        //     ->with('success', 'Message header saved successfully.');
         return redirect()->route('user.campaigns.groups', $campaign);
     }
 
@@ -80,36 +59,12 @@ class CampaignController extends Controller
         //
     }
 
-    // public function edit(MailCampaign $campaign)
-    // {
-    //     abort_unless($campaign->user_id == auth()->id(), 403);
-
-    //     return view('frontend.user.campaigns.edit', compact('campaign'));
-    // }
     public function edit(MailCampaign $campaign)
     {
         abort_if($campaign->user_id != auth()->id(), 403);
 
         return view('frontend.user.campaigns.edit', compact('campaign'));
     }
-
-    // public function update(Request $request, MailCampaign $campaign)
-    // {
-    //     abort_unless($campaign->user_id == auth()->id(), 403);
-
-    //     $validated = $request->validate([
-    //         'subject'        => 'required|max:255',
-    //         'from_name'      => 'required|max:255',
-    //         'campaign_name'  => 'required|max:255',
-    //         'from_email'     => 'required|email|max:255',
-    //     ]);
-
-    //     $campaign->update($validated);
-
-    //     return redirect()
-    //         ->route('user.campaigns.index')
-    //         ->with('success', 'Campaign updated successfully.');
-    // }
 
     public function update(Request $request, MailCampaign $campaign)
     {
@@ -183,24 +138,6 @@ class CampaignController extends Controller
         );
     }
 
-    // public function saveTemplate(Request $request, MailCampaign $campaign)
-    // {
-    //     abort_if($campaign->user_id != auth()->id(), 403);
-
-    //     $request->validate([
-    //         'template_type' => 'required'
-    //     ]);
-
-    //     $campaign->update([
-    //         'template_id' => $request->template_id
-    //     ]);
-
-    //     return redirect()->route(
-    //         'user.campaigns.editor',
-    //         $campaign
-    //     );
-    // }
-
     public function saveTemplate(Request $request, MailCampaign $campaign)
     {
         abort_if($campaign->user_id != auth()->id(), 403);
@@ -230,41 +167,6 @@ class CampaignController extends Controller
         return redirect()->route('user.campaigns.editor', $campaign);
     }
 
-    // public function editor(MailCampaign $campaign)
-    // {
-    //     abort_if($campaign->user_id != auth()->id(), 403);
-
-    //     $groups = Group::where('user_id', auth()->id())
-    //         ->where('status', 1)
-    //         ->orderBy('group_name')
-    //         ->get();
-
-    //     return view(
-    //         'frontend.user.campaigns.editor',
-    //         compact('campaign', 'groups')
-    //     );
-    // }
-
-//     public function editor(MailCampaign $campaign)
-//     {
-//         abort_if($campaign->user_id != auth()->id(), 403);
-
-//         $template = null;
-
-//         $groups = Group::where('user_id', auth()->id())
-//             ->where('status', 1)
-//             ->orderBy('group_name')
-//             ->get();
-// //dd($campaign);
-//         if ($campaign->template_type === 'default') {
-//             $template = Template::find($campaign->template_id);
-//         } else {
-//             $template = MailTemplate::find($campaign->template_id);
-//         }
-
-//         return view('frontend.user.campaigns.editor', compact('campaign', 'groups', 'template'));
-//     }
-
     public function editor(MailCampaign $campaign)
     {
         abort_if($campaign->user_id != auth()->id(), 403);
@@ -292,51 +194,51 @@ class CampaignController extends Controller
         // $cssToInline = new CssToInlineStyles();
 
         // $inlinedHtml = $cssToInline->convert($templateContent);
-// dd([
-//     'template_id' => $campaign->template_id,
-//     'template_type' => $campaign->template_type,
-//     'content_length' => strlen($templateContent),
-//     'content' => $templateContent,
-// ]);
+        // dd([
+        //     'template_id' => $campaign->template_id,
+        //     'template_type' => $campaign->template_type,
+        //     'content_length' => strlen($templateContent),
+        //     'content' => $templateContent,
+        // ]);
         
 
-$templateContent = $template->content ?? '';
+        $templateContent = $template->content ?? '';
 
-$editorContent = '';
+        $editorContent = '';
 
-if (!empty(trim($templateContent))) {
+        if (!empty(trim($templateContent))) {
 
-    $cssToInline = new CssToInlineStyles();
+            $cssToInline = new CssToInlineStyles();
 
-    // Convert CSS rules into inline styles
-    $inlinedHtml = $cssToInline->convert($templateContent);
+            // Convert CSS rules into inline styles
+            $inlinedHtml = $cssToInline->convert($templateContent);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Extract BODY while preserving BODY attributes/style
-    |--------------------------------------------------------------------------
-    */
+            /*
+            |--------------------------------------------------------------------------
+            | Extract BODY while preserving BODY attributes/style
+            |--------------------------------------------------------------------------
+            */
 
-    if (preg_match(
-        '/<body\b([^>]*)>(.*?)<\/body>/is',
-        $inlinedHtml,
-        $matches
-    )) {
+            if (preg_match(
+                '/<body\b([^>]*)>(.*?)<\/body>/is',
+                $inlinedHtml,
+                $matches
+            )) {
 
-        $bodyAttributes = $matches[1];
-        $bodyContent    = $matches[2];
+                $bodyAttributes = $matches[1];
+                $bodyContent    = $matches[2];
 
-        // Preserve body attributes/style inside editor
-        $editorContent =
-            '<div' . $bodyAttributes . '>' .
-                $bodyContent .
-            '</div>';
+                // Preserve body attributes/style inside editor
+                $editorContent =
+                    '<div' . $bodyAttributes . '>' .
+                        $bodyContent .
+                    '</div>';
 
-    } else {
+            } else {
 
-        $editorContent = $inlinedHtml;
-    }
-}
+                $editorContent = $inlinedHtml;
+            }
+        }
 
 
 
@@ -437,13 +339,37 @@ if (!empty(trim($templateContent))) {
 
     //     $campaign->update($validated);
 
-    //     // TODO:
-    //     // If send_now -> dispatch email job immediately.
-    //     // If schedule_now -> schedule the job using queue.
+    //     if ($validated['scheduler'] == 'send_now') {
+
+    //         // Build recipient snapshot
+    //         DB::transaction(function () use ($campaign, $validated) {
+
+    //             $this->processCampaign($campaign);
+
+    //             $campaign->update([
+    //                 'campaign_status' => 'queued',
+    //             ]);
+
+    //             // Queue sending
+            
+    //             SendCampaignJob::dispatch($campaign);
+    //         });
+
+    //         return redirect()
+    //             ->route('user.campaigns.index')
+    //             ->with('success', 'Campaign has been queued for sending.');
+    //     }
+
+    //     $this->processCampaign($campaign);
+
+    //     // Schedule
+    //     $campaign->update([
+    //         'campaign_status' => 'queued',
+    //     ]);
 
     //     return redirect()
     //         ->route('user.campaigns.index')
-    //         ->with('success', 'Campaign saved successfully.');
+    //         ->with('success', 'Campaign has been scheduled successfully.');
     // }
 
     public function sendCampaign(Request $request, MailCampaign $campaign)
@@ -454,8 +380,7 @@ if (!empty(trim($templateContent))) {
             'scheduler' => 'required|in:send_now,schedule_now',
         ];
 
-        if ($request->scheduler == 'schedule_now') {
-
+        if ($request->scheduler === 'schedule_now') {
             $rules['schedule_date'] = 'required|date|after_or_equal:today';
             $rules['schedule_hour'] = 'required|integer|min:0|max:23';
             $rules['schedule_minute'] = 'required|integer|min:0|max:59';
@@ -463,94 +388,82 @@ if (!empty(trim($templateContent))) {
 
         $validated = $request->validate($rules);
 
-        $campaign->update($validated);
+        /*
+        |--------------------------------------------------------------------------
+        | Save schedule information
+        |--------------------------------------------------------------------------
+        */
 
-        if ($validated['scheduler'] == 'send_now') {
+        $campaign->update([
+            'scheduler'      => $validated['scheduler'],
+            'schedule_date'  => $validated['schedule_date'] ?? null,
+            'schedule_hour'  => $validated['schedule_hour'] ?? null,
+            'schedule_minute'=> $validated['schedule_minute'] ?? null,
+        ]);
 
-            // Build recipient snapshot
-            DB::transaction(function () use ($campaign, $validated) {
+        /*
+        |--------------------------------------------------------------------------
+        | Create recipient snapshot
+        |--------------------------------------------------------------------------
+        */
 
-                $this->processCampaign($campaign);
+        $this->processCampaign($campaign);
 
-                $campaign->update([
-                    'campaign_status' => 'queued',
-                ]);
+        /*
+        |--------------------------------------------------------------------------
+        | SEND NOW
+        |--------------------------------------------------------------------------
+        */
 
-                // Queue sending
-            
-                SendCampaignJob::dispatch($campaign);
-            });
+        if ($validated['scheduler'] === 'send_now') {
+
+            $campaign->update([
+                'campaign_status' => 'queued',
+            ]);
+
+            SendCampaignJob::dispatch($campaign);
 
             return redirect()
                 ->route('user.campaigns.index')
                 ->with('success', 'Campaign has been queued for sending.');
         }
 
-        $this->processCampaign($campaign);
+        /*
+        |--------------------------------------------------------------------------
+        | SCHEDULE
+        |--------------------------------------------------------------------------
+        */
 
-        // Schedule
+        $scheduledAt = Carbon::create(
+            $validated['schedule_date'],
+            $validated['schedule_hour'],
+            $validated['schedule_minute'],
+            0
+        );
+
+        if ($scheduledAt->isPast()) {
+            return back()
+                ->withErrors([
+                    'schedule_date' => 'The scheduled time must be in the future.',
+                ])
+                ->withInput();
+        }
+
         $campaign->update([
             'campaign_status' => 'queued',
         ]);
 
+        SendCampaignJob::dispatch($campaign)
+            ->delay($scheduledAt);
+
         return redirect()
             ->route('user.campaigns.index')
-            ->with('success', 'Campaign has been scheduled successfully.');
-    }
-
-    // protected function processCampaign(MailCampaign $campaign): void
-    // {
-    //     //abort_if($campaign->user_id != auth()->id(), 403);
-
-    //     $campaign->load('groups.contacts');
-
-    //     if ($campaign->groups->isEmpty()) {
-    //         throw ValidationException::withMessages([
-    //             'groups' => 'Please select at least one contact group.',
-    //         ]);
-    //     }
-
-    //     DB::transaction(function () use ($campaign) {
-
-    //         $campaign->recipients()->delete();
-
-    //         $recipients = [];
-
-    //         foreach ($campaign->groups as $group) {
-
-    //             foreach ($group->contacts as $contact) {
-
-    //                 if (empty($contact->email)) {
-    //                     continue;
-    //                 }
-
-    //                 // Prevent duplicates
-    //                 $recipients[strtolower($contact->email)] = $contact;
-    //             }
-    //         }
-
-    //         foreach ($recipients as $contact) {
-
-    //             CampaignRecipient::create([
-    //                 'campaign_id' => $campaign->id,
-    //                 'contact_id'  => $contact->id,
-    //                 'email'       => $contact->email,
-    //                 'first_name'  => $contact->first_name,
-    //                 'last_name'   => $contact->last_name,
-    //                 'status'      => 'queued',
-    //                 'queued_at'   => now(),
-    //             ]);
-    //         }
-
-    //         // $campaign->update([
-    //         //     'campaign_status' => 'queued',
-    //         // ]);
-    //     });
-
-    //     // return redirect()
-    //     //     ->route('user.campaigns.index')
-    //     //     ->with('success', 'Campaign has been queued successfully.');
-    // }
+            ->with(
+                'success',
+                'Campaign scheduled successfully for ' .
+                $scheduledAt->format('d M Y h:i A')
+            );
+	}
 
     protected function processCampaign(MailCampaign $campaign): void
     {

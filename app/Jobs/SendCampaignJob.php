@@ -23,7 +23,27 @@ class SendCampaignJob implements ShouldQueue
 
     public function handle(): void
     {
-        $campaign = $this->campaign;
+        //$campaign = $this->campaign;
+        // Always get the latest campaign data from DB
+        $campaign = $this->campaign->fresh();
+
+        if (!$campaign) {
+            return;
+        }
+
+        // Do not send a cancelled campaign
+        if ($campaign->campaign_status === 'cancelled') {
+            \Log::info('Campaign cancelled, skipping send', [
+                'campaign_id' => $campaign->id,
+            ]);
+
+            return;
+        }
+
+        // Mark campaign as processing
+        $campaign->update([
+            'campaign_status' => 'processing',
+        ]);    
 
         $groupIds = DB::table('campaign_group')
             ->where('campaign_id', $campaign->id)
