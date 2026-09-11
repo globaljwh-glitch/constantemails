@@ -171,17 +171,23 @@ class SendCampaignJob implements ShouldQueue
                         $html = preg_replace_callback(
                             '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
                             function ($matches) {
+                                $imageUrl = asset('/' . $matches[2]);
+
+                                \Log::info('CAMPAIGN IMAGE URL', [
+                                    'original_path' => '/' . $matches[2],
+                                    'absolute_url' => $imageUrl,
+                                ]);
 
                                 return $matches[1]
-                                    . asset('/' . $matches[2])
+                                    . $imageUrl
                                     . $matches[3];
 
                             },
                             $html
                         );
-                        \Log::info('html images test: ', [
-                            'html' => $html
-                        ]);
+                        // \Log::info('html images test: ', [
+                        //     'html' => $html
+                        // ]);
                         /*
                          * Send email
                          */
