@@ -523,7 +523,7 @@ class CampaignController extends Controller
         try {
 
             $scheduledAt = Carbon::createFromFormat(
-                'd-m-Y H:i',
+                'Y-m-d H:i',
                 $validated['schedule_date'] . ' ' .
                 str_pad($validated['schedule_hour'], 2, '0', STR_PAD_LEFT) . ':' .
                 str_pad($validated['schedule_minute'], 2, '0', STR_PAD_LEFT),
