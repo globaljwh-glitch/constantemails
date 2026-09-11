@@ -179,7 +179,9 @@ class SendCampaignJob implements ShouldQueue
                             },
                             $html
                         );
-
+                        \Log::info('html images test: ', [
+                            'html' => $html
+                        ]);
                         /*
                          * Send email
                          */
