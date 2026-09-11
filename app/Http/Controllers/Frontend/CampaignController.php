@@ -372,6 +372,99 @@ class CampaignController extends Controller
     //         ->with('success', 'Campaign has been scheduled successfully.');
     // }
 
+    // public function sendCampaign(Request $request, MailCampaign $campaign)
+    // {
+    //     abort_if($campaign->user_id != auth()->id(), 403);
+
+    //     $rules = [
+    //         'scheduler' => 'required|in:send_now,schedule_now',
+    //     ];
+
+    //     if ($request->scheduler === 'schedule_now') {
+    //         $rules['schedule_date'] = 'required|date|after_or_equal:today';
+    //         $rules['schedule_hour'] = 'required|integer|min:0|max:23';
+    //         $rules['schedule_minute'] = 'required|integer|min:0|max:59';
+    //     }
+
+    //     $validated = $request->validate($rules);
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Save schedule information
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $campaign->update([
+    //         'scheduler'      => $validated['scheduler'],
+    //         'schedule_date'  => $validated['schedule_date'] ?? null,
+    //         'schedule_hour'  => $validated['schedule_hour'] ?? null,
+    //         'schedule_minute'=> $validated['schedule_minute'] ?? null,
+    //     ]);
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | Create recipient snapshot
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $this->processCampaign($campaign);
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | SEND NOW
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     if ($validated['scheduler'] === 'send_now') {
+
+    //         $campaign->update([
+    //             'campaign_status' => 'queued',
+    //         ]);
+
+    //         SendCampaignJob::dispatch($campaign);
+
+    //         return redirect()
+    //             ->route('user.campaigns.index')
+    //             ->with('success', 'Campaign has been queued for sending.');
+    //     }
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | SCHEDULE
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     $scheduledAt = Carbon::create(
+    //         $validated['schedule_date'],
+    //         $validated['schedule_hour'],
+    //         $validated['schedule_minute'],
+    //         0
+    //     );
+
+    //     if ($scheduledAt->isPast()) {
+    //         return back()
+    //             ->withErrors([
+    //                 'schedule_date' => 'The scheduled time must be in the future.',
+    //             ])
+    //             ->withInput();
+    //     }
+
+    //     $campaign->update([
+    //         'campaign_status' => 'queued',
+    //     ]);
+
+    //     SendCampaignJob::dispatch($campaign)
+    //         ->delay($scheduledAt);
+
+    //     return redirect()
+    //         ->route('user.campaigns.index')
+    //         ->with(
+    //             'success',
+    //             'Campaign scheduled successfully for ' .
+    //             $scheduledAt->format('d M Y h:i A')
+    //         );
+	// }
+
     public function sendCampaign(Request $request, MailCampaign $campaign)
     {
         abort_if($campaign->user_id != auth()->id(), 403);
@@ -381,7 +474,7 @@ class CampaignController extends Controller
         ];
 
         if ($request->scheduler === 'schedule_now') {
-            $rules['schedule_date'] = 'required|date|after_or_equal:today';
+            $rules['schedule_date'] = 'required';
             $rules['schedule_hour'] = 'required|integer|min:0|max:23';
             $rules['schedule_minute'] = 'required|integer|min:0|max:59';
         }
@@ -389,59 +482,68 @@ class CampaignController extends Controller
         $validated = $request->validate($rules);
 
         /*
-        |--------------------------------------------------------------------------
-        | Save schedule information
-        |--------------------------------------------------------------------------
+        * SEND NOW
         */
-
-        $campaign->update([
-            'scheduler'      => $validated['scheduler'],
-            'schedule_date'  => $validated['schedule_date'] ?? null,
-            'schedule_hour'  => $validated['schedule_hour'] ?? null,
-            'schedule_minute'=> $validated['schedule_minute'] ?? null,
-        ]);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Create recipient snapshot
-        |--------------------------------------------------------------------------
-        */
-
-        $this->processCampaign($campaign);
-
-        /*
-        |--------------------------------------------------------------------------
-        | SEND NOW
-        |--------------------------------------------------------------------------
-        */
-
         if ($validated['scheduler'] === 'send_now') {
 
             $campaign->update([
+                'scheduler'       => 'send_now',
+                'schedule_date'   => null,
+                'schedule_hour'   => null,
+                'schedule_minute' => null,
                 'campaign_status' => 'queued',
             ]);
 
+            // Create recipient snapshot
+            $this->processCampaign($campaign);
+
+            // Dispatch immediately
             SendCampaignJob::dispatch($campaign);
 
             return redirect()
                 ->route('user.campaigns.index')
-                ->with('success', 'Campaign has been queued for sending.');
+                ->with(
+                    'success',
+                    'Campaign has been queued for sending.'
+                );
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | SCHEDULE
-        |--------------------------------------------------------------------------
+        * SCHEDULE EMAIL
         */
 
-        $scheduledAt = Carbon::create(
-            $validated['schedule_date'],
-            $validated['schedule_hour'],
-            $validated['schedule_minute'],
-            0
-        );
+        /*
+        * Build scheduled date/time.
+        *
+        * Your UI is showing:
+        * 11-09-2026
+        *
+        * So we explicitly tell Carbon the format.
+        */
+        try {
 
-        if ($scheduledAt->isPast()) {
+            $scheduledAt = Carbon::createFromFormat(
+                'd-m-Y H:i',
+                $validated['schedule_date'] . ' ' .
+                str_pad($validated['schedule_hour'], 2, '0', STR_PAD_LEFT) . ':' .
+                str_pad($validated['schedule_minute'], 2, '0', STR_PAD_LEFT),
+                config('app.timezone')
+            );
+
+        } catch (\Throwable $e) {
+
+            return back()
+                ->withErrors([
+                    'schedule_date' => 'Invalid scheduled date or time.',
+                ])
+                ->withInput();
+        }
+
+        /*
+        * Check scheduled time against current time
+        */
+        if ($scheduledAt->lte(now(config('app.timezone')))) {
+
             return back()
                 ->withErrors([
                     'schedule_date' => 'The scheduled time must be in the future.',
@@ -449,12 +551,33 @@ class CampaignController extends Controller
                 ->withInput();
         }
 
+        /*
+        * Save schedule
+        */
         $campaign->update([
+            'scheduler'       => 'schedule_now',
+            'schedule_date'   => $validated['schedule_date'],
+            'schedule_hour'   => $validated['schedule_hour'],
+            'schedule_minute' => $validated['schedule_minute'],
             'campaign_status' => 'queued',
         ]);
 
+        /*
+        * Create recipient snapshot
+        */
+        $this->processCampaign($campaign);
+
+        /*
+        * Dispatch campaign job for future execution
+        */
         SendCampaignJob::dispatch($campaign)
             ->delay($scheduledAt);
+
+        \Log::info('Campaign scheduled', [
+            'campaign_id' => $campaign->id,
+            'scheduled_at' => $scheduledAt->toDateTimeString(),
+            'timezone' => config('app.timezone'),
+        ]);
 
         return redirect()
             ->route('user.campaigns.index')
@@ -463,7 +586,7 @@ class CampaignController extends Controller
                 'Campaign scheduled successfully for ' .
                 $scheduledAt->format('d M Y h:i A')
             );
-	}
+    }
 
     protected function processCampaign(MailCampaign $campaign): void
     {
