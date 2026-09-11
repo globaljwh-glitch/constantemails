@@ -116,10 +116,10 @@ class SendCampaignJob implements ShouldQueue
                         /*
                          * Email content
                          */
-                        $html = strtr(
-                            $campaign->message,
-                            $replacements
-                        );
+                        // $html = strtr(
+                        //     $campaign->message,
+                        //     $replacements
+                        // );
 
 
                         /*
@@ -131,16 +131,54 @@ class SendCampaignJob implements ShouldQueue
                          *
                          * https://yourdomain.com/images/img_waves.png
                          */
+                        // $html = preg_replace_callback(
+                        //     '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
+                        //     function ($matches) {
+                        //         return $matches[1]
+                        //             . asset($matches[2])
+                        //             . $matches[3];
+                        //     },
+                        //     $html
+                        // );
+
+                        /*
+                        * Remove escaped quotes from stored HTML
+                        */
+                        $html = str_replace(
+                            ['\\"', "\\'"],
+                            ['"', "'"],
+                            $campaign->message
+                        );
+
+                        /*
+                        * 2. Replace campaign variables
+                        */
+                        $html = strtr(
+                            $html,
+                            $replacements
+                        );
+
+
+                        /*
+                        * Convert relative image URLs to absolute URLs
+                        *
+                        * /assets/frontend/images/template/image.gif
+                        *
+                        * becomes:
+                        *
+                        * http://10.1.15.210/assets/frontend/images/template/image.gif
+                        */
                         $html = preg_replace_callback(
                             '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
                             function ($matches) {
+
                                 return $matches[1]
-                                    . asset($matches[2])
+                                    . asset('/' . $matches[2])
                                     . $matches[3];
+
                             },
                             $html
                         );
-
 
                         /*
                          * Send email
