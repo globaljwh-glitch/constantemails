@@ -45,6 +45,8 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/resource', [HomeController::class, 'resource'])->name('resource');
 Route::get('/feature', [HomeController::class, 'feature'])->name('feature');
 Route::get('/template', [HomeController::class, 'template'])->name('template');
+Route::get('/email/track/open/{recipient}', [CampaignController::class, 'trackOpen'])
+    ->name('email.track.open');
 
 /*
 |--------------------------------------------------------------------------

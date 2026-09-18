@@ -691,4 +691,19 @@ class CampaignController extends Controller
         );
     }
 
+    public function trackOpen(CampaignRecipient $recipient)
+    {
+        if ($recipient->status !== 'opened') {
+            $recipient->update([
+                'status' => 'opened',
+                'opened_at' => now(),
+            ]);
+        }
+
+        return response(
+            base64_decode('R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==')
+        )->header('Content-Type', 'image/gif')
+        ->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
+
 }

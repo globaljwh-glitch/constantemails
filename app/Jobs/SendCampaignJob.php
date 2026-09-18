@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\CampaignRecipient;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -186,26 +187,28 @@ class SendCampaignJob implements ShouldQueue
                             },
                             $html
                         );
-                        // Log::info('html images test: ', [
-                        //     'html' => $html
-                        // ]);
+                        
                         /*
                          * Send email
                          */
-                        // Mail::html($html, function ($message) use (
-                        //     $contact,
-                        //     $subject
-                        // ) {
-                        //     $message
-                        //         ->to(
-                        //             $contact->contact_email,
-                        //             trim(
-                        //                 ($contact->contact_first_name ?? '') . ' ' .
-                        //                 ($contact->contact_last_name ?? '')
-                        //             )
-                        //         )
-                        //         ->subject($subject);
-                        // });
+                        $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
+                        ->where('email', $contact->contact_email)
+                        ->first();
+
+                        if ($recipient) {
+                            $trackingUrl = route('email.track.open', [
+                                'recipient' => $recipient->id,
+                            ]);
+
+                            $html .= '<img src="' . $trackingUrl . '" width="1" height="1" style="display:none;" alt="">';
+                        }
+
+                        $trackingUrl = route('email.track.open', [
+                            'recipient' => $recipient->id,
+                        ]);
+
+                        $html .= '<img src="' . $trackingUrl . '" width="1" height="1" style="display:none;" alt="">';
+
                         Mail::html($html, function ($mail) use (
                             $contact,
                             $subject,
