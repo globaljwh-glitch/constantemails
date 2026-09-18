@@ -616,7 +616,7 @@ class CampaignController extends Controller
         DB::transaction(function () use ($campaign) {
 
             // Remove old recipient snapshot
-            $campaign->recipients()->delete();
+            //$campaign->recipients()->delete();
 
             $recipients = [];
 
