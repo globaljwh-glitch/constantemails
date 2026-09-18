@@ -22,7 +22,7 @@ class Group extends Model
         return $this->belongsTo(ContactCategory::class, 'category_id');
     }
 
-    public function contacts()
+    public function contact()
     {
         return $this->hasMany(Contact::class, 'group_id');
     }
@@ -34,6 +34,16 @@ class Group extends Model
             'campaign_group',
             'group_id',
             'campaign_id'
+        );
+    }
+
+    public function contacts()
+    {
+        return $this->belongsToMany(
+            ContactList::class,
+            'contact_group',
+            'group_id',
+            'contact_id'
         );
     }
 

@@ -3,8 +3,14 @@
 namespace App\Jobs;
 
 use App\Models\MailCampaign;
+use App\Models\ContactList;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use App\Models\CampaignRecipient;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -19,6 +25,259 @@ class SendCampaignJob implements ShouldQueue
 
     public function handle(): void
     {
-        // We'll write the email sending logic here.
+        //$campaign = $this->campaign;
+        // Always get the latest campaign data from DB
+        $campaign = $this->campaign->fresh();
+
+        if (!$campaign) {
+            return;
+        }
+
+        // Do not send a cancelled campaign
+        if ($campaign->campaign_status === 'cancelled') {
+            Log::info('Campaign cancelled, skipping send', [
+                'campaign_id' => $campaign->id,
+            ]);
+
+            return;
+        }
+
+        // Mark campaign as processing
+        $campaign->update([
+            'campaign_status' => 'processing',
+        ]);    
+
+        $groupIds = DB::table('campaign_group')
+            ->where('campaign_id', $campaign->id)
+            ->pluck('group_id');
+
+        Log::info('Campaign groups', [
+            'campaign_id' => $campaign->id,
+            'group_ids' => $groupIds->toArray(),
+        ]);
+
+        $contacts = ContactList::whereIn('group_id', $groupIds)
+            ->whereNotNull('contact_email')
+            ->get();
+
+        Log::info('Campaign contacts', [
+            'campaign_id' => $campaign->id,
+            'count' => $contacts->count(),
+        ]);
+
+        //$contacts = ContactList::where('group_id', $campaign->group_id)
+        $contacts = ContactList::whereIn('group_id', $groupIds)
+            ->whereNotNull('contact_email')
+            ->chunkById(100, function ($contacts) use ($campaign) {
+
+                foreach ($contacts as $contact) {
+
+                    try {
+
+                        Log::info('Campaign email content debug', [
+                            'campaign_id'     => $campaign->id,
+                            'message_length'  => strlen($campaign->message ?? ''),
+                            'message'         => $campaign->message,
+                            'email_subject'   => $campaign->email_subject,
+                            'recipient_email' => $contact->contact_email,
+                            'recipient_name'  => $contact->contact_first_name,
+                        ]);
+
+                        /*
+                         * Replace template variables
+                         */
+                        $replacements = [
+                            '[name]'    => trim(
+                                ($contact->contact_first_name ?? '') . ' ' .
+                                ($contact->contact_last_name ?? '')
+                            ),
+
+                            '[first_name]' => $contact->contact_first_name ?? '',
+
+                            '[last_name]' => $contact->contact_last_name ?? '',
+
+                            '[email]' => $contact->contact_email ?? '',
+
+                            '[company]' => $contact->contact_company_name ?? '',
+
+                            '[address]' => $contact->contact_address ?? '',
+
+                            '[area_interest]' => $contact->area_interest ?? '',
+                        ];
+
+
+                        /*
+                         * Subject
+                         */
+                        $subject = strtr(
+                            $campaign->email_subject,
+                            $replacements
+                        );
+
+
+                        /*
+                         * Email content
+                         */
+                        // $html = strtr(
+                        //     $campaign->message,
+                        //     $replacements
+                        // );
+
+
+                        /*
+                         * Convert relative image URLs
+                         *
+                         * /images/img_waves.png
+                         *
+                         * to
+                         *
+                         * https://yourdomain.com/images/img_waves.png
+                         */
+                        // $html = preg_replace_callback(
+                        //     '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
+                        //     function ($matches) {
+                        //         return $matches[1]
+                        //             . asset($matches[2])
+                        //             . $matches[3];
+                        //     },
+                        //     $html
+                        // );
+
+                        /*
+                        * Remove escaped quotes from stored HTML
+                        */
+                        $html = str_replace(
+                            ['\\"', "\\'"],
+                            ['"', "'"],
+                            $campaign->message
+                        );
+
+                        /*
+                        * 2. Replace campaign variables
+                        */
+                        $html = strtr(
+                            $html,
+                            $replacements
+                        );
+
+
+                        /*
+                        * Convert relative image URLs to absolute URLs
+                        *
+                        * /assets/frontend/images/template/image.gif
+                        *
+                        * becomes:
+                        *
+                        * http://10.1.15.210/assets/frontend/images/template/image.gif
+                        */
+                        $html = preg_replace_callback(
+                            '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
+                            function ($matches) {
+                                $imageUrl = asset('/' . $matches[2]);
+
+                                Log::info('CAMPAIGN IMAGE URL', [
+                                    'original_path' => '/' . $matches[2],
+                                    'absolute_url' => $imageUrl,
+                                ]);
+
+                                return $matches[1]
+                                    . $imageUrl
+                                    . $matches[3];
+
+                            },
+                            $html
+                        );
+                        
+                        /*
+                         * Send email
+                         */
+                        // $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
+                        // ->where('email', $contact->contact_email)
+                        // ->first();
+
+                        // if ($recipient) {
+                        //     $trackingUrl = route('email.track.open', [
+                        //         'recipient' => $recipient->id,
+                        //     ]);
+
+                        //     $html .= '<img src="' . $trackingUrl . '" width="1" height="1" style="display:none;" alt="">';
+                        // }
+
+
+                        Mail::html($html, function ($mail) use (
+                            $contact,
+                            $subject,
+                            $campaign
+                        ) {
+
+                            $mail->to(
+                                $contact->contact_email,
+                                trim(
+                                    ($contact->contact_first_name ?? '') . ' ' .
+                                    ($contact->contact_last_name ?? '')
+                                )
+                            )->subject($subject);
+
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Attach Campaign File
+                            |--------------------------------------------------------------------------
+                            */
+                            if ($campaign->attachment) {
+
+                                // $attachmentPath = storage_path(
+                                //     'app/public/' . $campaign->attachment
+                                // );
+                                $attachmentPath = Storage::disk('public')->path(
+                                    $campaign->attachment
+                                );
+
+                                if (file_exists($attachmentPath)) {
+
+                                    $mail->attach($attachmentPath);
+
+                                    Log::info('Campaign attachment added', [
+                                        'campaign_id' => $campaign->id,
+                                        'recipient' => $contact->contact_email,
+                                        'attachment' => $attachmentPath,
+                                    ]);
+
+                                } else {
+
+                                    Log::warning(
+                                        'Campaign attachment file not found',
+                                        [
+                                            'campaign_id' => $campaign->id,
+                                            'attachment' => $attachmentPath,
+                                        ]
+                                    );
+                                }
+                            }
+
+                        });
+
+
+                        Log::info('Campaign email sent new', [
+                            'campaign_id' => $campaign->id,
+                            'contact_id' => $contact->id,
+                            'email' => $contact->contact_email,
+                        ]);
+
+                    } catch (\Throwable $e) {
+
+                        /*
+                         * Don't stop the complete campaign
+                         * if one email fails.
+                         */
+                        Log::error('Campaign email failed', [
+                            'campaign_id' => $campaign->id,
+                            'contact_id' => $contact->id,
+                            'email' => $contact->contact_email,
+                            'error' => $e->getMessage(),
+                        ]);
+                    }
+                }
+            });
     }
 }

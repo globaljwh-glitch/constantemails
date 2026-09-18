@@ -78,7 +78,7 @@
 
                     <td>
 
-                        {{ $group->contacts_count }}
+                        {{ $group->contact_count }}
 
                     </td>
 

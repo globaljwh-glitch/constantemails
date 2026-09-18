@@ -103,7 +103,7 @@
                         </td>
 
                         <td class="text-center">
-                            {{ $group->contacts_count ?? 0 }}
+                            {{ $group->contact_count ?? 0 }}
                         </td>
 
                         <td class="text-center">

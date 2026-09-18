@@ -17,7 +17,7 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::with(['category'])
-            ->withCount('contacts')
+            ->withCount('contact')
             ->where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
