@@ -5,23 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class ImageGallery extends Model
 {
     use HasFactory;
 
-    protected $table = 'payments';
+    protected $table = 'image_galleries';
 
     protected $fillable = [
         'user_id',
-        'payment_type',
-        'payment_price',
-        'payment_date',
-        'subscription_id',
-        'status',
+        'image',
+        'size',
+        'type',
+        'caption',
     ];
 
     protected $casts = [
-        'payment_date' => 'date',
+        'size' => 'float',
     ];
 
     public function user()

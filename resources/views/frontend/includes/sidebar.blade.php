@@ -106,26 +106,30 @@
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="{{ route('user.account.profile') }}" 
+                        class="{{ request()->routeIs('user.account.profile') ? 'activeclass' : '' }}">
                             Edit your Contact and Billing Information
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="{{ route('user.account.password') }}"
+                          class="{{ request()->routeIs('user.account.password') ? 'activeclass' : '' }}">
                             Change your Password
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="{{ route('user.account.upgrade') }}"
+                          class="{{ request()->routeIs('user.account.upgrade') ? 'activeclass' : '' }}">
                             Upgrade My Package
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
-                            Check payment history
+                        <a href="{{ route('user.account.payment.history') }}"
+                          class="{{ request()->routeIs('user.account.payment.history') ? 'activeclass' : '' }}">
+                            Check Payment History
                         </a>
                     </li>
 
@@ -189,7 +193,8 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{ route('user.image-gallery.index') }}"
+              class="{{ request()->routeIs('user.image-gallery.*') ? 'activeclass' : '' }}">
                 My Image Gallery
             </a>
         </li>

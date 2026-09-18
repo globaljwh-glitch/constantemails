@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\MailingListController;
 use App\Http\Controllers\Frontend\AutoresponderController;
 use App\Http\Controllers\Frontend\EmailStatsController;
 use App\Http\Controllers\Frontend\SavedTemplateController;
+use App\Http\Controllers\Frontend\ImageGalleryController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
@@ -73,6 +74,29 @@ Route::middleware('guest')->group(function () {
 */
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/account/details', [UserController::class, 'edit'])
+        ->name('account.edit');
+    Route::get('/account/details', [UserController::class, 'profile'])
+        ->name('account.profile');
+    Route::put('/account/details', [UserController::class, 'updateProfile'])
+        ->name('account.update');
+    Route::get('/account/billing', [UserController::class, 'billing'])
+        ->name('account.billing');
+    Route::get('/account/subscription', [UserController::class, 'subscription'])
+        ->name('account.subscription');
+    Route::get('/account/change-password', [UserController::class, 'changePassword'])
+        ->name('account.password');
+    Route::put('/account/change-password', [UserController::class, 'updatePassword'])
+        ->name('account.password.update');
+    Route::get('/account/upgrade-package', [UserController::class, 'upgradePackage'])
+        ->name('account.upgrade');
+    Route::post('/account/upgrade-package', [UserController::class, 'upgradePackageStore'])
+        ->name('account.upgrade.store');
+    Route::get('/account/payment-history', [UserController::class, 'paymentHistory'])
+        ->name('account.payment.history');
+    Route::resource('image-gallery', ImageGalleryController::class)
+        ->except(['show'])
+        ->names('image-gallery');
     Route::post('/logout', [FrontAuthController::class, 'logout'])->name('logout');
 
     Route::resource('groups', GroupController::class);
