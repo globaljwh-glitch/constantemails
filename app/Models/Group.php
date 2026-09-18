@@ -22,10 +22,10 @@ class Group extends Model
         return $this->belongsTo(ContactCategory::class, 'category_id');
     }
 
-    // public function contacts()
-    // {
-    //     return $this->hasMany(Contact::class, 'group_id');
-    // }
+    public function contact()
+    {
+        return $this->hasMany(Contact::class, 'group_id');
+    }
 
     public function campaigns()
     {

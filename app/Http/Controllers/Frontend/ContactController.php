@@ -182,8 +182,9 @@ class ContactController extends Controller
 
             // Skip duplicate email in same user's contacts
             $exists = Contact::where('user_id', Auth::id())
-                        ->where('contact_email', trim($row[4]))
-                        ->exists();
+                ->where('contact_email', trim($row[4]))
+                ->where('group_id', $request->group_id)
+                ->exists();
 
             if ($exists) {
                 continue;
