@@ -263,6 +263,7 @@ class SendCampaignJob implements ShouldQueue
                             'campaign_id' => $campaign->id,
                             'contact_id' => $contact->id,
                             'email' => $contact->contact_email,
+                            'attachment' => $attachmentPath,
                         ]);
 
                     } catch (\Throwable $e) {
