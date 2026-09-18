@@ -34,7 +34,7 @@ class SendCampaignJob implements ShouldQueue
 
         // Do not send a cancelled campaign
         if ($campaign->campaign_status === 'cancelled') {
-            \Log::info('Campaign cancelled, skipping send', [
+            Log::info('Campaign cancelled, skipping send', [
                 'campaign_id' => $campaign->id,
             ]);
 
@@ -50,7 +50,7 @@ class SendCampaignJob implements ShouldQueue
             ->where('campaign_id', $campaign->id)
             ->pluck('group_id');
 
-        \Log::info('Campaign groups', [
+        Log::info('Campaign groups', [
             'campaign_id' => $campaign->id,
             'group_ids' => $groupIds->toArray(),
         ]);
@@ -59,7 +59,7 @@ class SendCampaignJob implements ShouldQueue
             ->whereNotNull('contact_email')
             ->get();
 
-        \Log::info('Campaign contacts', [
+        Log::info('Campaign contacts', [
             'campaign_id' => $campaign->id,
             'count' => $contacts->count(),
         ]);
@@ -73,7 +73,7 @@ class SendCampaignJob implements ShouldQueue
 
                     try {
 
-                        \Log::info('Campaign email content debug', [
+                        Log::info('Campaign email content debug', [
                             'campaign_id'     => $campaign->id,
                             'message_length'  => strlen($campaign->message ?? ''),
                             'message'         => $campaign->message,
@@ -174,7 +174,7 @@ class SendCampaignJob implements ShouldQueue
                             function ($matches) {
                                 $imageUrl = asset('/' . $matches[2]);
 
-                                \Log::info('CAMPAIGN IMAGE URL', [
+                                Log::info('CAMPAIGN IMAGE URL', [
                                     'original_path' => '/' . $matches[2],
                                     'absolute_url' => $imageUrl,
                                 ]);
@@ -186,7 +186,7 @@ class SendCampaignJob implements ShouldQueue
                             },
                             $html
                         );
-                        // \Log::info('html images test: ', [
+                        // Log::info('html images test: ', [
                         //     'html' => $html
                         // ]);
                         /*
@@ -206,9 +206,6 @@ class SendCampaignJob implements ShouldQueue
                         //         )
                         //         ->subject($subject);
                         // });
-$attachmentPath = Storage::disk('public')->path(
-                                    $campaign->attachment
-                                );
                         Mail::html($html, function ($mail) use (
                             $contact,
                             $subject,
@@ -229,9 +226,6 @@ $attachmentPath = Storage::disk('public')->path(
                             | Attach Campaign File
                             |--------------------------------------------------------------------------
                             */
-$attachmentPath2 = Storage::disk('public')->path(
-                                    $campaign->attachment
-                                );
                             if ($campaign->attachment) {
 
                                 // $attachmentPath = storage_path(
@@ -245,7 +239,7 @@ $attachmentPath2 = Storage::disk('public')->path(
 
                                     $mail->attach($attachmentPath);
 
-                                    \Log::info('Campaign attachment added', [
+                                    Log::info('Campaign attachment added', [
                                         'campaign_id' => $campaign->id,
                                         'recipient' => $contact->contact_email,
                                         'attachment' => $attachmentPath,
@@ -253,7 +247,7 @@ $attachmentPath2 = Storage::disk('public')->path(
 
                                 } else {
 
-                                    \Log::warning(
+                                    Log::warning(
                                         'Campaign attachment file not found',
                                         [
                                             'campaign_id' => $campaign->id,
@@ -266,12 +260,10 @@ $attachmentPath2 = Storage::disk('public')->path(
                         });
 
 
-                        \Log::info('Campaign email sent new', [
+                        Log::info('Campaign email sent new', [
                             'campaign_id' => $campaign->id,
                             'contact_id' => $contact->id,
                             'email' => $contact->contact_email,
-                            'attachment' => $attachmentPath,
-                            'att2' => $attachmentPath2,
                         ]);
 
                     } catch (\Throwable $e) {
@@ -280,7 +272,7 @@ $attachmentPath2 = Storage::disk('public')->path(
                          * Don't stop the complete campaign
                          * if one email fails.
                          */
-                        \Log::error('Campaign email failed', [
+                        Log::error('Campaign email failed', [
                             'campaign_id' => $campaign->id,
                             'contact_id' => $contact->id,
                             'email' => $contact->contact_email,
