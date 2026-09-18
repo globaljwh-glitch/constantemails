@@ -9,6 +9,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -237,7 +238,7 @@ class SendCampaignJob implements ShouldQueue
 
                                     $mail->attach($attachmentPath);
 
-                                    Log::info('Campaign attachment added', [
+                                    \Log::info('Campaign attachment added', [
                                         'campaign_id' => $campaign->id,
                                         'recipient' => $contact->contact_email,
                                         'attachment' => $attachmentPath,
@@ -245,7 +246,7 @@ class SendCampaignJob implements ShouldQueue
 
                                 } else {
 
-                                    Log::warning(
+                                    \Log::warning(
                                         'Campaign attachment file not found',
                                         [
                                             'campaign_id' => $campaign->id,
@@ -258,7 +259,7 @@ class SendCampaignJob implements ShouldQueue
                         });
 
 
-                        Log::info('Campaign email sent', [
+                        \Log::info('Campaign email sent', [
                             'campaign_id' => $campaign->id,
                             'contact_id' => $contact->id,
                             'email' => $contact->contact_email,
@@ -270,7 +271,7 @@ class SendCampaignJob implements ShouldQueue
                          * Don't stop the complete campaign
                          * if one email fails.
                          */
-                        Log::error('Campaign email failed', [
+                        \Log::error('Campaign email failed', [
                             'campaign_id' => $campaign->id,
                             'contact_id' => $contact->id,
                             'email' => $contact->contact_email,

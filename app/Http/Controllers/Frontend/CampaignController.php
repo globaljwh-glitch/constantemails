@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Jobs\SendCampaignJob;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use App\Models\SaveTemplate;
+use Illuminate\Support\Facades\Storage;
 
 class CampaignController extends Controller
 {
