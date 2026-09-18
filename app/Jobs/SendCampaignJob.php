@@ -191,23 +191,18 @@ class SendCampaignJob implements ShouldQueue
                         /*
                          * Send email
                          */
-                        $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
-                        ->where('email', $contact->contact_email)
-                        ->first();
+                        // $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
+                        // ->where('email', $contact->contact_email)
+                        // ->first();
 
-                        if ($recipient) {
-                            $trackingUrl = route('email.track.open', [
-                                'recipient' => $recipient->id,
-                            ]);
+                        // if ($recipient) {
+                        //     $trackingUrl = route('email.track.open', [
+                        //         'recipient' => $recipient->id,
+                        //     ]);
 
-                            $html .= '<img src="' . $trackingUrl . '" width="1" height="1" style="display:none;" alt="">';
-                        }
+                        //     $html .= '<img src="' . $trackingUrl . '" width="1" height="1" style="display:none;" alt="">';
+                        // }
 
-                        $trackingUrl = route('email.track.open', [
-                            'recipient' => $recipient->id,
-                        ]);
-
-                        $html .= '<img src="' . $trackingUrl . '" width="1" height="1" style="display:none;" alt="">';
 
                         Mail::html($html, function ($mail) use (
                             $contact,

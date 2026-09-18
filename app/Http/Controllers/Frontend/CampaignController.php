@@ -604,189 +604,189 @@ class CampaignController extends Controller
             );
     }
 
-    // protected function processCampaign(MailCampaign $campaign): void
-    // {
-    //     $campaign->load('groups.contacts');
-
-    //     if ($campaign->groups->isEmpty()) {
-    //         throw ValidationException::withMessages([
-    //             'groups' => 'Please select at least one contact group.',
-    //         ]);
-    //     }
-
-    //     DB::transaction(function () use ($campaign) {
-
-    //         // Remove old recipient snapshot
-    //         //$campaign->recipients()->delete();
-
-    //         $recipients = [];
-
-    //         foreach ($campaign->groups as $group) {
-
-    //             foreach ($group->contacts as $contact) {
-
-    //                 if (empty($contact->contact_email)) {
-    //                     continue;
-    //                 }
-
-    //                 // Prevent duplicate email addresses
-    //                 $email = strtolower(trim($contact->contact_email));
-
-    //                 $recipients[$email] = $contact;
-    //             }
-    //         }
-
-    //         foreach ($recipients as $contact) {
-
-    //             CampaignRecipient::create([
-    //                 'campaign_id' => $campaign->id,
-    //                 'contact_id'  => $contact->id,
-    //                 'email'       => $contact->contact_email,
-    //                 'first_name'  => $contact->contact_first_name,
-    //                 'last_name'   => $contact->contact_last_name,
-    //                 'status'      => 'queued',
-    //                 'queued_at'   => now(),
-    //             ]);
-    //         }
-    //     });
-    // }
-
     protected function processCampaign(MailCampaign $campaign): void
     {
-        try {
+        $campaign->load('groups.contacts');
 
-            Log::info('PROCESS CAMPAIGN STARTED', [
-                'campaign_id' => $campaign->id,
-                'user_id' => $campaign->user_id,
+        if ($campaign->groups->isEmpty()) {
+            throw ValidationException::withMessages([
+                'groups' => 'Please select at least one contact group.',
             ]);
+        }
 
-            $campaign->load('groups.contacts');
+        DB::transaction(function () use ($campaign) {
 
-            Log::info('CAMPAIGN GROUPS LOADED', [
-                'campaign_id' => $campaign->id,
-                'group_count' => $campaign->groups->count(),
-                'group_ids' => $campaign->groups->pluck('id')->toArray(),
-            ]);
+            // Remove old recipient snapshot
+            //$campaign->recipients()->delete();
 
-            if ($campaign->groups->isEmpty()) {
+            $recipients = [];
 
-                Log::warning('CAMPAIGN HAS NO GROUPS', [
-                    'campaign_id' => $campaign->id,
-                ]);
+            foreach ($campaign->groups as $group) {
 
-                throw ValidationException::withMessages([
-                    'groups' => 'Please select at least one contact group.',
-                ]);
+                foreach ($group->contacts as $contact) {
+
+                    if (empty($contact->contact_email)) {
+                        continue;
+                    }
+
+                    // Prevent duplicate email addresses
+                    $email = strtolower(trim($contact->contact_email));
+
+                    $recipients[$email] = $contact;
+                }
             }
 
-            DB::transaction(function () use ($campaign) {
+            foreach ($recipients as $contact) {
 
-                Log::info('CAMPAIGN TRANSACTION STARTED', [
+                CampaignRecipient::create([
                     'campaign_id' => $campaign->id,
+                    'contact_id'  => $contact->id,
+                    'email'       => $contact->contact_email,
+                    'first_name'  => $contact->contact_first_name,
+                    'last_name'   => $contact->contact_last_name,
+                    'status'      => 'queued',
+                    'queued_at'   => now(),
                 ]);
-
-                $recipients = [];
-
-                foreach ($campaign->groups as $group) {
-
-                    Log::info('PROCESSING GROUP', [
-                        'campaign_id' => $campaign->id,
-                        'group_id' => $group->id,
-                        'group_name' => $group->name ?? null,
-                        'contact_count' => $group->contacts->count(),
-                    ]);
-
-                    foreach ($group->contacts as $contact) {
-
-                        Log::info('PROCESSING CONTACT', [
-                            'campaign_id' => $campaign->id,
-                            'group_id' => $group->id,
-                            'contact_id' => $contact->id,
-                            'email' => $contact->contact_email,
-                        ]);
-
-                        if (empty($contact->contact_email)) {
-
-                            Log::warning('CONTACT EMAIL EMPTY', [
-                                'campaign_id' => $campaign->id,
-                                'contact_id' => $contact->id,
-                            ]);
-
-                            continue;
-                        }
-
-                        // Prevent duplicate email addresses
-                        $email = strtolower(trim($contact->contact_email));
-
-                        $recipients[$email] = $contact;
-                    }
-                }
-
-                Log::info('RECIPIENTS PREPARED', [
-                    'campaign_id' => $campaign->id,
-                    'recipient_count' => count($recipients),
-                    'emails' => array_keys($recipients),
-                ]);
-
-                foreach ($recipients as $contact) {
-
-                    try {
-
-                        $recipient = CampaignRecipient::create([
-                            'campaign_id' => $campaign->id,
-                            'contact_id'  => $contact->id,
-                            'email'       => $contact->contact_email,
-                            'first_name'  => $contact->contact_first_name,
-                            'last_name'   => $contact->contact_last_name,
-                            'status'      => 'queued',
-                            'queued_at'   => now(),
-                        ]);
-
-                        Log::info('CAMPAIGN RECIPIENT CREATED', [
-                            'campaign_id' => $campaign->id,
-                            'recipient_id' => $recipient->id,
-                            'contact_id' => $contact->id,
-                            'email' => $contact->contact_email,
-                        ]);
-
-                    } catch (\Throwable $e) {
-
-                        Log::error('CAMPAIGN RECIPIENT CREATE FAILED', [
-                            'campaign_id' => $campaign->id,
-                            'contact_id' => $contact->id,
-                            'email' => $contact->contact_email,
-                            'error' => $e->getMessage(),
-                            'file' => $e->getFile(),
-                            'line' => $e->getLine(),
-                        ]);
-
-                        throw $e;
-                    }
-                }
-
-                Log::info('CAMPAIGN TRANSACTION COMPLETED', [
-                    'campaign_id' => $campaign->id,
-                    'recipient_count' => count($recipients),
-                ]);
-            });
-
-            Log::info('PROCESS CAMPAIGN FINISHED SUCCESSFULLY', [
-                'campaign_id' => $campaign->id,
-            ]);
-
-        } catch (\Throwable $e) {
-
-            Log::error('PROCESS CAMPAIGN FAILED', [
-                'campaign_id' => $campaign->id,
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            throw $e;
-        }
+            }
+        });
     }
+
+    // protected function processCampaign(MailCampaign $campaign): void
+    // {
+    //     try {
+
+    //         Log::info('PROCESS CAMPAIGN STARTED', [
+    //             'campaign_id' => $campaign->id,
+    //             'user_id' => $campaign->user_id,
+    //         ]);
+
+    //         $campaign->load('groups.contacts');
+
+    //         Log::info('CAMPAIGN GROUPS LOADED', [
+    //             'campaign_id' => $campaign->id,
+    //             'group_count' => $campaign->groups->count(),
+    //             'group_ids' => $campaign->groups->pluck('id')->toArray(),
+    //         ]);
+
+    //         if ($campaign->groups->isEmpty()) {
+
+    //             Log::warning('CAMPAIGN HAS NO GROUPS', [
+    //                 'campaign_id' => $campaign->id,
+    //             ]);
+
+    //             throw ValidationException::withMessages([
+    //                 'groups' => 'Please select at least one contact group.',
+    //             ]);
+    //         }
+
+    //         DB::transaction(function () use ($campaign) {
+
+    //             Log::info('CAMPAIGN TRANSACTION STARTED', [
+    //                 'campaign_id' => $campaign->id,
+    //             ]);
+
+    //             $recipients = [];
+
+    //             foreach ($campaign->groups as $group) {
+
+    //                 Log::info('PROCESSING GROUP', [
+    //                     'campaign_id' => $campaign->id,
+    //                     'group_id' => $group->id,
+    //                     'group_name' => $group->name ?? null,
+    //                     'contact_count' => $group->contacts->count(),
+    //                 ]);
+
+    //                 foreach ($group->contacts as $contact) {
+
+    //                     Log::info('PROCESSING CONTACT', [
+    //                         'campaign_id' => $campaign->id,
+    //                         'group_id' => $group->id,
+    //                         'contact_id' => $contact->id,
+    //                         'email' => $contact->contact_email,
+    //                     ]);
+
+    //                     if (empty($contact->contact_email)) {
+
+    //                         Log::warning('CONTACT EMAIL EMPTY', [
+    //                             'campaign_id' => $campaign->id,
+    //                             'contact_id' => $contact->id,
+    //                         ]);
+
+    //                         continue;
+    //                     }
+
+    //                     // Prevent duplicate email addresses
+    //                     $email = strtolower(trim($contact->contact_email));
+
+    //                     $recipients[$email] = $contact;
+    //                 }
+    //             }
+
+    //             Log::info('RECIPIENTS PREPARED', [
+    //                 'campaign_id' => $campaign->id,
+    //                 'recipient_count' => count($recipients),
+    //                 'emails' => array_keys($recipients),
+    //             ]);
+
+    //             foreach ($recipients as $contact) {
+
+    //                 try {
+
+    //                     $recipient = CampaignRecipient::create([
+    //                         'campaign_id' => $campaign->id,
+    //                         'contact_id'  => $contact->id,
+    //                         'email'       => $contact->contact_email,
+    //                         'first_name'  => $contact->contact_first_name,
+    //                         'last_name'   => $contact->contact_last_name,
+    //                         'status'      => 'queued',
+    //                         'queued_at'   => now(),
+    //                     ]);
+
+    //                     Log::info('CAMPAIGN RECIPIENT CREATED', [
+    //                         'campaign_id' => $campaign->id,
+    //                         'recipient_id' => $recipient->id,
+    //                         'contact_id' => $contact->id,
+    //                         'email' => $contact->contact_email,
+    //                     ]);
+
+    //                 } catch (\Throwable $e) {
+
+    //                     Log::error('CAMPAIGN RECIPIENT CREATE FAILED', [
+    //                         'campaign_id' => $campaign->id,
+    //                         'contact_id' => $contact->id,
+    //                         'email' => $contact->contact_email,
+    //                         'error' => $e->getMessage(),
+    //                         'file' => $e->getFile(),
+    //                         'line' => $e->getLine(),
+    //                     ]);
+
+    //                     throw $e;
+    //                 }
+    //             }
+
+    //             Log::info('CAMPAIGN TRANSACTION COMPLETED', [
+    //                 'campaign_id' => $campaign->id,
+    //                 'recipient_count' => count($recipients),
+    //             ]);
+    //         });
+
+    //         Log::info('PROCESS CAMPAIGN FINISHED SUCCESSFULLY', [
+    //             'campaign_id' => $campaign->id,
+    //         ]);
+
+    //     } catch (\Throwable $e) {
+
+    //         Log::error('PROCESS CAMPAIGN FAILED', [
+    //             'campaign_id' => $campaign->id,
+    //             'error' => $e->getMessage(),
+    //             'file' => $e->getFile(),
+    //             'line' => $e->getLine(),
+    //             'trace' => $e->getTraceAsString(),
+    //         ]);
+
+    //         throw $e;
+    //     }
+    // }
 
     public function templates(MailCampaign $campaign)
     {
