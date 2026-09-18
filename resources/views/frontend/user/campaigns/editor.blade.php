@@ -142,7 +142,39 @@
 
                         </small>
 
+                        <div class="mt-2">
+
+                            <strong>
+                                Current attachment:
+                            </strong>
+
+                            {{ basename($campaign->attachment) }}
+
+                            <br>
+
+                            <label class="mt-1">
+
+                                <input
+                                    type="checkbox"
+                                    name="remove_attachment"
+                                    value="1"
+                                >
+
+                                Remove attachment
+
+                            </label>
+
+                        </div>
+
                     @endif
+
+                    @error('attachment')
+
+                        <div class="text-danger mt-1">
+                            {{ $message }}
+                        </div>
+
+                    @enderror
 
                 </div>
 

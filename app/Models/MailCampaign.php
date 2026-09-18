@@ -20,6 +20,7 @@ class MailCampaign extends Model
         'additional_recipients',
         'message',
         'mail_header',
+        'attachment',
         'mail_message',
         'campaign_footer',
         'scheduler',

@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\ReferralController;
 use App\Http\Controllers\Frontend\MailingListController;
 use App\Http\Controllers\Frontend\AutoresponderController;
 use App\Http\Controllers\Frontend\EmailStatsController;
+use App\Http\Controllers\Frontend\SavedTemplateController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
@@ -263,6 +264,58 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     ])->name('contacts.bad-report.delete');
 
     Route::resource('contacts', ContactController::class);
+
+    // Templates routes
+
+    Route::get('/saved-templates', [
+        SavedTemplateController::class,
+        'index'
+    ])->name('saved-templates.index');
+
+    Route::get('/saved-templates/create', [
+        SavedTemplateController::class,
+        'create'
+    ])->name('saved-templates.create');
+
+    Route::post('/saved-templates', [
+        SavedTemplateController::class,
+        'store'
+    ])->name('saved-templates.store');
+
+    Route::get('/saved-templates/{template}', [
+        SavedTemplateController::class,
+        'show'
+    ])->name('saved-templates.show');
+
+    Route::get('/saved-templates/{template}/edit', [
+        SavedTemplateController::class,
+        'edit'
+    ])->name('saved-templates.edit');
+
+    Route::put('/saved-templates/{template}', [
+        SavedTemplateController::class,
+        'update'
+    ])->name('saved-templates.update');
+
+    Route::post('/saved-templates/delete', [
+        SavedTemplateController::class,
+        'destroy'
+    ])->name('saved-templates.destroy');
+
+    Route::post('/saved-templates/{template}/activate', [
+        SavedTemplateController::class,
+        'activate'
+    ])->name('saved-templates.activate');
+
+    Route::post('/saved-templates/{template}/deactivate', [
+        SavedTemplateController::class,
+        'deactivate'
+    ])->name('saved-templates.deactivate');
+
+    Route::post('/saved-templates/{template}/duplicate', [
+        SavedTemplateController::class,
+        'duplicate'
+    ])->name('saved-templates.duplicate');
 
 });
 

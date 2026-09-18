@@ -169,7 +169,8 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{ route('user.saved-templates.index') }}"
+              class="{{ request()->routeIs('user.saved-templates.*') ? 'activeclass' : '' }}">
                 Manage Custom Templates
             </a>
         </li>

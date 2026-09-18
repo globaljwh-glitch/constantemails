@@ -191,19 +191,70 @@ class SendCampaignJob implements ShouldQueue
                         /*
                          * Send email
                          */
-                        Mail::html($html, function ($message) use (
+                        // Mail::html($html, function ($message) use (
+                        //     $contact,
+                        //     $subject
+                        // ) {
+                        //     $message
+                        //         ->to(
+                        //             $contact->contact_email,
+                        //             trim(
+                        //                 ($contact->contact_first_name ?? '') . ' ' .
+                        //                 ($contact->contact_last_name ?? '')
+                        //             )
+                        //         )
+                        //         ->subject($subject);
+                        // });
+
+                        Mail::html($html, function ($mail) use (
                             $contact,
-                            $subject
+                            $subject,
+                            $campaign
                         ) {
-                            $message
-                                ->to(
-                                    $contact->contact_email,
-                                    trim(
-                                        ($contact->contact_first_name ?? '') . ' ' .
-                                        ($contact->contact_last_name ?? '')
-                                    )
+
+                            $mail->to(
+                                $contact->contact_email,
+                                trim(
+                                    ($contact->contact_first_name ?? '') . ' ' .
+                                    ($contact->contact_last_name ?? '')
                                 )
-                                ->subject($subject);
+                            )->subject($subject);
+
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Attach Campaign File
+                            |--------------------------------------------------------------------------
+                            */
+
+                            if ($campaign->attachment) {
+
+                                $attachmentPath = storage_path(
+                                    'app/public/' . $campaign->attachment
+                                );
+
+                                if (file_exists($attachmentPath)) {
+
+                                    $mail->attach($attachmentPath);
+
+                                    Log::info('Campaign attachment added', [
+                                        'campaign_id' => $campaign->id,
+                                        'recipient' => $contact->contact_email,
+                                        'attachment' => $attachmentPath,
+                                    ]);
+
+                                } else {
+
+                                    Log::warning(
+                                        'Campaign attachment file not found',
+                                        [
+                                            'campaign_id' => $campaign->id,
+                                            'attachment' => $attachmentPath,
+                                        ]
+                                    );
+                                }
+                            }
+
                         });
 
 

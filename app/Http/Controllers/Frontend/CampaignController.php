@@ -13,6 +13,7 @@ use App\Models\CampaignRecipient;
 use Carbon\Carbon;
 use App\Jobs\SendCampaignJob;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use App\Models\SaveTemplate;
 
 class CampaignController extends Controller
 {
@@ -122,21 +123,21 @@ class CampaignController extends Controller
         );
     }
 
-    public function templates(MailCampaign $campaign)
-    {
-        abort_if($campaign->user_id != auth()->id(), 403);
+    // public function templates(MailCampaign $campaign)
+    // {
+    //     abort_if($campaign->user_id != auth()->id(), 403);
 
-        $defaultTemplates = Template::where('status', 'Active')->get();
+    //     $defaultTemplates = Template::where('status', 'Active')->get();
 
-        $userTemplates = MailTemplate::where('status', 'Active')
-            ->where('user_id', auth()->id()) // if your table has user_id
-            ->get();
+    //     $userTemplates = MailTemplate::where('status', 'Active')
+    //         ->where('user_id', auth()->id()) // if your table has user_id
+    //         ->get();
 
-        return view(
-            'frontend.user.campaigns.templates',
-            compact('campaign', 'defaultTemplates', 'userTemplates')
-        );
-    }
+    //     return view(
+    //         'frontend.user.campaigns.templates',
+    //         compact('campaign', 'defaultTemplates', 'userTemplates')
+    //     );
+    // }
 
     public function saveTemplate(Request $request, MailCampaign $campaign)
     {
@@ -175,15 +176,28 @@ class CampaignController extends Controller
 
         if ($campaign->template_type === 'default') {
             $template = Template::find($campaign->template_id);
+
+            $templateContent = $template->content ?? '';
         } elseif ($campaign->template_type === 'user') {
-            $template = MailTemplate::find($campaign->template_id);
+            //$template = MailTemplate::find($campaign->template_id);
+            $template = SaveTemplate::where('id', $campaign->template_id)
+                ->where('user_id', auth()->id())
+                ->where('status', 'Active')
+                ->firstOrFail();
+
+            $templateContent = $template->template_content ?? '';
+        }else {
+
+            //abort(404, 'Template type is invalid.');
+            // add log here for template type mismatch
+            $templateContent = '';    
         }
 
         if (!$template) {
             abort(404, 'Template not found.');
         }
 
-        $templateContent = $template->content ?? '';
+        
 
         /*
         |--------------------------------------------------------------------------
@@ -202,7 +216,7 @@ class CampaignController extends Controller
         // ]);
         
 
-        $templateContent = $template->content ?? '';
+        //$templateContent = $template->content ?? '';
 
         $editorContent = '';
 
@@ -633,6 +647,47 @@ class CampaignController extends Controller
                 ]);
             }
         });
+    }
+
+    public function templates(MailCampaign $campaign)
+    {
+        // Make sure campaign belongs to logged-in user
+        abort_if(
+            $campaign->user_id !== auth()->id(),
+            403
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Default Templates
+        |--------------------------------------------------------------------------
+        */
+
+        $defaultTemplates = Template::where('status', 'Active')->latest()->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | My Saved Templates
+        |--------------------------------------------------------------------------
+        */
+
+        $userTemplates = SaveTemplate::where(
+                'user_id',
+                auth()->id()
+            )
+            ->where('status', 'Active')
+            ->latest()
+            ->get();
+
+
+        return view(
+            'frontend.user.campaigns.templates',
+            compact(
+                'campaign',
+                'defaultTemplates',
+                'userTemplates'
+            )
+        );
     }
 
 }

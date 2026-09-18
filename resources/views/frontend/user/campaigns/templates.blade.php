@@ -111,7 +111,7 @@
                                 <label class="form-check-label"
                                        for="user{{ $template->id }}">
 
-                                    <strong>{{ $template->mail_template_name }}</strong>
+                                    <strong>{{ $template->template_title }}</strong>
 
                                 </label>
 
