@@ -230,8 +230,11 @@ class SendCampaignJob implements ShouldQueue
 
                             if ($campaign->attachment) {
 
-                                $attachmentPath = storage_path(
-                                    'app/public/' . $campaign->attachment
+                                // $attachmentPath = storage_path(
+                                //     'app/public/' . $campaign->attachment
+                                // );
+                                $attachmentPath = Storage::disk('public')->path(
+                                    $campaign->attachment
                                 );
 
                                 if (file_exists($attachmentPath)) {
