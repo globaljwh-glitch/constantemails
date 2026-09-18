@@ -206,7 +206,9 @@ class SendCampaignJob implements ShouldQueue
                         //         )
                         //         ->subject($subject);
                         // });
-
+$attachmentPath = Storage::disk('public')->path(
+                                    $campaign->attachment
+                                );
                         Mail::html($html, function ($mail) use (
                             $contact,
                             $subject,
@@ -227,7 +229,9 @@ class SendCampaignJob implements ShouldQueue
                             | Attach Campaign File
                             |--------------------------------------------------------------------------
                             */
-
+$attachmentPath2 = Storage::disk('public')->path(
+                                    $campaign->attachment
+                                );
                             if ($campaign->attachment) {
 
                                 // $attachmentPath = storage_path(
@@ -262,11 +266,12 @@ class SendCampaignJob implements ShouldQueue
                         });
 
 
-                        \Log::info('Campaign email sent', [
+                        \Log::info('Campaign email sent new', [
                             'campaign_id' => $campaign->id,
                             'contact_id' => $contact->id,
                             'email' => $contact->contact_email,
                             'attachment' => $attachmentPath,
+                            'att2' => $attachmentPath2,
                         ]);
 
                     } catch (\Throwable $e) {
