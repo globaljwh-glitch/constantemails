@@ -10,6 +10,8 @@ use App\Models\Contact;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\DB;
 use App\Models\ContactList;
+use App\Models\BadMailCategory;
+use App\Models\BadMailList;
 
 class ContactController extends Controller
 {
@@ -411,4 +413,234 @@ class ContactController extends Controller
 
         return back()->with('success','Contacts deleted successfully.');
     }
+
+    public function assignContacts()
+    {
+        $userId = auth()->id();
+
+        $contacts = ContactList::with('groups')
+            ->where('user_id', $userId)
+            ->whereNotNull('contact_email')
+            ->latest()
+            ->paginate(20);
+
+        $groups = Group::where('user_id', $userId)
+            ->where('status', 1)
+            ->orderBy('group_name')
+            ->get();
+
+        return view(
+            'frontend.user.contacts.assign_contacts',
+            compact('contacts', 'groups')
+        );
+    }
+
+    public function assignContactsStore(Request $request)
+    {
+        $request->validate([
+            'action' => 'required|in:assign,delete',
+            'contact_ids' => 'required|array|min:1',
+            'contact_ids.*' => 'integer',
+        ]);
+
+
+        $userId = auth()->id();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Delete Contacts
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->action === 'delete') {
+
+            $contacts = ContactList::where('user_id', $userId)
+                ->whereIn('id', $request->contact_ids)
+                ->get();
+
+            foreach ($contacts as $contact) {
+
+                // Remove group relationships first
+                $contact->groups()->detach();
+
+                // Delete contact
+                $contact->delete();
+            }
+
+            return back()->with(
+                'success',
+                'Selected contacts have been deleted successfully.'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Assign Contacts
+        |--------------------------------------------------------------------------
+        */
+
+        $request->validate([
+            'group_ids' => 'required|array|min:1',
+            'group_ids.*' => 'integer',
+        ]);
+
+
+        /*
+        * Make sure selected groups belong
+        * to the logged-in user.
+        */
+        $groupIds = Group::where('user_id', $userId)
+            ->whereIn('id', $request->group_ids)
+            ->pluck('id')
+            ->toArray();
+
+
+        if (empty($groupIds)) {
+
+            return back()
+                ->withErrors([
+                    'group_ids' => 'Please select a valid Contact Group.',
+                ])
+                ->withInput();
+        }
+
+
+        /*
+        * Get only contacts belonging to
+        * the logged-in user.
+        */
+        $contacts = ContactList::where('user_id', $userId)
+            ->whereIn('id', $request->contact_ids)
+            ->get();
+
+
+        foreach ($contacts as $contact) {
+
+            /*
+            * syncWithoutDetaching means:
+            *
+            * Existing groups remain.
+            * New selected groups are added.
+            */
+            $contact->groups()->syncWithoutDetaching($groupIds);
+        }
+
+
+        return back()->with(
+            'success',
+            'Selected contacts have been assigned to the selected groups successfully.'
+        );
+    }
+
+    public function badContactsReport()
+    {
+        $userId = auth()->id();
+
+        $reports = BadMailCategory::where('user_id', $userId)
+            ->where('status', 'y')
+            ->withCount('badContacts')
+            ->latest('upload_date')
+            ->paginate(20);
+
+        return view(
+            'frontend.user.contacts.bad_contacts',
+            compact('reports')
+        );
+    }
+
+    public function badContactsDetails(BadMailCategory $report)
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Security
+        |--------------------------------------------------------------------------
+        */
+
+        abort_if(
+            $report->user_id !== auth()->id(),
+            403
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Rejected Contacts
+        |--------------------------------------------------------------------------
+        */
+
+        $badContacts = $report->badContacts()
+            ->latest()
+            ->paginate(25);
+
+
+        return view(
+            'frontend.user.contacts.bad_contacts_details',
+            compact(
+                'report',
+                'badContacts'
+            )
+        );
+    }
+
+    public function deleteBadContactReports(Request $request)
+    {
+        $request->validate([
+            'report_ids' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'report_ids.*' => [
+                'integer',
+            ],
+        ]);
+
+
+        $userId = auth()->id();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Only delete user's own reports
+        |--------------------------------------------------------------------------
+        */
+
+        $reports = BadMailCategory::where('user_id', $userId)
+            ->whereIn('id', $request->report_ids)
+            ->get();
+
+
+        foreach ($reports as $report) {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Delete rejected contacts
+            |--------------------------------------------------------------------------
+            */
+
+            $report->badContacts()->delete();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Delete report
+            |--------------------------------------------------------------------------
+            */
+
+            $report->delete();
+        }
+
+
+        return redirect()
+            ->route('user.contacts.bad-report')
+            ->with(
+                'success',
+                'Selected bad contact reports have been deleted successfully.'
+            );
+    }
+
+    
 }

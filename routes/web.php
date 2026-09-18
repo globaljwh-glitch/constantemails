@@ -8,6 +8,10 @@ use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\GroupController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\CampaignController;
+use App\Http\Controllers\Frontend\ReferralController;
+use App\Http\Controllers\Frontend\MailingListController;
+use App\Http\Controllers\Frontend\AutoresponderController;
+use App\Http\Controllers\Frontend\EmailStatsController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
@@ -81,7 +85,6 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::post('/contacts/deactivate', [ContactController::class, 'deactivate'])->name('contacts.deactivate');
     Route::post('/contacts/bulk-delete', [ContactController::class, 'bulkDelete'])->name('contacts.bulk-delete');
 
-    Route::resource('contacts', ContactController::class);
     Route::resource('campaigns', CampaignController::class);
 
     Route::get('/campaigns/{campaign}/groups', [CampaignController::class, 'groups'])->name('campaigns.groups');
@@ -92,6 +95,175 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::post('/campaigns/{campaign}/editor', [CampaignController::class, 'saveEditor'])->name('campaigns.editor.store');
     Route::get('/campaigns/{campaign}/send', [CampaignController::class, 'send'])->name('campaigns.send');
     Route::post('/campaigns/{campaign}/send', [CampaignController::class, 'sendCampaign'])->name('campaigns.send.store');
+
+    Route::get('/referral', [ReferralController::class, 'index'])
+        ->name('referral');
+
+    Route::post('/referral', [ReferralController::class, 'store'])
+        ->name('referral.store');
+
+    Route::get('/mailing-list', [MailingListController::class, 'index'])
+        ->name('mailing-list');
+
+    Route::post('/mailing-list', [MailingListController::class, 'store'])
+        ->name('mailing-list.store');
+
+    Route::get('/contacts/assign', [ContactController::class, 'assignContacts'])
+        ->name('contacts.assign');
+
+    Route::post('/contacts/assign', [ContactController::class, 'assignContactsStore'])
+        ->name('contacts.assign.store');
+
+    // Auto Responders routes
+
+    Route::get('/autoresponders', [
+        AutoresponderController::class,
+        'index'
+    ])->name('autoresponders.index');
+
+
+    Route::get('/autoresponders/create', [
+        AutoresponderController::class,
+        'create'
+    ])->name('autoresponders.create');
+
+
+    Route::post('/autoresponders/create', [
+        AutoresponderController::class,
+        'selectType'
+    ])->name('autoresponders.type');
+
+
+    Route::get('/autoresponders/copy', [
+        AutoresponderController::class,
+        'copy'
+    ])->name('autoresponders.copy');
+
+
+    Route::post('/autoresponders/copy', [
+        AutoresponderController::class,
+        'copyCampaign'
+    ])->name('autoresponders.copy.store');
+
+
+    Route::post('/autoresponders', [
+        AutoresponderController::class,
+        'store'
+    ])->name('autoresponders.store');
+
+
+    Route::get('/autoresponders/{autoresponder}/edit', [
+        AutoresponderController::class,
+        'edit'
+    ])->name('autoresponders.edit');
+
+
+    Route::put('/autoresponders/{autoresponder}', [
+        AutoresponderController::class,
+        'update'
+    ])->name('autoresponders.update');
+
+
+    Route::post('/autoresponders/{autoresponder}/activate', [
+        AutoresponderController::class,
+        'activate'
+    ])->name('autoresponders.activate');
+
+
+    Route::post('/autoresponders/{autoresponder}/pause', [
+        AutoresponderController::class,
+        'pause'
+    ])->name('autoresponders.pause');
+
+
+    Route::post('/autoresponders/{autoresponder}/duplicate', [
+        AutoresponderController::class,
+        'duplicate'
+    ])->name('autoresponders.duplicate');
+
+
+    Route::delete('/autoresponders/{autoresponder}', [
+        AutoresponderController::class,
+        'destroy'
+    ])->name('autoresponders.destroy');
+
+    Route::post('/autoresponders/delete', [
+        AutoresponderController::class,
+        'bulkDestroy'
+    ])->name('autoresponders.destroy.bulk');
+
+    Route::get('/autoresponders/{autoresponder}/groups', [
+        AutoresponderController::class,
+        'groups'
+    ])->name('autoresponders.groups');
+
+    Route::get('/autoresponders/{autoresponder}/schedule', [
+        AutoresponderController::class,
+        'schedule'
+    ])->name('autoresponders.schedule');
+
+    Route::get('/autoresponders/info', [
+        AutoresponderController::class,
+        'info'
+    ])->name('autoresponders.info');
+
+    // email stats routes
+
+    Route::get('/email-stats', [
+        EmailStatsController::class,
+        'index'
+    ])->name('email-stats.index');
+
+    Route::get('/email-stats/{campaign}', [
+        EmailStatsController::class,
+        'show'
+    ])->name('email-stats.show');
+
+    Route::get('/email-stats/{campaign}/itemized', [
+        EmailStatsController::class,
+        'itemized'
+    ])->name('email-stats.itemized');
+
+    Route::get('/email-stats/export', [
+        EmailStatsController::class,
+        'export'
+    ])->name('email-stats.export');
+
+    Route::post('/email-stats/delete', [
+        EmailStatsController::class,
+        'destroy'
+    ])->name('email-stats.destroy');
+
+    // bad contacts 
+    // Special contact routes
+    
+    Route::get('/contacts/assign', [
+        ContactController::class,
+        'assignContacts'
+    ])->name('contacts.assign');
+
+    Route::post('/contacts/assign', [
+        ContactController::class,
+        'assignContactsStore'
+    ])->name('contacts.assign.store');
+
+    Route::get('/contacts/bad-report', [
+        ContactController::class,
+        'badContactsReport'
+    ])->name('contacts.bad-report');
+
+    Route::get('/contacts/bad-report/{report}', [
+        ContactController::class,
+        'badContactsDetails'
+    ])->name('contacts.bad-report.show');
+
+    Route::post('/contacts/bad-report/delete', [
+        ContactController::class,
+        'deleteBadContactReports'
+    ])->name('contacts.bad-report.delete');
+
+    Route::resource('contacts', ContactController::class);
+
 });
 
 Route::get('/test-logout', function () {
