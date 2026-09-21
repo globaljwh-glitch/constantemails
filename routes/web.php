@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\AutoresponderController;
 use App\Http\Controllers\Frontend\EmailStatsController;
 use App\Http\Controllers\Frontend\SavedTemplateController;
 use App\Http\Controllers\Frontend\ImageGalleryController;
+use App\Http\Controllers\Frontend\ContactMessageController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
@@ -48,6 +49,12 @@ Route::get('/feature', [HomeController::class, 'feature'])->name('feature');
 Route::get('/template', [HomeController::class, 'template'])->name('template');
 Route::get('/email/track/open/{recipient}', [CampaignController::class, 'trackOpen'])
     ->name('email.track.open');
+    
+Route::get('/contact', [ContactMessageController::class, 'index'])
+    ->name('contact');
+
+Route::post('/contact', [ContactMessageController::class, 'store'])
+    ->name('contact.store');
 
 /*
 |--------------------------------------------------------------------------
