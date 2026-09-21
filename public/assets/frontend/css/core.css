@@ -663,3 +663,14 @@ input.form-control-file {
     border: none;
     line-height: 30px;
 }
+
+.navbar-nav .nav-item {
+    white-space: nowrap !important;
+}
+
+.navbar-nav .nav-link {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
