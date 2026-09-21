@@ -61,4 +61,9 @@ class HomeController extends Controller
         return view('frontend.pages.our_templates');
     }
 
+    public function managedAccounts()
+    {
+        return view('frontend.pages.managed-accounts');
+    }
+
 }

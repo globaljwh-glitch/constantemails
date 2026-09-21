@@ -49,12 +49,12 @@ Route::get('/feature', [HomeController::class, 'feature'])->name('feature');
 Route::get('/template', [HomeController::class, 'template'])->name('template');
 Route::get('/email/track/open/{recipient}', [CampaignController::class, 'trackOpen'])
     ->name('email.track.open');
-    
 Route::get('/contact', [ContactMessageController::class, 'index'])
     ->name('contact');
-
 Route::post('/contact', [ContactMessageController::class, 'store'])
     ->name('contact.store');
+Route::get('/managed-accounts', [HomeController::class, 'managedAccounts'])
+    ->name('managed-accounts');
 
 /*
 |--------------------------------------------------------------------------
