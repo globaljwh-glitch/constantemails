@@ -88,7 +88,7 @@ class ContactMessageController extends Controller
 
             $adminEmail = config(
                 'mail.contact_email',
-                env('CONTACT_EMAIL', config('mail.from.address'))
+                env('MAIL_FROM_ADDRESS', config('mail.from.address'))
             );
 
             Mail::send(
