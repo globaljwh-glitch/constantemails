@@ -29,6 +29,9 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\MailTemplateController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\CampaignController as AdmincampaignController;
+use App\Http\Controllers\Admin\ContactQueryController;
+use App\Http\Controllers\Admin\UserTemplateController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -270,7 +273,7 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 
     // bad contacts 
     // Special contact routes
-    
+
     Route::get('/contacts/assign', [
         ContactController::class,
         'assignContacts'
@@ -419,7 +422,17 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
+    Route::resource('campaigns', AdminCampaignController::class)->names('admin.campaigns');
+    Route::get('/campaigns/{id}/contacts-json', [AdminCampaignController::class, 'getCampaignContacts'])->name('campaigns.contacts.json');
+
+    Route::get('/contact-queries', [ContactQueryController::class, 'index'])->name('admin.contact-queries.index');
+    Route::delete('/contact-queries/{id}', [ContactQueryController::class, 'destroy'])->name('admin.contact-queries.destroy');
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile');
     Route::post('/profile/update-details', [ProfileController::class, 'updateDetails'])->name('admin.profile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('admin.profile.password');
+
+    Route::resource('user-templates', UserTemplateController::class)->names('admin.user-templates')->except(['show']);
+
+
 });

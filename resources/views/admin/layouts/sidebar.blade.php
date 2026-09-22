@@ -77,6 +77,27 @@
             </li>
 
             <li class="menu">
+                <a href="#component" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="flaticon-menu-4"></i>
+                        <span>Manage Campaigns</span>
+                    </div>
+                    <div>
+                        <i class="flaticon-right-arrow"></i>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="component" data-parent="#accordionExample">
+
+                    <!-- <li>
+                        <a href="#"> Create Campaign </a>
+                    </li> -->
+                    <li>
+                        <a href="{{ route('admin.campaigns.index') }}"> All Campaigns </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="menu">
                 <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-copy-line"></i>
@@ -162,8 +183,8 @@
                 </ul>
             </li>
 
-            <!-- <li class="menu">
-                <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <li class="menu">
+                <a href="#user-templates-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-bar-chart-2"></i>
                         <span>User Templates</span>
@@ -172,20 +193,15 @@
                         <i class="flaticon-right-arrow"></i>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="charts" data-parent="#accordionExample">
-                    
-                    
+                <ul class="collapse submenu list-unstyled" id="user-templates-menu" data-parent="#accordionExample">
                     <li>
-                        <a href="charts_cssplot.html"> CSS Plot </a>
+                        <a href="{{ route('admin.user-templates.index') }}"> All Templates </a>
                     </li>
-
-                    
-                    
                     <li>
-                        <a href="charts_google.html"> Google </a>
+                        <a href="{{ route('admin.user-templates.create') }}"> Add Template </a>
                     </li>
                 </ul>
-            </li> -->
+            </li>
 
             <li class="menu">
                 <a href="#maps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -211,9 +227,28 @@
             </li>
 
             <li class="menu">
+                <a href="#contact-us-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="flaticon-menu-4"></i>
+                        <span>Contact Us</span>
+                    </div>
+                    <div>
+                        <i class="flaticon-right-arrow"></i>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="contact-us-menu" data-parent="#accordionExample">
+                    <li>
+                        <a href="{{ route('admin.contact-queries.index') }}"> All Queries </a>
+                    </li>
+                    <!-- <li>
+            <a href="{{ route('settings.index') }}"> View Settings </a>
+        </li> -->
+                </ul>
+            </li>
+            <li class="menu">
                 <a href="#mailing" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
-                        <i class="flaticon-mail-19"></i>
+                        <i class="flaticon-menu-4"></i>
                         <span>Settings</span>
                     </div>
                     <div>
@@ -231,6 +266,7 @@
 
                 </ul>
             </li>
+
 
             <!-- <li class="menu">
                 <a href="#modules" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
