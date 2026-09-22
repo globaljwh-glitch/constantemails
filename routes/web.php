@@ -133,12 +133,6 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::get('/campaigns/{campaign}/send', [CampaignController::class, 'send'])->name('campaigns.send');
     Route::post('/campaigns/{campaign}/send', [CampaignController::class, 'sendCampaign'])->name('campaigns.send.store');
 
-    Route::get('/referral', [ReferralController::class, 'index'])
-        ->name('referral');
-
-    Route::post('/referral', [ReferralController::class, 'store'])
-        ->name('referral.store');
-
     Route::get('/mailing-list', [MailingListController::class, 'index'])
         ->name('mailing-list');
 
@@ -352,6 +346,12 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
         SavedTemplateController::class,
         'duplicate'
     ])->name('saved-templates.duplicate');
+
+    Route::get('/referral', [ReferralController::class, 'index'])
+        ->name('referral');
+
+    Route::post('/referral', [ReferralController::class, 'store'])
+        ->name('referral.store');
 
 });
 
