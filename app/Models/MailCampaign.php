@@ -54,5 +54,10 @@ class MailCampaign extends Model
             'campaign_id'
         );
     }
-    
+
+    public function getContactsAttribute()
+    {
+        $groupIds = $this->groups->pluck('id');
+        return Contact::whereIn('group_id', $groupIds)->get();
+    }
 }
