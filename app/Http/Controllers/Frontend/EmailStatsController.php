@@ -37,9 +37,12 @@ class EmailStatsController extends Controller
         |--------------------------------------------------------------------------
         */
 
+        // $query = MailCampaign::query()
+        //     ->where('mail_campaign.user_id', $userId)
+        //     ->where('mail_campaign.campaign_status', 'completed');
+
         $query = MailCampaign::query()
-            ->where('mail_campaign.user_id', $userId)
-            ->where('mail_campaign.campaign_status', 'completed');
+            ->where('mail_campaign.user_id', $userId);
 
 
         /*

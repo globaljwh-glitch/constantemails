@@ -550,8 +550,7 @@
 
 
                                     <tbody>
-
-                                        @forelse($campaigns ?? [] as $campaign)
+                                        @forelse($campaigns as $campaign)
 
                                             @php
                                                 $stats = $campaign->stats ?? null;
