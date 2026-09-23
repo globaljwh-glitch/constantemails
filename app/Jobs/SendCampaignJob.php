@@ -219,7 +219,7 @@ class SendCampaignJob implements ShouldQueue
                             ['contact' => $contact->id]
                         );
 
-                        $footer = view('frontend.emails.partials.campaign-footer', [
+                        $footer = view('frontend.partials.campaign-footer', [
                             'footer' => $campaign->footer ?? null,
                             'unsubscribeUrl' => $unsubscribeUrl,
                         ])->render();
