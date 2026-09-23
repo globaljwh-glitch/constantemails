@@ -54,13 +54,13 @@
 
                                         <td>
                                             {{ trim(
-                                                ($recipient->contact_first_name ?? '') . ' ' .
-                                                ($recipient->contact_last_name ?? '')
+                                                ($recipient->first_name ?? '') . ' ' .
+                                                ($recipient->last_name ?? '')
                                             ) ?: '-' }}
                                         </td>
 
                                         <td>
-                                            {{ $recipient->contact_email ?? '-' }}
+                                            {{ $recipient->email ?? '-' }}
                                         </td>
 
                                         <td>
