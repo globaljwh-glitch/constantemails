@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\MailCampaign;
-use App\Models\ContactList;
+use App\Models\Contact;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CampaignRecipient;
+use Illuminate\Support\Facades\URL;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -56,19 +57,28 @@ class SendCampaignJob implements ShouldQueue
             'group_ids' => $groupIds->toArray(),
         ]);
 
-        $contacts = ContactList::whereIn('group_id', $groupIds)
-            ->whereNotNull('contact_email')
-            ->get();
+        // $contacts = Contact::whereIn('group_id', $groupIds)
+        //     ->whereNotNull('contact_email')
+        //     ->get();
 
-        Log::info('Campaign contacts', [
-            'campaign_id' => $campaign->id,
-            'count' => $contacts->count(),
-        ]);
+        // Log::info('Campaign contacts', [
+        //     'campaign_id' => $campaign->id,
+        //     'count' => $contacts->count(),
+        // ]);
 
-        //$contacts = ContactList::where('group_id', $campaign->group_id)
-        $contacts = ContactList::whereIn('group_id', $groupIds)
-            ->whereNotNull('contact_email')
-            ->chunkById(100, function ($contacts) use ($campaign) {
+        //$contacts = Contact::where('group_id', $campaign->group_id)
+        // $contacts = Contact::whereIn('group_id', $groupIds)
+        //     ->whereNotNull('contact_email')
+        //     ->chunkById(100, function ($contacts) use ($campaign) {
+
+        $contacts = Contact::whereHas('groups', function ($query) use ($groupIds) {
+            $query->whereIn('contact_groups.id', $groupIds);
+        })
+        ->whereNotNull('contact_email')
+        ->where('user_status', 'opt-in')
+        ->select('contact_lists.*')
+        ->distinct()
+        ->chunkById(100, function ($contacts) use ($campaign) {
 
                 foreach ($contacts as $contact) {
 
@@ -203,6 +213,18 @@ class SendCampaignJob implements ShouldQueue
                         //     $html .= '<img src="' . $trackingUrl . '" width="1" height="1" style="display:none;" alt="">';
                         // }
 
+                        // Adding footer and generate unsubscribe link 
+                        $unsubscribeUrl = URL::signedRoute(
+                            'unsubscribe',
+                            ['contact' => $contact->id]
+                        );
+
+                        $footer = view('frontend.emails.partials.campaign-footer', [
+                            'footer' => $campaign->footer ?? null,
+                            'unsubscribeUrl' => $unsubscribeUrl,
+                        ])->render();
+
+                        $html .= $footer;
 
                         Mail::html($html, function ($mail) use (
                             $contact,

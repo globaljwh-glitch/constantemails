@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Contact;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\DB;
-use App\Models\ContactList;
 use App\Models\BadMailCategory;
 use App\Models\BadMailList;
 
@@ -18,11 +17,25 @@ class ContactController extends Controller
     /**
      * Display contacts.
      */
+    // public function index(Group $group)
+    // {
+    //     abort_if($group->user_id != auth()->id(), 403);
+
+    //     $contacts = Contact::where('group_id', $group->id)
+    //         ->orderBy('contact_first_name')
+    //         ->paginate(20);
+
+    //     return view(
+    //         'frontend.user.contacts.index',
+    //         compact('group', 'contacts')
+    //     );
+    // }
+
     public function index(Group $group)
     {
         abort_if($group->user_id != auth()->id(), 403);
 
-        $contacts = ContactList::where('group_id', $group->id)
+        $contacts = $group->contacts()
             ->orderBy('contact_first_name')
             ->paginate(20);
 
@@ -158,67 +171,247 @@ class ContactController extends Controller
         return view('frontend.user.contacts.import', compact('groups'));
     }
 
+    // public function import(Request $request)
+    // {
+    //     $request->validate([
+    //         'group_id' => 'required|exists:contact_groups,id',
+    //         'file'     => 'required|mimes:xlsx,xls,csv|max:10240',
+    //     ]);
+
+    //     $spreadsheet = IOFactory::load($request->file('file'));
+
+    //     $rows = $spreadsheet
+    //                 ->getActiveSheet()
+    //                 ->toArray();
+
+    //     $count = 0;
+
+    //     foreach ($rows as $index => $row) {
+
+    //         // Skip blank rows
+    //         if (empty($row[4])) {
+    //             continue;
+    //         }
+
+    //         // Skip duplicate email in same user's contacts
+    //         $exists = Contact::where('user_id', Auth::id())
+    //             ->where('contact_email', trim($row[4]))
+    //             ->where('group_id', $request->group_id)
+    //             ->exists();
+
+    //         if ($exists) {
+    //             continue;
+    //         }
+
+    //         Contact::create([
+
+    //             'user_id' => Auth::id(),
+
+    //             'group_id' => $request->group_id,
+
+    //             'contact_first_name' => trim($row[0]),
+
+    //             'contact_last_name' => trim($row[1]),
+
+    //             'contact_company_name' => trim($row[2]),
+
+    //             'contact_address' => trim($row[3]),
+
+    //             'contact_email' => trim($row[4]),
+
+    //             'contact_phone' => trim($row[5]),
+
+    //             'status' => 1,
+
+    //             'user_status' => 'opt-in',
+    //         ]);
+
+    //         $count++;
+    //     }
+
+    //     return redirect()
+    //             ->route('user.groups.index')
+    //             ->with('success', "{$count} contacts imported successfully.");
+    // }
+
     public function import(Request $request)
     {
         $request->validate([
-            'group_id' => 'required|exists:contact_groups,id',
-            'file'     => 'required|mimes:xlsx,xls,csv|max:10240',
+            'group_id' => [
+                'required',
+                'integer',
+                'exists:contact_groups,id',
+            ],
+            'file' => [
+                'required',
+                'file',
+                'mimes:xlsx,xls,csv',
+                'max:10240',
+            ],
         ]);
 
-        $spreadsheet = IOFactory::load($request->file('file'));
+        /*
+        |--------------------------------------------------------------------------
+        | Verify group belongs to logged-in user
+        |--------------------------------------------------------------------------
+        */
+
+        $group = Group::where('id', $request->group_id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $groupId = $group->id;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Read spreadsheet
+        |--------------------------------------------------------------------------
+        */
+
+        $spreadsheet = IOFactory::load(
+            $request->file('file')->getRealPath()
+        );
 
         $rows = $spreadsheet
-                    ->getActiveSheet()
-                    ->toArray();
+            ->getActiveSheet()
+            ->toArray();
+
 
         $count = 0;
+        $skipped = 0;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Import contacts
+        |--------------------------------------------------------------------------
+        */
 
         foreach ($rows as $index => $row) {
 
-            // Skip blank rows
-            if (empty($row[4])) {
+            /*
+            |--------------------------------------------------------------------------
+            | Skip header row
+            |--------------------------------------------------------------------------
+            |
+            | If your Excel file has a header row, skip row 0.
+            |
+            */
+
+            if ($index === 0) {
                 continue;
             }
 
-            // Skip duplicate email in same user's contacts
-            $exists = Contact::where('user_id', Auth::id())
-                ->where('contact_email', trim($row[4]))
-                ->where('group_id', $request->group_id)
+
+            /*
+            |--------------------------------------------------------------------------
+            | Skip blank rows
+            |--------------------------------------------------------------------------
+            */
+
+            $email = strtolower(trim($row[4] ?? ''));
+
+            if (empty($email)) {
+                $skipped++;
+                continue;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Find existing contact for this user
+            |--------------------------------------------------------------------------
+            */
+
+            $contact = Contact::where('user_id', Auth::id())
+                ->whereRaw('LOWER(contact_email) = ?', [$email])
+                ->first();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Create contact if it doesn't exist
+            |--------------------------------------------------------------------------
+            */
+
+            if (!$contact) {
+
+                $contact = Contact::create([
+
+                    'user_id' => Auth::id(),
+
+                    'contact_first_name' =>
+                        trim($row[0] ?? ''),
+
+                    'contact_last_name' =>
+                        trim($row[1] ?? ''),
+
+                    'contact_company_name' =>
+                        trim($row[2] ?? ''),
+
+                    'contact_address' =>
+                        trim($row[3] ?? ''),
+
+                    'contact_email' =>
+                        $email,
+
+                    'contact_phone' =>
+                        trim($row[5] ?? ''),
+
+                    'status' => 1,
+
+                    'user_status' => 'opt-in',
+                ]);
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Check if contact already belongs to this group
+            |--------------------------------------------------------------------------
+            */
+
+            $alreadyInGroup = $contact->groups()
+                ->where('contact_groups.id', $groupId)
                 ->exists();
 
-            if ($exists) {
+
+            if ($alreadyInGroup) {
+
+                $skipped++;
+
                 continue;
             }
 
-            Contact::create([
 
-                'user_id' => Auth::id(),
+            /*
+            |--------------------------------------------------------------------------
+            | Attach contact to group
+            |--------------------------------------------------------------------------
+            */
 
-                'group_id' => $request->group_id,
-
-                'contact_first_name' => trim($row[0]),
-
-                'contact_last_name' => trim($row[1]),
-
-                'contact_company_name' => trim($row[2]),
-
-                'contact_address' => trim($row[3]),
-
-                'contact_email' => trim($row[4]),
-
-                'contact_phone' => trim($row[5]),
-
-                'status' => 1,
-
-                'user_status' => 'opt-in',
+            $contact->groups()->syncWithoutDetaching([
+                $groupId
             ]);
+
 
             $count++;
         }
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Response
+        |--------------------------------------------------------------------------
+        */
+
         return redirect()
-                ->route('user.groups.index')
-                ->with('success', "{$count} contacts imported successfully.");
+            ->route('user.groups.index')
+            ->with(
+                'success',
+                "{$count} contacts imported successfully."
+            );
     }
 
 
@@ -419,7 +612,7 @@ class ContactController extends Controller
     {
         $userId = auth()->id();
 
-        $contacts = ContactList::with('groups')
+        $contacts = Contact::with('groups')
             ->where('user_id', $userId)
             ->whereNotNull('contact_email')
             ->latest()
@@ -456,7 +649,7 @@ class ContactController extends Controller
 
         if ($request->action === 'delete') {
 
-            $contacts = ContactList::where('user_id', $userId)
+            $contacts = Contact::where('user_id', $userId)
                 ->whereIn('id', $request->contact_ids)
                 ->get();
 
@@ -512,7 +705,7 @@ class ContactController extends Controller
         * Get only contacts belonging to
         * the logged-in user.
         */
-        $contacts = ContactList::where('user_id', $userId)
+        $contacts = Contact::where('user_id', $userId)
             ->whereIn('id', $request->contact_ids)
             ->get();
 
@@ -643,5 +836,17 @@ class ContactController extends Controller
             );
     }
 
+    public function unsubscribe(Contact $contact)
+    {
+        $contact->update([
+            'user_status' => 'opt-out',
+            'status' => 0,
+        ]);
+
+        return view(
+            'frontend.user.contacts.unsubscribe',
+            compact('contact')
+        );
+    }
     
 }

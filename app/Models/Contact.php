@@ -10,7 +10,6 @@ class Contact extends Model
 
     protected $fillable = [
         'user_id',
-        'group_id',
         'contact_first_name',
         'contact_last_name',
         'contact_company_name',
@@ -22,8 +21,18 @@ class Contact extends Model
         'user_status',
     ];
 
-    public function group()
+    // public function group()
+    // {
+    //     return $this->belongsTo(Group::class);
+    // }
+
+    public function groups()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsToMany(
+            Group::class,
+            'contact_group',
+            'contact_id',
+            'group_id','id','id'
+        )->withTimestamps();
     }
 }

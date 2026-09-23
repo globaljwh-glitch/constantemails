@@ -122,6 +122,9 @@
 
     {{ $contacts->links() }}
 
+    <a href="{{ url()->previous() }}" class="btn btn-default orangeBg text-white">
+        Back
+    </a>
 </div>
 
 <script>

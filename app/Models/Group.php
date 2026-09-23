@@ -22,10 +22,10 @@ class Group extends Model
         return $this->belongsTo(ContactCategory::class, 'category_id');
     }
 
-    public function contact()
-    {
-        return $this->hasMany(Contact::class, 'group_id');
-    }
+    // public function contact()
+    // {
+    //     return $this->hasMany(Contact::class, 'group_id');
+    // }
 
     public function campaigns()
     {
@@ -40,11 +40,12 @@ class Group extends Model
     public function contacts()
     {
         return $this->belongsToMany(
-            ContactList::class,
+            Contact::class,
             'contact_group',
             'group_id',
-            'contact_id'
-        );
+            'contact_id',
+            'id','id'
+        )->withTimestamps();
     }
 
 }

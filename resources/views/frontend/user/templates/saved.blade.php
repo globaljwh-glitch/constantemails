@@ -321,16 +321,6 @@
                                                                 style="margin-top:10px;"
                                                             >
 
-                                                                <button
-                                                                    type="submit"
-                                                                    class="btn btn-danger"
-                                                                    name="delete"
-                                                                    value="1"
-                                                                    onclick="return confirmDeleteTemplates();"
-                                                                >
-                                                                    Delete
-                                                                </button>
-
                                                             </div>
 
                                                         </td>

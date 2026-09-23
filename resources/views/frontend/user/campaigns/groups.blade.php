@@ -48,6 +48,7 @@
                 <th>Group Name</th>
 
                 <th width="25%">Number of Members</th>
+                <th width="25%">Created Date</th>
 
                 <th width="15%">Explore</th>
 
@@ -78,7 +79,12 @@
 
                     <td>
 
-                        {{ $group->contact_count }}
+                        {{ $group->contacts_count }}
+
+                    </td>
+                    <td>
+
+                        {{ $group->created_at->format('M d, Y') }}
 
                     </td>
 

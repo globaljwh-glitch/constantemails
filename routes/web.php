@@ -34,6 +34,7 @@ use App\Http\Controllers\Admin\ContactQueryController;
 use App\Http\Controllers\Admin\UserTemplateController;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,9 @@ Route::post('/contact', [ContactMessageController::class, 'store'])
     ->name('contact.store');
 Route::get('/managed-accounts', [HomeController::class, 'managedAccounts'])
     ->name('managed-accounts');
+Route::get('/unsubscribe/{contact}', [ContactController::class, 'unsubscribe'])
+    ->middleware('signed')
+    ->name('unsubscribe');
 
 /*
 |--------------------------------------------------------------------------

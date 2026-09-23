@@ -17,13 +17,40 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::with(['category'])
-            ->withCount('contact')
+            ->withCount('contacts')
             ->where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
 
         return view('frontend.user.groups.index', compact('groups'));
     }
+
+// public function contacts(Group $group)
+// {
+//     abort_if($group->user_id !== auth()->id(), 403);
+
+//     dd($group->contacts()->get());
+
+//     $contacts = $group->contacts()
+//         ->latest('contact_lists.id')
+//         ->paginate(20);
+
+//     return view(
+//         'frontend.user.groups.contacts',
+//         compact('group', 'contacts')
+//     );
+// }
+
+//     public function index()
+// {
+//     $group = Group::find(8);
+
+//     dd([
+//         'group' => $group->group_name,
+//         'contacts' => $group->contacts()->get(),
+//         'count' => $group->contacts()->count(),
+//     ]);
+// }
 
     /**
      * Show the form for creating a new resource.

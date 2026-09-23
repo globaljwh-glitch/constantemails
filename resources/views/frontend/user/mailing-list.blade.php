@@ -216,9 +216,9 @@
                                     the code a bit.
 
                                     Don't know how,
-                                    <a href="#">
+                                    <!-- <a href="#"> -->
                                         click here to learn!
-                                    </a>
+                                    <!-- </a> -->
 
                                 </p>
 

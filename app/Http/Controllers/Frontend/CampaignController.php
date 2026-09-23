@@ -98,10 +98,10 @@ class CampaignController extends Controller
     {
         abort_if($campaign->user_id != auth()->id(),403);
 
-        $groups = Group::withCount('contact')
+        $groups = Group::withCount('contacts')
             ->where('user_id',auth()->id())
             ->where('status',1)
-            ->orderBy('group_name')
+            ->orderBy('id', 'desc')
             ->get();
 
         return view(

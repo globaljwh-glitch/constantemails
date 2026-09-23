@@ -103,7 +103,7 @@
                         </td>
 
                         <td class="text-center">
-                            {{ $group->contact_count ?? 0 }}
+                            {{ $group->contacts_count ?? 0 }}
                         </td>
 
                         <td class="text-center">
@@ -138,8 +138,12 @@
 
     <p>
         Were you uploading a file?
-        <a href="#">Click Here</a>
+        <a href="{{ route('user.contacts.import') }}">Click Here</a>
     </p>
+
+    <a href="{{ url()->previous() }}" class="btn btn-default orangeBg text-white">
+        Back
+    </a>
 
 </div>
 

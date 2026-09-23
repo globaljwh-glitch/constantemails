@@ -53,25 +53,167 @@ class MailingListController extends Controller
 
     private function generateMailingForm(int $userId): string
     {
-        $url = url('/join-mailing-list/user' . $userId);
+        $url = url('/join-mailing-list/user/' . $userId);
 
         return <<<HTML
-            <form action="{$url}" method="POST">
+    <style>
+    .mail_form {
+        background-color: #F7F7F7;
+        padding: 15px;
+        border-collapse: collapse;
+    }
 
-                <label>First Name</label>
-                <input type="text" name="first_name" required>
+    .mail_form td {
+        color: #000000;
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        padding: 5px;
+    }
 
-                <label>Last Name</label>
-                <input type="text" name="last_name" required>
+    .mail_form input[type="text"],
+    .mail_form input[type="email"] {
+        width: 275px;
+        padding: 6px;
+        box-sizing: border-box;
+    }
 
-                <label>Email</label>
-                <input type="email" name="email" required>
+    .mailing_button {
+        color: #000000;
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 7px 15px;
+        cursor: pointer;
+    }
+    </style>
 
-                <button type="submit">
-                    Subscribe
-                </button>
+    <script>
+    function mailing_form_check(form) {
 
-            </form>
-            HTML;
+        var msg = "";
+
+        var email = form.mailing_email.value.trim();
+
+        if (email === "") {
+
+            msg += "Please enter your Email.\\n";
+
+        } else if (!isEmail(email)) {
+
+            msg += "Please enter a correct Email.\\n";
+
+        }
+
+        if (msg === "") {
+            return true;
+        }
+
+        alert(msg);
+
+        return false;
+    }
+
+    function isEmail(email) {
+
+        var regex = /^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,}$/;
+
+        return regex.test(email);
+    }
+    </script>
+
+    <form
+        name="frm_mailing_list_{$userId}"
+        method="POST"
+        action="{$url}"
+        onsubmit="return mailing_form_check(this);"
+    >
+
+        <table
+            width="400"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            class="mail_form"
+        >
+
+            <tbody>
+
+                <tr>
+                    <td>
+                        <strong>First name</strong>
+                    </td>
+
+                    <td>
+                        <input
+                            type="text"
+                            name="mailing_fName"
+                            value=""
+                            maxlength="100"
+                        >
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <strong>Last name</strong>
+                    </td>
+
+                    <td>
+                        <input
+                            type="text"
+                            name="mailing_lName"
+                            value=""
+                            maxlength="100"
+                        >
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span style="color:#F00">*</span>
+                        <strong>Email</strong>
+                    </td>
+
+                    <td>
+                        <input
+                            type="email"
+                            name="mailing_email"
+                            value=""
+                            maxlength="255"
+                            required
+                        >
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="height:10px;"></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+
+                    <td>
+                        <input
+                            type="submit"
+                            name="submit"
+                            value="Submit"
+                            class="mailing_button"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="mailing_user"
+                            value="user"
+                        >
+
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </form>
+    HTML;
     }
 }
