@@ -11,26 +11,14 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\DB;
 use App\Models\BadMailCategory;
 use App\Models\BadMailList;
+use App\Services\EmailVerifier;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
     /**
      * Display contacts.
      */
-    // public function index(Group $group)
-    // {
-    //     abort_if($group->user_id != auth()->id(), 403);
-
-    //     $contacts = Contact::where('group_id', $group->id)
-    //         ->orderBy('contact_first_name')
-    //         ->paginate(20);
-
-    //     return view(
-    //         'frontend.user.contacts.index',
-    //         compact('group', 'contacts')
-    //     );
-    // }
-
     public function index(Group $group)
     {
         abort_if($group->user_id != auth()->id(), 403);
@@ -171,70 +159,293 @@ class ContactController extends Controller
         return view('frontend.user.contacts.import', compact('groups'));
     }
 
-    // public function import(Request $request)
-    // {
-    //     $request->validate([
-    //         'group_id' => 'required|exists:contact_groups,id',
-    //         'file'     => 'required|mimes:xlsx,xls,csv|max:10240',
-    //     ]);
+    public function import(Request $request, EmailVerifier $verifier)
+    {
+        $request->validate([
+            'group_id' => [
+                'required',
+                'integer',
+                'exists:contact_groups,id',
+            ],
+            'file' => [
+                'required',
+                'file',
+                'mimes:xlsx,xls,csv',
+                'max:10240',
+            ],
+        ]);
 
-    //     $spreadsheet = IOFactory::load($request->file('file'));
+        /*
+        |--------------------------------------------------------------------------
+        | Verify group belongs to logged-in user
+        |--------------------------------------------------------------------------
+        */
 
-    //     $rows = $spreadsheet
-    //                 ->getActiveSheet()
-    //                 ->toArray();
+        $group = Group::where('id', $request->group_id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
 
-    //     $count = 0;
+        $groupId = $group->id;
 
-    //     foreach ($rows as $index => $row) {
 
-    //         // Skip blank rows
-    //         if (empty($row[4])) {
-    //             continue;
-    //         }
+        /*
+        |--------------------------------------------------------------------------
+        | Read spreadsheet
+        |--------------------------------------------------------------------------
+        */
 
-    //         // Skip duplicate email in same user's contacts
-    //         $exists = Contact::where('user_id', Auth::id())
-    //             ->where('contact_email', trim($row[4]))
-    //             ->where('group_id', $request->group_id)
-    //             ->exists();
+        $spreadsheet = IOFactory::load(
+            $request->file('file')->getRealPath()
+        );
 
-    //         if ($exists) {
-    //             continue;
-    //         }
+        $rows = $spreadsheet
+            ->getActiveSheet()
+            ->toArray();
 
-    //         Contact::create([
 
-    //             'user_id' => Auth::id(),
+        $count = 0;
+        $skipped = 0;
+        $invalid = 0;
 
-    //             'group_id' => $request->group_id,
 
-    //             'contact_first_name' => trim($row[0]),
+        /*
+        |--------------------------------------------------------------------------
+        | Import contacts
+        |--------------------------------------------------------------------------
+        */
 
-    //             'contact_last_name' => trim($row[1]),
+        foreach ($rows as $index => $row) {
 
-    //             'contact_company_name' => trim($row[2]),
+            /*
+            |--------------------------------------------------------------------------
+            | Skip header row
+            |--------------------------------------------------------------------------
+            */
 
-    //             'contact_address' => trim($row[3]),
+            if ($index === 0) {
+                continue;
+            }
 
-    //             'contact_email' => trim($row[4]),
 
-    //             'contact_phone' => trim($row[5]),
+            /*
+            |--------------------------------------------------------------------------
+            | Get email
+            |--------------------------------------------------------------------------
+            */
 
-    //             'status' => 1,
+            $email = strtolower(trim($row[4] ?? ''));
 
-    //             'user_status' => 'opt-in',
-    //         ]);
 
-    //         $count++;
-    //     }
+            /*
+            |--------------------------------------------------------------------------
+            | Skip blank email
+            |--------------------------------------------------------------------------
+            */
 
-    //     return redirect()
-    //             ->route('user.groups.index')
-    //             ->with('success', "{$count} contacts imported successfully.");
-    // }
+            if (empty($email)) {
+                $skipped++;
+                continue;
+            }
 
-    public function import(Request $request)
+
+            /*
+            |--------------------------------------------------------------------------
+            | Find existing contact
+            |--------------------------------------------------------------------------
+            */
+
+            $contact = Contact::where('user_id', Auth::id())
+                ->whereRaw(
+                    'LOWER(contact_email) = ?',
+                    [$email]
+                )
+                ->first();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | EXISTING CONTACT
+            |--------------------------------------------------------------------------
+            |
+            | If contact already exists, do NOT create or update it.
+            | Just attach it to this group.
+            |
+            */
+
+            if ($contact) {
+
+                /*
+                | Check whether already in this group
+                */
+
+                $alreadyInGroup = $contact->groups()
+                    ->where('contact_groups.id', $groupId)
+                    ->exists();
+
+
+                if ($alreadyInGroup) {
+
+                    $skipped++;
+
+                    continue;
+                }
+
+
+                /*
+                | Attach existing contact to new group
+                */
+
+                $contact->groups()->syncWithoutDetaching([
+                    $groupId
+                ]);
+
+                $count++;
+
+                continue;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | NEW CONTACT
+            |--------------------------------------------------------------------------
+            |
+            | Verify email before creating contact.
+            |
+            */
+
+            $emailStatus = 'invalid';
+            $contactStatus = 0;
+            $userStatus = 'opt-out';
+
+
+            try {
+
+                $verification = $verifier->verify($email);
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Only "valid" emails are treated as valid
+                |--------------------------------------------------------------------------
+                */
+
+                if ($verification->status === 'valid') {
+
+                    $emailStatus = 'valid';
+
+                    $contactStatus = 1;
+
+                    $userStatus = 'opt-in';
+                }
+
+            } catch (\Throwable $e) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Verification failed technically
+                |--------------------------------------------------------------------------
+                */
+
+                Log::error('Email verification failed during import', [
+                    'email' => $email,
+                    'user_id' => Auth::id(),
+                    'error' => $e->getMessage(),
+                ]);
+
+                $emailStatus = 'invalid';
+
+                $contactStatus = 0;
+
+                $userStatus = 'opt-out';
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Create NEW contact
+            |--------------------------------------------------------------------------
+            */
+
+            $contact = Contact::create([
+
+                'user_id' => Auth::id(),
+
+                'contact_first_name' =>
+                    trim($row[0] ?? ''),
+
+                'contact_last_name' =>
+                    trim($row[1] ?? ''),
+
+                'contact_company_name' =>
+                    trim($row[2] ?? ''),
+
+                'contact_address' =>
+                    trim($row[3] ?? ''),
+
+                'contact_email' =>
+                    $email,
+
+                'contact_phone' =>
+                    trim($row[5] ?? ''),
+
+                'status' =>
+                    $contactStatus,
+
+                'user_status' =>
+                    $userStatus,
+            ]);
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Attach new contact to group
+            |--------------------------------------------------------------------------
+            */
+
+            $contact->groups()->syncWithoutDetaching([
+                $groupId
+            ]);
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Count result
+            |--------------------------------------------------------------------------
+            */
+
+            $count++;
+
+            if ($emailStatus !== 'valid') {
+                $invalid++;
+            }
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Response
+        |--------------------------------------------------------------------------
+        */
+
+        $message = "{$count} contacts imported successfully.";
+
+        if ($invalid > 0) {
+
+            $message .=
+                " {$invalid} contacts have invalid/unverified email addresses.";
+        }
+
+
+        return redirect()
+            ->route('user.groups.index')
+            ->with(
+                'success',
+                $message
+            );
+    }
+
+    public function import1111(Request $request)
     {
         $request->validate([
             'group_id' => [

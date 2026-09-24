@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CampaignRecipient;
 use Illuminate\Support\Facades\URL;
-use App\Services\EmailVerifier;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -25,9 +24,8 @@ class SendCampaignJob implements ShouldQueue
         $this->campaign = $campaign;
     }
 
-    public function handle(EmailVerifier $verifier): void
+    public function handle(): void
     {
-        //$campaign = $this->campaign;
         // Always get the latest campaign data from DB
         $campaign = $this->campaign->fresh();
 
@@ -58,20 +56,6 @@ class SendCampaignJob implements ShouldQueue
             'group_ids' => $groupIds->toArray(),
         ]);
 
-        // $contacts = Contact::whereIn('group_id', $groupIds)
-        //     ->whereNotNull('contact_email')
-        //     ->get();
-
-        // Log::info('Campaign contacts', [
-        //     'campaign_id' => $campaign->id,
-        //     'count' => $contacts->count(),
-        // ]);
-
-        //$contacts = Contact::where('group_id', $campaign->group_id)
-        // $contacts = Contact::whereIn('group_id', $groupIds)
-        //     ->whereNotNull('contact_email')
-        //     ->chunkById(100, function ($contacts) use ($campaign) {
-
         $contacts = Contact::whereHas('groups', function ($query) use ($groupIds) {
             $query->whereIn('contact_groups.id', $groupIds);
         })
@@ -84,24 +68,6 @@ class SendCampaignJob implements ShouldQueue
                 foreach ($contacts as $contact) {
 
                     try {
-
-                        $email = trim($contact->contact_email);
-
-                        $verification = $verifier->verify($email);
-
-                        if ($verification->status !== 'valid') {
-
-                            Log::warning('Invalid email skipped', [
-                                'campaign_id' => $campaign->id,
-                                'contact_id' => $contact->id,
-                                'email' => $email,
-                                'status' => $verification->status,
-                                'smtp_status' => $verification->smtp_status,
-                                'message' => $verification->message,
-                            ]);
-
-                            continue;
-                        }
 
                         Log::info('Campaign email content debug', [
                             'campaign_id'     => $campaign->id,
@@ -142,35 +108,6 @@ class SendCampaignJob implements ShouldQueue
                             $campaign->email_subject,
                             $replacements
                         );
-
-
-                        /*
-                         * Email content
-                         */
-                        // $html = strtr(
-                        //     $campaign->message,
-                        //     $replacements
-                        // );
-
-
-                        /*
-                         * Convert relative image URLs
-                         *
-                         * /images/img_waves.png
-                         *
-                         * to
-                         *
-                         * https://yourdomain.com/images/img_waves.png
-                         */
-                        // $html = preg_replace_callback(
-                        //     '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
-                        //     function ($matches) {
-                        //         return $matches[1]
-                        //             . asset($matches[2])
-                        //             . $matches[3];
-                        //     },
-                        //     $html
-                        // );
 
                         /*
                         * Remove escaped quotes from stored HTML
@@ -216,21 +153,6 @@ class SendCampaignJob implements ShouldQueue
                             },
                             $html
                         );
-                        
-                        /*
-                         * Send email
-                         */
-                        // $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
-                        // ->where('email', $contact->contact_email)
-                        // ->first();
-
-                        // if ($recipient) {
-                        //     $trackingUrl = route('email.track.open', [
-                        //         'recipient' => $recipient->id,
-                        //     ]);
-
-                        //     $html .= '<img src="' . $trackingUrl . '" width="1" height="1" style="display:none;" alt="">';
-                        // }
 
                         // Adding footer and generate unsubscribe link 
                         $unsubscribeUrl = URL::signedRoute(
@@ -245,6 +167,9 @@ class SendCampaignJob implements ShouldQueue
 
                         $html .= $footer;
 
+                        /*
+                         * Send email
+                         */
                         Mail::html($html, function ($mail) use (
                             $contact,
                             $subject,
