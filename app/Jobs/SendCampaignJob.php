@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CampaignRecipient;
 use Illuminate\Support\Facades\URL;
+use App\Services\EmailVerifier;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -24,7 +25,7 @@ class SendCampaignJob implements ShouldQueue
         $this->campaign = $campaign;
     }
 
-    public function handle(): void
+    public function handle(EmailVerifier $verifier): void
     {
         //$campaign = $this->campaign;
         // Always get the latest campaign data from DB
@@ -83,6 +84,24 @@ class SendCampaignJob implements ShouldQueue
                 foreach ($contacts as $contact) {
 
                     try {
+
+                        $email = trim($contact->contact_email);
+
+                        $verification = $verifier->verify($email);
+
+                        if ($verification->status !== 'valid') {
+
+                            Log::warning('Invalid email skipped', [
+                                'campaign_id' => $campaign->id,
+                                'contact_id' => $contact->id,
+                                'email' => $email,
+                                'status' => $verification->status,
+                                'smtp_status' => $verification->smtp_status,
+                                'message' => $verification->message,
+                            ]);
+
+                            continue;
+                        }
 
                         Log::info('Campaign email content debug', [
                             'campaign_id'     => $campaign->id,
