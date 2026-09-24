@@ -519,7 +519,7 @@ class CampaignController extends Controller
             return redirect()
                 ->route('user.campaigns.index')
                 ->with(
-                    'campaign_queued',
+                    'success',
                     'Campaign has been queued for sending.'
                 );
         }
