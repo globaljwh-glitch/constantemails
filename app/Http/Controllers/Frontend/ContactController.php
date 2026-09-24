@@ -222,9 +222,9 @@ class ContactController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            if ($index === 0) {
-                continue;
-            }
+            // if ($index === 0) {
+            //     continue;
+            // }
 
 
             /*
