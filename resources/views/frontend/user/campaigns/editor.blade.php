@@ -18,7 +18,7 @@
         Edit your email before sending.
     </p>
 
-    <form action="{{ route('user.campaigns.editor.store',$campaign) }}"
+    <form action="{{ route('user.campaigns.editor.store',$campaign) }}" id="editorForm"
           method="POST"
           enctype="multipart/form-data">
 
@@ -274,6 +274,26 @@
 
 </div>
 
+<style>
+
+.constant-email-alert {
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.constant-email-alert-title {
+    color: #333;
+    font-size: 23px;
+}
+
+.constant-email-alert-button {
+    border-radius: 5px !important;
+    padding: 10px 30px !important;
+    font-weight: 600 !important;
+}
+
+</style>
+
 @endsection
 
 @push('scripts')
@@ -334,5 +354,80 @@ $(document).ready(function () {
     });
 
 });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function showValidation(title, message) {
+
+        Swal.fire({
+            icon: 'warning',
+            title: title,
+            html: message,
+            confirmButtonText: 'OK',
+
+            confirmButtonColor: '#f79432',
+
+            background: '#ffffff',
+
+            customClass: {
+                popup: 'constant-email-alert',
+                title: 'constant-email-alert-title',
+                confirmButton: 'constant-email-alert-button'
+            },
+
+            allowOutsideClick: false
+        });
+
+    }
+
+    $('#editorForm').on('submit', function (e) {
+
+        const emailTitle = $('input[name="email_title"]').val().trim();
+        const emailMessage = $('input[name="message"]').val().trim();
+
+        const selectedTemplate =
+            $('input[name="group_ids[]"]:checked');
+
+        if (selectedTemplate.length === 0) {
+
+            e.preventDefault();
+
+            showValidation(
+                'Group Required',
+                'Please select atleast 1 group before continuing.'
+            );
+
+            return false;
+        }
+
+        if (emailTitle === '') {
+
+            e.preventDefault();
+
+            showValidation(
+                'Email Campaign Name Required',
+                'Please enter an email campaign name before continuing.'
+            );
+
+            return false;
+        }
+
+        if (emailMessage === '') {
+
+            e.preventDefault();
+
+            showValidation(
+                'Email message Required',
+                'Please enter email message or content before continuing.'
+            );
+
+            return false;
+        }
+
+        // Allow normal form submission
+    });
+
 </script>
 @endpush

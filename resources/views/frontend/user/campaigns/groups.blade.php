@@ -14,7 +14,7 @@
     </p>
 
     <form method="POST"
-          action="{{ route('user.campaigns.groups.store',$campaign) }}">
+          action="{{ route('user.campaigns.groups.store',$campaign) }}" id="templateForm">
 
         @csrf
 
@@ -110,6 +110,26 @@
 
 </div>
 
+<style>
+
+.constant-email-alert {
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.constant-email-alert-title {
+    color: #333;
+    font-size: 23px;
+}
+
+.constant-email-alert-button {
+    border-radius: 5px !important;
+    padding: 10px 30px !important;
+    font-weight: 600 !important;
+}
+
+</style>
+
 @endsection
 
 @push('scripts')
@@ -125,4 +145,51 @@ document.getElementById('checkAll').addEventListener('change',function(){
 
 </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function showValidation(title, message) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: title,
+                html: message,
+                confirmButtonText: 'OK',
+
+                confirmButtonColor: '#f79432',
+
+                background: '#ffffff',
+
+                customClass: {
+                    popup: 'constant-email-alert',
+                    title: 'constant-email-alert-title',
+                    confirmButton: 'constant-email-alert-button'
+                },
+
+                allowOutsideClick: false
+            });
+
+        }
+
+        $('#templateForm').on('submit', function (e) {
+
+            const selectedTemplate =
+                $('input[name="group_ids[]"]:checked');
+
+            if (selectedTemplate.length === 0) {
+
+                e.preventDefault();
+
+                showValidation(
+                    'Group Required',
+                    'Please select atleast 1 group before continuing.'
+                );
+
+                return false;
+            }
+
+            // No e.preventDefault()
+            // Form submits normally and Laravel redirects.
+        });
+
+    </script>
 @endpush
