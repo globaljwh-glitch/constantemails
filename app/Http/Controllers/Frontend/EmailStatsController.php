@@ -571,53 +571,88 @@ class EmailStatsController extends Controller
     |--------------------------------------------------------------------------
     */
 
+    // private function getCampaignStats(int $campaignId)
+    // {
+    //     return DB::table('campaign_recipients')
+    //         ->where('campaign_id', $campaignId)
+    //         ->selectRaw('
+    //             COUNT(*) as total_user,
+
+    //             SUM(
+    //                 CASE
+    //                     WHEN opened_at IS NOT NULL
+    //                     THEN 1
+    //                     ELSE 0
+    //                 END
+    //             ) as viewed_user,
+
+    //             SUM(
+    //                 CASE
+    //                     WHEN clicked_at IS NOT NULL
+    //                     THEN 1
+    //                     ELSE 0
+    //                 END
+    //             ) as embed_link_click_status_user,
+
+    //             SUM(
+    //                 CASE
+    //                     WHEN status = "unsubscribed"
+    //                     THEN 1
+    //                     ELSE 0
+    //                 END
+    //             ) as unsubscribed_user,
+
+    //             SUM(
+    //                 CASE
+    //                     WHEN status = "bounced"
+    //                     THEN 1
+    //                     ELSE 0
+    //                 END
+    //             ) as bounced_user,
+
+    //             SUM(
+    //                 CASE
+    //                     WHEN status = "forwarded"
+    //                     THEN 1
+    //                     ELSE 0
+    //                 END
+    //             ) as forword_to_friend_user
+    //         ')
+    //         ->first();
+    // }
+
     private function getCampaignStats(int $campaignId)
     {
         return DB::table('campaign_recipients')
             ->where('campaign_id', $campaignId)
-            ->selectRaw('
+            ->selectRaw("
                 COUNT(*) as total_user,
 
-                SUM(
-                    CASE
-                        WHEN opened_at IS NOT NULL
-                        THEN 1
-                        ELSE 0
-                    END
-                ) as viewed_user,
+                COUNT(CASE
+                    WHEN opened_at IS NOT NULL
+                    THEN 1
+                END) as viewed_user,
 
-                SUM(
-                    CASE
-                        WHEN clicked_at IS NOT NULL
-                        THEN 1
-                        ELSE 0
-                    END
-                ) as embed_link_click_status_user,
+                COUNT(CASE
+                    WHEN clicked_at IS NOT NULL
+                    THEN 1
+                END) as embed_link_click_status_user,
 
-                SUM(
-                    CASE
-                        WHEN status = "unsubscribed"
-                        THEN 1
-                        ELSE 0
-                    END
-                ) as unsubscribed_user,
+                COUNT(CASE
+                    WHEN status = 'unsubscribed'
+                    THEN 1
+                END) as unsubscribed_user,
 
-                SUM(
-                    CASE
-                        WHEN status = "bounced"
-                        THEN 1
-                        ELSE 0
-                    END
-                ) as bounced_user,
+                COUNT(CASE
+                    WHEN status = 'bounced'
+                    THEN 1
+                END) as bounced_user,
 
-                SUM(
-                    CASE
-                        WHEN status = "forwarded"
-                        THEN 1
-                        ELSE 0
-                    END
-                ) as forword_to_friend_user
-            ')
+                COUNT(CASE
+                    WHEN status = 'forwarded'
+                    THEN 1
+                END) as forword_to_friend_user
+            ")
             ->first();
     }
 

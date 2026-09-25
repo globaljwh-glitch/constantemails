@@ -184,7 +184,15 @@ class SendCampaignJob implements ShouldQueue
                                 )
                             )->subject($subject);
 
-
+                            // Email successfully handed to the mailer
+                            CampaignRecipient::where('campaign_id', $campaign->id)
+                                ->where('contact_id', $contact->id)
+                                ->update([
+                                    'status' => 'sent',
+                                    'sent_at' => now(),
+                                    'updated_at' => now(),
+                                ]);
+                                
                             /*
                             |--------------------------------------------------------------------------
                             | Attach Campaign File
