@@ -76,7 +76,7 @@
                                         </td>
 
                                         <td>
-                                            {{ $recipient->unsubscribed ?? 0 }}
+                                            {{ $recipient->status === 'unsubscribed' ? 1 : 0 }}
                                         </td>
 
                                         <td>
