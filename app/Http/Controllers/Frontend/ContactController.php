@@ -1047,12 +1047,46 @@ class ContactController extends Controller
             );
     }
 
+    // public function unsubscribe(Contact $contact)
+    // {
+    //     $contact->update([
+    //         'user_status' => 'opt-out',
+    //         'status' => 1,
+    //     ]);
+
+    //     // Update campaign recipient records
+    //     DB::table('campaign_recipients')
+    //         ->where('contact_id', $contact->id)
+    //         ->update([
+    //             'status' => 'unsubscribed',
+    //             'updated_at' => now(),
+    //         ]);
+
+    //     return view(
+    //         'frontend.user.contacts.unsubscribe',
+    //         compact('contact')
+    //     );
+    // }
+
     public function unsubscribe(Contact $contact)
     {
-        $contact->update([
-            'user_status' => 'opt-out',
-            'status' => 0,
-        ]);
+        DB::transaction(function () use ($contact) {
+
+            // Global unsubscribe
+            $contact->update([
+                'user_status' => 'opt-out',
+                'status' => 1,
+            ]);
+
+            // Mark this contact as unsubscribed
+            // in every campaign where they are a recipient
+            DB::table('campaign_recipients')
+                ->where('contact_id', $contact->id)
+                ->update([
+                    'status' => 'unsubscribed',
+                    'updated_at' => now(),
+                ]);
+        });
 
         return view(
             'frontend.user.contacts.unsubscribe',
