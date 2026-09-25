@@ -644,8 +644,16 @@ class CampaignController extends Controller
                     'email'       => $contact->contact_email,
                     'first_name'  => $contact->contact_first_name,
                     'last_name'   => $contact->contact_last_name,
-                    'status'      => 'queued',
-                    'queued_at'   => now(),
+                    //'status'      => 'queued',
+                    //'queued_at'   => now(),
+
+                    'status' => $contact->user_status === 'opt-out'
+                        ? 'unsubscribed'
+                        : 'queued',
+
+                    'queued_at' => $contact->user_status === 'opt-out'
+                        ? null
+                        : now(),
                 ]);
             }
         });
