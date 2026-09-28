@@ -629,6 +629,11 @@ class EmailStatsController extends Controller
                 COUNT(*) as total_user,
 
                 COUNT(CASE
+                    WHEN sent_at IS NOT NULL
+                    THEN 1
+                END) as sent_user,
+
+                COUNT(CASE
                     WHEN opened_at IS NOT NULL
                     THEN 1
                 END) as viewed_user,
