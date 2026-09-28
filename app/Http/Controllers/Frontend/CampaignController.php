@@ -885,6 +885,7 @@ class CampaignController extends Controller
         if (!$recipient->clicked_at) {
             $recipient->update([
                 'clicked_at' => now(),
+                'opened_at' => now(),
             ]);
         }
 
