@@ -565,6 +565,11 @@
                                                     ?? $campaign->opened_count
                                                     ?? 0;
 
+                                                $sent =
+                                                    $stats->sent_user
+                                                    ?? $campaign->sent_count
+                                                    ?? 0;
+
                                                 $clicked =
                                                     $stats->embed_link_click_status_user
                                                     ?? $campaign->clicked_count
