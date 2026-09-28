@@ -68,11 +68,11 @@
                                         </td>
 
                                         <td>
-                                            {{ $recipient->opened ?? 0 }}
+                                            {{ $recipient->viewed_user ?? 0 }}
                                         </td>
 
                                         <td>
-                                            {{ $recipient->clicked ?? 0 }}
+                                            {{ $recipient->embed_link_click_status_user ?? 0 }}
                                         </td>
 
                                         <td>
