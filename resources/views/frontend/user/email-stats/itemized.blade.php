@@ -68,11 +68,11 @@
                                         </td>
 
                                         <td>
-                                            {{ $recipient->viewed_user ?? 0 }}
+                                            {{ $stats->viewed_user ?? 0 }}
                                         </td>
 
                                         <td>
-                                            {{ $recipient->embed_link_click_status_user ?? 0 }}
+                                            {{ $stats->embed_link_click_status_user ?? 0 }}
                                         </td>
 
                                         <td>
