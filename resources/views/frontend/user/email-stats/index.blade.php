@@ -513,25 +513,25 @@
 
 
                                             {{-- BOUNCED --}}
-                                            <td
+                                            <!-- <td
                                                 align="left"
                                                 class="arial_11_000"
                                             >
                                                 <strong>
                                                     Bounced
                                                 </strong>
-                                            </td>
+                                            </td> -->
 
 
                                             {{-- FORWARDED --}}
-                                            <td
+                                            <!-- <td
                                                 align="left"
                                                 class="arial_11_000"
                                             >
                                                 <strong>
                                                     Forwarded
                                                 </strong>
-                                            </td>
+                                            </td> -->
 
 
                                             {{-- ITEMIZED --}}
@@ -679,21 +679,21 @@
 
 
                                                 {{-- BOUNCED --}}
-                                                <td
+                                                <!-- <td
                                                     class="arial_13_000"
                                                     align="center"
                                                 >
                                                     {{ $bounced }}
-                                                </td>
+                                                </td> -->
 
 
                                                 {{-- FORWARDED --}}
-                                                <td
+                                                <!-- <td
                                                     class="arial_13_000"
                                                     align="center"
                                                 >
                                                     {{ $forwarded }}
-                                                </td>
+                                                </td> -->
 
 
                                                 {{-- ITEMIZED REPORT --}}
@@ -812,10 +812,8 @@
 
                         @if(isset($campaigns) && method_exists($campaigns, 'links'))
 
-                            <div class="mt-3">
-
+                            <div class="email-stats-pagination mt-3">
                                 {{ $campaigns->appends(request()->query())->links() }}
-
                             </div>
 
                         @endif
@@ -832,6 +830,30 @@
 
 </section>
 
+<style>
+.email-stats-pagination {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.email-stats-pagination nav {
+    width: auto !important;
+}
+
+.email-stats-pagination svg {
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+}
+
+.email-stats-pagination a,
+.email-stats-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
 
 {{-- =====================================================
      JAVASCRIPT

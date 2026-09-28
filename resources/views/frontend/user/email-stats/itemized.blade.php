@@ -42,7 +42,7 @@
                                     <th>Opened</th>
                                     <th>Clicked</th>
                                     <th>Unsubscribed</th>
-                                    <th>Bounced</th>
+                                    <!-- <th>Bounced</th> -->
                                 </tr>
                             </thead>
 
@@ -79,9 +79,9 @@
                                             {{ $recipient->status === 'unsubscribed' ? 1 : 0 }}
                                         </td>
 
-                                        <td>
+                                        <!-- <td>
                                             {{ $recipient->bounced ?? 0 }}
-                                        </td>
+                                        </td> -->
 
                                     </tr>
 

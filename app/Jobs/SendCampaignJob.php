@@ -167,6 +167,20 @@ class SendCampaignJob implements ShouldQueue
 
                         $html .= $footer;
 
+                        // Converting links to tracking urls 
+                        $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
+                            ->where('contact_id', $contact->id)
+                            ->first();
+
+                        if (!$recipient) {
+                        }else{
+                            $html = $this->convertLinks(
+                                $html,
+                                $campaign->id,
+                                $recipient->id
+                            );
+                        }                        
+
                         /*
                          * Send email
                          */
@@ -253,5 +267,66 @@ class SendCampaignJob implements ShouldQueue
                     }
                 }
             });
+    }
+
+    private function convertLinks(string $html, int $campaignId, int $recipientId): string {
+        libxml_use_internal_errors(true);
+
+        $dom = new \DOMDocument();
+
+        $dom->loadHTML(
+            '<?xml encoding="UTF-8">' . $html,
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $links = $dom->getElementsByTagName('a');
+
+        foreach ($links as $link) {
+
+            $href = trim($link->getAttribute('href'));
+
+            if (empty($href)) {
+                continue;
+            }
+
+            // Don't track special links
+            if (
+                str_starts_with($href, '#') ||
+                str_starts_with(strtolower($href), 'mailto:') ||
+                str_starts_with(strtolower($href), 'tel:') ||
+                str_starts_with(strtolower($href), 'javascript:')
+            ) {
+                continue;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Don't convert unsubscribe link
+            |--------------------------------------------------------------------------
+            */
+
+            if ($link->hasAttribute('data-no-track')) {
+                continue;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Create tracking URL
+            |--------------------------------------------------------------------------
+            */
+
+            $trackingUrl = route('email.track.click', [
+                'recipient' => $recipientId,
+                'url' => base64_encode($href),
+            ]);
+
+            $link->setAttribute('href', $trackingUrl);
+        }
+
+        $html = $dom->saveHTML();
+
+        libxml_clear_errors();
+
+        return $html;
     }
 }
