@@ -176,7 +176,6 @@ class SendCampaignJob implements ShouldQueue
                         }else{
                             $html = $this->convertLinks(
                                 $html,
-                                $campaign->id,
                                 $recipient->id
                             );
                         }                        
@@ -269,7 +268,7 @@ class SendCampaignJob implements ShouldQueue
             });
     }
 
-    private function convertLinks(string $html, int $campaignId, int $recipientId): string {
+    private function convertLinks(string $html, int $recipientId): string {
         libxml_use_internal_errors(true);
 
         $dom = new \DOMDocument();
@@ -279,19 +278,21 @@ class SendCampaignJob implements ShouldQueue
             LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
         );
 
-        $links = $dom->getElementsByTagName('a');
-
-        foreach ($links as $link) {
+        foreach ($dom->getElementsByTagName('a') as $link) {
 
             $href = trim($link->getAttribute('href'));
 
-            if (empty($href)) {
+            if (!$href) {
                 continue;
             }
 
-            // Don't track special links
+            // Ignore # links
+            if (str_starts_with($href, '#')) {
+                continue;
+            }
+
+            // Ignore mailto/tel/javascript
             if (
-                str_starts_with($href, '#') ||
                 str_starts_with(strtolower($href), 'mailto:') ||
                 str_starts_with(strtolower($href), 'tel:') ||
                 str_starts_with(strtolower($href), 'javascript:')
@@ -299,12 +300,7 @@ class SendCampaignJob implements ShouldQueue
                 continue;
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Don't convert unsubscribe link
-            |--------------------------------------------------------------------------
-            */
-
+            // Don't track unsubscribe links
             if ($link->hasAttribute('data-no-track')) {
                 continue;
             }
@@ -317,7 +313,7 @@ class SendCampaignJob implements ShouldQueue
 
             $trackingUrl = route('email.track.click', [
                 'recipient' => $recipientId,
-                'url' => base64_encode($href),
+                'url' => $href,
             ]);
 
             $link->setAttribute('href', $trackingUrl);

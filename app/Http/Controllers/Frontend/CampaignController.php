@@ -852,4 +852,51 @@ class CampaignController extends Controller
         ->header('Cache-Control', 'no-cache, no-store, must-revalidate');
     }
 
+    public function click(
+        Request $request,
+        CampaignRecipient $recipient
+    ) {
+        $url = $request->query('url');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate URL
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            !$url ||
+            !filter_var($url, FILTER_VALIDATE_URL) ||
+            !in_array(
+                strtolower(parse_url($url, PHP_URL_SCHEME)),
+                ['http', 'https'],
+                true
+            )
+        ) {
+            abort(404);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update click information
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$recipient->clicked_at) {
+            $recipient->update([
+                'clicked_at' => now(),
+            ]);
+        }
+
+        //$recipient->increment('click_count');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Redirect to original URL
+        |--------------------------------------------------------------------------
+        */
+
+        return redirect()->away($url);
+    }
+
 }

@@ -62,7 +62,7 @@ Route::get('/managed-accounts', [HomeController::class, 'managedAccounts'])
 Route::get('/unsubscribe/{contact}', [ContactController::class, 'unsubscribe'])
     ->middleware('signed')
     ->name('unsubscribe');
-Route::get('/email/click/{recipient}/{encodedUrl}', [EmailTrackingController::class, 'click'])
+Route::get('/email/click/{recipient}', [CampaignController::class, 'click'])
     ->name('email.track.click');
 
 /*
