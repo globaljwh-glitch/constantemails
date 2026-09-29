@@ -837,21 +837,6 @@ class CampaignController extends Controller
         );
     }
 
-    public function trackOpen(CampaignRecipient $recipient)
-    {
-        if ($recipient->status !== 'opened') {
-            $recipient->update([
-                'status' => 'opened',
-                'opened_at' => now(),
-            ]);
-        }
-
-        return response(
-            base64_decode('R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==')
-        )->header('Content-Type', 'image/gif')
-        ->header('Cache-Control', 'no-cache, no-store, must-revalidate');
-    }
-
     public function click(
         Request $request,
         CampaignRecipient $recipient
@@ -885,6 +870,7 @@ class CampaignController extends Controller
         if (!$recipient->clicked_at) {
             $recipient->update([
                 'clicked_at' => now(),
+                'status' => 'clicked',
                 'opened_at' => now(),
             ]);
         }
@@ -898,6 +884,34 @@ class CampaignController extends Controller
         */
 
         return redirect()->away($url);
+    }
+
+    public function trackOpen(CampaignRecipient $recipient)
+    {
+        // Only record the first open
+        // if (!$recipient->opened_at) {
+        //     $recipient->update([
+        //         'opened_at' => now(),
+        //     ]);
+        // }
+        if ($recipient->status !== 'opened') {
+            $recipient->update([
+                'status' => 'opened',
+                'opened_at' => now(),
+            ]);
+        }
+
+        // Transparent 1x1 GIF
+        $pixel = base64_decode(
+            'R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='
+        );
+
+        return response($pixel, 200)
+            ->header('Content-Type', 'image/gif')
+            ->header('Content-Length', strlen($pixel))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
 }

@@ -178,7 +178,16 @@ class SendCampaignJob implements ShouldQueue
                                 $html,
                                 $recipient->id
                             );
-                        }                        
+                        }  
+
+                        // Login for get email opened status
+                        $trackingPixel = '<img src="' .
+                            route('email.track.open', [
+                                'recipient' => $recipient->id
+                            ]) .
+                            '" width="1" height="1" style="display:block;border:0;" alt="">';
+
+                        $html .= $trackingPixel;
 
                         /*
                          * Send email

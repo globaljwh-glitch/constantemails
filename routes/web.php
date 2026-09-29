@@ -51,8 +51,6 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/resource', [HomeController::class, 'resource'])->name('resource');
 Route::get('/feature', [HomeController::class, 'feature'])->name('feature');
 Route::get('/template', [HomeController::class, 'template'])->name('template');
-Route::get('/email/track/open/{recipient}', [CampaignController::class, 'trackOpen'])
-    ->name('email.track.open');
 Route::get('/contact', [ContactMessageController::class, 'index'])
     ->name('contact');
 Route::post('/contact', [ContactMessageController::class, 'store'])
@@ -64,6 +62,8 @@ Route::get('/unsubscribe/{contact}', [ContactController::class, 'unsubscribe'])
     ->name('unsubscribe');
 Route::get('/email/click/{recipient}', [CampaignController::class, 'click'])
     ->name('email.track.click');
+Route::get('/email/open/{recipient}', [CampaignController::class, 'trackOpen'])
+    ->name('email.track.open');
 
 /*
 |--------------------------------------------------------------------------
