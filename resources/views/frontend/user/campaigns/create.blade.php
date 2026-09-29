@@ -53,7 +53,7 @@
         <strong>Enter your email header information below:</strong>
     </p>
 
-    <form action="{{ route('user.campaigns.store') }}" method="POST">
+    <form action="{{ route('user.campaigns.store') }}" method="POST" id="firstSubjectForm">
 
         @csrf
 
@@ -185,4 +185,90 @@
 
 </div>
 
+
+<style>
+
+.constant-email-alert {
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.constant-email-alert-title {
+    color: #333;
+    font-size: 23px;
+}
+
+.constant-email-alert-button {
+    border-radius: 5px !important;
+    padding: 10px 30px !important;
+    font-weight: 600 !important;
+}
+
+</style>
+
 @endsection
+
+@push('scripts')
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        console.log('SweetAlert loaded:', typeof Swal);
+    </script>
+    <script>
+        function showValidation(title, message) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: title,
+                html: message,
+                confirmButtonText: 'OK',
+
+                confirmButtonColor: '#f79432',
+
+                background: '#ffffff',
+
+                customClass: {
+                    popup: 'constant-email-alert',
+                    title: 'constant-email-alert-title',
+                    confirmButton: 'constant-email-alert-button'
+                },
+
+                allowOutsideClick: false
+            });
+
+        }
+
+        $('#firstSubjectForm').on('submit', function (e) {
+
+            const emailSubject = $('input[name="email_subject"]').val().trim();
+            const campaignName = $('input[name="email_title"]').val().trim();
+
+            if (emailSubject === '') {
+
+                e.preventDefault();
+
+                showValidation(
+                    'Subject Required',
+                    'Please enter an email subject before continuing.'
+                );
+
+                return false;
+            }
+
+            if (campaignName === '') {
+
+                e.preventDefault();
+
+                showValidation(
+                    'Campaign Name Required',
+                    'Please enter campaign name before continuing.'
+                );
+
+                return false;
+            }
+
+            // Allow normal form submission
+        });
+
+    </script>
+@endpush

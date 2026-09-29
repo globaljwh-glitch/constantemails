@@ -31,7 +31,7 @@
     <div class="accountInfo">
 
         <form method="POST"
-              action="{{ route('user.campaigns.update',$campaign) }}" id="templateForm">
+              action="{{ route('user.campaigns.update',$campaign) }}" id="firstSubjectForm">
 
             @csrf
             @method('PUT')
@@ -178,6 +178,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        console.log('SweetAlert loaded:', typeof Swal);
+    </script>
+    <script>
         function showValidation(title, message) {
 
             Swal.fire({
@@ -201,7 +204,7 @@
 
         }
 
-        $('#templateForm').on('submit', function (e) {
+        $('#firstSubjectForm').on('submit', function (e) {
 
             const emailSubject = $('input[name="email_subject"]').val().trim();
             const campaignName = $('input[name="email_title"]').val().trim();
