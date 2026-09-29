@@ -69,14 +69,14 @@ class SendCampaignJob implements ShouldQueue
 
                     try {
 
-                        Log::info('Campaign email content debug', [
-                            'campaign_id'     => $campaign->id,
-                            'message_length'  => strlen($campaign->message ?? ''),
-                            'message'         => $campaign->message,
-                            'email_subject'   => $campaign->email_subject,
-                            'recipient_email' => $contact->contact_email,
-                            'recipient_name'  => $contact->contact_first_name,
-                        ]);
+                        // Log::info('Campaign email content debug', [
+                        //     'campaign_id'     => $campaign->id,
+                        //     'message_length'  => strlen($campaign->message ?? ''),
+                        //     'message'         => $campaign->message,
+                        //     'email_subject'   => $campaign->email_subject,
+                        //     'recipient_email' => $contact->contact_email,
+                        //     'recipient_name'  => $contact->contact_first_name,
+                        // ]);
 
                         /*
                          * Replace template variables
@@ -178,16 +178,23 @@ class SendCampaignJob implements ShouldQueue
                                 $html,
                                 $recipient->id
                             );
+
+                            // Login for get email opened status
+                            $trackingPixel = '<img src="' .
+                                route('email.track.open', [
+                                    'recipient' => $recipient->id
+                                ]) .
+                                '" width="1" height="1" style="display:block;border:0;" alt="">';
+
+                            $html .= $trackingPixel;
+
+                            Log::info('Final campaign HTML', [
+                                'campaign_id' => $campaign->id,
+                                'contact_id' => $contact->id,
+                                'recipient_id' => $recipient?->id,
+                                'html' => $html,
+                            ]);
                         }  
-
-                        // Login for get email opened status
-                        $trackingPixel = '<img src="' .
-                            route('email.track.open', [
-                                'recipient' => $recipient->id
-                            ]) .
-                            '" width="1" height="1" style="display:block;border:0;" alt="">';
-
-                        $html .= $trackingPixel;
 
                         /*
                          * Send email
