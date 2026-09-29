@@ -723,45 +723,111 @@ class ContactController extends Controller
     /**
      * Update Contact.
      */
+    // public function update(Request $request, Contact $contact)
+    // {
+    //     abort_if($contact->user_id != auth()->id(),403);
+
+    //     $request->validate([
+
+    //         'group_id'=>'required',
+
+    //         'contact_first_name'=>'required',
+
+    //         'contact_email'=>'required|email',
+
+    //     ]);
+
+    //     $contact->update([
+
+    //         'group_id'=>$request->group_id,
+
+    //         'contact_first_name'=>$request->contact_first_name,
+
+    //         'contact_last_name'=>$request->contact_last_name,
+
+    //         'contact_company_name'=>$request->contact_company_name,
+
+    //         'contact_address'=>$request->contact_address,
+
+    //         'area_interest'=>$request->area_interest,
+
+    //         'contact_email'=>$request->contact_email,
+
+    //         'contact_phone'=>$request->contact_phone,
+
+    //     ]);
+
+    //     return redirect()
+
+    //         //->route('user.groups.contacts.index',$contact->group_id)
+    //         ->route('user.groups.contacts.index', ['group' => $contact->group_id])
+    //         ->with('success','Contact updated successfully.');
+    // }
+
+    // public function update(Request $request, Contact $contact)
+    // {
+    //     abort_if($contact->user_id != auth()->id(), 403);
+
+    //     $request->validate([
+    //         'group_id' => 'required|exists:groups,id',
+    //         'contact_first_name' => 'required',
+    //         'contact_email' => 'required|email',
+    //     ]);
+
+    //     $contact->update([
+    //         'contact_first_name' => $request->contact_first_name,
+    //         'contact_last_name' => $request->contact_last_name,
+    //         'contact_company_name' => $request->contact_company_name,
+    //         'contact_address' => $request->contact_address,
+    //         'area_interest' => $request->area_interest,
+    //         'contact_email' => $request->contact_email,
+    //         'contact_phone' => $request->contact_phone,
+    //     ]);
+
+    //     // Update contact_group pivot
+    //     $contact->groups()->sync([
+    //         $request->group_id
+    //     ]);
+
+    //     return redirect()
+    //         ->route(
+    //             'user.groups.contacts.index',
+    //             ['group' => $request->group_id]
+    //         )
+    //         ->with('success', 'Contact updated successfully.');
+    // }
     public function update(Request $request, Contact $contact)
     {
-        abort_if($contact->user_id != auth()->id(),403);
+        abort_if($contact->user_id != auth()->id(), 403);
 
         $request->validate([
+            'group_id' => 'required',
+            'group_id.*' => 'exists:groups,id',
 
-            'group_id'=>'required',
-
-            'contact_first_name'=>'required',
-
-            'contact_email'=>'required|email',
-
+            'contact_first_name' => 'required',
+            'contact_email' => 'required|email',
         ]);
 
         $contact->update([
-
-            'group_id'=>$request->group_id,
-
-            'contact_first_name'=>$request->contact_first_name,
-
-            'contact_last_name'=>$request->contact_last_name,
-
-            'contact_company_name'=>$request->contact_company_name,
-
-            'contact_address'=>$request->contact_address,
-
-            'area_interest'=>$request->area_interest,
-
-            'contact_email'=>$request->contact_email,
-
-            'contact_phone'=>$request->contact_phone,
-
+            'contact_first_name' => $request->contact_first_name,
+            'contact_last_name' => $request->contact_last_name,
+            'contact_company_name' => $request->contact_company_name,
+            'contact_address' => $request->contact_address,
+            'area_interest' => $request->area_interest,
+            'contact_email' => $request->contact_email,
+            'contact_phone' => $request->contact_phone,
         ]);
 
+        // Update contact_group pivot table
+        $contact->groups()->sync($request->group_id);
+
+        // Redirect to first selected group
         return redirect()
-
-            ->route('user.groups.contacts.index',$contact->group_id)
-
-            ->with('success','Contact updated successfully.');
+            ->route(
+                'user.groups.contacts.index',
+                ['group' => $request->group_id[0]]
+            )
+            ->with('success', 'Contact updated successfully.');
     }
 
     /**
