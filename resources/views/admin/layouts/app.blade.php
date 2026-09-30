@@ -108,33 +108,7 @@
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     @stack('scripts')
-    <script>
-        $(document).ready(function () {
-            var placeholderText = '<p>Start building your template here...</p>';
-
-            // When the "Edit Content" button is clicked
-            $('#editEditor').on('click', function () {
-                var $editor = $('.click2edit');
-
-                // If the current content is exactly the placeholder, empty it
-                if ($editor.html().trim() === placeholderText) {
-                    $editor.html('');
-
-                    // Note: If you are using Summernote, uncomment the line below instead:
-                    // $editor.summernote('code', ''); 
-                }
-            });
-
-            // Optional: Also clear it if they click directly inside the editor box
-            $('.click2edit').on('click', function () {
-                if ($(this).html().trim() === placeholderText) {
-                    $(this).html('');
-                    // $(this).summernote('code', ''); // Uncomment if using Summernote
-                }
-            });
-        });
-    </script>
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+   
 </body>
 
 </html>

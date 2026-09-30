@@ -69,7 +69,8 @@
             @if ($errors->any())
                 <div class="alert alert-danger mb-4">
                     <ul class="mb-0">
-                        @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li> @endforeach
                     </ul>
                 </div>
             @endif
@@ -192,7 +193,7 @@
                                 </div>
 
                                 <div class="click2edit editor-container">
-                                    {!! old('content', $article->content ?? '<p>Write your article here...</p>') !!}
+                                    {!! old('content', $article->content ?? '<p>Start writing your article here...</p>') !!}
                                 </div>
                                 <input type="hidden" name="content" id="hiddenContent">
                             </div>
@@ -224,17 +225,57 @@
 
             // Start the editor
             $('#editEditor').on('click', function () {
-                $('.click2edit').summernote({
+                let $editor = $('.click2edit');
+
+                // OPTION 1: Clear ONLY the placeholder text (Safe method)
+                let placeholderText = '<p>Start writing your article here...</p>'; // Adjust if your placeholder is different
+                if ($editor.html().trim() === placeholderText) {
+                    $editor.html('');
+                }
+
+                // OPTION 2: Clear ANY AND ALL text every time the edit button is clicked.
+                // If this is what you want, delete Option 1 above and uncomment the line below:
+                // $editor.html('');
+
+                $editor.summernote({
                     focus: true,
                     height: 400,
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
+                        ['font', [
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strikethrough',
+                            'superscript',
+                            'subscript',
+                            'clear'
+                        ]],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
                         ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['para', [
+                            'ul',
+                            'ol',
+                            'paragraph',
+                            'height'
+                        ]],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
+                        ['insert', [
+                            'link',
+                            'picture',
+                            'video',
+                            'hr'
+                        ]],
+                        ['view', [
+                            'fullscreen',
+                            'codeview',
+                            'help'
+                        ]],
+                        ['history', [
+                            'undo',
+                            'redo'
+                        ]]
                     ]
                 });
             });

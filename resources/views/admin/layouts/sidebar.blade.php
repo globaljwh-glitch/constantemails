@@ -172,7 +172,7 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="tables" data-parent="#accordionExample">
                     <li>
-                        <a href="{{ route('packages.store') }}"> Create Package </a>
+                        <a href="{{ route('admin.createpackage') }}"> Create Package </a>
                     </li>
                     <li>
                         <a href="{{ route('packages.index') }}"> All Packages </a>
