@@ -29,12 +29,14 @@ class CampaignController extends Controller
     public function getCampaignContacts($id)
     {
         $campaign = MailCampaign::with('groups')->findOrFail($id);
-
         $groupIds = $campaign->groups->pluck('id');
 
-
-        $contacts = \App\Models\Contact::with('group')
-            ->whereIn('group_id', $groupIds)
+        // 1. Change 'group' to 'groups'
+        // 2. Use whereHas to query the many-to-many pivot table
+        $contacts = \App\Models\Contact::with('groups')
+            ->whereHas('groups', function ($query) use ($groupIds) {
+                $query->whereIn('contact_groups.id', $groupIds);
+            })
             ->get();
 
         return response()->json([

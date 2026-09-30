@@ -12,7 +12,18 @@
           <div class="verticalMiddle">
             <h1>Resources</h1>
             <p>Learn tips to help you send out better campaigns and achieve more success with email marketing.</p>
-            <div class="header-button-container"> <a href="{{ route('register') }}" class="custom-btn1 orangeBg">Try For Free</a> <a href="{{ route('pricing') }}" class="custom-btn1 transparent-btn">Pricing Plans</a> </div>
+            <div class="header-button-container"> 
+                @if(auth()->check())
+                    <a href="{{ route('user.dashboard') }}" class="custom-btn1 orangeBg">
+                        Try For Free
+                    </a>
+                @else
+                    <a href="{{ route('register') }}" class="custom-btn1 orangeBg">
+                        Try For Free
+                    </a>
+                @endif 
+                
+                <a href="{{ route('pricing') }}" class="custom-btn1 transparent-btn">Pricing Plans</a> </div>
           </div>
         </div>
       </div>

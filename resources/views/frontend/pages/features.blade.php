@@ -12,7 +12,17 @@
           <div class="verticalMiddle">
             <h1>Features</h1>
             <p>Our methods to create powerful email campaigns may be quick and simple, but the results are powerful and professional! Below are the features we provide to make your emails shine.</p>
-            <div class="header-button-container"> <a href="registration.html" class="custom-btn1 orangeBg">Try For Free</a> <a href="pricing.html" class="custom-btn1 transparent-btn">Pricing Plans</a> </div>
+            <div class="header-button-container">
+              @if(auth()->check())
+                  <a href="{{ route('user.dashboard') }}" class="custom-btn1 orangeBg">
+                      Try For Free
+                  </a>
+              @else
+                  <a href="{{ route('register') }}" class="custom-btn1 orangeBg">
+                      Try For Free
+                  </a>
+              @endif 
+                <a href="{{ route('pricing') }}" class="custom-btn1 transparent-btn">Pricing Plans</a> </div>
           </div>
         </div>
       </div>

@@ -76,6 +76,7 @@
                                     <th>Thumbnail</th>
                                     <th>Template Name</th>
                                     <th>Category</th>
+                                     <th class="text-center">Date Created</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center" style="width: 120px;">Action</th>
                                 </tr>
@@ -93,6 +94,7 @@
                                         </td>
                                         <td><span class="bold-name">{{ $template->name }}</span></td>
                                         <td>{{ $template->category->name ?? 'N/A' }}</td>
+                                        <td class="text-center">{{ $template->created_at->format('d M, Y') }}</td>
                                         <td class="text-center">
                                             @if($template->status == 'Active')
                                                 <span class="badge badge-success shadow-none badge-pill">Active</span>

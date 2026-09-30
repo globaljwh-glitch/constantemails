@@ -67,7 +67,8 @@
             @if ($errors->any())
                 <div class="alert alert-danger mb-4">
                     <ul class="mb-0">
-                        @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li> @endforeach
                     </ul>
                 </div>
             @endif
@@ -135,7 +136,7 @@
                                 </div>
 
                                 <div class="click2edit editor-container">
-                                    {!! old('content', $article->content ?? '<p>Write your article here...</p>') !!}
+                                    {!! old('content', $article->content ?? '<p>Start writing your article here...</p>') !!}
                                 </div>
                                 <input type="hidden" name="content" id="hiddenContent">
                             </div>
@@ -163,17 +164,56 @@
         $(document).ready(function () {
             // Start the editor
             $('#editEditor').on('click', function () {
-                $('.click2edit').summernote({
+                let $editor = $('.click2edit');
+
+                // Define your exact placeholder text here
+                let placeholderText = '<p>Start writing your article here...</p>';
+
+                // Clear the text if it matches the placeholder
+                // (If you want to delete ALL text every time, just use: $editor.html(''); )
+                if ($editor.html().trim() === placeholderText) {
+                    $editor.html('');
+                }
+
+                $editor.summernote({
                     focus: true,
                     height: 400,
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
+                        ['font', [
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strikethrough',
+                            'superscript',
+                            'subscript',
+                            'clear'
+                        ]],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
                         ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['para', [
+                            'ul',
+                            'ol',
+                            'paragraph',
+                            'height'
+                        ]],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
+                        ['insert', [
+                            'link',
+                            'picture',
+                            'video',
+                            'hr'
+                        ]],
+                        ['view', [
+                            'fullscreen',
+                            'codeview',
+                            'help'
+                        ]],
+                        ['history', [
+                            'undo',
+                            'redo'
+                        ]]
                     ]
                 });
             });

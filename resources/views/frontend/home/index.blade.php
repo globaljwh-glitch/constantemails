@@ -50,7 +50,16 @@
 	        <div class="text-white">Go beyond with your inbox invites!</div>
             <div class="ctaSmallHeading text-black">Start taking advantage of our FREE features!</div>
             <h6>No more 60-day free trail! Here at Custom Emails we provide free services 24/7 all year round.</h6>
-            <a href="registration.html" class="ctaButton custom-btn1 orangeBg">Register today</a> </div>
+            @if(auth()->check())
+                <a href="{{ route('user.dashboard') }}" class="ctaButton custom-btn1 orangeBg">
+                    Register today
+                </a>
+            @else
+                <a href="{{ route('register') }}" class="ctaButton custom-btn1 orangeBg">
+                    Register today
+                </a>
+            @endif
+            <!-- <a href="registration.html" class="ctaButton custom-btn1 orangeBg">Register today</a> </div> -->
       </div>
     </div>
   </div>
@@ -63,7 +72,7 @@
           <div class="verticalMiddle">
             <h2>Constant Emails Services</h2>
             <p>Here at Constant Emails, we provide a bulk messaging platform perfect for giving your company’s message a greater reach. Our safe and secure engine, built with 256-bit data encryption, give you sole access to your mailing list! Everything from your credit card information to your individual email recipients is all protected through our Secure Sockets Layer (SSL) program. Designed specifically with safety and security in mind to protect your sensitive information.</p>
-            <a href="managed_accounts_new.html" class="custom-btn1 transparent-btn">Know More</a> </div>
+            <a href="{{ route('managed-accounts') }}" class="custom-btn1 transparent-btn">Know More</a> </div>
         </div>
       </div>
       <div class="col-md-12 col-lg-6 order-sm-1">
@@ -81,7 +90,7 @@
               <h2>An Award Winning platform</h2>
               <p><b>100% Satisfaction Guarantee: </b></p>
               <p>We promise to make your mailing list easy to send out. Our efficient program will make sure each and every one of your clients on your opt-in mailing lists will receive your content in a streamlined manner. Stand out with our intriguing backgrounds and formats! We guarantee you won’t just be another email in the spam-file; our unique approach to mass emails makes sure that your email is important and interesting! Whether you’re an ecommerce, brick and mortar, or online retailer: Constant Email is your all in one stop for your mailing list purposes.</p>
-              <a href="resources.html" class="custom-btn1 transparent-btn">Know More</a> </div>
+              <a href="{{ route('resource') }}" class="custom-btn1 transparent-btn">Know More</a> </div>
           </div>
         </div>
       </div>

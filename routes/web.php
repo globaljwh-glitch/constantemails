@@ -87,6 +87,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/forgot-password', [FrontAuthController::class, 'sendResetLink'])->name('password.email');
     Route::get('/reset-password/{token}', [FrontAuthController::class, 'showResetPassword'])->name('password.reset');
     Route::post('/reset-password', [FrontAuthController::class, 'resetPassword'])->name('password.update');
+    Route::get('/verify-email/{token}', [FrontAuthController::class, 'verifyEmail'])->name('email.verify');
 });
 
 /*
@@ -435,6 +436,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
     Route::resource('campaigns', AdminCampaignController::class)->names('admin.campaigns');
+    
     Route::get('/campaigns/{id}/contacts-json', [AdminCampaignController::class, 'getCampaignContacts'])->name('campaigns.contacts.json');
 
     Route::get('/contact-queries', [ContactQueryController::class, 'index'])->name('admin.contact-queries.index');

@@ -128,7 +128,25 @@
                                     </select>
                                 </div>
                             </div>
+                            <style>
+                                /* Makes the default grey 'Choose File' button blue for this specific input */
+                                #mail_template_image::file-selector-button {
+                                    background-color: #0d6efd;
+                                    /* Bootstrap primary blue */
+                                    color: white;
+                                    border: none;
+                                    padding: 5px 12px;
+                                    border-radius: 4px;
+                                    cursor: pointer;
+                                    margin-right: 10px;
+                                    transition: background-color 0.2s;
+                                }
 
+                                /* Darker blue on hover */
+                                #mail_template_image::file-selector-button:hover {
+                                    background-color: #0b5ed7;
+                                }
+                            </style>
                             <!-- Template Image Upload -->
                             <div class="col-md-12 mb-4">
                                 <label for="mail_template_image">Template Image (Optional)</label>
@@ -163,7 +181,7 @@
                                 </div>
 
                                 <div class="click2edit editor-container">
-                                    {!! old('mail_template_content', $template->mail_template_content ?? '<p>Design your email template here...</p>') !!}
+                                    {!! old('mail_template_content', $template->mail_template_content ?? '<p>Start building your template here...</p>') !!}
                                 </div>
                                 <input type="hidden" name="mail_template_content" id="hiddenContent">
                             </div>
@@ -192,19 +210,60 @@
 
     <script>
         $(document).ready(function () {
+
             // Start the editor
             $('#editEditor').on('click', function () {
-                $('.click2edit').summernote({
+                let $editor = $('.click2edit');
+
+                // OPTION 1: Clear ONLY the placeholder text
+                let placeholderText = '<p>Start building your template here...</p>'; // Adjust if your placeholder is different
+                if ($editor.html().trim() === placeholderText) {
+                    $editor.html('');
+                }
+
+                // OPTION 2: To clear ANY AND ALL text every time you click Edit, 
+                // remove Option 1 above and uncomment the line below:
+                // $editor.html('');
+
+                $editor.summernote({
                     focus: true,
                     height: 400,
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
+                        ['font', [
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strikethrough',
+                            'superscript',
+                            'subscript',
+                            'clear'
+                        ]],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
                         ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['para', [
+                            'ul',
+                            'ol',
+                            'paragraph',
+                            'height'
+                        ]],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
+                        ['insert', [
+                            'link',
+                            'picture',
+                            'video',
+                            'hr'
+                        ]],
+                        ['view', [
+                            'fullscreen',
+                            'codeview',
+                            'help'
+                        ]],
+                        ['history', [
+                            'undo',
+                            'redo'
+                        ]]
                     ]
                 });
             });

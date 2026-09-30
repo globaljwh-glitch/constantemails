@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RegistrationPackage;
+use App\Models\TemplateCategory;
 
 class HomeController extends Controller
 {
@@ -58,7 +59,17 @@ class HomeController extends Controller
 
     public function template()
     {
-        return view('frontend.pages.our_templates');
+        $categories = TemplateCategory::where('status', 'Active')
+            ->with([
+                'templates' => function ($query) {
+                    $query->where('status', 'Active')
+                        ->orderBy('id', 'desc');
+                }
+            ])
+            ->orderBy('id')
+            ->get();
+
+        return view('frontend.pages.our_templates', compact('categories'));
     }
 
     public function managedAccounts()

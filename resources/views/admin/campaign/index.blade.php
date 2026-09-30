@@ -119,9 +119,9 @@
                                 </div>
                             </form>
                             <!-- <a href="{{ route('admin.campaigns.create') }}" class="btn btn-gradient-warning btn-rounded"
-                                    style="height: 42px; line-height: 28px;">
-                                    <i class="flaticon-plus"></i> Create Campaign
-                                </a> -->
+                                        style="height: 42px; line-height: 28px;">
+                                        <i class="flaticon-plus"></i> Create Campaign
+                                    </a> -->
                         </div>
                     </div>
                 </div>
@@ -150,20 +150,20 @@
                                         <td>{{ $campaign->email_subject ?? 'N/A' }}</td>
                                         <td class="text-center">{{ $campaign->created_at->format('d M, Y') }}</td>
                                         <!-- <td class="text-center">
-                                            @if($campaign->send_status == 1)
-                                                <span
-                                                    class="badge badge-success shadow-none badge-pill d-inline-flex align-items-center justify-content-center"
-                                                    style="padding: 6px 12px;">
-                                                    <i class="flaticon-check-fill mr-1" style="font-size: 14px;"></i> Sent
-                                                </span>
-                                            @else
-                                                <span
-                                                    class="badge badge-secondary shadow-none badge-pill d-inline-flex align-items-center justify-content-center"
-                                                    style="padding: 6px 12px;">
-                                                    <i class="flaticon-clock-1 mr-1" style="font-size: 14px;"></i> Not Sent
-                                                </span>
-                                            @endif
-                                        </td> -->
+                                                    @if($campaign->send_status == 1)
+                                                        <span
+                                                            class="badge badge-success shadow-none badge-pill d-inline-flex align-items-center justify-content-center"
+                                                            style="padding: 6px 12px;">
+                                                            <i class="flaticon-check-fill mr-1" style="font-size: 14px;"></i> Sent
+                                                        </span>
+                                                    @else
+                                                        <span
+                                                            class="badge badge-secondary shadow-none badge-pill d-inline-flex align-items-center justify-content-center"
+                                                            style="padding: 6px 12px;">
+                                                            <i class="flaticon-clock-1 mr-1" style="font-size: 14px;"></i> Not Sent
+                                                        </span>
+                                                    @endif
+                                                </td> -->
                                         <td class="text-center">
                                             @php
                                                 $status = $campaign->campaign_status ?? 'Draft';
@@ -189,22 +189,22 @@
                                                     </button>
                                                 </li>
                                                 <!-- <li>
-                                                            <a href="{{ route('admin.campaigns.edit', $campaign->id) }}"
-                                                                data-toggle="tooltip" title="Edit">
-                                                                <i class="flaticon-edit-fill-2 fs-20"></i>
-                                                            </a>
-                                                        </li> -->
+                                                                    <a href="{{ route('admin.campaigns.edit', $campaign->id) }}"
+                                                                        data-toggle="tooltip" title="Edit">
+                                                                        <i class="flaticon-edit-fill-2 fs-20"></i>
+                                                                    </a>
+                                                                </li> -->
                                                 <!-- <li>
-                                                            <form action="{{ route('admin.campaigns.destroy', $campaign->id) }}"
-                                                                method="POST" class="d-inline delete-form">
-                                                                @csrf @method('DELETE')
-                                                                <button type="button" class="btn-delete-item"
-                                                                    style="border: none; background: none; padding: 0;"
-                                                                    data-toggle="tooltip" title="Delete">
-                                                                    <i class="flaticon-delete-fill fs-20"></i>
-                                                                </button>
-                                                            </form>
-                                                        </li> -->
+                                                                    <form action="{{ route('admin.campaigns.destroy', $campaign->id) }}"
+                                                                        method="POST" class="d-inline delete-form">
+                                                                        @csrf @method('DELETE')
+                                                                        <button type="button" class="btn-delete-item"
+                                                                            style="border: none; background: none; padding: 0;"
+                                                                            data-toggle="tooltip" title="Delete">
+                                                                            <i class="flaticon-delete-fill fs-20"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </li> -->
                                             </ul>
                                         </td>
                                     </tr>
@@ -301,17 +301,19 @@
                         if (response.contacts.length > 0) {
                             response.contacts.forEach(contact => {
                                 let statusBadge = contact.status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-secondary">Inactive</span>';
-                                let groupName = contact.group ? contact.group.group_name : 'N/A';
+                                let groupName = (contact.groups && contact.groups.length > 0)
+                                    ? contact.groups.map(g => g.group_name).join(', ')
+                                    : 'N/A';
                                 tbody.append(`
-                                            <tr>
-                                                <td><span class="font-weight-bold text-dark">${groupName}</span></td>
-                                                <td>${contact.contact_first_name ?? ''} ${contact.contact_last_name ?? ''}</td>
-                                                <td>${contact.contact_email ?? 'N/A'}</td>
-                                                <td>${contact.contact_phone ?? 'N/A'}</td>
-                                                <td>${contact.contact_company_name ?? 'N/A'}</td>
-                                                <td>${statusBadge}</td>
-                                            </tr>
-                                        `);
+                                                <tr>
+                                                    <td><span class="font-weight-bold text-dark">${groupName}</span></td>
+                                                    <td>${contact.contact_first_name ?? ''} ${contact.contact_last_name ?? ''}</td>
+                                                    <td>${contact.contact_email ?? 'N/A'}</td>
+                                                    <td>${contact.contact_phone ?? 'N/A'}</td>
+                                                    <td>${contact.contact_company_name ?? 'N/A'}</td>
+                                                    <td>${statusBadge}</td>
+                                                </tr>
+                                            `);
                             });
                         } else {
                             tbody.html('<tr><td colspan="6" class="py-4 text-muted">No associated contacts found for this campaign.</td></tr>');
