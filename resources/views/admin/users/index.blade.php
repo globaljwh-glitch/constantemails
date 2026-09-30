@@ -135,7 +135,7 @@
                                     <th>Package</th>
                                     <th>Status</th>
                                     <th>Edit</th>
-                                    <th>View Campaign</th>
+                                    <!-- <th>View Campaign</th> -->
                                     <th>View Statistics</th>
                                     <th>Print Agreement</th>
                                 </tr>
@@ -157,13 +157,13 @@
                                             <a href="{{ route('users.edit', $user->id) }}" data-toggle="tooltip" title="Edit"><i
                                                     class="flaticon-edit-fill-2 text-primary fs-20"></i></a>
                                         </td>
-                                        <td><a href="#" class="btn-action-text">View</a></td>
+                                        <!-- <td><a href="#" class="btn-action-text">View</a></td> -->
                                         <td><a href="#" class="btn-action-text">View</a></td>
                                         <td><a href="#" class="btn-action-text">View</a></td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="9" class="text-center py-4">No users found.</td>
+                                        <td colspan="8" class="text-center py-4">No users found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

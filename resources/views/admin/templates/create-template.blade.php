@@ -127,6 +127,8 @@
                                 <label for="thumbnail">Thumbnail <small>(GIF, JPG or PNG. Min 140x200px)</small>
                                     @if(!isset($template)) <span class="text-danger">*</span> @endif
                                 </label>
+                               
+
                                 <input type="file" id="thumbnail" name="thumbnail"
                                     class="form-control-file @error('thumbnail') is-invalid @enderror"
                                     accept="image/png, image/gif, image/jpeg" {{ isset($template) ? '' : 'required' }}>

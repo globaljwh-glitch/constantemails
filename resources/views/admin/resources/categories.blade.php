@@ -3,29 +3,113 @@
 
 @push('styles')
     <style>
-        .table td, .table th { border-top: 1px solid #080908; vertical-align: middle; }
-        .table th { color: #000000 !important; font-weight: 700 !important; }
-        .category-name { color: #000000 !important; font-weight: 700 !important; }
+        .table td,
+        .table th {
+            border-top: 1px solid #080908;
+            vertical-align: middle;
+        }
 
-        .table-controls { padding: 0; margin: 0; list-style: none; }
-        .table-controls>li { display: inline-block; margin: 0 2px; }
-        .table-controls>li>a i, .table-controls>li>button i { color: #0e0d0d; transition: color 0.3s; }
-        .table-controls>li>a:hover i.flaticon-menu-list { color: #1abc9c; } /* Green View */
-        .table-controls>li>a:hover i.flaticon-edit-fill-2 { color: #00b1f4; } /* Blue Edit */
-        .table-controls>li>button:hover i.flaticon-delete-fill { color: #e7515a; } /* Red Delete */
+        .table th {
+            color: #000000 !important;
+            font-weight: 700 !important;
+        }
 
-        .badge { font-weight: 600; padding: 6px 10px; }
+        .category-name {
+            color: #000000 !important;
+            font-weight: 700 !important;
+        }
 
-        .form-control, .custom-select { border: 1px solid #ccc; color: #888ea8; font-size: 15px; height: 48px; }
-        .input-group-text { background-color: #f3f4f7; border-color: #ccc; color: #6156ce; font-weight: 600; padding: 0 15px; }
-        .form-control:focus, .custom-select:focus { border-color: #3862f5; box-shadow: none; }
-        label { color: #3b3f5c; font-weight: 600; margin-bottom: 8px !important; }
-        .is-invalid { border-color: #e7515a !important; }
+        .table-controls {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
 
-        .pagination-section nav { display: flex; justify-content: flex-end; margin-top: 20px; }
-        .page-item.active .page-link { background-color: #f6993f; border-color: #f6993f; color: #fff; }
-        .page-link { color: #3b3f5c; border-radius: 4px; margin: 0 3px; }
-        .page-link:hover { color: #f6993f; }
+        .table-controls>li {
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+        .table-controls>li>a i,
+        .table-controls>li>button i {
+            color: #0e0d0d;
+            transition: color 0.3s;
+        }
+
+        .table-controls>li>a:hover i.flaticon-menu-list {
+            color: #1abc9c;
+        }
+
+        /* Green View */
+        .table-controls>li>a:hover i.flaticon-edit-fill-2 {
+            color: #00b1f4;
+        }
+
+        /* Blue Edit */
+        .table-controls>li>button:hover i.flaticon-delete-fill {
+            color: #e7515a;
+        }
+
+        /* Red Delete */
+
+        .badge {
+            font-weight: 600;
+            padding: 6px 10px;
+        }
+
+        .form-control,
+        .custom-select {
+            border: 1px solid #ccc;
+            color: #888ea8;
+            font-size: 15px;
+            height: 48px;
+        }
+
+        .input-group-text {
+            background-color: #f3f4f7;
+            border-color: #ccc;
+            color: #6156ce;
+            font-weight: 600;
+            padding: 0 15px;
+        }
+
+        .form-control:focus,
+        .custom-select:focus {
+            border-color: #3862f5;
+            box-shadow: none;
+        }
+
+        label {
+            color: #3b3f5c;
+            font-weight: 600;
+            margin-bottom: 8px !important;
+        }
+
+        .is-invalid {
+            border-color: #e7515a !important;
+        }
+
+        .pagination-section nav {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .page-item.active .page-link {
+            background-color: #f6993f;
+            border-color: #f6993f;
+            color: #fff;
+        }
+
+        .page-link {
+            color: #3b3f5c;
+            border-radius: 4px;
+            margin: 0 3px;
+        }
+
+        .page-link:hover {
+            color: #f6993f;
+        }
     </style>
 @endpush
 
@@ -47,10 +131,13 @@
     <div class="row">
         <div class="col-lg-12">
             @if(session('success'))
-                <div class="alert alert-success mb-4"><button type="button" class="close" data-dismiss="alert"><span>&times;</span></button><strong>Success!</strong> {{ session('success') }}</div>
+                <div class="alert alert-success mb-4"><button type="button" class="close"
+                        data-dismiss="alert"><span>&times;</span></button><strong>Success!</strong> {{ session('success') }}
+                </div>
             @endif
             @if(session('error'))
-                <div class="alert alert-danger mb-4"><button type="button" class="close" data-dismiss="alert"><span>&times;</span></button><strong>Error!</strong> {{ session('error') }}</div>
+                <div class="alert alert-danger mb-4"><button type="button" class="close"
+                        data-dismiss="alert"><span>&times;</span></button><strong>Error!</strong> {{ session('error') }}</div>
             @endif
         </div>
     </div>
@@ -75,8 +162,12 @@
                             <div class="col-md-4 mb-4">
                                 <label for="name">Category Name <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend"><span class="form-control-rounded-left input-group-text"><i class="flaticon-menu-list"></i></span></div>
-                                    <input type="text" id="name" name="name" class="form-control-rounded-right form-control @error('name') is-invalid @enderror" placeholder="e.g. Tutorials" value="{{ old('name') }}" required>
+                                    <div class="input-group-prepend"><span
+                                            class="form-control-rounded-left input-group-text"><i
+                                                class="flaticon-menu-list"></i></span></div>
+                                    <input type="text" id="name" name="name"
+                                        class="form-control-rounded-right form-control @error('name') is-invalid @enderror"
+                                        placeholder="e.g. Tutorials" value="{{ old('name') }}" required>
                                 </div>
                                 @error('name') <span class="text-danger small mt-1">{{ $message }}</span> @enderror
                             </div>
@@ -84,23 +175,30 @@
                             <div class="col-md-5 mb-4">
                                 <label for="description">Description <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend"><span class="form-control-rounded-left input-group-text"><i class="flaticon-notes"></i></span></div>
-                                    <input type="text" id="desc" name="description" class="form-control-rounded-right form-control @error('description') is-invalid @enderror" placeholder="Short description..." value="{{ old('description') }}" required>
+                                    <div class="input-group-prepend"><span
+                                            class="form-control-rounded-left input-group-text"><i
+                                                class="flaticon-notes"></i></span></div>
+                                    <input type="text" id="desc" name="description"
+                                        class="form-control-rounded-right form-control @error('description') is-invalid @enderror"
+                                        placeholder="Short description..." value="{{ old('description') }}" required>
                                 </div>
                                 @error('description') <span class="text-danger small mt-1">{{ $message }}</span> @enderror
                             </div>
 
                             <div class="col-md-3 mb-4">
                                 <label for="status">Status</label>
-                                <select class="form-control custom-select rounded @error('status') is-invalid @enderror" id="status" name="status">
+                                <select class="form-control custom-select rounded @error('status') is-invalid @enderror"
+                                    id="status" name="status">
                                     <option value="Active" selected>Active</option>
                                     <option value="Deactive">Deactive</option>
                                 </select>
                             </div>
 
                             <div class="col-md-12 text-right mb-2">
-                                <button type="button" id="cancelEditBtn" class="btn btn-dark btn-rounded d-none mr-2">Cancel</button>
-                                <button type="submit" id="submitBtn" class="btn btn-gradient-warning btn-rounded">Save Category</button>
+                                <button type="button" id="cancelEditBtn"
+                                    class="btn btn-dark btn-rounded d-none mr-2">Cancel</button>
+                                <button type="submit" id="submitBtn" class="btn btn-gradient-warning btn-rounded">Save
+                                    Category</button>
                             </div>
                         </div>
                     </form>
@@ -119,12 +217,16 @@
                             <h4>Manage Categories</h4>
                         </div>
                         <div class="col-xl-6 col-md-6 col-sm-12 col-12 d-flex justify-content-end mt-sm-0 mt-3">
-                            <form action="{{ route('resource-categories.index') }}" method="GET" style="max-width: 350px; width: 100%;">
+                            <form action="{{ route('resource-categories.index') }}" method="GET"
+                                style="max-width: 350px; width: 100%;">
                                 <div class="input-group">
-                                    <input type="text" name="search" class="form-control" placeholder="Search categories..." value="{{ request('search') }}" style="height: 42px;">
+                                    <input type="text" name="search" class="form-control" placeholder="Search categories..."
+                                        value="{{ request('search') }}" style="height: 42px;">
                                     <div class="input-group-append">
-                                        <button class="btn btn-dark" type="submit" style="height: 42px; border-radius: 0 4px 4px 0;">Search</button>
-                                        @if(request('search')) <a href="{{ route('resource-categories.index') }}" class="btn btn-danger" style="height: 42px; line-height: 28px;">Clear</a> @endif
+                                        <button class="btn btn-dark" type="submit"
+                                            style="height: 42px; border-radius: 0 4px 4px 0;">Search</button>
+                                        @if(request('search')) <a href="{{ route('resource-categories.index') }}"
+                                        class="btn btn-danger" style="height: 42px; line-height: 28px;">Clear</a> @endif
                                     </div>
                                 </div>
                             </form>
@@ -140,6 +242,7 @@
                                     <th class="align-center" style="width: 80px;">#</th>
                                     <th>Category Name</th>
                                     <th>Description</th>
+                                    <th class="text-center">Date Created</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center" style="width: 150px;">Action</th>
                                 </tr>
@@ -147,27 +250,43 @@
                             <tbody>
                                 @forelse($categories as $key => $category)
                                     <tr>
-                                        <td class="align-center">{{ ($categories->currentPage() - 1) * $categories->perPage() + $key + 1 }}</td>
+                                        <td class="align-center">
+                                            {{ ($categories->currentPage() - 1) * $categories->perPage() + $key + 1 }}</td>
                                         <td><span class="category-name">{{ $category->name }}</span></td>
                                         <td>{{ Str::limit($category->description, 40) }}</td>
+                                        <td class="text-center">{{ $category->created_at->format('d M, Y') }}</td>
                                         <td class="text-center">
-                                            <span class="badge badge-{{ $category->status == 'Active' ? 'success' : 'warning' }} shadow-none badge-pill">{{ $category->status }}</span>
+                                            <span
+                                                class="badge badge-{{ $category->status == 'Active' ? 'success' : 'warning' }} shadow-none badge-pill">{{ $category->status }}</span>
                                         </td>
                                         <td class="align-center">
                                             <ul class="table-controls mb-0">
-                                                <li><a href="{{ route('resource-articles.index', ['category_id' => $category->id]) }}" data-toggle="tooltip" title="View Articles"><i class="flaticon-menu-list fs-20 text-success"></i></a></li>
-                                                <li><a href="javascript:void(0);" class="btn-edit-category" data-id="{{ $category->id }}" data-name="{{ $category->name }}" data-desc="{{ $category->description }}" data-status="{{ $category->status }}" data-toggle="tooltip" title="Edit"><i class="flaticon-edit-fill-2 fs-20"></i></a></li>
+                                                <li><a href="{{ route('resource-articles.index', ['category_id' => $category->id]) }}"
+                                                        data-toggle="tooltip" title="View Articles"><i
+                                                            class="flaticon-menu-list fs-20 text-success"></i></a></li>
+                                                <li><a href="javascript:void(0);" class="btn-edit-category"
+                                                        data-id="{{ $category->id }}" data-name="{{ $category->name }}"
+                                                        data-desc="{{ $category->description }}"
+                                                        data-status="{{ $category->status }}" data-toggle="tooltip"
+                                                        title="Edit"><i class="flaticon-edit-fill-2 fs-20"></i></a></li>
                                                 <li>
-                                                    <form action="{{ route('resource-categories.destroy', $category->id) }}" method="POST" class="d-inline delete-form">
+                                                    <form action="{{ route('resource-categories.destroy', $category->id) }}"
+                                                        method="POST" class="d-inline delete-form">
                                                         @csrf @method('DELETE')
-                                                        <button type="button" class="btn-delete-item" style="border: none; background: none; padding: 0;" data-toggle="tooltip" title="Delete"><i class="flaticon-delete-fill fs-20"></i></button>
+                                                        <button type="button" class="btn-delete-item"
+                                                            style="border: none; background: none; padding: 0;"
+                                                            data-toggle="tooltip" title="Delete"><i
+                                                                class="flaticon-delete-fill fs-20"></i></button>
                                                     </form>
                                                 </li>
                                             </ul>
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="5" class="text-center py-4 text-muted">No categories found.</td></tr>
+                                    <tr>
+                                        <!-- Changed colspan from 5 to 6 to match the number of table headers -->
+                                        <td colspan="6" class="text-center py-4 text-muted">No categories found.</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>

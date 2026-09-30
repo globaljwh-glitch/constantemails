@@ -128,7 +128,25 @@
                                     </select>
                                 </div>
                             </div>
+                            <style>
+                                /* Makes the default grey 'Choose File' button blue for this specific input */
+                                #mail_template_image::file-selector-button {
+                                    background-color: #0d6efd;
+                                    /* Bootstrap primary blue */
+                                    color: white;
+                                    border: none;
+                                    padding: 5px 12px;
+                                    border-radius: 4px;
+                                    cursor: pointer;
+                                    margin-right: 10px;
+                                    transition: background-color 0.2s;
+                                }
 
+                                /* Darker blue on hover */
+                                #mail_template_image::file-selector-button:hover {
+                                    background-color: #0b5ed7;
+                                }
+                            </style>
                             <!-- Template Image Upload -->
                             <div class="col-md-12 mb-4">
                                 <label for="mail_template_image">Template Image (Optional)</label>

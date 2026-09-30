@@ -133,6 +133,7 @@
                                     <th>Thumbnail</th>
                                     <th>Article Name</th>
                                     <th>Category</th>
+                                    <th class="text-center">Date Created</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -152,6 +153,7 @@
                                         </td>
                                         <td><span class="article-name">{{ $art->name }}</span></td>
                                         <td>{{ $art->category->name ?? 'N/A' }}</td>
+                                        <td class="text-center">{{ $art->created_at->format('d M, Y') }}</td>
                                         <td class="text-center">
                                             <span
                                                 class="badge badge-{{ $art->status == 'Active' ? 'success' : 'warning' }} shadow-none badge-pill">{{ $art->status }}</span>
@@ -176,7 +178,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center py-4">No articles found.</td>
+                                        <td colspan="7" class="text-center py-4">No articles found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
