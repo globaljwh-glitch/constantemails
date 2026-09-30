@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyEmailMail;
 
 class FrontAuthController extends Controller
 {

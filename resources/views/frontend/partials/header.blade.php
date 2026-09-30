@@ -21,7 +21,7 @@
 
 
         @auth
-    <!-- @if(!auth()->user()->is_admin) -->
+    
 
         <!-- <div class="dropdown d-inline-block">
 
@@ -96,7 +96,7 @@
 
 </div>
 
-    <!-- @endif -->
+    
 @endauth
 
       </div>

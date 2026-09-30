@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Verify Your Email</title>
+    <title>Verify Email</title>
 </head>
 <body>
 
@@ -11,31 +11,23 @@
     <p>Hello {{ $user->name }},</p>
 
     <p>
-        Thank you for registering with Constant Emails.
-        Please verify your email address to activate your account.
+        Thank you for registering. Please verify your email address
+        by clicking the button below.
     </p>
 
     <p>
-        <a href="{{ route('email.verify', ['token' => $user->verification_token]) }}"
-           style="
-                display:inline-block;
-                padding:12px 25px;
-                background:#ed2828;
-                color:#ffffff;
-                text-decoration:none;
-                border-radius:4px;
-           ">
-            Verify My Email
+        <a href="{{ route('verify.email', $user->verification_token) }}"
+           style="display:inline-block;
+                  padding:12px 25px;
+                  background:#ed2929;
+                  color:#fff;
+                  text-decoration:none;">
+            Verify Email
         </a>
     </p>
 
     <p>
-        Your account will remain inactive until you verify your email address.
-    </p>
-
-    <p>
-        Regards,<br>
-        Constant Emails
+        If you did not create this account, you can ignore this email.
     </p>
 
 </body>
