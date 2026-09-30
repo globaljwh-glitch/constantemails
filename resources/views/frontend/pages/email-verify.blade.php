@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Privacy Policy')
+@section('title', 'Validate Email')
 
 @section('content')
 
