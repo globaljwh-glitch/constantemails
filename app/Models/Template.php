@@ -9,11 +9,21 @@ class Template extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category_id', 'name', 'thumbnail', 'content', 'status'];
+    protected $table = 'templates';
 
-    // Define the relationship to Category
+    protected $fillable = [
+        'category_id',
+        'name',
+        'thumbnail',
+        'content',
+        'status',
+    ];
+
     public function category()
     {
-        return $this->belongsTo(TemplateCategory::class, 'category_id');
+        return $this->belongsTo(
+            TemplateCategory::class,
+            'category_id'
+        );
     }
 }

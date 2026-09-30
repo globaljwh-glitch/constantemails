@@ -129,7 +129,7 @@
             <div class="col-md-12 col-lg-6 col-xl-7">
                 <div class="imageThumb text-right">
                     <img
-                        src="{{ asset('frontend/images/login-thumb.jpg') }}"
+                        src="{{ asset('assets/frontend/images/login-thumb.jpg') }}"
                         alt="Login"
                         class="img-fluid">
                 </div>

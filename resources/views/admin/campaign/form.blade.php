@@ -67,7 +67,8 @@
             @if ($errors->any())
                 <div class="alert alert-danger mb-4">
                     <ul class="mb-0">
-                        @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li> @endforeach
                     </ul>
                 </div>
             @endif
@@ -168,12 +169,49 @@
                     height: 400,
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
+
+                        ['font', [
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strikethrough',
+                            'superscript',
+                            'subscript',
+                            'clear'
+                        ]],
+
+                        ['fontname', ['fontname']],
+
+                        ['fontsize', ['fontsize']],
+
                         ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
+
+                        ['para', [
+                            'ul',
+                            'ol',
+                            'paragraph',
+                            'height'
+                        ]],
+
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
+
+                        ['insert', [
+                            'link',
+                            'picture',
+                            'video',
+                            'hr'
+                        ]],
+
+                        ['view', [
+                            'fullscreen',
+                            'codeview',
+                            'help'
+                        ]],
+
+                        ['history', [
+                            'undo',
+                            'redo'
+                        ]]
                     ]
                 });
             });

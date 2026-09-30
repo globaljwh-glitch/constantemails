@@ -157,7 +157,7 @@
                                 </div>
 
                                 <div class="click2edit editor-container">
-                                    {!! old('template_content', $template->template_content ?? '<p>Design your user email template here...</p>') !!}
+                                    {!! old('template_content', $template->template_content ?? '<p>Start building your template here...</p>') !!}
                                 </div>
                                 <input type="hidden" name="template_content" id="hiddenContent">
                             </div>
@@ -186,17 +186,57 @@
         $(document).ready(function () {
             // Start the editor
             $('#editEditor').on('click', function () {
-                $('.click2edit').summernote({
+                let $editor = $('.click2edit');
+
+                // Option 1: Clear only the specific placeholder text
+                let placeholderText = '<p>Start building your template here...</p>';
+                if ($editor.html().trim() === placeholderText) {
+                    $editor.html('');
+                }
+
+                // Option 2: To wipe ANY and ALL text every time you click Edit, 
+                // delete Option 1 above and uncomment the line below:
+                // $editor.html('');
+
+                $editor.summernote({
                     focus: true,
                     height: 400,
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
+                        ['font', [
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strikethrough',
+                            'superscript',
+                            'subscript',
+                            'clear'
+                        ]],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
                         ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['para', [
+                            'ul',
+                            'ol',
+                            'paragraph',
+                            'height'
+                        ]],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
+                        ['insert', [
+                            'link',
+                            'picture',
+                            'video',
+                            'hr'
+                        ]],
+                        ['view', [
+                            'fullscreen',
+                            'codeview',
+                            'help'
+                        ]],
+                        ['history', [
+                            'undo',
+                            'redo'
+                        ]]
                     ]
                 });
             });

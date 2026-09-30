@@ -127,6 +127,8 @@
                                 <label for="thumbnail">Thumbnail <small>(GIF, JPG or PNG. Min 140x200px)</small>
                                     @if(!isset($template)) <span class="text-danger">*</span> @endif
                                 </label>
+
+
                                 <input type="file" id="thumbnail" name="thumbnail"
                                     class="form-control-file @error('thumbnail') is-invalid @enderror"
                                     accept="image/png, image/gif, image/jpeg" {{ isset($template) ? '' : 'required' }}>
@@ -187,24 +189,46 @@
     <!-- Summernote JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script>
+
         $(document).ready(function () {
 
             // Start the editor
             $('#editEditor').on('click', function () {
-                $('.click2edit').summernote({
+                let $editor = $('.click2edit');
+                let placeholderText = '<p>Start building your template here...</p>'; // Update this to match your exact placeholder
+
+                // 1. Clear the text if it's the placeholder (or empty)
+                // Note: If you TRULY want to delete ALL text every time they click edit, 
+                // you can just use: $editor.html(''); instead of the if-statement.
+                if ($editor.html().trim() === placeholderText) {
+                    $editor.html('');
+                }
+
+                // 2. Initialize Summernote
+                $editor.summernote({
                     focus: true,
                     height: 400,
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
+                        ['font', [
+                            'bold', 'italic', 'underline', 'strikethrough',
+                            'superscript', 'subscript', 'clear'
+                        ]],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
                         ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['para', ['ul', 'ol', 'paragraph', 'height']],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
+                        ['insert', ['link', 'picture', 'video', 'hr']],
+                        ['view', ['fullscreen', 'codeview', 'help']],
+                        ['history', ['undo', 'redo']]
                     ]
                 });
+
+                // If Summernote is already initialized and you want to clear it via API, uncomment this:
+                // $editor.summernote('code', '');
             });
 
             // Lock the editor
