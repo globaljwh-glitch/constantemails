@@ -1159,5 +1159,58 @@ class ContactController extends Controller
             compact('contact')
         );
     }
+
+    
+    
+    public function PostVerify(Request $request, EmailVerifier $verifier)
+    {
+        $validated = $request->validate([
+            'email' => [
+                'required',
+                'email',
+                'max:254',
+            ],
+        ], [
+            'email.required' => 'Please enter an email address.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.max' => 'Email address cannot exceed 254 characters.',
+        ]);
+
+        try {
+            $email = strtolower(trim($validated['email']));
+
+            $verification = $verifier->verify($email);
+
+            return redirect()
+                ->route('email.verification')
+                ->with('verification', [
+                    'email'          => $verification->email,
+                    'status'         => $verification->status,
+                    'syntax_valid'   => $verification->syntax_valid,
+                    'domain_exists'  => $verification->domain_exists,
+                    'mx_exists'      => $verification->mx_exists,
+                    'smtp_status'    => $verification->smtp_status,
+                    'smtp_code'      => $verification->smtp_code,
+                    'mx_host'        => $verification->mx_host,
+                    'message'        => $verification->message,
+                ]);
+
+        } catch (Throwable $e) {
+
+            \Log::error('Email verification failed', [
+                'email' => $request->email,
+                'error' => $e->getMessage(),
+            ]);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Unable to verify the email address. Please try again.');
+        }
+    }
+    public function verify_email()
+    {
+        return view('frontend.pages.email-verify');
+    }
     
 }

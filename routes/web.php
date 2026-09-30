@@ -65,6 +65,12 @@ Route::get('/email/click/{recipient}', [CampaignController::class, 'click'])
 Route::get('/email/open/{recipient}', [CampaignController::class, 'trackOpen'])
     ->name('email.track.open');
 
+
+Route::get('/validate-email', [ContactController::class, 'verify_email'])
+    ->name('email.verification');
+Route::post('/validate-email', [ContactController::class, 'PostVerify'])
+    ->name('email.verification.verify');
+
 /*
 |--------------------------------------------------------------------------
 | Guest Routes (Frontend Auth)
