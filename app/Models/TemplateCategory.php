@@ -9,5 +9,15 @@ class TemplateCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'status'];
+    protected $table = 'template_categories';
+
+    protected $fillable = [
+        'name',
+        'status',
+    ];
+
+    public function templates()
+    {
+        return $this->hasMany(Template::class, 'category_id');
+    }
 }

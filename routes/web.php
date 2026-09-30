@@ -81,6 +81,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/forgot-password', [FrontAuthController::class, 'sendResetLink'])->name('password.email');
     Route::get('/reset-password/{token}', [FrontAuthController::class, 'showResetPassword'])->name('password.reset');
     Route::post('/reset-password', [FrontAuthController::class, 'resetPassword'])->name('password.update');
+    Route::get('/verify-email/{token}', [FrontAuthController::class, 'verifyEmail'])->name('email.verify');
 });
 
 /*
