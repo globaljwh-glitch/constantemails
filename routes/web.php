@@ -429,6 +429,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
     Route::resource('campaigns', AdminCampaignController::class)->names('admin.campaigns');
+    
     Route::get('/campaigns/{id}/contacts-json', [AdminCampaignController::class, 'getCampaignContacts'])->name('campaigns.contacts.json');
 
     Route::get('/contact-queries', [ContactQueryController::class, 'index'])->name('admin.contact-queries.index');
