@@ -156,18 +156,6 @@ class FrontAuthController extends Controller
 
     public function login(Request $request)
     {
-        $user = Auth::user();
-        if ($user->status !== 'Active') {
-
-            Auth::logout();
-
-            return back()
-                ->withInput($request->only('email'))
-                ->withErrors([
-                    'email' => 'Please verify your email address before logging in.',
-                ]);
-        }
-
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -183,6 +171,17 @@ class FrontAuthController extends Controller
             return back()
                 ->withInput($request->only('email'))
                 ->with('error', 'Invalid email or password.');
+        }
+
+        $user = Auth::user();
+
+        if ($user->status !== 'Active') {
+
+            Auth::logout();
+
+            return back()
+                ->withInput($request->only('email'))
+                ->with('error', 'Your account is not active. Please verify your email first.');
         }
 
         $request->session()->regenerate();

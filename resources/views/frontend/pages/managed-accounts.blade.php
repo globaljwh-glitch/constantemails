@@ -29,12 +29,21 @@
 
                         <div class="header-button-container">
 
-                            <a
+                            <!-- <a
                                 href="{{ route('register') }}"
                                 class="custom-btn1 orangeBg"
                             >
                                 Try For Free
-                            </a>
+                            </a> -->
+                            @if(auth()->check())
+                                <a href="{{ route('user.dashboard') }}" class="custom-btn1 orangeBg">
+                                    Try For Free
+                                </a>
+                            @else
+                                <a href="{{ route('register') }}" class="custom-btn1 orangeBg">
+                                    Try For Free
+                                </a>
+                            @endif
 
                             <a
                                 href="{{ route('pricing') }}"

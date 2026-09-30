@@ -674,3 +674,7 @@ input.form-control-file {
     align-items: center;
     justify-content: center;
 }
+
+.contentContainer.smallContainer {
+	padding: 100px 0 100px 0;
+}

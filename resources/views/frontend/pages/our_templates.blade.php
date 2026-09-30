@@ -44,7 +44,7 @@
                                     Try For Free
                                 </a>
                             @else
-                                <a href="{{ route('register') }}" class="text-orange">
+                                <a href="{{ route('register') }}" class="custom-btn1 orangeBg">
                                     Try For Free
                                 </a>
                             @endif

@@ -21,9 +21,9 @@
 
 
         @auth
-    @if(!auth()->user()->is_admin)
+    <!-- @if(!auth()->user()->is_admin) -->
 
-        <div class="dropdown d-inline-block">
+        <!-- <div class="dropdown d-inline-block">
 
             <button class="custom-btn1 transparent-btn dropdown-toggle"
                     data-bs-toggle="dropdown">
@@ -55,9 +55,48 @@
 
             </div>
 
-        </div>
+        </div> -->
 
-    @endif
+        <div class="dropdown d-inline-block">
+
+    <button
+        type="button"
+        class="custom-btn1 transparent-btn dropdown-toggle"
+        id="userDropdown"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false">
+
+        {{ ucfirst(auth()->user()->username) }}
+
+    </button>
+
+    <div class="dropdown-menu dropdown-menu-right"
+         aria-labelledby="userDropdown">
+
+        <a class="dropdown-item"
+           href="{{ route('user.dashboard') }}">
+            Dashboard
+        </a>
+
+        <!-- <a class="dropdown-item"
+           href="#">
+            Profile
+        </a> -->
+
+        <form method="POST" action="{{ route('user.logout') }}">
+            @csrf
+
+            <button type="submit" class="dropdown-item">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+    <!-- @endif -->
 @endauth
 
       </div>
