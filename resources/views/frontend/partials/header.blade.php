@@ -116,7 +116,7 @@
           <li class="nav-item"> <a class="nav-link" href="{{ route('pricing') }}">Pricing</a> </li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('managed-accounts') }}">Managed Accounts</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('template') }}">Templates</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('resource') }}">Resources</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('email.verification') }}">Validate Email</a> </li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('contact') }}">Contact Us</a> </li>
         </ul>
       </div>
