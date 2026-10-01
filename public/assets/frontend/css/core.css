@@ -38,7 +38,8 @@ a:hover {
 }
 .borderBottom {
 	padding-bottom: 11px;
-	border-bottom: 1px solid #fef5f5;
+	/*border-bottom: 1px solid #fef5f5;*/
+	border-bottom: 1px solid #e2e2e2;
 }
 b, strong {
 	font-weight: 500;
@@ -375,7 +376,7 @@ footer li a {
 .contactForm input, .contactForm select, .contactForm textarea {
 	background-color: #fdfdfd;
 	width: 100%;
-	border: 1px solid #ededed;
+	border: 1px solid #e2e2e2;
 	font-size: 17px;
 	height: 53px;
 	line-height: 53px;
@@ -673,8 +674,4 @@ input.form-control-file {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.contentContainer.smallContainer {
-	padding: 100px 0 100px 0;
 }

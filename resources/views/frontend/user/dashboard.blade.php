@@ -8,7 +8,7 @@
     'title' => 'Account Details'
 ])
 
-<section class="contentContainer">
+<section class="contentContainer smallContainer">
     <div class="container">
 
         <div class="row">
@@ -76,15 +76,11 @@
                             <a href="{{ route('pricing') }}" class="linkButton">
                                 Add more emails?
                             </a>
+                            <div class="progress">
+                              <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </p>
 
-                        <p>
-                            You have used
-                            <strong>{{ $image_usage_percent ?? 0 }}%</strong>
-                            of your
-                            <strong>{{ $image_storage_limit ?? 0 }}MB</strong>
-                            image gallery space.
-                        </p>
 
                         <p>
                             You have used
@@ -92,7 +88,9 @@
                             of your
                             <strong>{{ $image_storage_limit ?? 0 }}MB</strong>
                             image gallery space.
-
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                             <a href="#" class="linkButton">
                                 Upload images?
                             </a>
@@ -104,147 +102,83 @@
                     <div class="accountInfo mt-4">
 
                         {{-- Name --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Name</strong>
-                                </div>
 
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                        <div class="row">   
+                            <div class="col-md-6 col-lg-6">
+                                <div class="list borderBottom">
+                                            <strong>Name</strong>
+                                            {{ $user->name ?? '-' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <label>Last Name</label>
+                                <div class="borderBottom mt-2">
                                     {{ $user->name ?? '-' }}
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- Email --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Email</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                            <div class="col-md-6 col-lg-6">
+                                <label>Email</label>
+                                <div class="borderBottom">
                                     {{ $user->email ?? '-' }}
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- Company --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Company/Organization</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
-                                    {{ $user->company_name ?? '-' }}
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Address --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Address</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
-                                    {{ $user->company_address ?? '-' }}
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Phone --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Phone Number</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                            <div class="col-md-6 col-lg-6">
+                                <label>Phone Number</label>
+                                <div class="borderBottom">
                                     {{ $user->company_phone ?? '-' }}
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- Fax --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Fax Number</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                            <div class="col-md-6 col-lg-6">
+                                <label>Fax Number</label>
+                                <div class="borderBottom">
                                     {{ $user->company_fax ?? '-' }}
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- City --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>City/Town</strong>
+                            <div class="col-md-6 col-lg-6">
+                                <label>Company/Organization</label>
+                                <div class="borderBottom">
+                                    {{ $user->company_name ?? '-' }}
                                 </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <label>Address</label>
+                                <div class="">
+                                    {{ $user->company_address ?? '-' }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <label>City/Town</label>
+                                <div class="">
                                     {{ $user->city ?? '-' }}
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- State --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>State/Province</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                            <div class="col-md-6 col-lg-6">
+                                <label>State/Province</label>
+                                <div class="">
                                     {{ $user->state ?? '-' }}
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- Country --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Country</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                            <div class="col-md-6 col-lg-6">
+                                <label>Country</label>
+                                <div class="">
                                     {{ $user->country ?? '-' }}
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- Zip --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Zip/Postal Code</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                            <div class="col-md-6 col-lg-6">
+                                <label>Zip/Postal Code</label>
+                                <div class="">
                                     {{ $user->zip ?? '-' }}
                                 </div>
                             </div>
-                        </div>
-
-                        {{-- Package --}}
-                        <div class="list borderBottom">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-5">
-                                    <strong>Package Type</strong>
-                                </div>
-
-                                <div class="col-lg-9 col-md-8 col-sm-7">
+                            <div class="col-md-6 col-lg-6">
+                                <label>Package Type</label>
+                                <div class="">
                                     {{ $user->package_type ?? 'Free' }}
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
 
