@@ -214,6 +214,7 @@ a.nav-link {
 	border: 1px solid rgba(255, 255, 255, 1);
 	padding: 14px 30px 14px 30px;
 	color: #ffffff;
+	display: inline-block;
 }
 /*----------------------------- Content Block ------------------------------------------*/
 .contentBlock {
@@ -726,4 +727,18 @@ input.form-control-file {
     max-height: 1228px;
     overflow: hidden;
     overflow-y: scroll;
+}
+
+.contactForm input[type="file"] {
+	height: 53px;
+    line-height: 45px;
+    padding: 0 12px 0px 0px;
+}
+
+.acoountRightSection.contactAccountSection {
+	padding-left: 30px;
+}
+.acoountRightSection.contactAccountSection .table th, .table td {
+    padding: 10px 5px;
+
 }
