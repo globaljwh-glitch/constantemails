@@ -68,9 +68,13 @@
 
             </div>
 
-            <button type="submit" class="submitButton">
+            <button type="submit" class="btn btn-default orangeBg text-white">
                 Update Group
             </button>
+
+            <a href="{{ url()->previous() }}" class="btn btn-default orangeBg text-white">
+                Back
+            </a>
 
         </form>
 

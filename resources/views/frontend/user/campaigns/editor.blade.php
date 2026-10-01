@@ -393,6 +393,7 @@ $(document).ready(function () {
 
         const emailTitle = $('input[name="email_title"]').val().trim();
         const emailMessage = $('input[name="message"]').val().trim();
+        const value = $('input[name="additional_recipients"]').val().trim();
 
         const selectedTemplate =
             $('input[name="group_ids[]"]:checked');
@@ -434,6 +435,38 @@ $(document).ready(function () {
         }
 
         // Allow normal form submission
+        // Optional field - empty is allowed
+        if (value === '') {
+            return;
+        }
+
+        // Split emails by comma
+        const emails = value
+            .split(',')
+            .map(email => email.trim())
+            .filter(email => email !== '');
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const invalidEmails = emails.filter(email => !emailRegex.test(email));
+
+        if (invalidEmails.length > 0) {
+            e.preventDefault();
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Email Address',
+                html: `
+                    Please check the following email address(es):
+                    <br><br>
+                    <strong>${invalidEmails.join('<br>')}</strong>
+                `,
+                confirmButtonText: 'OK'
+            });
+
+            return false;
+        }
     });
 
 </script>

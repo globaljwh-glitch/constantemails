@@ -84,7 +84,7 @@
 
         <a class="dropdown-item"
            href="{{ route('user.dashboard') }}">
-            Dashboard
+            My Account
         </a>
     </li>
         <!-- <a class="dropdown-item"
