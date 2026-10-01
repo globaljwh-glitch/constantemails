@@ -61,37 +61,29 @@
 
     <button
         type="button"
-        class="custom-btn1 orangeBg dropbtn dropdown-toggle d-flex align-items-center justify-content-center"
+        class="custom-btn1 transparent-btn dropdown-toggle"
         id="userDropdown"
         data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false">
 
-        <div class="userProfileImage">
-            <a href="#" class="">KS</a> <!--a href="#" class=""><img src="http://10.1.15.210/assets/frontend/images/feature-thumb-01.jpg" alt="User" class="imgResponsive"></a-->
-        </div>
-
         {{ ucfirst(auth()->user()->username) }}
 
     </button>
 
-    <div id="myDropdown" class="headerSettingsLinks dropdown-content dropdown-menu dropdown-menu-right"
+    <div class="dropdown-menu dropdown-menu-right"
          aria-labelledby="userDropdown">
-
-         <ul class="mb-0">
-
-            <li>
 
         <a class="dropdown-item"
            href="{{ route('user.dashboard') }}">
             Dashboard
         </a>
-    </li>
+
         <!-- <a class="dropdown-item"
            href="#">
             Profile
         </a> -->
-        <li>
+
         <form method="POST" action="{{ route('user.logout') }}">
             @csrf
 
@@ -99,8 +91,7 @@
                 Logout
             </button>
         </form>
-        </li>
-        </ul>
+
     </div>
 
 </div>

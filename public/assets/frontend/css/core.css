@@ -610,13 +610,13 @@ ul.myaccountList {
 .myaccountList li:last-child, .headerSettingsLinks li:last-child {
 	border-bottom: 0px solid #fef5f5;
 }
-.myaccountList li a, .headerSettingsLinks li a {
+.myaccountList li a, .headerSettingsLinks li a, .headerSettingsLinks li button {
 	color: #282828;
 	display: block;
 	line-height: 23px;
 	padding: 11px 15px 12px 15px;
 }
-.myaccountList li a.activeclass, .myaccountList li a:hover, .headerSettingsLinks li a:hover, .settingSection #accordion .card-header a:hover {
+.myaccountList li a.activeclass, .myaccountList li a:hover, .headerSettingsLinks li a:hover, .settingSection #accordion .card-header a:hover, .headerSettingsLinks li button:hover {
 	background-color: #e62d29;
 	color: #ffffff;
 }
@@ -677,4 +677,47 @@ input.form-control-file {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.userProfileImage {
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+}
+.userProfileImage a {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #fff;
+    margin-bottom: 0px;
+    font-size: 16px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    background-color: #ffffff;
+    color: #e62d29;
+}
+.custom-btn1.orangeBg.dropbtn.dropdown-toggle {
+	padding: 9px 12px 9px 11px;
+}
+.accountInfo .list {
+	padding: 14px 0;
+}
+.accountInfo .list label {
+	font-weight: 500;
+}
+.packageDetailBox {
+	/*border: 1px solid #e2e2e2;
+	padding: 15px;*/
+	padding: 5px;
+	border-radius: 8px;
+}
+.homeBanner.smallPadding {
+	padding: 50px 0px;
+	text-align: center;
 }
