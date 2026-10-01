@@ -437,8 +437,14 @@ class ContactController extends Controller
         }
 
 
+        // return redirect()
+        //     ->route('user.groups.index')
+        //     ->with(
+        //         'success',
+        //         $message
+        //     );
         return redirect()
-            ->route('user.groups.index')
+            ->route('user.groups.contacts.index', ['group' => $group->id])
             ->with(
                 'success',
                 $message

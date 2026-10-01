@@ -122,7 +122,7 @@
 
     {{ $contacts->links() }}
 
-    <a href="{{ url()->previous() }}" class="btn btn-default orangeBg text-white">
+    <a href="{{ route('user.groups.index') }}" class="btn btn-default orangeBg text-white">
         Back
     </a>
 </div>

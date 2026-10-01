@@ -35,12 +35,11 @@
     </div>
 
     <p class="mt-4">
-        In this step, you will provide the information for your message header.
+        In this step, you will be providing the information for your message header
     </p>
 
     <p>
-        The message header in an email contains information about the sender and recipient.
-        On some email providers it looks like this:
+        The message header in an email is what contains information about the sender and recipient. On some email service providers it looks like this:
     </p>
 
     <div class="border border-dark p-3 mb-4" style="border-style:dashed !important;">
@@ -50,7 +49,7 @@
     </div>
 
     <p>
-        <strong>Enter your email header information below:</strong>
+        <strong>Enter your email's header information below:</strong>
     </p>
 
     <form action="{{ route('user.campaigns.store') }}" method="POST" id="firstSubjectForm">
@@ -79,8 +78,7 @@
 
                     <div class="col-lg-9 offset-lg-3 mt-2">
                         <small class="text-muted">
-                            This is the subject line that recipients will see.
-                            Choose something trustworthy so recipients recognize it.
+                            This is the subject line that will be displayed when your email arrives to its recipient. Make sure it is something your recipients trust so they don't discard it.
                         </small>
                     </div>
 
@@ -90,7 +88,7 @@
                 <div class="row mb-4">
 
                     <div class="col-lg-3">
-                        <strong>"From" Name</strong>
+                        <strong>"From: " Name</strong>
                     </div>
 
                     <div class="col-lg-6">
@@ -104,7 +102,7 @@
 
                     <div class="col-lg-9 offset-lg-3 mt-2">
                         <small class="text-muted">
-                            Use a familiar name so recipients immediately recognize your email.
+                            Try using a name that your contacts know so they will quickly recognize it and open it.
                         </small>
                     </div>
 
@@ -114,7 +112,7 @@
                 <div class="row mb-4">
 
                     <div class="col-lg-3">
-                        <strong>Campaign Name</strong>
+                        <strong>Name of Email Campaign</strong>
                     </div>
 
                     <div class="col-lg-6">
@@ -128,7 +126,7 @@
 
                     <div class="col-lg-9 offset-lg-3 mt-2">
                         <small class="text-muted">
-                            This name is only for your reference and will never appear in the email.
+                            This Name of Email Campaign <b><u>will not be displayed</u></b> in your emails, we only require it so you can track your Email Campaigns by a name in your email statistics.
                         </small>
                     </div>
 
@@ -138,7 +136,7 @@
                 <div class="row mb-4">
 
                     <div class="col-lg-3">
-                        <strong>From Email</strong>
+                        <strong>This email will be sent from</strong>
                     </div>
 
                     <div class="col-lg-6">
@@ -157,7 +155,7 @@
 
                     <div class="col-lg-9 offset-lg-3 mt-2">
                         <small class="text-muted">
-                            This email address will appear as the sender of your campaign.
+                            This Name of Email Campaign <b><u>will not be displayed</u></b> in your emails, we only require it so you can track your Email Campaigns by a name in your email statistics.
                         </small>
                     </div>
 

@@ -30,7 +30,7 @@
             <div class="row mb-4">
 
                 <div class="col-md-3">
-                    <strong>Selected Contact Group(s)</strong>
+                    <strong>Selected Contact Group(s): </strong>
                 </div>
 
                 <div class="col-md-7">
@@ -49,7 +49,8 @@
                     </select>
 
                     <small class="text-muted">
-                        Hold Ctrl to select multiple groups.
+                        Here you can add more Contact Groups if needed.<br>
+                        To select multiple Contact Groups just hold the <b>Ctrl key</b> and click on the Contact Groups of your choice.
                     </small>
 
                 </div>
@@ -60,7 +61,7 @@
             <div class="row mb-4">
 
                 <div class="col-md-3">
-                    <strong>Additional Recipients</strong>
+                    <strong>Add additional recipients (Optional): </strong>
                 </div>
 
                 <div class="col-md-7">
@@ -72,7 +73,7 @@
                         value="{{ old('additional_recipients',$campaign->additional_recipients) }}">
 
                     <small>
-                        Separate multiple email addresses using commas.
+                        Add more email addresses here if needed. Separate each one with a coma (,)
                     </small>
 
                 </div>
@@ -83,7 +84,7 @@
             <div class="row mb-4">
 
                 <div class="col-md-3">
-                    <strong>Email Campaign Name</strong>
+                    <strong>Email Campaign Name: </strong>
                 </div>
 
                 <div class="col-md-7">
@@ -93,6 +94,11 @@
                         name="email_title"
                         class="form-control"
                         value="{{ old('email_title',$campaign->email_title) }}">
+                    
+                    <small>
+                        Here you may change the Email Campaign Name you originaly provided in the emai header settings.<br>
+Remember, this will not be displayed in your email. This is the name with which you track this email in your account.
+                    </small>
 
                 </div>
 
@@ -118,7 +124,8 @@
             <div class="row mb-4">
 
                 <div class="col-md-3">
-                    <strong>Attachment</strong>
+                    <strong>Attach a file here (optional):</strong>
+                    <small>You may attach a file along with your email if you wish to.</small>
                 </div>
 
                 <div class="col-md-7">
@@ -184,7 +191,7 @@
             <div class="row mb-4">
 
                 <div class="col-md-3">
-                    <strong>Save this template?</strong>
+                    <strong>Would you like to save this template to reuse it in the future?</strong>
                 </div>
 
                 <div class="col-md-7">
@@ -219,7 +226,7 @@
             <div class="row mb-5">
 
                 <div class="col-md-3">
-                    <strong>Show Company Logo</strong>
+                    <strong>You may choose to display the Constant Emails logo a the botom of the email. Showing our logo helps your recipients trust your email and not discard it.</strong>
                 </div>
 
                 <div class="col-md-7">
