@@ -68,7 +68,7 @@
         aria-expanded="false">
 
         <div class="userProfileImage">
-            <a href="#" class="">{{ strtoupper(substr($user->username, 0, 1)) }}</a> <!--a href="#" class=""><img src="http://10.1.15.210/assets/frontend/images/feature-thumb-01.jpg" alt="User" class="imgResponsive"></a-->
+            <a href="#" class="">{{ strtoupper(substr(auth()->user()->username, 0, 1)) }}</a> <!--a href="#" class=""><img src="http://10.1.15.210/assets/frontend/images/feature-thumb-01.jpg" alt="User" class="imgResponsive"></a-->
         </div>
 
         {{ ucfirst(auth()->user()->username) }}
