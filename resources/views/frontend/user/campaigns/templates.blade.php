@@ -7,15 +7,26 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="borderBottom">
-                <h2>Select Email Template</h2>
+                <h2>Template List</h2>
             </div>
         </div>
     </div>
 
     <p class="mt-4">
-        Select one of the available templates for this email campaign.
+        <b>Choose an Email Template</b>
+        <p>
+            Here you can choose a template that best suits your message. Using a template with a layout that matches the contents of your email will help you to efficiently present your message.
+        </p>
+        <p>
+            All of <b>our templates are editable!</b> When using our templates you can use our easy editor, or switch to source (html) mode. Things like changing pictures, layouts, frames, and text are very easy to modify.
+        </p>
+        <p>
+            If you have previously created a custom template, you may search your <a href="#templateList">Custom Template List</a> from the drop down menu.
+        </p>
+        <p>
+            Pick a Preformated Email Template or a Custom template of your own, and then hit <b>"Save Next"</b>.
+        </p>
     </p>
-
     <form action="{{ route('user.campaigns.templates.store', $campaign) }}"
           method="POST" id="templateForm">
 
@@ -35,8 +46,12 @@
 
                         @if($template->thumbnail)
                             <img src="{{ asset('storage/'.$template->thumbnail) }}"
-                                 class="card-img-top"
-                                 style="height:180px;object-fit:cover;">
+                                class="card-img-top"
+                                style="height:180px;object-fit:cover;">
+                        @else 
+                            <img src="{{ asset('assets/frontend/images/default-template.png') }}"
+                                class="card-img-top"
+                                style="height:180px;object-fit:cover;">
                         @endif
 
                         <div class="card-body">
@@ -56,7 +71,7 @@
                                 <label class="form-check-label"
                                        for="default{{ $template->id }}">
 
-                                    <strong>{{ $template->name }}</strong>
+                                    <strong>{{ ucwords($template->name) }}</strong>
 
                                 </label>
 
@@ -79,9 +94,13 @@
         </div>
 
         <hr class="my-5">
-
-        <h4 class="mb-3">My Templates</h4>
-
+        <h4 class="mb-3" id="templateList">Custom Made Templates</h4>
+        <p>
+            If you'd like to use a template of your own, you may do so by picking one from the drop down menu below.
+        </p>
+        <p>
+            <b>Pick template from saved template list (optional) :</b>
+        </p>
         <div class="row">
 
             @forelse($userTemplates as $template)
@@ -92,8 +111,8 @@
 
                         @if($template->mail_template_image)
                             <img src="{{ asset('uploads/mail_templates/'.$template->mail_template_image) }}"
-                                 class="card-img-top"
-                                 style="height:180px;object-fit:cover;">
+                                class="card-img-top"
+                                style="height:180px;object-fit:cover;">
                         @endif
 
                         <div class="card-body">
@@ -111,7 +130,7 @@
                                 <label class="form-check-label"
                                        for="user{{ $template->id }}">
 
-                                    <strong>{{ $template->template_title }}</strong>
+                                    <strong>{{ ucwords($template->template_title) }}</strong>
 
                                 </label>
 
@@ -132,7 +151,10 @@
             @endforelse
 
         </div>
-
+        <p>None of these templates is doing it for you?</p>
+        <p>
+            <a href="{{ route('user.saved-templates.create') }}">Create your own template!</a>
+        </p>
         <div class="mt-4 d-flex justify-content-between">
 
             <a href="{{ route('user.campaigns.groups', $campaign) }}"
