@@ -68,7 +68,8 @@ class User extends Authenticatable
         'masking_allowed',
         'stripe_id',
         'pm_type',
-        'pm_last_four'
+        'pm_last_four',
+        'verification_token'
     ];
 
 
