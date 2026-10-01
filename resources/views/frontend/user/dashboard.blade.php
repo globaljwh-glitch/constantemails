@@ -28,7 +28,7 @@
                     }
 
                     .accountInfo .list {
-                        padding: 12px 0;
+                        padding: 14px 0;
                     }
 
                     .accountInfo .list label {
@@ -55,42 +55,46 @@
 
                     {{-- Package Information --}}
                     <div class="mt-4">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="packageDetailBox"> 
 
-                        <p>
-                            You have the
-                            <strong>
-                                {{ $user->package_type ?? 'Free' }}
-                            </strong>
-                            package.
-                        </p>
+                                    <h3>Package Type</h3>
 
-                        <p>
-                            You have
-                            <strong>{{ $only_mail ?? 0 }}</strong>
-                            contacts remaining to upload.
-
-                            <a href="{{ route('pricing') }}" class="linkButton">
-                                Add more emails?
-                            </a>
-                            <div class="progress">
-                              <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <h4><strong>
+                                        {{ $user->package_type ?? 'Free' }}
+                                    </strong></h4>
+                                </div>
                             </div>
-                        </p>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="packageDetailBox"> 
 
+                                    <h3>Contact Remaining</h3>
 
-                        <p>
-                            You have used
-                            <strong>{{ $image_storage_used ?? 0 }}MB</strong>
-                            of your
-                            <strong>{{ $image_storage_limit ?? 0 }}MB</strong>
-                            image gallery space.
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <h4><strong>{{ $only_mail ?? 0 }}</strong>
+                            contacts remaining to upload.</h4>
+                                    <div class="progress">
+                                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+
+                                    <a href="{{ route('pricing') }}" class="custom-btn1 transparent-btn">Add more emails?</a>
+                                </div>
                             </div>
-                            <a href="#" class="linkButton">
-                                Upload images?
-                            </a>
-                        </p>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="packageDetailBox"> 
+
+                                    <h3>Images Storage</h3>
+
+                                    <h4><strong>{{ $image_storage_used ?? 0 }}MB/ <strong>{{ $image_storage_limit ?? 0 }}MB</strong></strong>
+                            image gallery space.</h4>
+                                    <div class="progress">
+                                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+
+                                    <a href="" class="custom-btn1 transparent-btn">Upload images?</a>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 
