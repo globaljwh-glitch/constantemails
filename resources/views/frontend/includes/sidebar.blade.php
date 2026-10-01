@@ -66,31 +66,31 @@
                 <li class="account-menu-item menu-header active"><a href="javascript:void(0);" class="positionRelative"><i class="fa fa-solid fa-user"></i> My Account <span><i class="fa fa-minus menu-toggle-icon" aria-hidden="true"></i></span></a>
                     <div class="menu-content" id="accountMenuContent">
                         <ul>
-                            <li>
+                            <li class="{{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
                                 <a href="{{ route('user.dashboard') }}"
                                    class="{{ request()->routeIs('user.dashboard') ? 'activeclass' : '' }}">
                                     My Account
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ request()->routeIs('user.account.profile') ? 'active' : '' }}">
                                 <a href="{{ route('user.account.profile') }}" 
                                 class="{{ request()->routeIs('user.account.profile') ? 'activeclass' : '' }}">
                                     Edit your Contact and Billing Information
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ request()->routeIs('user.account.password') ? 'active' : '' }}">
                                 <a href="{{ route('user.account.password') }}"
                                   class="{{ request()->routeIs('user.account.password') ? 'activeclass' : '' }}">
                                     Change your Password
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ request()->routeIs('user.account.upgrade') ? 'active' : '' }}">
                                 <a href="{{ route('user.account.upgrade') }}"
                                   class="{{ request()->routeIs('user.account.upgrade') ? 'activeclass' : '' }}">
                                     Upgrade My Package
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ request()->routeIs('user.account.payment.history') ? 'active' : '' }}">
                                 <a href="{{ route('user.account.payment.history') }}"
                                   class="{{ request()->routeIs('user.account.payment.history') ? 'activeclass' : '' }}">
                                     Check Payment History
@@ -99,28 +99,28 @@
                         </ul>
                     </div>
                 </li>
-                <li class="account-menu-item">
-                    <a href="{{ route('user.contacts.import') }}" class="{{ request()->routeIs('user.contacts.import') ? 'activeclass' : '' }}"><i class="fa fa-database" aria-hidden="true"></i> Import Contact from database</a>
+                <li class="account-menu-item {{ request()->routeIs('user.contacts.import') ? 'active' : '' }}">
+                    <a href="{{ route('user.contacts.import') }}" class="{{ request()->routeIs('user.contacts.import') ? 'activeclass' : '' }}"><i class="fa fa-database" aria-hidden="true"></i> Import Contacts</a>
                 </li>
-                <li class="account-menu-item">
+                <li class="account-menu-item {{ request()->routeIs('user.contacts.bad-report') ? 'active' : '' }}">
                     <a href="{{ route('user.contacts.bad-report') }}" class="{{ request()->routeIs('user.contacts.bad-report*') ? 'activeclass' : '' }}"><i class="fa fa-solid fa-user"></i> Bad Contacts Report</a>
                 </li>
-                <li class="account-menu-item">
-                    <a href="{{ route('user.campaigns.create') }}" class="{{ request()->routeIs('user.campaigns.*') ? 'activeclass' : '' }}"><i class="fa fa-envelope" aria-hidden="true"></i> Create and Emails/Email Campaign</a>
+                <li class="account-menu-item {{ request()->routeIs('user.campaigns.create') ? 'active' : '' }}">
+                    <a href="{{ route('user.campaigns.create') }}" class="{{ request()->routeIs('user.campaigns.*') ? 'activeclass' : '' }}"><i class="fa fa-envelope" aria-hidden="true"></i> Create An Email Campaign</a>
                 </li>
-                <li class="account-menu-item">
-                    <a href="{{ route('user.email-stats.index') }}" class="{{ request()->routeIs('user.email-stats.index') ? 'activeclass' : '' }}"><i class="fa fa-history" aria-hidden="true"></i> Create Email History/Statistics</a>
+                <li class="account-menu-item {{ request()->routeIs('user.email-stats.index') ? 'active' : '' }}">
+                    <a href="{{ route('user.email-stats.index') }}" class="{{ request()->routeIs('user.email-stats.index') ? 'activeclass' : '' }}"><i class="fa fa-history" aria-hidden="true"></i> Campaign History</a>
                 </li>
-                <li class="account-menu-item">
+                <li class="account-menu-item {{ request()->routeIs('user.saved-templates.index') ? 'active' : '' }}">
                     <a href="{{ route('user.saved-templates.index') }}" class="{{ request()->routeIs('user.saved-templates.*') ? 'activeclass' : '' }}"><i class="fa fa-folder" aria-hidden="true"></i> Manage Custom Templates</a>
                 </li>
-                <li class="account-menu-item">
+                <li class="account-menu-item {{ request()->routeIs('user.autoresponders.index') ? 'active' : '' }}">
                     <a href="{{ route('user.autoresponders.index') }}" class="{{ request()->routeIs('user.autoresponders.index') ? 'activeclass' : '' }}"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> My Auto Responders</a>
                 </li>
-                <li class="account-menu-item">
+                <li class="account-menu-item {{ request()->routeIs('user.autoresponders.create') ? 'active' : '' }}">
                     <a href="{{ route('user.autoresponders.create') }}" class="{{ request()->routeIs('user.autoresponders.create') ? 'activeclass' : '' }}"><i class="fa fa-calendar" aria-hidden="true"></i> Add an Auto Responder</a>
                 </li>
-                <li class="account-menu-item">
+                <li class="account-menu-item {{ request()->routeIs('user.image-gallery.index') ? 'active' : '' }}">
                     <a href="{{ route('user.image-gallery.index') }}" class="{{ request()->routeIs('user.image-gallery.*') ? 'activeclass' : '' }}"><i class="fa fa-picture-o" aria-hidden="true"></i> My Image Gallery</a>
                 </li>
                 <li class="account-menu-item menu-header"><a href="javascript:void(0);" class="positionRelative"><i class="fa fa-address-book" aria-hidden="true"></i> Contacts List <span><i class="fa fa-plus menu-toggle-icon" aria-hidden="true"></i></span></a>
