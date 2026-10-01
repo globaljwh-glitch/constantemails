@@ -22,10 +22,6 @@
             <div class="col-lg-9 col-md-8">
 
                 <style>
-                    .activeclass {
-                        background-color: #e62d29;
-                        color: #fff !important;
-                    }
 
                     .contactForm input[type="radio"] {
                         height: 15px !important;
@@ -35,8 +31,8 @@
                         padding: 12px 0;
                     }
 
-                    .accountInfo .list strong {
-                        display: block;
+                    .accountInfo .list label {
+                        font-weight: 500;
                     }
                 </style>
 
@@ -103,81 +99,103 @@
 
                         {{-- Name --}}
 
-                        <div class="row">   
-                            <div class="col-md-6 col-lg-6">
+ 
+                            
                                 <div class="list borderBottom">
-                                            <strong>Name</strong>
-                                            {{ $user->name ?? '-' }}
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>First Name</label>
+                                            <div>{{ $user->name ?? '-' }}</div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>Last Name</label>
+                                            <div class="">
+                                                {{ $user->name ?? '-' }}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Last Name</label>
-                                <div class="borderBottom mt-2">
-                                    {{ $user->name ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Email</label>
-                                <div class="borderBottom">
-                                    {{ $user->email ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Phone Number</label>
-                                <div class="borderBottom">
-                                    {{ $user->company_phone ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Fax Number</label>
-                                <div class="borderBottom">
-                                    {{ $user->company_fax ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Company/Organization</label>
-                                <div class="borderBottom">
-                                    {{ $user->company_name ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Address</label>
-                                <div class="">
-                                    {{ $user->company_address ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>City/Town</label>
-                                <div class="">
-                                    {{ $user->city ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>State/Province</label>
-                                <div class="">
-                                    {{ $user->state ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Country</label>
-                                <div class="">
-                                    {{ $user->country ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Zip/Postal Code</label>
-                                <div class="">
-                                    {{ $user->zip ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
-                                <label>Package Type</label>
-                                <div class="">
-                                    {{ $user->package_type ?? 'Free' }}
-                                </div>
-                            </div>
-                        </div>
+                                 </div>
+                                 <div class="list borderBottom">
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>Email</label>
+                                            <div class="">
+                                                {{ $user->email ?? '-' }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>Company/Organization</label>
+                                            <div class="">
+                                                {{ $user->company_name ?? '-' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="list borderBottom">
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>Phone Number</label>
+                                            <div class="">
+                                                {{ $user->company_phone ?? '-' }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>Fax Number</label>
+                                            <div class="">
+                                                {{ $user->company_fax ?? '-' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="list borderBottom">
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>Address</label>
+                                            <div class="">
+                                                {{ $user->company_address ?? '-' }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>City/Town</label>
+                                            <div class="">
+                                                {{ $user->city ?? '-' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="list borderBottom">
+                                    <div class="row">
+                                         <div class="col-md-6 col-lg-6">
+                                            <label>State/Province</label>
+                                            <div class="">
+                                                {{ $user->state ?? '-' }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>Country</label>
+                                            <div class="">
+                                                {{ $user->country ?? '-' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="list borderBottom">
+                                    <div class="row">
+                                         <div class="col-md-6 col-lg-6">
+                                            <label>Zip/Postal Code</label>
+                                            <div class="">
+                                                {{ $user->zip ?? '-' }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                            <label>Package Type</label>
+                                            <div class="">
+                                                {{ $user->package_type ?? 'Free' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+
 
 
                     </div>
