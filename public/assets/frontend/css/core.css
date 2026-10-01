@@ -544,8 +544,8 @@ p.MsoNormal br {
 .headerSettingsLinks {
 	display: none;
 	border: 1px solid #e62d29;
-	width: 250px;
-	max-width: 250px;
+	width: 190px;
+	max-width: 190px;
 	position: absolute;
 	right: 0px;
 	z-index: 99;
@@ -720,4 +720,10 @@ input.form-control-file {
 .homeBanner.smallPadding {
 	padding: 50px 0px;
 	text-align: center;
+}
+
+.templatesBlock .tab-content .tab-pane {
+    max-height: 1228px;
+    overflow: hidden;
+    overflow-y: scroll;
 }
