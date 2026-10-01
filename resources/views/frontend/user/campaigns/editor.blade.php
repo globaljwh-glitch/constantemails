@@ -67,7 +67,7 @@
                 <div class="col-md-7">
 
                     <input
-                        type="text"
+                        type="email" multiple 
                         name="additional_recipients"
                         class="form-control"
                         value="{{ old('additional_recipients',$campaign->additional_recipients) }}">
