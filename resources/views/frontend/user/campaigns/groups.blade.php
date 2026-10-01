@@ -9,8 +9,7 @@
     </div>
 
     <p class="mt-4">
-        Pick the Contact Group(s) you would like to send your Email to.
-        <strong>*If you have no Contact Groups, please create one.</strong>
+        Pick the Contact Group(s) you would like to send your Email to: *If you have no Contact Groups, please create one.
     </p>
 
     <form method="POST"
@@ -84,7 +83,7 @@
                     </td>
                     <td>
 
-                        {{ $group->created_at->format('M d, Y') }}
+                        {{ $group->created_at->timezone('America/New_York')->format('d M Y, h:i A') }}
 
                     </td>
 

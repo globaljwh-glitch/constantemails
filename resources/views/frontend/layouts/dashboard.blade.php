@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="contentContainer smallContainer">
+<section class="contentContainer">
     <div class="container">
 
         <div class="row">

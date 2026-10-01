@@ -65,7 +65,9 @@ Route::get('/email/click/{recipient}', [CampaignController::class, 'click'])
 Route::get('/email/open/{recipient}', [CampaignController::class, 'trackOpen'])
     ->name('email.track.open');
 
-
+Route::get('/what-if-excel', function () {
+    return view('frontend.user.contacts.whatIfExcel');
+})->name('whatif.excel');
 Route::get('/validate-email', [ContactController::class, 'verify_email'])
     ->name('email.verification');
 Route::post('/validate-email', [ContactController::class, 'PostVerify'])

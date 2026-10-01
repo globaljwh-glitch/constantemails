@@ -9,8 +9,8 @@
     </div>
 
     <p class="mt-4">
-        Decide when you want to send your email. You may send it immediately or
-        schedule it for a later date and time.
+        Decide when you want to send your emails. You may choose to send it now, or if you prefer it, you may schedule its delivery.<br>
+        This comes in handy when you are planning an event or have thought of a specific date to send your message.
     </p>
 
     <form action="{{ route('user.campaigns.send.store', $campaign) }}" method="POST">

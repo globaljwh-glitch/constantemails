@@ -16,7 +16,7 @@
     </p>
 
     <p>
-        <a href="{{ route('verify.email', $user->verification_token) }}"
+        <a href="{{ route('verify.email', ['token' => $user->verification_token]) }}"
            style="display:inline-block;
                   padding:12px 25px;
                   background:#ed2929;
