@@ -183,11 +183,19 @@
 
                                                     {{-- TEMPLATE NAME --}}
                                                     <td
-                                                        width="80%"
+                                                        width="50%"
                                                         colspan="2"
                                                         class="arial_12_000_b"
                                                     >
                                                         Template Name
+                                                    </td>
+
+                                                    <td
+                                                        width="35%"
+                                                        colspan="2"
+                                                        class="arial_12_000_b"
+                                                    >
+                                                        Created Date
                                                     </td>
 
 
@@ -233,12 +241,22 @@
                                                         ================================================== --}}
 
                                                         <td
-                                                            width="80%"
+                                                            width="50%"
                                                             colspan="2"
                                                             class="arial_11_000"
                                                         >
 
                                                             {{ $template->template_title }}
+
+                                                        </td>
+
+                                                        <td
+                                                            width="35%"
+                                                            colspan="2"
+                                                            class="arial_11_000"
+                                                        >
+
+                                                            {{ $template->created_at->timezone('America/New_York')->format('d M Y, h:i A') }}
 
                                                         </td>
 

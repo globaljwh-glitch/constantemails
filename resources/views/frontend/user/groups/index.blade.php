@@ -73,8 +73,8 @@
                     <th>Group Category</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Number of Contacts</th>
-                    <th class="text-center">Edit</th>
-                    <th class="text-center">Contacts</th>
+                    <th class="text-center">Edit Group</th>
+                    <th class="text-center">View Contacts</th>
                 </tr>
             </thead>
 
