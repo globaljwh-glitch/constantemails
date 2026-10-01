@@ -34,6 +34,11 @@
                     .accountInfo .list label {
                         font-weight: 500;
                     }
+                    .packageDetailBox {
+                        border: 1px solid #e2e2e2;
+                        padding: 15px;
+                        border-radius: 8px;
+                    }
                 </style>
 
                 <div class="acoountRightSection">
@@ -56,38 +61,34 @@
                     {{-- Package Information --}}
                     <div class="mt-4">
                         <div class="row">
-                            <div class="col-md-6 col-lg-4">
-                                <div class="packageDetailBox"> 
+                            <div class="col-md-12">
+                                <div class="packageDetailBox mb-3"> 
 
-                                    <h3>Package Type</h3>
-
-                                    <h4><strong>
-                                        {{ $user->package_type ?? 'Free' }}
-                                    </strong></h4>
+                                    <h3 class="mb-0">Package Type : <span class="text-red"><strong>{{ $user->package_type ?? 'Free' }}</strong></span></h3>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-4">
+                            <div class="col-md-6 col-lg-6">
                                 <div class="packageDetailBox"> 
 
-                                    <h3>Contact Remaining</h3>
+                                    <h4>Contact Remaining</h4>
 
-                                    <h4><strong>{{ $only_mail ?? 0 }}</strong>
-                            contacts remaining to upload.</h4>
-                                    <div class="progress">
+                                    <h6><span class="text-red"><strong>{{ $only_mail ?? 0 }}</strong></span>
+                            contacts remaining to upload.</h6>
+                                    <div class="progress mb-2">
                                       <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
 
                                     <a href="{{ route('pricing') }}" class="custom-btn1 transparent-btn">Add more emails?</a>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-4">
+                            <div class="col-md-6 col-lg-6">
                                 <div class="packageDetailBox"> 
 
-                                    <h3>Images Storage</h3>
+                                    <h4>Images Storage</h4>
 
-                                    <h4><strong>{{ $image_storage_used ?? 0 }}MB/ <strong>{{ $image_storage_limit ?? 0 }}MB</strong></strong>
-                            image gallery space.</h4>
-                                    <div class="progress">
+                                    <h6><span class="text-red"><strong>{{ $image_storage_used ?? 0 }}MB/ <strong>{{ $image_storage_limit ?? 0 }}MB</strong></strong></span>
+                            image gallery space.</h6>
+                                    <div class="progress mb-2">
                                       <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
 
