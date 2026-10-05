@@ -16,11 +16,31 @@
         Here you can manage all contacts in this group.
     </p>
 
-    <div class="text-right mb-3">
+    <!-- <div class="text-right mb-3">
         <a href="{{ route('user.contacts.create', ['group_id' => $group->id]) }}"
            class="btn btn-primary">
             Add Contact
         </a>
+    </div> -->
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <div>
+        <a href="{{ url()->previous() }}"
+        class="btn btn-default orangeBg text-white">
+            Back
+        </a>
+</div>
+<div>
+        <a href="{{ route('user.campaigns.create') }}"
+        class="btn btn-primary">
+            Create Campaign
+        </a>
+        <a href="{{ route('user.contacts.create', ['group_id' => $group->id]) }}"
+        class="btn btn-primary">
+            Add Contact
+        </a>
+</div>
     </div>
 
     <form method="POST">
@@ -122,9 +142,7 @@
 
     {{ $contacts->links() }}
 
-    <a href="{{ url()->previous() }}" class="btn btn-default orangeBg text-white">
-        Back
-    </a>
+    
 </div>
 
 <script>

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\RegistrationPackage;
 use App\Models\Payment;
+use App\Mail\PasswordChangedMail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -102,6 +105,13 @@ class UserController extends Controller
         $user->update([
             'password' => Hash::make($request->password),
         ]);
+
+        // Mail::to($user->email)->send(
+        //     new PasswordChangedMail($user)
+        // );
+        Mail::to($user->email)->queue(
+            new PasswordChangedMail($user)
+        );
 
         return redirect()
             ->route('user.account.password')

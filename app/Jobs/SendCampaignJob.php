@@ -160,12 +160,12 @@ class SendCampaignJob implements ShouldQueue
                             ['contact' => $contact->id]
                         );
 
-                        $footer = view('frontend.partials.campaign-footer', [
-                            'footer' => $campaign->footer ?? null,
-                            'unsubscribeUrl' => $unsubscribeUrl,
-                        ])->render();
+                        // $footer = view('frontend.partials.campaign-footer', [
+                        //     'footer' => $campaign->footer ?? null,
+                        //     'unsubscribeUrl' => $unsubscribeUrl,
+                        // ])->render();
 
-                        $html .= $footer;
+                        // $html .= $footer;
 
                         // Converting links to tracking urls 
                         $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
