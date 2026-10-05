@@ -231,7 +231,6 @@ class SendCampaignJob implements ShouldQueue
                                     'updated_at' => now(),
                                 ]);
 
-                            session()->forget('campaign_draft');
                                 
                             /*
                             |--------------------------------------------------------------------------

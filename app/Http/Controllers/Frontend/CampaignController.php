@@ -600,6 +600,8 @@ class CampaignController extends Controller
         SendCampaignJob::dispatch($campaign)
             ->delay($scheduledAt);
 
+        session()->forget('campaign_draft');
+
         \Log::info('Campaign scheduled', [
             'campaign_id' => $campaign->id,
             'scheduled_at' => $scheduledAt->toDateTimeString(),
