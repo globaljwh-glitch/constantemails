@@ -527,6 +527,8 @@ class CampaignController extends Controller
             // Dispatch immediately
             SendCampaignJob::dispatch($campaign);
 
+            session()->forget('campaign_draft');
+            
             return redirect()
                 ->route('user.campaigns.index')
                 ->with(
