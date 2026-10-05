@@ -106,12 +106,12 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Mail::to($user->email)->send(
-        //     new PasswordChangedMail($user)
-        // );
-        Mail::to($user->email)->queue(
+        Mail::to($user->email)->send(
             new PasswordChangedMail($user)
         );
+        // Mail::to($user->email)->queue(
+        //     new PasswordChangedMail($user)
+        // );
 
         return redirect()
             ->route('user.account.password')
