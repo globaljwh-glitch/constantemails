@@ -68,7 +68,7 @@
             </button>
 
         </div>
-        <div class="tableOuterBox">
+
         <table class="table table-bordered table-hover">
 
             <thead>
@@ -137,7 +137,7 @@
             </tbody>
 
         </table>
-        </div>
+
     </form>
 
     {{ $contacts->links() }}

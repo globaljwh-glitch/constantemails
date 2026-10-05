@@ -123,7 +123,7 @@ Remember, this will not be displayed in your email. This is the name with which 
             {{-- Attachment --}}
             <div class="row mb-4">
 
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <strong>Attach a file here (optional):</strong>
                     <small>You may attach a file along with your email if you wish to.</small>
                 </div>
@@ -190,7 +190,7 @@ Remember, this will not be displayed in your email. This is the name with which 
             {{-- Save Template --}}
             <div class="row mb-4">
 
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <strong>Would you like to save this template to reuse it in the future?</strong>
                 </div>
 
@@ -225,7 +225,7 @@ Remember, this will not be displayed in your email. This is the name with which 
             {{-- Campaign Footer --}}
             <div class="row mb-5">
 
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <strong>You may choose to display the Constant Emails logo a the botom of the email. Showing our logo helps your recipients trust your email and not discard it.</strong>
                 </div>
 
