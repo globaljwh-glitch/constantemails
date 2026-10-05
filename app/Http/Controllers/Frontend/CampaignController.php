@@ -54,6 +54,9 @@ class CampaignController extends Controller
             'save_option'     => 1,
         ]);
 
+        session()->put('campaign_draft.email_subject', $validated['email_subject']);
+        session()->put('campaign_draft.email_title', $validated['email_title']);
+
         return redirect()->route('user.campaigns.groups', $campaign);
     }
 
@@ -119,6 +122,8 @@ class CampaignController extends Controller
 
         $campaign->groups()->sync($request->group_ids);
 
+        session()->put('campaign_draft.group_ids', $request->group_ids);
+
         return redirect()->route(
             'user.campaigns.templates',
             $campaign
@@ -158,6 +163,9 @@ class CampaignController extends Controller
                 'template_type' => 'default',
             ]);
 
+            session()->put('campaign_draft.template_id', $id);
+            session()->put('campaign_draft.template_type', 'default');
+
         } else {
 
             // User-created template
@@ -165,6 +173,9 @@ class CampaignController extends Controller
                 'template_id' => $id,
                 'template_type' => 'user',
             ]);
+
+            session()->put('campaign_draft.template_id', $id);
+            session()->put('campaign_draft.template_type', 'user');
         }
 
         return redirect()->route('user.campaigns.editor', $campaign);

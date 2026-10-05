@@ -58,7 +58,7 @@
 
                             <div class="form-check">
 
-                                <input
+                                <!-- <input
                                     class="form-check-input"
                                     type="radio"
                                     name="template_type"
@@ -66,6 +66,30 @@
                                     id="default{{ $template->id }}"
 
                                     {{ $campaign->template_id == $template->id ? 'checked' : '' }}
+                                > -->
+
+                                @php
+                                    $selectedTemplateId = old(
+                                        'template_id',
+                                        $campaign->template_id ?? session('campaign_draft.template_id')
+                                    );
+
+                                    $selectedTemplateType = old(
+                                        'template_type',
+                                        $campaign->template_type ?? session('campaign_draft.template_type')
+                                    );
+                                @endphp
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="template_type"
+                                    value="default_{{ $template->id }}"
+                                    id="default{{ $template->id }}"
+                                    {{ $selectedTemplateType === 'default'
+                                        && (int) $selectedTemplateId === (int) $template->id
+                                        ? 'checked'
+                                        : '' }}
                                 >
 
                                 <label class="form-check-label"
@@ -119,12 +143,36 @@
 
                             <div class="form-check">
 
+                                <!-- <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="template_type"
+                                    value="user_{{ $template->id }}"
+                                    id="user{{ $template->id }}"
+                                > -->
+
+                                @php
+                                    $selectedTemplateId = old(
+                                        'template_id',
+                                        $campaign->template_id ?? session('campaign_draft.template_id')
+                                    );
+
+                                    $selectedTemplateType = old(
+                                        'template_type',
+                                        $campaign->template_type ?? session('campaign_draft.template_type')
+                                    );
+                                @endphp
+
                                 <input
                                     class="form-check-input"
                                     type="radio"
                                     name="template_type"
                                     value="user_{{ $template->id }}"
                                     id="user{{ $template->id }}"
+                                    {{ $selectedTemplateType === 'user'
+                                        && (int) $selectedTemplateId === (int) $template->id
+                                        ? 'checked'
+                                        : '' }}
                                 >
 
                                 <label class="form-check-label"

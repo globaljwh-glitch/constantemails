@@ -73,7 +73,7 @@
                             name="email_subject"
                             class="form-control"
                             maxlength="255"
-                            value="{{ old('subject', $campaign->subject ?? '') }}">
+                            value="{{ old('email_subject', $campaign->email_subject ?? session('campaign_draft.email_subject', '')) }}">
                     </div>
 
                     <div class="col-lg-9 offset-lg-3 mt-2">
@@ -121,7 +121,7 @@
                             name="email_title"
                             class="form-control"
                             maxlength="255"
-                            value="{{ old('campaign_name', $campaign->campaign_name ?? '') }}">
+                            value="{{ old('email_title', $campaign->email_title ?? session('campaign_draft.email_title', '')) }}">
                     </div>
 
                     <div class="col-lg-9 offset-lg-3 mt-2">

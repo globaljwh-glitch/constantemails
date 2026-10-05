@@ -12,6 +12,8 @@
         Pick the Contact Group(s) you would like to send your Email to: *If you have no Contact Groups, please create one.
     </p>
 
+    <a href="{{ route('user.groups.create') }}" class="btn btn-default orangeBg text-white">Create a Group</a>
+
     <form method="POST"
           action="{{ route('user.campaigns.groups.store',$campaign) }}" id="templateForm">
 
@@ -63,10 +65,19 @@
 
                     <td>
 
-                        <input type="checkbox"
+                        <!-- <input type="checkbox"
                                name="group_ids[]"
                                value="{{ $group->id }}"
-                               {{ $campaign->groups->contains($group->id) ? 'checked' : '' }}>
+                               {{ $campaign->groups->contains($group->id) ? 'checked' : '' }}> -->
+
+                        <input
+                            type="checkbox"
+                            name="group_ids[]"
+                            value="{{ $group->id }}"
+                            {{ in_array(
+                                $group->id,
+                                old('group_ids', $campaign->groups->pluck('id')->toArray() ?: session('campaign_draft.group_ids', []))
+                            ) ? 'checked' : '' }}>
 
                     </td>
 
