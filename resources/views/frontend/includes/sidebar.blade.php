@@ -1,7 +1,13 @@
+@php
+    // Store the check in a variable to keep the HTML clean
+    $isContactslistActive = request()->routeIs('user.groups.*') || request()->routeIs('user.contacts.*');
+    $isUserAccountActive = request()->routeIs('user.account.*') || request()->routeIs('user.dashboard');
+@endphp
 <div class="settingSection1">
     <ul class="myaccountList">
-        <li class="account-menu-item menu-header {{ (request()->routeIs('user.account.*') || request()->routeIs('user.dashboard')) ? 'active' : '' }}"><a href="javascript:void(0);" class="positionRelative"><i class="fa fa-solid fa-user"></i> My Account <span><i class="fa fa-plus menu-toggle-icon" aria-hidden="true"></i></span></a>
-            <div class="menu-content" id="accountMenuContent" style="display: {{ (request()->routeIs('user.account.*') || request()->routeIs('user.dashboard')) ? 'block' : 'none' }};">
+        <li class="account-menu-item menu-header {{ $isUserAccountActive ? 'active' : '' }}"><a href="javascript:void(0);" class="positionRelative"><i class="fa fa-solid fa-user"></i> My Account <span>
+            <i class="fa {{ $isUserAccountActive ? 'fa-minus' : 'fa-plus' }} menu-toggle-icon" aria-hidden="true"></i></span></a>
+            <div class="menu-content" id="accountMenuContent" style="display: {{ $isUserAccountActive ? 'block' : 'none' }};">
                 <ul>
                     <li class="{{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
                         <a href="{{ route('user.dashboard') }}"
@@ -36,12 +42,12 @@
                 </ul>
             </div>
         </li>
-        <li class="account-menu-item {{ request()->routeIs('user.contacts.import') ? 'active' : '' }}">
+        <!-- <li class="account-menu-item {{ request()->routeIs('user.contacts.import') ? 'active' : '' }}">
             <a href="{{ route('user.contacts.import') }}" class="{{ request()->routeIs('user.contacts.import') ? 'activeclass' : '' }}"><i class="fa fa-database" aria-hidden="true"></i> Import Contacts</a>
-        </li>
-        <li class="account-menu-item {{ request()->routeIs('user.contacts.bad-report') ? 'active' : '' }}">
+        </li> -->
+        <!-- <li class="account-menu-item {{ request()->routeIs('user.contacts.bad-report') ? 'active' : '' }}">
             <a href="{{ route('user.contacts.bad-report') }}" class="{{ request()->routeIs('user.contacts.bad-report*') ? 'activeclass' : '' }}"><i class="fa fa-solid fa-user"></i> Bad Contacts Report</a>
-        </li>
+        </li> -->
         <li class="account-menu-item {{ request()->routeIs('user.campaigns.*') ? 'active' : '' }}">
             <a href="{{ route('user.campaigns.create') }}" class="{{ request()->routeIs('user.campaigns.*') ? 'activeclass' : '' }}"><i class="fa fa-envelope" aria-hidden="true"></i> Create An Email Campaign</a>
         </li>
@@ -51,23 +57,14 @@
         <li class="account-menu-item {{ request()->routeIs('user.saved-templates.*') ? 'active' : '' }}">
             <a href="{{ route('user.saved-templates.index') }}" class="{{ request()->routeIs('user.saved-templates.*') ? 'activeclass' : '' }}"><i class="fa fa-folder" aria-hidden="true"></i> Manage Custom Templates</a>
         </li>
-        <li class="account-menu-item {{ request()->routeIs('user.autoresponders.index') ? 'active' : '' }}">
-            <a href="{{ route('user.autoresponders.index') }}" class="{{ request()->routeIs('user.autoresponders.index') ? 'activeclass' : '' }}"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> My Auto Responders</a>
-        </li>
-        <li class="account-menu-item {{ request()->routeIs('user.autoresponders.create') ? 'active' : '' }}">
-            <a href="{{ route('user.autoresponders.create') }}" class="{{ request()->routeIs('user.autoresponders.create') ? 'activeclass' : '' }}"><i class="fa fa-calendar" aria-hidden="true"></i> Add an Auto Responder</a>
-        </li>
-        <li class="account-menu-item {{ request()->routeIs('user.image-gallery.*') ? 'active' : '' }}">
-            <a href="{{ route('user.image-gallery.index') }}" class="{{ request()->routeIs('user.image-gallery.*') ? 'activeclass' : '' }}"><i class="fa fa-picture-o" aria-hidden="true"></i> My Image Gallery</a>
-        </li>
-        <li class="account-menu-item menu-header {{ (request()->routeIs('user.groups.*') || request()->routeIs('user.contacts.*')) ? 'active' : '' }}">
+        <li class="account-menu-item menu-header {{ $isContactslistActive ? 'active' : '' }}">
             <a href="javascript:void(0);" class="positionRelative">
                 <i class="fa fa-address-book" aria-hidden="true"></i> Contacts List 
-                <span><i class="fa fa-plus menu-toggle-icon" aria-hidden="true"></i></span>
+                <span><i class="fa {{ $isContactslistActive ? 'fa-minus' : 'fa-plus' }} menu-toggle-icon" aria-hidden="true"></i></span>
             </a>
     
             <!-- Change display: none; to dynamic PHP condition below -->
-            <div class="menu-content" id="contactsMenuContent" style="display: {{ (request()->routeIs('user.groups.*') || request()->routeIs('user.contacts.*')) ? 'block' : 'none' }};">
+            <div class="menu-content" id="contactsMenuContent" style="display: {{ $isContactslistActive? 'block' : 'none' }};">
                 <ul>
                     <li class="{{ request()->routeIs('user.groups.index') ? 'active' : '' }}">
                         <a href="{{ route('user.groups.index') }}" class="{{ request()->routeIs('user.groups.index') ? 'activeclass' : '' }}">Manage your Contact List</a>
@@ -84,6 +81,16 @@
                 </ul>
             </div>
         </li>
+        <li class="account-menu-item {{ request()->routeIs('user.autoresponders.index') ? 'active' : '' }}">
+            <a href="{{ route('user.autoresponders.index') }}" class="{{ request()->routeIs('user.autoresponders.index') ? 'activeclass' : '' }}"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> My Auto Responders</a>
+        </li>
+        <li class="account-menu-item {{ request()->routeIs('user.autoresponders.create') ? 'active' : '' }}">
+            <a href="{{ route('user.autoresponders.create') }}" class="{{ request()->routeIs('user.autoresponders.create') ? 'activeclass' : '' }}"><i class="fa fa-calendar" aria-hidden="true"></i> Add an Auto Responder</a>
+        </li>
+        <li class="account-menu-item {{ request()->routeIs('user.image-gallery.*') ? 'active' : '' }}">
+            <a href="{{ route('user.image-gallery.index') }}" class="{{ request()->routeIs('user.image-gallery.*') ? 'activeclass' : '' }}"><i class="fa fa-picture-o" aria-hidden="true"></i> My Image Gallery</a>
+        </li>
+        
         <li class="account-menu-item {{ request()->routeIs('user.mailing-list') ? 'active' : '' }}">
             <a href="{{ route('user.mailing-list.store') }}" class="{{ request()->routeIs('user.mailing-list') ? 'activeclass' : '' }}"><i class="fa fa-handshake-o" aria-hidden="true"></i> Join Mailing List code</a>
         </li>
