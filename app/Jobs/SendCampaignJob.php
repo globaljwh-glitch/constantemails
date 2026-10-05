@@ -174,6 +174,15 @@ class SendCampaignJob implements ShouldQueue
 
                         if (!$recipient) {
                         }else{
+
+                            // New footer part
+                            $newfooter = $this->buildEmailFooter(
+                                $campaign,
+                                $recipient
+                            );
+
+                            $html .= $newfooter;
+                            
                             $html = $this->convertLinks(
                                 $html,
                                 $recipient->id
@@ -340,5 +349,338 @@ class SendCampaignJob implements ShouldQueue
         libxml_clear_errors();
 
         return $html;
+    }
+
+    private function buildEmailFooter($campaign, $recipient): string
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Company information
+        |--------------------------------------------------------------------------
+        | Change these according to where you store your company settings.
+        |--------------------------------------------------------------------------
+        */
+
+        $companyAddress = config('app.company_address', '');
+        $city           = config('app.company_city', '');
+        $state          = config('app.company_state', '');
+        $zip             = config('app.company_zip', '');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sender
+        |--------------------------------------------------------------------------
+        */
+
+        $fromEmail = $campaign->from_email ?? config('mail.from.address');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Recipient
+        |--------------------------------------------------------------------------
+        */
+
+        $recipientEmail = $recipient->email;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Unsubscribe URL
+        |--------------------------------------------------------------------------
+        */
+
+        $unsubscribeUrl = route('campaign.unsubscribe', [
+            'campaign' => $campaign->id,
+            'contact'  => $recipient->contact_id,
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Forward to friend
+        |--------------------------------------------------------------------------
+        */
+
+        $forwardUrl = route('campaign.forward', [
+            'campaign' => $campaign->id,
+            'contact'  => $recipient->contact_id,
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Privacy Policy
+        |--------------------------------------------------------------------------
+        */
+
+        $privacyUrl = route('privacy.policy');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update Profile
+        |--------------------------------------------------------------------------
+        */
+
+        $profileUrl = route('user.profile');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Tracking pixel
+        |--------------------------------------------------------------------------
+        */
+
+        $trackingUrl = route('campaign.tracking', [
+            'campaign' => $campaign->id,
+            'contact'  => $recipient->contact_id,
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Footer
+        |--------------------------------------------------------------------------
+        */
+
+        $footer = '';
+
+        $footer .= '
+            <table width="680"
+                border="0"
+                align="center"
+                cellpadding="0"
+                cellspacing="0"
+                style="
+                        text-align:left;
+                        padding:5px 10px;
+                        background:#f9f9f9;
+                        border-radius:10px;
+                "
+                class="email_temp_footer">
+            ';
+
+        /*
+        |--------------------------------------------------------------------------
+        | Campaign footer enabled
+        |--------------------------------------------------------------------------
+        */
+
+        if ($campaign->campaign_footer == 1) {
+
+            $footer .= '
+            <tr>
+
+                <td>
+
+                    <div style="
+                        font-size:10px !important;
+                        padding:0 !important;
+                        line-height:14px !important;
+                        margin:0 !important;
+                    ">
+                        This email was sent to
+                        <a href="mailto:' . e($recipientEmail) . '">
+                            ' . e($recipientEmail) . '
+                        </a>
+                    </div>
+
+                    <div style="
+                        font-size:10px !important;
+                        padding:0 !important;
+                        line-height:14px !important;
+                        margin:0 !important;
+                    ">
+                        By
+                        <a href="mailto:' . e($fromEmail) . '">
+                            ' . e($fromEmail) . '
+                        </a>
+                    </div>
+
+                    <div style="
+                        font-size:10px !important;
+                        padding:0 !important;
+                        line-height:14px !important;
+                        margin:0 !important;
+                    ">
+
+                        <a href="' . e($unsubscribeUrl) . '">
+                            Unsubscribe
+                        </a>
+
+                        |
+
+                        <a href="' . e($forwardUrl) . '">
+                            Forward to friend
+                        </a>
+
+                        |
+
+                        <a href="' . e($privacyUrl) . '">
+                            Privacy policy
+                        </a>
+
+                        |
+
+                        <a href="' . e($profileUrl) . '">
+                            Update Profile
+                        </a>
+
+                        <img
+                            src="' . e($trackingUrl) . '"
+                            width="1"
+                            height="1"
+                            style="display:block;border:0;"
+                            alt=""
+                        >
+
+                    </div>
+
+                    <div style="
+                        font-size:10px !important;
+                        padding:0 !important;
+                        line-height:14px !important;
+                    ">
+                        ' . e($companyAddress) . ' |
+                        ' . e($city) . ' |
+                        ' . e($state) . ' |
+                        ' . e($zip) . '
+                    </div>
+
+                </td>
+
+                <td align="center" style="font-size:9px;">
+
+                    <div style="
+                        font-size:9px !important;
+                        padding:0 !important;
+                        margin:1px !important;
+                    ">
+                        <b>Powered by</b>
+                    </div>
+
+                    <div style="
+                        font-size:9px !important;
+                        padding:0 !important;
+                        margin:2px !important;
+                    ">
+
+                        <a href="https://constantemails.com">
+
+                            <img
+                                src="' . asset('images/logo_email.gif') . '"
+                                alt="Constant Emails"
+                                border="0"
+                            >
+
+                        </a>
+
+                    </div>
+
+                    <div style="
+                        font-size:9px !important;
+                        padding:0 !important;
+                        margin:1px !important;
+                    ">
+                        <b style="color:#75BE06;">
+                            Premiere Email Marketing Engine
+                        </b>
+                    </div>
+
+                </td>
+
+            </tr>
+            ';
+
+        } else {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Footer disabled
+            |--------------------------------------------------------------------------
+            */
+
+            $footer .= '
+            <tr>
+
+                <td
+                    align="center"
+                    width="620"
+                    style="font-size:10px;"
+                >
+
+                    This email was sent to
+
+                    <a href="mailto:' . e($recipientEmail) . '">
+                        ' . e($recipientEmail) . '
+                    </a>
+
+                    by
+
+                    <a href="mailto:' . e($fromEmail) . '">
+                        ' . e($fromEmail) . '
+                    </a>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td
+                    align="center"
+                    style="font-size:10px;"
+                >
+
+                    <a href="' . e($unsubscribeUrl) . '">
+                        Unsubscribe
+                    </a>
+
+                    |
+
+                    <a href="' . e($forwardUrl) . '">
+                        Forward to friend
+                    </a>
+
+                    |
+
+                    <a href="' . e($privacyUrl) . '">
+                        Privacy policy
+                    </a>
+
+                    |
+
+                    <a href="' . e($profileUrl) . '">
+                        Update Profile / Email address
+                    </a>
+
+                    <img
+                        src="' . e($trackingUrl) . '"
+                        width="1"
+                        height="1"
+                        style="display:inline;border:0;"
+                        alt=""
+                    >
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td
+                    align="center"
+                    width="620"
+                    style="font-size:10px;"
+                >
+
+                    ' . e($companyAddress) . ' |
+                    ' . e($city) . ' |
+                    ' . e($state) . ' |
+                    ' . e($zip) . '
+
+                </td>
+
+            </tr>
+            ';
+        }
+
+        $footer .= '</table>';
+
+        return $footer;
     }
 }
