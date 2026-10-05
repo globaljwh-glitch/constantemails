@@ -399,9 +399,12 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        $forwardUrl = route('campaign.forward', [
-            'campaign' => $campaign->id,
-            'contact'  => $recipient->contact_id,
+        // $forwardUrl = route('campaign.forward', [
+        //     'campaign' => $campaign->id,
+        //     'contact'  => $recipient->contact_id,
+        // ]);
+        $forwardUrl = URL::signedRoute('forward', [
+            'contact' => $contact->id,
         ]);
 
         /*
@@ -410,7 +413,7 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        $privacyUrl = route('privacy.policy');
+        $privacyUrl = route('privacy');
 
         /*
         |--------------------------------------------------------------------------
@@ -418,7 +421,7 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        $profileUrl = route('user.profile');
+        $profileUrl = route('account.profile');
 
         /*
         |--------------------------------------------------------------------------
@@ -426,7 +429,7 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        $trackingUrl = route('campaign.tracking', [
+        $trackingUrl = route('email.track.click', [
             'campaign' => $campaign->id,
             'contact'  => $recipient->contact_id,
         ]);

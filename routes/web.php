@@ -60,6 +60,9 @@ Route::get('/managed-accounts', [HomeController::class, 'managedAccounts'])
 Route::get('/unsubscribe/{contact}', [ContactController::class, 'unsubscribe'])
     ->middleware('signed')
     ->name('unsubscribe');
+Route::get('/forward/{contact}', [ContactController::class, 'forward'])
+    ->middleware('signed')
+    ->name('forward');
 Route::get('/email/click/{recipient}', [CampaignController::class, 'click'])
     ->name('email.track.click');
 Route::get('/email/open/{recipient}', [CampaignController::class, 'trackOpen'])
