@@ -178,7 +178,7 @@ class SendCampaignJob implements ShouldQueue
                             // New footer part
                             $newfooter = $this->buildEmailFooter(
                                 $campaign,
-                                $recipient
+                                $recipient, $unsubscribeUrl
                             );
 
                             $html .= $newfooter;
@@ -351,7 +351,7 @@ class SendCampaignJob implements ShouldQueue
         return $html;
     }
 
-    private function buildEmailFooter($campaign, $recipient): string
+    private function buildEmailFooter($campaign, $recipient, $unsubscribeUrl): string
     {
         /*
         |--------------------------------------------------------------------------
@@ -388,10 +388,10 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        $unsubscribeUrl = route('campaign.unsubscribe', [
-            'campaign' => $campaign->id,
-            'contact'  => $recipient->contact_id,
-        ]);
+        // $unsubscribeUrl = route('campaign.unsubscribe', [
+        //     'campaign' => $campaign->id,
+        //     'contact'  => $recipient->contact_id,
+        // ]);
 
         /*
         |--------------------------------------------------------------------------
