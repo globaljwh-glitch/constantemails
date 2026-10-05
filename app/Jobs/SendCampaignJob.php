@@ -429,10 +429,12 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        $trackingUrl = route('email.track.click', [
-            'campaign' => $campaign->id,
-            'contact'  => $recipient->contact_id,
-        ]);
+        // $trackingUrl = route('email.track.click', [
+        //     'campaign' => $campaign->id,
+        //     'contact'  => $recipient->contact_id,
+        // ]);
+
+        $trackingUrl = '';
 
         /*
         |--------------------------------------------------------------------------
