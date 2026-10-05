@@ -52,7 +52,7 @@
     <div class="accountInfo">
 
         {{-- Login Information --}}
-        <div class="">
+        <div class="borderBottom">
 
             <div class="row">
                 <div class="col-lg-12">
@@ -107,7 +107,7 @@
         <form
             method="POST"
             action="{{ route('user.account.update') }}"
-            class="contactForm p-0"
+            class="contactForm"
         >
 
             @csrf
@@ -115,7 +115,7 @@
 
 
             {{-- Contact Information --}}
-            <div class="contactForm">
+            <div class="contactForm borderBottom">
 
                 <div class="row">
 
@@ -260,7 +260,7 @@
 
 
             {{-- Billing Information --}}
-            <div class="contactForm">
+            <div class="contactForm borderBottom">
 
                 <div class="row">
 
@@ -358,7 +358,7 @@
 
 
             {{-- Submit --}}
-            <div class="contactForm pt-3">
+            <div class="contactForm">
 
                 <div class="row">
 

@@ -1,0 +1,242 @@
+/*!
+ * Common CSS files
+ */
+@media (max-width: 1199px) {
+.contentContainer, .homeBanner, .callToAction, .callToAction02 {
+	padding: 80px 0 80px 0;
+}
+a.nav-link {
+	padding: 19px 17px 19px 17px !important;
+}
+.homeBanner h1 {
+	font-size: 43px;
+}
+.homeBanner .smallHeading {
+	font-size: 33px;
+}
+.homeBanner p {
+	font-size: 18px;
+}
+.contentBlock {
+	margin-top: 120px;
+}
+h2 {
+	font-size: 34px;
+	padding: 0 0 4px 0;
+}
+.callToAction02 {
+	font-size: 55px;
+}
+.ctaSmallHeading {
+	font-size: 27px;
+	padding: 11px 0 8px 0;
+}
+.ctaButton02 {
+	padding: 16px 35px 15px 35px;
+}
+.socialMediaIcon .socialIcon {
+	font-size: 19px !important;
+	width: 36px;
+	height: 36px;
+}
+#accordion .card-header {
+	font-size: 22px;
+	padding: 14px 0 7px 0;
+}
+#accordion .card {
+	padding: 0 0 5px 0;
+}
+.featureContentRight {
+	padding-left: 50px;
+}
+.featureContentLeft {
+	padding-right: 50px;
+}
+.col-Block {
+	width: 25% !important;
+	padding: 0px 15px;
+}
+}
+@media (max-width: 991px) {
+.navbar-toggler {
+	padding: 0.15rem 0.55rem;
+	margin: 7px 7px 7px 15px;
+	border: 1px solid #fff;
+}
+.navbar-toggler-icon {
+	display: block;
+	height: 2px;
+	background-color: #ffffff;
+	margin: 6px 0px;
+}
+a.nav-link {
+	padding: 10px !important;
+}
+.navbar-nav {
+	padding-bottom: 18px;
+}
+.bannerThumb {
+	display: none;
+}
+.imageThumb {
+	margin-bottom: 25px;
+	text-align: center;
+}
+.featureBlock {
+	padding-bottom: 22px;
+	margin-bottom: 40px;
+}
+.featureContentRight {
+	padding-left: 30px;
+}
+.featureContentLeft {
+	padding-right: 30px;
+}
+.col-Block {
+	width: 33% !important;
+	padding: 0px 15px;
+}
+.loginForm .imageThumb {
+	display: none;
+}
+.acoountRightSection {
+	padding-left: 20px;
+}
+}
+@media (max-width: 767px) {
+.contentContainer, .homeBanner, .callToAction, .callToAction02 {
+	padding: 40px 0 40px 0;
+}
+header {
+	padding: 18px 0 0 0;
+	text-align: center;
+}
+header .text-right {
+	text-align: center !important;
+}
+header .custom-btn1 {
+	margin: 0 5px;
+}
+.navbar {
+	margin-top: 22px;
+}
+.homeBanner h1 {
+	font-size: 30px;
+	line-height: 37px;
+}
+.homeBanner .smallHeading {
+	font-size: 24px;
+}
+.homeBanner p {
+	font-size: 16px;
+	line-height: 25px;
+	padding-left: 0px;
+}
+h2 {
+	font-size: 26px;
+	padding: 0 0 2px 0;
+}
+p {
+	font-size: 16px;
+	line-height: 26px;
+	margin-bottom: 12px;
+}
+.listing01 li {
+	font-size: 16px;
+	line-height: 23px;
+}
+.listing02 li {
+	font-size: 16px;
+	line-height: 23px;
+}
+.listing02 li a {
+	font-size: 18px;
+}
+.contentBlock {
+	margin-top: 40px;
+}
+#accordion .card-header {
+	padding: 14px 0 10px 0;
+	font-size: 22px;
+}
+#accordion .card-header a {
+	padding: 0 0 0 38px;
+	background: url(../images/icons/arrow-down.png) no-repeat 4px 5px;
+}
+#accordion .card-header a.collapsed {
+	background: url(../images/icons/arrow-up.png) no-repeat 4px 5px;
+}
+#accordion .card-body {
+	padding: 0 10px 0 40px;
+}
+.callToAction p {
+	font-size: 23px;
+	padding: 0 10px;
+	line-height: 30px;
+}
+.ctaButton {
+	font-size: 20px;
+}
+.callToAction02 {
+	font-size: 35px;
+}
+.ctaSmallHeading {
+	font-size: 23px;
+	padding: 7px 0 20px 0;
+}
+.ctaButton02 {
+	padding: 14px 30px 13px 30px;
+}
+.logo {
+	max-width: 361px;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+.featureContentRight {
+	padding-left: 0px;
+}
+.featureContentLeft {
+	padding-right: 0px;
+}
+.contactForm input, .contactForm textarea {
+	margin-bottom: 20px !important;
+}
+.col-Block {
+	width: 50% !important;
+	padding: 0px 15px;
+}
+.templatesBlock .nav-tabs .nav-item {
+	margin: 0 7px 0 0px;
+	min-width: inherit;
+}
+.templatesBlock .nav-tabs .nav-link {
+	padding: 15px 12px 14px 12px !important;
+	font-size: 16px;
+}
+.acoountRightSection {
+	padding: 30px 0 0 0px;
+}
+}
+@media (max-width: 575px) {
+footer {
+	text-align: center;
+}
+.col-Block {
+	width: 100% !important;
+	padding: 0px 15px;
+}
+.forgot {
+	text-align: left;
+	padding-top: 0px;
+}
+.accountInfo {
+	line-height: 30px;
+	margin-top: 35px;
+}
+}
+@media (max-width: 520px) {
+.templatesBlock .nav-tabs .nav-item {
+	width: 50%;
+	margin: 0px;
+}
+}

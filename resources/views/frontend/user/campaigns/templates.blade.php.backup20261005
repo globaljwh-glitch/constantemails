@@ -35,71 +35,69 @@
         <input type="hidden" name="campaign_id" value="{{ $campaign->id }}">
 
         <h4 class="mb-3">Default Templates</h4>
-        <div class="defaultTemplateOuterBox">
-            <div class="row">
 
-                @forelse($defaultTemplates as $template)
+        <div class="row">
 
-                    <div class="col-lg-4 col-md-6 mb-4">
+            @forelse($defaultTemplates as $template)
 
-                        <div class="card h-100">
+                <div class="col-md-4 mb-4">
 
-                            @if($template->thumbnail)
-                                <img src="{{ asset('storage/'.$template->thumbnail) }}"
-                                    class="card-img-top"
-                                    style="height:180px;object-fit:cover;">
-                            @else 
-                                <img src="{{ asset('assets/frontend/images/default-template.png') }}"
-                                    class="card-img-top"
-                                    style="height:180px;object-fit:cover;">
-                            @endif
+                    <div class="card h-100">
 
-                            <div class="card-body">
+                        @if($template->thumbnail)
+                            <img src="{{ asset('storage/'.$template->thumbnail) }}"
+                                class="card-img-top"
+                                style="height:180px;object-fit:cover;">
+                        @else 
+                            <img src="{{ asset('assets/frontend/images/default-template.png') }}"
+                                class="card-img-top"
+                                style="height:180px;object-fit:cover;">
+                        @endif
 
-                                <div class="form-check">
+                        <div class="card-body">
 
-                                    <!-- <input
-                                        class="form-check-input"
-                                        type="radio"
-                                        name="template_type"
-                                        value="default_{{ $template->id }}"
-                                        id="default{{ $template->id }}"
+                            <div class="form-check">
 
-                                        {{ $campaign->template_id == $template->id ? 'checked' : '' }}
-                                    > -->
+                                <!-- <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="template_type"
+                                    value="default_{{ $template->id }}"
+                                    id="default{{ $template->id }}"
 
-                                    @php
-                                        $selectedTemplateId = old(
-                                            'template_id',
-                                            $campaign->template_id ?? session('campaign_draft.template_id')
-                                        );
+                                    {{ $campaign->template_id == $template->id ? 'checked' : '' }}
+                                > -->
 
-                                        $selectedTemplateType = old(
-                                            'template_type',
-                                            $campaign->template_type ?? session('campaign_draft.template_type')
-                                        );
-                                    @endphp
+                                @php
+                                    $selectedTemplateId = old(
+                                        'template_id',
+                                        $campaign->template_id ?? session('campaign_draft.template_id')
+                                    );
 
-                                    <input
-                                        class="form-check-input"
-                                        type="radio"
-                                        name="template_type"
-                                        value="default_{{ $template->id }}"
-                                        id="default{{ $template->id }}"
-                                        {{ $selectedTemplateType === 'default'
-                                            && (int) $selectedTemplateId === (int) $template->id
-                                            ? 'checked'
-                                            : '' }}
-                                    >
+                                    $selectedTemplateType = old(
+                                        'template_type',
+                                        $campaign->template_type ?? session('campaign_draft.template_type')
+                                    );
+                                @endphp
 
-                                    <label class="form-check-label"
-                                           for="default{{ $template->id }}">
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="template_type"
+                                    value="default_{{ $template->id }}"
+                                    id="default{{ $template->id }}"
+                                    {{ $selectedTemplateType === 'default'
+                                        && (int) $selectedTemplateId === (int) $template->id
+                                        ? 'checked'
+                                        : '' }}
+                                >
 
-                                        <strong>{{ ucwords($template->name) }}</strong>
+                                <label class="form-check-label"
+                                       for="default{{ $template->id }}">
 
-                                    </label>
+                                    <strong>{{ ucwords($template->name) }}</strong>
 
-                                </div>
+                                </label>
 
                             </div>
 
@@ -107,16 +105,18 @@
 
                     </div>
 
-                @empty
+                </div>
 
-                    <div class="col-12">
-                        <p>No default templates found.</p>
-                    </div>
+            @empty
 
-                @endforelse
+                <div class="col-12">
+                    <p>No default templates found.</p>
+                </div>
 
-            </div>
+            @endforelse
+
         </div>
+
         <hr class="my-5">
         <h4 class="mb-3" id="templateList">Custom Made Templates</h4>
         <p>

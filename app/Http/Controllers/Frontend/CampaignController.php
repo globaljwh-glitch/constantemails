@@ -42,23 +42,96 @@ class CampaignController extends Controller
             'from_email'    => 'required|email',
         ]);
 
-        $campaign = MailCampaign::create([
-            'user_id'       => auth()->id(),
-            'email_title'   => $validated['email_title'],
-            'from_name'     => $validated['from_name'],
-            'email_subject' => $validated['email_subject'],
+        $campaignId = session('campaign_draft.campaign_id');
 
-            // Existing table defaults
-            'campaign_status' => 'active',
-            'send_status'     => 0,
-            'save_option'     => 1,
-        ]);
+        if ($campaignId) {
 
+            // Existing campaign
+            $campaign = MailCampaign::where('id', $campaignId)
+                ->where('user_id', auth()->id())
+                ->first();
+
+            if ($campaign) {
+
+                $campaign->update([
+                    'email_title'   => $validated['email_title'],
+                    'from_name'     => $validated['from_name'],
+                    'email_subject' => $validated['email_subject'],
+                    'from_email'    => $validated['from_email'],
+                ]);
+
+            } else {
+
+                // Session campaign doesn't exist anymore
+                $campaign = MailCampaign::create([
+                    'user_id'       => auth()->id(),
+                    'email_title'   => $validated['email_title'],
+                    'from_name'     => $validated['from_name'],
+                    'email_subject' => $validated['email_subject'],
+                    'from_email'    => $validated['from_email'],
+
+                    'campaign_status' => 'active',
+                    'send_status'     => 0,
+                    'save_option'     => 1,
+                ]);
+            }
+
+        } else {
+
+            // First time - create campaign
+            $campaign = MailCampaign::create([
+                'user_id'       => auth()->id(),
+                'email_title'   => $validated['email_title'],
+                'from_name'     => $validated['from_name'],
+                'email_subject' => $validated['email_subject'],
+                'from_email'    => $validated['from_email'],
+
+                'campaign_status' => 'active',
+                'send_status'     => 0,
+                'save_option'     => 1,
+            ]);
+        }
+
+        // Keep current campaign in session
+        session()->put('campaign_draft.campaign_id', $campaign->id);
         session()->put('campaign_draft.email_subject', $validated['email_subject']);
         session()->put('campaign_draft.email_title', $validated['email_title']);
+        session()->put('campaign_draft.from_name', $validated['from_name']);
+        session()->put('campaign_draft.from_email', $validated['from_email']);
 
-        return redirect()->route('user.campaigns.groups', $campaign);
+        return redirect()->route(
+            'user.campaigns.groups',
+            $campaign
+        );
     }
+    
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'email_subject' => 'required|max:255',
+    //         'from_name'     => 'required|max:255',
+    //         'email_title'   => 'required|max:255',
+    //         'from_email'    => 'required|email',
+    //     ]);
+
+    //     $campaign = MailCampaign::create([
+    //         'user_id'       => auth()->id(),
+    //         'email_title'   => $validated['email_title'],
+    //         'from_name'     => $validated['from_name'],
+    //         'email_subject' => $validated['email_subject'],
+
+    //         // Existing table defaults
+    //         'campaign_status' => 'active',
+    //         'send_status'     => 0,
+    //         'save_option'     => 1,
+    //     ]);
+        
+    //     session()->put('campaign_draft.campaign_id', $campaign->id);
+    //     session()->put('campaign_draft.email_subject', $validated['email_subject']);
+    //     session()->put('campaign_draft.email_title', $validated['email_title']);
+
+    //     return redirect()->route('user.campaigns.groups', $campaign);
+    // }
 
     public function show(MailCampaign $campaign)
     {

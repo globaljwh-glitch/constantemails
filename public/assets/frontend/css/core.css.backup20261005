@@ -742,9 +742,3 @@ input.form-control-file {
     padding: 10px 5px;
 
 }
-
-.defaultTemplateOuterBox {
-    height: 1040px;
-    overflow: hidden;
-    overflow-y: scroll;
-}
