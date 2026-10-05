@@ -399,13 +399,13 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        // $forwardUrl = route('campaign.forward', [
-        //     'campaign' => $campaign->id,
-        //     'contact'  => $recipient->contact_id,
-        // ]);
-        $forwardUrl = URL::signedRoute('forward', [
-            'contact' => $contact->id,
+        $forwardUrl = route('forward', [
+            'campaign' => $campaign->id,
+            'contact'  => $recipient->contact_id,
         ]);
+        // $forwardUrl = URL::signedRoute('forward', [
+        //     'contact' => $recipient->contact_id,
+        // ]);
 
         /*
         |--------------------------------------------------------------------------
