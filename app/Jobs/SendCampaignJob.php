@@ -565,10 +565,10 @@ class SendCampaignJob implements ShouldQueue
                         margin:2px !important;
                     ">
 
-                        <a href="https://constantemails.com">
+                        <a href="' . url('/') . '">
 
                             <img
-                                src="' . asset('images/logo_email.gif') . '"
+                                src="' . asset('assets/frontend/images/logo_email.gif') . '"
                                 alt="Constant Emails"
                                 border="0"
                             >
@@ -674,9 +674,9 @@ class SendCampaignJob implements ShouldQueue
                     style="font-size:10px;"
                 >
 
-                    ' . e($companyAddress) . ' |
-                    ' . e($city) . ' |
-                    ' . e($state) . ' |
+                    ' . e($companyAddress) . ' 
+                    ' . e($city) . ' 
+                    ' . e($state) . ' 
                     ' . e($zip) . '
 
                 </td>
