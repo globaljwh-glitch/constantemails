@@ -421,7 +421,7 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        $profileUrl = route('account.profile');
+        $profileUrl = route('user.account.profile');
 
         /*
         |--------------------------------------------------------------------------
