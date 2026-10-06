@@ -160,7 +160,7 @@
 
                                             <div class="templateSection">
 
-                                                <a href="#">
+                                                <!-- <a href="#"> -->
 
                                                     <div class="templateThumb">
 
@@ -178,7 +178,7 @@
                                                         {{ $template->name }}
                                                     </div>
 
-                                                </a>
+                                                <!-- </a> -->
 
                                             </div>
 

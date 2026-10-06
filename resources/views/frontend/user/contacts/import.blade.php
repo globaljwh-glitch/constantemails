@@ -31,7 +31,7 @@
             <div class="contactForm">
 
                 {{-- Contact Group --}}
-                <div class="row mb-3">
+                <div class="row">
                     <div class="col-lg-4">
                         <label><strong>Select an option from the dropdown menu</strong></label>
                     </div>
@@ -234,7 +234,7 @@
                 <br>
                 <br>
                 {{-- File Type --}}
-                <div class="row mb-3" id="import-type-group" style="display:none;">
+                <div class="row" id="import-type-group" style="display:none;">
 
                     <div class="col-lg-4">
                         <label><strong>*Select an existing Contact Group:</strong></label>
@@ -262,7 +262,7 @@
                 </div>
 
                 {{-- Upload File --}}
-                <div class="row mb-3" id="file-wrapper" style="display:none;">
+                <div class="row" id="file-wrapper" style="display:none;">
 
                     <div class="col-lg-4">
                         <label><strong>Upload your file here:</strong></label>
@@ -281,7 +281,7 @@
                 </div>
 
                 {{-- Sample File --}}
-                <div class="row mb-3" id="import-type-wrapper11" style="display:none;">
+                <div class="row" id="import-type-wrapper11" style="display:none;">
 
                     <div class="col-lg-10 offset-lg-4">
 
@@ -297,7 +297,7 @@
                 </div>
 
                 {{-- Microsoft Access Note --}}
-                <div class="row mb-3" id="import-type-wrapper3434" style="display:none;">
+                <div class="row" id="import-type-wrapper3434" style="display:none;">
 
                     <div class="col-lg-10 offset-lg-4">
 

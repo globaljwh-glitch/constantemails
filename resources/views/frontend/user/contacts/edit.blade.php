@@ -56,7 +56,7 @@
         </div>
 
 
-        <div class="row mb-3">
+        <div class="row">
             <div class="col-lg-3"><strong>First Name</strong></div>
             <div class="col-lg-6">
                 <input type="text"
@@ -68,7 +68,7 @@
         </div>
 
 
-        <div class="row mb-3">
+        <div class="row">
             <div class="col-lg-3"><strong>Last Name</strong></div>
             <div class="col-lg-6">
                 <input type="text"
@@ -79,7 +79,7 @@
         </div>
 
 
-        <div class="row mb-3">
+        <div class="row">
             <div class="col-lg-3"><strong>Email</strong></div>
             <div class="col-lg-6">
                 <input type="email"
@@ -91,7 +91,7 @@
         </div>
 
 
-        <div class="row mb-3">
+        <div class="row">
             <div class="col-lg-3"><strong>Phone</strong></div>
             <div class="col-lg-6">
                 <input type="text"
@@ -102,7 +102,7 @@
         </div>
 
 
-        <div class="row mb-3">
+        <div class="row">
             <div class="col-lg-3"><strong>Company</strong></div>
             <div class="col-lg-6">
                 <input type="text"
@@ -113,7 +113,7 @@
         </div>
 
 
-        <div class="row mb-3">
+        <div class="row">
             <div class="col-lg-3"><strong>Address</strong></div>
             <div class="col-lg-6">
                 <textarea name="contact_address"
@@ -123,7 +123,7 @@
         </div>
 
 
-        <div class="row mb-3">
+        <div class="row">
             <div class="col-lg-3"><strong>Area of Interest</strong></div>
             <div class="col-lg-6">
                 <input type="text"

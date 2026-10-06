@@ -83,7 +83,7 @@
                                 <div class="contactForm">
 
                                     {{-- Package --}}
-                                    <div class="row mb-3">
+                                    <div class="row">
                                         <div class="col-lg-3 col-md-6 col-sm-6">
                                             <strong>Package Name:</strong>
                                         </div>
@@ -120,7 +120,7 @@
                                     </div>
 
                                     {{-- Card Type --}}
-                                    <div class="row mb-3">
+                                    <div class="row">
                                         <div class="col-lg-3 col-md-6 col-sm-6">
                                             <strong>* Card Type:</strong>
                                         </div>
@@ -157,7 +157,7 @@
                                     </div>
 
                                     {{-- Credit Card Number --}}
-                                    <div class="row mb-3">
+                                    <div class="row">
                                         <div class="col-lg-3 col-md-6 col-sm-6">
                                             <strong>* Credit Card Number:</strong>
                                         </div>
@@ -176,7 +176,7 @@
                                     </div>
 
                                     {{-- Expiration --}}
-                                    <div class="row mb-3">
+                                    <div class="row">
                                         <div class="col-lg-3 col-md-6 col-sm-6">
                                             <strong>* Expiration Date:</strong>
                                         </div>
@@ -232,7 +232,7 @@
                                     </div>
 
                                     {{-- Security Code --}}
-                                    <div class="row mb-3">
+                                    <div class="row">
                                         <div class="col-lg-3 col-md-6 col-sm-6">
                                             <strong>* Security Code:</strong>
                                         </div>

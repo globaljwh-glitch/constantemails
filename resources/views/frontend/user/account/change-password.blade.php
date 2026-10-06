@@ -66,7 +66,7 @@
                             <div class="contactForm">
 
                                 {{-- Current Password --}}
-                                <div class="row mb-3">
+                                <div class="row">
                                     <div class="col-lg-3 col-md-6 col-sm-6">
                                         <strong>Current Password:</strong>
                                     </div>
@@ -84,7 +84,7 @@
                                 </div>
 
                                 {{-- New Password --}}
-                                <div class="row mb-3">
+                                <div class="row">
                                     <div class="col-lg-3 col-md-6 col-sm-6">
                                         <strong>New Password:</strong>
                                     </div>
@@ -102,7 +102,7 @@
                                 </div>
 
                                 {{-- Confirm Password --}}
-                                <div class="row mb-3">
+                                <div class="row">
                                     <div class="col-lg-3 col-md-6 col-sm-6">
                                         <strong>Confirm New Password:</strong>
                                     </div>

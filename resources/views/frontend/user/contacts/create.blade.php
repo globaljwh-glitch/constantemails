@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        <button class="submitButton">
+        <button class="btn btn-default orangeBg text-white submitButton">
             Save Contact
         </button>
 

@@ -186,7 +186,7 @@
 
 
                             {{-- First Name --}}
-                            <div class="col-md-6 col-lg-6 mb-3">
+                            <div class="col-md-6 col-lg-6">
 
                                 <input
                                     type="text"
@@ -210,7 +210,7 @@
 
 
                             {{-- Last Name --}}
-                            <div class="col-md-6 col-lg-6 mb-3">
+                            <div class="col-md-6 col-lg-6">
 
                                 <input
                                     type="text"
@@ -233,7 +233,7 @@
 
 
                             {{-- Email --}}
-                            <div class="col-md-6 col-lg-6 mb-3">
+                            <div class="col-md-6 col-lg-6">
 
                                 <input
                                     type="email"
@@ -257,7 +257,7 @@
 
 
                             {{-- Organization --}}
-                            <div class="col-md-6 col-lg-6 mb-3">
+                            <div class="col-md-6 col-lg-6">
 
                                 <input
                                     type="text"
@@ -280,7 +280,7 @@
 
 
                             {{-- Phone --}}
-                            <div class="col-md-6 col-lg-6 mb-3">
+                            <div class="col-md-6 col-lg-6">
 
                                 <input
                                     type="text"
@@ -303,7 +303,7 @@
 
 
                             {{-- Message --}}
-                            <div class="col-md-12 col-lg-12 mb-3">
+                            <div class="col-md-12 col-lg-12">
 
                                 <textarea
                                     name="comments"

@@ -47,7 +47,7 @@
                         <div class="row">
 
                             {{-- Email --}}
-                            <div class="col-lg-12 mb-3">
+                            <div class="col-lg-12">
                                 <input
                                     type="email"
                                     name="email"
@@ -61,7 +61,7 @@
                             </div>
 
                             {{-- Password --}}
-                            <div class="col-lg-12 mb-3">
+                            <div class="col-lg-12">
                                 <input
                                     type="password"
                                     name="password"
@@ -74,7 +74,7 @@
                             </div>
 
                             {{-- Remember --}}
-                            <div class="col-lg-12 mb-3">
+                            <div class="col-lg-12">
 
                                 <input
                                     type="checkbox"
@@ -109,7 +109,7 @@
                             </div>
 
                             {{-- Register --}}
-                            <div class="col-lg-12 mt-3">
+                            <div class="col-lg-12">
                                 <div class="createAccount text-left">
                                     Need a Constant Email account?
                                     <a href="{{ route('register') }}">

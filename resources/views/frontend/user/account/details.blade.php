@@ -21,18 +21,23 @@
             {{-- Account Content --}}
             <div class="col-lg-9 col-md-8">
 
-<div class="acoountRightSection">
-
-    {{-- Header --}}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="borderBottom">
-                <h2>Edit your Account Details</h2>
-
+                <div class="acoountRightSection">
                 @if(session('success'))
-                    <p class="text-center text-success">
-                        {{ session('success') }}
-                    </p>
+                    <div class="alert alert-success alert-dismissible fade show">
+                        {!! session('success') !!}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
                 @endif
 
                 @if($errors->any())
@@ -44,63 +49,68 @@
                         </ul>
                     </div>
                 @endif
-            </div>
-        </div>
-    </div>
-
-
-    <div class="accountInfo">
-
-        {{-- Login Information --}}
-        <div class="">
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4 class="text-orange">Login Information</h4>
-
-                    <p>
-                        Your email address and username are like an "ID" card
-                        in our system. Your username cannot be changed.
-                        If you need to change your email address, please contact us.
-                    </p>
-                </div>
-            </div>
-
-            <div class="list borderBottom">
+                {{-- Header --}}
                 <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-5">
-                        <strong>Username</strong>
-                    </div>
-
-                    <div class="col-lg-9 col-md-8 col-sm-7">
-                        {{ $user->username ?? $user->name ?? '-' }}
+                    <div class="col-lg-12">
+                        <div class="borderBottom">
+                            <h2>Edit your Account Details</h2>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <p class="small02">
-                This is your username. You will always need it to log in,
-                so make sure you remember it.
-            </p>
 
-            <div class="list borderBottom">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-5">
-                        <strong>E-mail</strong>
+                <div class="accountInfo">
+
+                    {{-- Login Information --}}
+                    <div class="">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="text-orange">Login Information</h4>
+
+                                <p>
+                                    Your email address and username are like an "ID" card
+                                    in our system. Your username cannot be changed.
+                                    If you need to change your email address, please contact us.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="list borderBottom">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-5">
+                                    <strong>Username</strong>
+                                </div>
+
+                                <div class="col-lg-9 col-md-8 col-sm-7">
+                                    {{ $user->username ?? $user->name ?? '-' }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="small02">
+                            This is your username. You will always need it to log in,
+                            so make sure you remember it.
+                        </p>
+
+                        <div class="list borderBottom">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-5">
+                                    <strong>E-mail</strong>
+                                </div>
+
+                                <div class="col-lg-9 col-md-8 col-sm-7">
+                                    {{ $user->email ?? '-' }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="small02">
+                            This is your primary email address. Alerts, messages and
+                            notifications will be sent to this email address.
+                        </p>
+
                     </div>
-
-                    <div class="col-lg-9 col-md-8 col-sm-7">
-                        {{ $user->email ?? '-' }}
-                    </div>
-                </div>
-            </div>
-
-            <p class="small02">
-                This is your primary email address. Alerts, messages and
-                notifications will be sent to this email address.
-            </p>
-
-        </div>
 
 
         {{-- Update Form --}}

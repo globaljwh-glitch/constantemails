@@ -16,6 +16,7 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use App\Models\SaveTemplate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class CampaignController extends Controller
 {
@@ -35,14 +36,26 @@ class CampaignController extends Controller
 
     public function store(Request $request)
     {
+        $campaignId = session('campaign_draft.campaign_id');
+        // dd([
+        //     'campaign_id_from_session' => session('campaign_draft.campaign_id'),
+        //     'email_title_from_request' => $request->email_title,
+
+        //     'existing_campaigns' => \DB::table('mail_campaign')
+        //         ->where('email_title', $request->email_title)
+        //         ->get(['id', 'email_title']),
+        // ]);
         $validated = $request->validate([
             'email_subject' => 'required|max:255',
             'from_name'     => 'required|max:255',
-            'email_title'   => 'required|max:255',
+            'email_title' => [
+                'required',
+                'max:255',
+                Rule::unique('mail_campaign', 'email_title')
+                ->ignore($campaignId, 'id'),
+            ],
             'from_email'    => 'required|email',
         ]);
-
-        $campaignId = session('campaign_draft.campaign_id');
 
         if ($campaignId) {
 
@@ -104,34 +117,6 @@ class CampaignController extends Controller
             $campaign
         );
     }
-    
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'email_subject' => 'required|max:255',
-    //         'from_name'     => 'required|max:255',
-    //         'email_title'   => 'required|max:255',
-    //         'from_email'    => 'required|email',
-    //     ]);
-
-    //     $campaign = MailCampaign::create([
-    //         'user_id'       => auth()->id(),
-    //         'email_title'   => $validated['email_title'],
-    //         'from_name'     => $validated['from_name'],
-    //         'email_subject' => $validated['email_subject'],
-
-    //         // Existing table defaults
-    //         'campaign_status' => 'active',
-    //         'send_status'     => 0,
-    //         'save_option'     => 1,
-    //     ]);
-        
-    //     session()->put('campaign_draft.campaign_id', $campaign->id);
-    //     session()->put('campaign_draft.email_subject', $validated['email_subject']);
-    //     session()->put('campaign_draft.email_title', $validated['email_title']);
-
-    //     return redirect()->route('user.campaigns.groups', $campaign);
-    // }
 
     public function show(MailCampaign $campaign)
     {
@@ -149,10 +134,32 @@ class CampaignController extends Controller
     {
         abort_if($campaign->user_id != auth()->id(), 403);
 
-        $validated = $request->validate([
+        // $validated = $request->validate([
+        //     'email_subject' => 'required|max:255',
+        //     'from_name'     => 'required|max:255',
+        //     'email_title'   => 'required|max:255',
+        // ]);
+
+
+         $campaignId = session('campaign_draft.campaign_id');
+            // dd([
+            //     'campaign_id_from_session' => session('campaign_draft.campaign_id'),
+            //     'email_title_from_request' => $request->email_title,
+
+            //     'existing_campaigns' => \DB::table('mail_campaign')
+            //         ->where('email_title', $request->email_title)
+            //         ->get(['id', 'email_title']),
+            // ]);
+            
+            $validated = $request->validate([
             'email_subject' => 'required|max:255',
             'from_name'     => 'required|max:255',
-            'email_title'   => 'required|max:255',
+            'email_title' => [
+                'required',
+                'max:255',
+                Rule::unique('mail_campaign', 'email_title')
+                ->ignore($campaignId, 'id'),
+            ],
         ]);
 
         $campaign->update($validated);

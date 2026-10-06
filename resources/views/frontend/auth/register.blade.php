@@ -54,10 +54,10 @@
 
 </div>
 
-
+<div class="col-md-7">
             <form method="POST" action="{{ route('register.submit') }}">
                 @csrf  
-                    <div class="col-md-7">
+                    
                         <div class="contactForm pt-0 pr-4">
                             <div class="row">
 
@@ -109,9 +109,12 @@
                                 <div class="col-md-6">
                                     <input type="password"
                                         name="password_confirmation"
-                                        class="form-control"
+                                        class="form-control @error('password') is-invalid @enderror"
                                         placeholder="Confirm Password"
                                         autocomplete="new-password">
+                                        @error('password_confirmation')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                 </div>
 
                                 <!-- Package -->
@@ -216,9 +219,9 @@
 
                             </div>
                         </div>
-                    </div>
+                    
                 </form>
-
+            </div>
                 <!-- <script>
                 function reloadCaptcha() {
                     document.getElementById('captcha').src = "{{ url('/captcha') }}?" + Date.now();
