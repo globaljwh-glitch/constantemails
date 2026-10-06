@@ -89,7 +89,9 @@ class GroupController extends Controller
 
         return redirect()
             ->back()
-            ->with('success', 'Contact group created successfully.');
+            ->with('success', 'Contact group created successfully. <a href="' .
+                route('user.contacts.import') .
+                '">Clik here for Import Contacts</a>');
     }
 
     /**

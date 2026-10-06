@@ -67,7 +67,7 @@
                                 </div>
 
                                 <!-- Username -->
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6">
                                     <input type="text"
                                         name="username"
                                         class="form-control @error('username') is-invalid @enderror"
@@ -80,7 +80,7 @@
                                 </div>
 
                                 <!-- Email -->
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6">
                                     <input type="email"
                                         name="email"
                                         class="form-control @error('email') is-invalid @enderror"
@@ -93,7 +93,7 @@
                                 </div>
 
                                 <!-- Password -->
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6">
                                     <input type="password"
                                         name="password"
                                         class="form-control @error('password') is-invalid @enderror"
@@ -106,7 +106,7 @@
                                 </div>
 
                                 <!-- Confirm Password -->
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6">
                                     <input type="password"
                                         name="password_confirmation"
                                         class="form-control"
@@ -115,7 +115,7 @@
                                 </div>
 
                                 <!-- Package -->
-                                <div class="col-lg-9 mb-3">
+                                <div class="col-lg-9">
                                     <select name="package_id"
                                             id="package_id"
                                             class="custom-select @error('package_id') is-invalid @enderror">
@@ -179,7 +179,7 @@
 
                                 <!-- Terms -->
 
-                                <div class="col-lg-12 mb-4">
+                                <div class="col-lg-12">
 
                                     <input
                                         type="checkbox"
@@ -278,7 +278,7 @@
                     </div>
                 </div> -->
             <div class="col-md-5">
-                <div class="imageThumb text-right"><img src="images/register-thumb.jpg" alt="" class=""></div>
+                <div class="imageThumb text-right"><img src="{{ asset('assets/frontend/images/register-thumb.jpg') }}" alt="" class=""></div>
             </div>
         </div>
     </div>
