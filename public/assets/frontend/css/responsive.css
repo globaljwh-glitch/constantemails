@@ -24,9 +24,9 @@
 		font-size: 34px;
 		padding: 0 0 4px 0;
 	}
-	.callToAction02 {
+	/*.callToAction02 {
 		font-size: 55px;
-	}
+	}*/
 	.ctaSmallHeading {
 		font-size: 27px;
 		padding: 11px 0 8px 0;
@@ -101,6 +101,11 @@
 	}
 	.acoountRightSection, .acoountRightSection.contactAccountSection {
 		padding-left: 20px;
+	}
+	.defaultTemplateOuterBox {
+    	height: 1040px;
+    	overflow: hidden;
+    	overflow-y: scroll;
 	}
 }
 @media (max-width: 767px) {
