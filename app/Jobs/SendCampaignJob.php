@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CampaignRecipient;
 use Illuminate\Support\Facades\URL;
+use App\Models\User;
 
 class SendCampaignJob implements ShouldQueue
 {
