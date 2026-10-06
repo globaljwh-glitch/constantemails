@@ -149,7 +149,7 @@
 
 
                     {{-- Last Name --}}
-                    <!-- <div class="col-md-6 col-lg-6">
+                    <div class="col-md-6 col-lg-6">
                         <label>Last Name</label>
 
                         <input
@@ -158,7 +158,7 @@
                             value="{{ old('last_name', $user->last_name) }}"
                             placeholder="Last Name"
                         >
-                    </div> -->
+                    </div>
 
 
                     {{-- Company --}}

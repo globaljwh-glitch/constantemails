@@ -42,7 +42,7 @@ class UserController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
-            //'last_name' => ['required', 'string', 'max:100'],
+            'last_name' => ['required', 'string', 'max:100'],
 
             'company_name' => ['nullable', 'string', 'max:255'],
             'company_address' => ['nullable', 'string', 'max:500'],

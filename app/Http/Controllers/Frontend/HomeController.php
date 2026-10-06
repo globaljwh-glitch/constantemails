@@ -19,9 +19,10 @@ class HomeController extends Controller
     }
 
     public function pricing()
-    {
+    {       
         $packages = RegistrationPackage::where('status', 'Active')
-            ->orderBy('package_price')
+            ->where('access_level', 'user')
+            ->orderBy('package_price', 'asc')
             ->get();
 
         return view('frontend.pages.pricing', compact('packages'));
