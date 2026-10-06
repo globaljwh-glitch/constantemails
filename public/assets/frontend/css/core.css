@@ -726,7 +726,7 @@ input.form-control-file {
 .templatesBlock .tab-content .tab-pane {
     max-height: 1228px;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .contactForm input[type="file"] {
@@ -746,5 +746,5 @@ input.form-control-file {
 .defaultTemplateOuterBox {
     height: 1040px;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
