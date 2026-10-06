@@ -68,10 +68,20 @@
         aria-expanded="false">
 
         <div class="userProfileImage">
-            <a href="#" class="">{{ strtoupper(substr(auth()->user()->username, 0, 1)) }}</a> <!--a href="#" class=""><img src="http://10.1.15.210/assets/frontend/images/feature-thumb-01.jpg" alt="User" class="imgResponsive"></a-->
+            <a href="#" class="">
+            {{ strtoupper(
+                substr(auth()->user()->name ?: auth()->user()->username, 0, 1) .
+                substr(auth()->user()->last_name ?? '', 0, 1)
+            ) }}  
+            <!-- {{ strtoupper(substr(auth()->user()->username, 0, 1)) }} -->
+          </a>
         </div>
 
-        {{ ucfirst(auth()->user()->username) }}
+        <!-- {{ ucfirst(auth()->user()->username) }} -->
+        {{ auth()->user()->name
+            ? ucfirst(trim(auth()->user()->name) . ' ' . ucfirst(auth()->user()->last_name))
+            : ucfirst(auth()->user()->username) . ' ' . ucfirst(auth()->user()->last_name)
+        }}
 
     </button>
 

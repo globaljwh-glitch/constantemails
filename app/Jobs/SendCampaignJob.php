@@ -362,10 +362,24 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
 
-        $companyAddress = config('app.company_address', '');
-        $city           = config('app.company_city', '');
-        $state          = config('app.company_state', '');
-        $zip             = config('app.company_zip', '');
+        $user = User::find($campaign->user_id);
+
+        $companyAddress = $user->company_address ?? '';
+        $city           = $user->city ?? '';
+        $state          = $user->state ?? '';
+        $zip            = $user->zip ?? '';
+
+        $companyDetails = implode(' | ', array_filter([
+            $companyAddress,
+            $city,
+            $state,
+            $zip,
+        ], fn ($value) => !empty(trim($value ?? ''))));
+
+        // $companyAddress = config('app.company_address', '');
+        // $city           = config('app.company_city', '');
+        // $state          = config('app.company_state', '');
+        // $zip             = config('app.company_zip', '');
 
         /*
         |--------------------------------------------------------------------------
@@ -541,10 +555,7 @@ class SendCampaignJob implements ShouldQueue
                         padding:0 !important;
                         line-height:14px !important;
                     ">
-                        ' . e($companyAddress) . ' |
-                        ' . e($city) . ' |
-                        ' . e($state) . ' |
-                        ' . e($zip) . '
+                        ' . e($companyDetails) . '
                     </div>
 
                 </td>
@@ -674,10 +685,7 @@ class SendCampaignJob implements ShouldQueue
                     style="font-size:10px;"
                 >
 
-                    ' . e($companyAddress) . ' 
-                    ' . e($city) . ' 
-                    ' . e($state) . ' 
-                    ' . e($zip) . '
+                    ' . e($companyDetails) . '
 
                 </td>
 

@@ -64,7 +64,7 @@
                 <div class="col-md-6 col-lg-6">
                   <label>Last Name</label>
                   <div class="">
-                    {{ $user->name ?? '-' }}
+                    {{ $user->last_name ?? '-' }}
                   </div>
                 </div>
               </div>

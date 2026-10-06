@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="pricingList text-center">
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-4 col-sm-6 col-lg-3">
           <div class="priceBlock">
             <h2 class="text-white">$9.99</h2>
@@ -141,7 +141,79 @@
             </div>
             <a href="#" class="signUpButton">Signup</a> </div>
         </div>
-      </div>
+      </div> -->
+
+      <div class="row">
+
+    @foreach($packages as $package)
+
+        @php
+            $isManaged = strtolower($package->package_name) === 'managed package';
+        @endphp
+
+        <div class="col-md-4 col-sm-6 col-lg-3">
+
+            <div class="priceBlock">
+
+                @if($isManaged)
+
+                    <h2 class="text-white smallHeading">
+                        Managed Accounts <br>
+                        Pricing upon request.
+                    </h2>
+
+                @else
+
+                    <h2 class="text-white">
+                        ${{ number_format($package->package_price, 2) }}
+                    </h2>
+
+                @endif
+
+
+                <div class="priceBlockContent">
+
+                    <p>Number of Email Addresses</p>
+
+                    <h4>
+                        @if($isManaged)
+                            100,000 +
+                        @else
+                            {{ number_format($package->package_emails) }}
+                        @endif
+                    </h4>
+
+                    <hr>
+
+                    <p>Number of Emails</p>
+
+                    <h4>Unlimited</h4>
+
+                </div>
+
+                @if(auth()->check())
+
+                    <a href="{{ url('/user/account/upgrade-package') }}"
+                      class="signUpButton">
+                        Upgrade Package
+                    </a>
+
+                @else
+
+                    <a href="{{ route('register', ['package' => $package->id]) }}"
+                      class="signUpButton">
+                        Signup
+                    </a>
+
+                @endif
+
+            </div>
+
+        </div>
+
+    @endforeach
+
+</div>
     </div>
   </div>
 </section>
