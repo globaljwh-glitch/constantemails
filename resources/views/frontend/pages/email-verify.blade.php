@@ -10,7 +10,7 @@
       <div class="col-md-12 col-lg-6 col-xl-5">
         <h2>Free email address validator</h2>
          
-        <p>Our free email checker ensures proper formatting and verifies the existence of the mailbox, confirming its ability to receive emails: the email validation process is completely discreet and our email verifier does not send any messages while testing email addresses.</p>
+        <p>Our free email validation tool checks email addresses for accurate formatting and mailbox availability, helping you identify valid addresses before sending campaigns. The verification process is fully private and secure and does not send actual messages while evaluating email addresses.</p>
         @if(session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
