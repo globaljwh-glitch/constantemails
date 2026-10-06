@@ -78,8 +78,6 @@
                         </strong>
                     </p>
 
-                    <p>&nbsp;</p>
-
 
                     {{-- =================================================
                          ACCOUNT INFO
@@ -153,7 +151,7 @@
                                     <a
                                         href="javascript:void(0);"
                                         onclick="toggleEmailFilter();"
-                                        class="arial_13_c43e00"
+                                        class="arial_13_c43e00 btn btn-default orangeBg text-white"
                                     >
                                         Custom Search
                                     </a>
@@ -194,7 +192,7 @@
                                          DATE
                                     ================================================== --}}
 
-                                    <div class="row">
+                                    <!-- <div class="row">
 
                                         <div class="col-lg-4 col-md-6 col-sm-6">
                                             Date Email was sent:
@@ -247,14 +245,14 @@
 
                                         </div>
 
-                                    </div>
+                                    </div> -->
 
 
                                     {{-- =================================================
                                          RECIPIENTS
                                     ================================================== --}}
 
-                                    <div class="row mt-3">
+                                    <!-- <div class="row mt-3">
 
                                         <div class="col-lg-4 col-md-6 col-sm-6">
                                             Recipients
@@ -306,7 +304,7 @@
 
                                         </div>
 
-                                    </div>
+                                    </div> -->
 
 
                                     {{-- =================================================
@@ -763,7 +761,7 @@
 
 
                                                     {{-- EXPORT --}}
-                                                    <div
+                                                    <!-- <div
                                                         style="float:left;"
                                                     >
 
@@ -777,11 +775,11 @@
                                                             an Excel *.csv file?
                                                         </a>
 
-                                                    </div>
+                                                    </div> -->
 
 
                                                     {{-- DELETE --}}
-                                                    <div
+                                                    <!-- <div
                                                         style="float:right;"
                                                     >
 
@@ -794,7 +792,7 @@
                                                             Delete
                                                         </button>
 
-                                                    </div>
+                                                    </div> -->
 
                                                 </td>
 

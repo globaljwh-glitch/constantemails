@@ -27,7 +27,7 @@
                         Back
                     </a>
                 </div>
-                <div class="d-flex gap-2">
+                <div class="gap-2">
                     <button
                         formaction="{{ route('user.groups.activate') }}"
                         class="btn btn-success">

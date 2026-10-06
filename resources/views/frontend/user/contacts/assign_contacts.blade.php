@@ -192,7 +192,7 @@
                                     width="100%"
                                     cellspacing="1"
                                     cellpadding="5"
-                                    class="mod-form"
+                                    class="mod-form table"
                                     style="margin: 10px 0; border: 0;"
                                 >
 
