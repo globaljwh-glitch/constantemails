@@ -492,36 +492,28 @@ class SendCampaignJob implements ShouldQueue
 
                 <td>
 
-                    <div style="
-                        font-size:10px !important;
-                        padding:0 !important;
-                        line-height:14px !important;
-                        margin:0 !important;
-                    ">
+                    <table cellpadding="0" cellspacing="0">
+							<tr>
+								
+
+
+						<td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:0px !important; margin:0 !important;">
                         This email was sent to
                         <a href="mailto:' . e($recipientEmail) . '">
                             ' . e($recipientEmail) . '
                         </a>
-                    </div>
-
-                    <div style="
-                        font-size:10px !important;
-                        padding:0 !important;
-                        line-height:14px !important;
-                        margin:0 !important;
-                    ">
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:0px !important; margin:0 !important;">
                         By
                         <a href="mailto:' . e($fromEmail) . '">
                             ' . e($fromEmail) . '
                         </a>
-                    </div>
-
-                    <div style="
-                        font-size:10px !important;
-                        padding:0 !important;
-                        line-height:14px !important;
-                        margin:0 !important;
-                    ">
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:0px !important; margin:0 !important;">
 
                         <a href="' . e($unsubscribeUrl) . '">
                             Unsubscribe
@@ -553,16 +545,14 @@ class SendCampaignJob implements ShouldQueue
                             alt=""
                         >
 
-                    </div>
-
-                    <div style="
-                        font-size:10px !important;
-                        padding:0 !important;
-                        line-height:14px !important;
-                    ">
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:0px !important; margin:0 !important;">
                         ' . e($companyDetails) . '
-                    </div>
-
+                    </td>
+                </tr>
+            </table>
                 </td>
 
                 <td align="center" style="font-size:9px;">

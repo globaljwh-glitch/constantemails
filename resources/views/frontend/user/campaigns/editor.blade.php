@@ -392,8 +392,8 @@ $(document).ready(function () {
     $('#editorForm').on('submit', function (e) {
 
         const emailTitle = $('input[name="email_title"]').val().trim();
-        const emailMessage = $('input[name="message"]').val().trim();
-        const value = $('input[name="additional_recipients"]').val().trim();
+        //const emailMessage = $('input[name="message"]').val().trim();
+        //const additional_recipients = $('input[name="additional_recipients"]').val().trim();
 
         const selectedTemplate =
             $('input[name="group_ids[]"]:checked');
@@ -422,50 +422,54 @@ $(document).ready(function () {
             return false;
         }
 
-        if (emailMessage === '') {
+        // if (emailMessage === '') {
 
-            e.preventDefault();
+        //     e.preventDefault();
 
-            showValidation(
-                'Email message Required',
-                'Please enter email message or content before continuing.'
-            );
+        //     showValidation(
+        //         'Email message Required',
+        //         'Please enter email message or content before continuing.'
+        //     );
 
-            return false;
-        }
+        //     return false;
+        // }
 
-        // Allow normal form submission
-        // Optional field - empty is allowed
-        if (value === '') {
-            return;
-        }
+        
+        const additional_recipients = $('input[name="additional_recipients"]').val().trim();
 
-        // Split emails by comma
-        const emails = value
-            .split(',')
-            .map(email => email.trim())
-            .filter(email => email !== '');
+        // Optional field
+        if (additional_recipients !== '') {
 
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // Split emails by comma
+            const emails = additional_recipients
+                .split(',')
+                .map(email => email.trim())
+                .filter(email => email !== '');
 
-        const invalidEmails = emails.filter(email => !emailRegex.test(email));
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (invalidEmails.length > 0) {
-            e.preventDefault();
+            const invalidEmails = emails.filter(email => !emailRegex.test(email));
 
-            Swal.fire({
-                icon: 'error',
-                title: 'Invalid Email Address',
-                html: `
-                    Please check the following email address(es):
-                    <br><br>
-                    <strong>${invalidEmails.join('<br>')}</strong>
-                `,
-                confirmButtonText: 'OK'
-            });
+            if (invalidEmails.length > 0) {
 
-            return false;
+                e.preventDefault();
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Email Address',
+                    html: `
+                        Please check the following email address(es):
+                        <br><br>
+                        <strong>${invalidEmails.join('<br>')}</strong>
+                    `,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#f79432',
+                    allowOutsideClick: false
+                });
+
+                return false;
+            }
         }
     });
 

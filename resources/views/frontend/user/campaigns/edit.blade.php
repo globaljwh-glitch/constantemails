@@ -178,9 +178,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        console.log('SweetAlert loaded:', typeof Swal);
-    </script>
-    <script>
         function showValidation(title, message) {
 
             Swal.fire({
@@ -208,7 +205,7 @@
 
             const emailSubject = $('input[name="email_subject"]').val().trim();
             const campaignName = $('input[name="email_title"]').val().trim();
-            const value = $('input[name="additional_recipients"]').val().trim();
+            //const value = $('input[name="additional_recipients"]').val().trim();
 
             if (emailSubject === '') {
 
@@ -236,38 +233,38 @@
 
 
             // Allow normal form submission
-        // Optional field - empty is allowed
-        if (value === '') {
-            return;
-        }
+            // Optional field - empty is allowed
+            // if (value === '') {
+            //     return;
+            // }
 
-        // Split emails by comma
-        const emails = value
-            .split(',')
-            .map(email => email.trim())
-            .filter(email => email !== '');
+            // // Split emails by comma
+            // const emails = value
+            //     .split(',')
+            //     .map(email => email.trim())
+            //     .filter(email => email !== '');
 
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // // Email validation
+            // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        const invalidEmails = emails.filter(email => !emailRegex.test(email));
+            // const invalidEmails = emails.filter(email => !emailRegex.test(email));
 
-        if (invalidEmails.length > 0) {
-            e.preventDefault();
+            // if (invalidEmails.length > 0) {
+            //     e.preventDefault();
 
-            Swal.fire({
-                icon: 'error',
-                title: 'Invalid Email Address',
-                html: `
-                    Please check the following email address(es):
-                    <br><br>
-                    <strong>${invalidEmails.join('<br>')}</strong>
-                `,
-                confirmButtonText: 'OK'
-            });
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Invalid Email Address',
+            //         html: `
+            //             Please check the following email address(es):
+            //             <br><br>
+            //             <strong>${invalidEmails.join('<br>')}</strong>
+            //         `,
+            //         confirmButtonText: 'OK'
+            //     });
 
-            return false;
-        }
+            //     return false;
+            // }
             // Allow normal form submission
         });
 
