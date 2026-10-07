@@ -35,7 +35,7 @@
 
                 <div class="col-md-7">
 
-                    <select name="group_ids[]" class="form-control" multiple size="6">
+                    <select name="group_ids[]" class="form-control" multiple size="6" required>
 
                         @foreach($groups as $group)
 
@@ -395,20 +395,20 @@ $(document).ready(function () {
         //const emailMessage = $('input[name="message"]').val().trim();
         //const additional_recipients = $('input[name="additional_recipients"]').val().trim();
 
-        const selectedTemplate =
-            $('input[name="group_ids[]"]:checked');
+        // const selectedTemplate =
+        //     $('input[name="group_ids[]"]:checked');
 
-        if (selectedTemplate.length === 0) {
+        // if (selectedTemplate.length === 0) {
 
-            e.preventDefault();
+        //     e.preventDefault();
 
-            showValidation(
-                'Group Required',
-                'Please select atleast 1 group before continuing.'
-            );
+        //     showValidation(
+        //         'Group Required',
+        //         'Please select atleast 1 group before continuing.'
+        //     );
 
-            return false;
-        }
+        //     return false;
+        // }
 
         if (emailTitle === '') {
 

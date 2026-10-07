@@ -193,16 +193,52 @@ class CampaignController extends Controller
         );
     }
 
+    // public function saveGroups(Request $request, MailCampaign $campaign)
+    // {
+    //     $request->validate([
+    //         'group_ids'   => 'required|array|min:1',
+    //         'group_ids.*' => 'exists:contact_groups,id'
+    //     ]);
+
+    //     $campaign->groups()->sync($request->group_ids);
+
+    //     session()->put('campaign_draft.group_ids', $request->group_ids);
+
+    //     return redirect()->route(
+    //         'user.campaigns.templates',
+    //         $campaign
+    //     );
+    // }
+
     public function saveGroups(Request $request, MailCampaign $campaign)
     {
         $request->validate([
-            'group_ids'   => 'required|array|min:1',
-            'group_ids.*' => 'exists:contact_groups,id'
+            'group_ids'   => 'nullable|array|min:1',
+            'group_ids.*' => 'exists:contact_groups,id',
         ]);
 
-        $campaign->groups()->sync($request->group_ids);
+        $groupIds = $request->group_ids;
 
-        session()->put('campaign_draft.group_ids', $request->group_ids);
+        // If request doesn't contain groups, get from session
+        if (empty($groupIds)) {
+            $groupIds = session('campaign_draft.group_ids', []);
+        }
+
+        if (empty($groupIds)) {
+            return back()->withErrors([
+                'group_ids' => 'Please select at least one group.',
+            ]);
+        }
+
+        // Check whether campaign_group already has records
+        $hasGroups = $campaign->groups()->exists();
+
+        if (!$hasGroups) {
+            // campaign_group is empty, so insert session/request groups
+            $campaign->groups()->sync($groupIds);
+        }
+
+        session()->put('campaign_draft.group_ids', $groupIds);
 
         return redirect()->route(
             'user.campaigns.templates',
