@@ -207,72 +207,151 @@ class SendCampaignJob implements ShouldQueue
                         }  
 
                         /*
-                         * Send email
+                         * Send email old method
                          */
-                        Mail::html($html, function ($mail) use (
-                            $contact,
-                            $subject,
-                            $campaign
-                        ) {
+                        // Mail::html($html, function ($mail) use (
+                        //     $contact,
+                        //     $subject,
+                        //     $campaign
+                        // ) {
 
-                            $mail->to(
-                                $contact->contact_email,
-                                trim(
-                                    ($contact->contact_first_name ?? '') . ' ' .
-                                    ($contact->contact_last_name ?? '')
-                                )
-                            )->subject($subject);
-$headers = '';
-                            $this->send_smtp_mail($contact->contact_email, "no-reply@constantemails.com", $subject, $campaign, $headers);
+                        //     $mail->to(
+                        //         $contact->contact_email,
+                        //         trim(
+                        //             ($contact->contact_first_name ?? '') . ' ' .
+                        //             ($contact->contact_last_name ?? '')
+                        //         )
+                        //     )->subject($subject);
+                         
+                        //     // $headers = '';
+                        //     // $this->send_smtp_mail($contact->contact_email, "noreply@constantemails.com", $subject, $campaign, $headers);
 
-                            // Email successfully handed to the mailer
-                            CampaignRecipient::where('campaign_id', $campaign->id)
-                                ->where('contact_id', $contact->id)
-                                ->update([
-                                    'status' => 'sent',
-                                    'sent_at' => now(),
-                                    'updated_at' => now(),
-                                ]);
+                        //     // Email successfully handed to the mailer
+                        //     CampaignRecipient::where('campaign_id', $campaign->id)
+                        //         ->where('contact_id', $contact->id)
+                        //         ->update([
+                        //             'status' => 'sent',
+                        //             'sent_at' => now(),
+                        //             'updated_at' => now(),
+                        //         ]);
 
                                 
+                        //     /*
+                        //     |--------------------------------------------------------------------------
+                        //     | Attach Campaign File
+                        //     |--------------------------------------------------------------------------
+                        //     */
+                        //     if ($campaign->attachment) {
+
+                        //         // $attachmentPath = storage_path(
+                        //         //     'app/public/' . $campaign->attachment
+                        //         // );
+                        //         $attachmentPath = Storage::disk('public')->path(
+                        //             $campaign->attachment
+                        //         );
+
+                        //         if (file_exists($attachmentPath)) {
+
+                        //             $mail->attach($attachmentPath);
+
+                        //             Log::info('Campaign attachment added', [
+                        //                 'campaign_id' => $campaign->id,
+                        //                 'recipient' => $contact->contact_email,
+                        //                 'attachment' => $attachmentPath,
+                        //             ]);
+
+                        //         } else {
+
+                        //             Log::warning(
+                        //                 'Campaign attachment file not found',
+                        //                 [
+                        //                     'campaign_id' => $campaign->id,
+                        //                     'attachment' => $attachmentPath,
+                        //                 ]
+                        //             );
+                        //         }
+                        //     }
+
+                        // });
+
+                        // New code for send mail
+                        try {
+
+                            $attachmentPath = null;
+
                             /*
                             |--------------------------------------------------------------------------
-                            | Attach Campaign File
+                            | Get Campaign Attachment
                             |--------------------------------------------------------------------------
                             */
                             if ($campaign->attachment) {
 
-                                // $attachmentPath = storage_path(
-                                //     'app/public/' . $campaign->attachment
-                                // );
                                 $attachmentPath = Storage::disk('public')->path(
                                     $campaign->attachment
                                 );
 
-                                if (file_exists($attachmentPath)) {
+                                if (!file_exists($attachmentPath)) {
 
-                                    $mail->attach($attachmentPath);
-
-                                    Log::info('Campaign attachment added', [
+                                    Log::warning('Campaign attachment file not found', [
                                         'campaign_id' => $campaign->id,
-                                        'recipient' => $contact->contact_email,
-                                        'attachment' => $attachmentPath,
+                                        'attachment'  => $attachmentPath,
                                     ]);
 
-                                } else {
-
-                                    Log::warning(
-                                        'Campaign attachment file not found',
-                                        [
-                                            'campaign_id' => $campaign->id,
-                                            'attachment' => $attachmentPath,
-                                        ]
-                                    );
+                                    $attachmentPath = null;
                                 }
                             }
 
-                        });
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Send Email
+                            |--------------------------------------------------------------------------
+                            */
+                            $this->send_smtp_mail(
+                                $contact->contact_email,
+                                'noreply@constantemails.com',
+                                $subject,
+                                $html,
+                                $attachmentPath
+                            );
 
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Mark Recipient Sent
+                            |--------------------------------------------------------------------------
+                            */
+                            CampaignRecipient::where('campaign_id', $campaign->id)
+                                ->where('contact_id', $contact->id)
+                                ->update([
+                                    'status'       => 'sent',
+                                    'sent_at'      => now(),
+                                    'error_message'=> null,
+                                    'updated_at'   => now(),
+                                ]);
+
+                            Log::info('Campaign email sent successfully', [
+                                'campaign_id' => $campaign->id,
+                                'recipient'   => $contact->contact_email,
+                                'attachment'  => $attachmentPath,
+                            ]);
+
+                        } catch (\Throwable $e) {
+
+                            CampaignRecipient::where('campaign_id', $campaign->id)
+                                ->where('contact_id', $contact->id)
+                                ->update([
+                                    'status'        => 'failed',
+                                    'error_message' => $e->getMessage(),
+                                    'updated_at'    => now(),
+                                ]);
+
+                            Log::error('Campaign email failed', [
+                                'campaign_id' => $campaign->id,
+                                'recipient'   => $contact->contact_email,
+                                'error'       => $e->getMessage(),
+                            ]);
+
+                            throw $e;
+                        }
 
                         Log::info('Campaign email sent new', [
                             'campaign_id' => $campaign->id,
@@ -297,59 +376,366 @@ $headers = '';
             });
     }
 
-    public function send_smtp_mail($to, $from, $subject, $body,$headers = '') {
-        $smtpServer = "10.1.15.202";
+    public function send_smtp_mail(
+    $to,
+    $from,
+    $subject,
+    $body,
+    $attachmentPath = null
+    ) {
+        $smtpServer = '10.1.15.202';
         $smtpPort   = 25;
 
-        $fp = fsockopen($smtpServer, $smtpPort, $errno, $errstr, 10);
+        $errno  = 0;
+        $errstr = '';
+
+        $fp = fsockopen(
+            $smtpServer,
+            $smtpPort,
+            $errno,
+            $errstr,
+            10
+        );
+
         if (!$fp) {
-            die("Connection failed: $errstr ($errno)\n");
+            throw new \Exception(
+                "SMTP connection failed: {$errstr} ({$errno})"
+            );
         }
 
-        // helper to read and write
-        $read = function() use ($fp) {
-            return fgets($fp, 515);
+        stream_set_timeout($fp, 30);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Read SMTP response
+        |--------------------------------------------------------------------------
+        */
+        $readResponse = function () use ($fp) {
+
+            $response = '';
+
+            while (($line = fgets($fp, 515)) !== false) {
+
+                $response .= $line;
+
+                // End of multiline SMTP response
+                if (isset($line[3]) && $line[3] === ' ') {
+                    break;
+                }
+            }
+
+            return $response;
         };
-        $write = function($cmd) use ($fp) {
-            fwrite($fp, $cmd . "\r\n");
+
+        /*
+        |--------------------------------------------------------------------------
+        | Send SMTP command
+        |--------------------------------------------------------------------------
+        */
+        $sendCommand = function ($command) use ($fp, $readResponse) {
+
+            fwrite($fp, $command . "\r\n");
+
+            return $readResponse();
         };
 
-        $read(); // server banner
-        $write("HELO globalchemicalscorp.com");
-        $read();
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP Greeting
+        |--------------------------------------------------------------------------
+        */
+        $response = $readResponse();
 
-        $write("MAIL FROM:<$from>");
-        $read();
+        if (substr($response, 0, 1) !== '2') {
 
-        $write("RCPT TO:<$to>");
-        $read();
+            fclose($fp);
 
-        $write("DATA");
-        $read();
+            throw new \Exception(
+                "SMTP greeting failed: {$response}"
+            );
+        }
 
-        // $headers  = "From: $from\r\n";
-        // $headers .= "To: $to\r\n";
-        // $headers .= "Subject: $subject\r\n";
-        // $headers .= "X-Mailer: PHP SMTP\r\n";
-        //$message = $headers . "\r\n" . $body . "\r\n.\r\n";
-        // $headers  = "From: $from\r\n";
-        // $headers .= "Reply-To: $from\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "Content-Transfer-Encoding: 8bit\r\n";
-        //echo nl2br($headers);die;
+        /*
+        |--------------------------------------------------------------------------
+        | HELO
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            'HELO constantemails.com'
+        );
 
-        $mailBody = "To: $to\r\nSubject: $subject\r\n$headers\r\n$body\r\n.\r\n";
-        //echo nl2br($mailBody);die;
+        if (substr($response, 0, 3) !== '250') {
 
-        fwrite($fp, $mailBody);
-        $read();
+            fclose($fp);
 
-        $write("QUIT");
+            throw new \Exception(
+                "SMTP HELO failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | MAIL FROM
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            "MAIL FROM:<{$from}>"
+        );
+
+        if (substr($response, 0, 3) !== '250') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP MAIL FROM failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RCPT TO
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            "RCPT TO:<{$to}>"
+        );
+
+        if (
+            substr($response, 0, 3) !== '250' &&
+            substr($response, 0, 3) !== '251'
+        ) {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP RCPT TO failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand('DATA');
+
+        if (substr($response, 0, 3) !== '354') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP DATA failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | MIME Boundary
+        |--------------------------------------------------------------------------
+        */
+        $boundary = '=_ConstantEmails_' . md5(
+            uniqid((string) mt_rand(), true)
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Email Headers
+        |--------------------------------------------------------------------------
+        */
+        $message  = "Date: " . date('r') . "\r\n";
+        $message .= "From: {$from}\r\n";
+        $message .= "To: {$to}\r\n";
+        $message .= "Subject: {$subject}\r\n";
+        $message .= "MIME-Version: 1.0\r\n";
+
+        /*
+        |--------------------------------------------------------------------------
+        | Attachment
+        |--------------------------------------------------------------------------
+        */
+        if ($attachmentPath && file_exists($attachmentPath)) {
+
+            $fileName = basename($attachmentPath);
+
+            $mimeType = mime_content_type($attachmentPath);
+
+            if (!$mimeType) {
+                $mimeType = 'application/octet-stream';
+            }
+
+            $message .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | HTML Body
+            |--------------------------------------------------------------------------
+            */
+            $message .= "--{$boundary}\r\n";
+            $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: 8bit\r\n";
+            $message .= "\r\n";
+
+            // Prevent SMTP termination issues
+            $body = str_replace(
+                ["\r\n.", "\n."],
+                ["\r\n..", "\n.."],
+                $body
+            );
+
+            $message .= $body;
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | Attachment
+            |--------------------------------------------------------------------------
+            */
+            $fileContent = file_get_contents($attachmentPath);
+
+            if ($fileContent === false) {
+
+                fclose($fp);
+
+                throw new \Exception(
+                    "Unable to read attachment: {$attachmentPath}"
+                );
+            }
+
+            $encodedFile = chunk_split(
+                base64_encode($fileContent),
+                76,
+                "\r\n"
+            );
+
+            $message .= "--{$boundary}\r\n";
+            $message .= "Content-Type: {$mimeType}; name=\"{$fileName}\"\r\n";
+            $message .= "Content-Disposition: attachment; filename=\"{$fileName}\"\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n";
+            $message .= "\r\n";
+            $message .= $encodedFile;
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | End MIME
+            |--------------------------------------------------------------------------
+            */
+            $message .= "--{$boundary}--\r\n";
+
+        } else {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Normal HTML Email Without Attachment
+            |--------------------------------------------------------------------------
+            */
+            $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: 8bit\r\n";
+            $message .= "\r\n";
+
+            $body = str_replace(
+                ["\r\n.", "\n."],
+                ["\r\n..", "\n.."],
+                $body
+            );
+
+            $message .= $body;
+            $message .= "\r\n";
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP End of DATA
+        |--------------------------------------------------------------------------
+        */
+        $message .= ".\r\n";
+
+        fwrite($fp, $message);
+
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP Response
+        |--------------------------------------------------------------------------
+        */
+        $response = $readResponse();
+
+        if (substr($response, 0, 3) !== '250') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP message rejected: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | QUIT
+        |--------------------------------------------------------------------------
+        */
+        fwrite($fp, "QUIT\r\n");
+
+        $readResponse();
+
         fclose($fp);
-        //writeLog("Mail sent (relayed via $smtpServer:$smtpPort to $to)\n");
-        //echo "Mail sent (relayed via $smtpServer:$smtpPort)\n";
+
+        return true;
     }
+
+    // public function send_smtp_mail($to, $from, $subject, $body,$headers = '') {
+    //     $smtpServer = "10.1.15.202";
+    //     $smtpPort   = 25;
+
+    //     $fp = fsockopen($smtpServer, $smtpPort, $errno, $errstr, 10);
+    //     if (!$fp) {
+    //         die("Connection failed: $errstr ($errno)\n");
+    //     }
+
+    //     // helper to read and write
+    //     $read = function() use ($fp) {
+    //         return fgets($fp, 515);
+    //     };
+    //     $write = function($cmd) use ($fp) {
+    //         fwrite($fp, $cmd . "\r\n");
+    //     };
+
+    //     $read(); // server banner
+    //     $write("HELO globalchemicalscorp.com");
+    //     $read();
+
+    //     $write("MAIL FROM:<$from>");
+    //     $read();
+
+    //     $write("RCPT TO:<$to>");
+    //     $read();
+
+    //     $write("DATA");
+    //     $read();
+
+    //     // $headers  = "From: $from\r\n";
+    //     // $headers .= "To: $to\r\n";
+    //     // $headers .= "Subject: $subject\r\n";
+    //     // $headers .= "X-Mailer: PHP SMTP\r\n";
+    //     //$message = $headers . "\r\n" . $body . "\r\n.\r\n";
+    //     // $headers  = "From: $from\r\n";
+    //     // $headers .= "Reply-To: $from\r\n";
+    //     $headers .= "MIME-Version: 1.0\r\n";
+    //     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    //     $headers .= "Content-Transfer-Encoding: 8bit\r\n";
+    //     //echo nl2br($headers);die;
+
+    //     $mailBody = "To: $to\r\nSubject: $subject\r\n$headers\r\n$body\r\n.\r\n";
+    //     //echo nl2br($mailBody);die;
+
+    //     fwrite($fp, $mailBody);
+    //     $read();
+
+    //     $write("QUIT");
+    //     fclose($fp);
+    //     //writeLog("Mail sent (relayed via $smtpServer:$smtpPort to $to)\n");
+    //     //echo "Mail sent (relayed via $smtpServer:$smtpPort)\n";
+    // }
 
     public function writeLog($message, $file = "app.log") {
         $date = date("Y-m-d H:i:s");
