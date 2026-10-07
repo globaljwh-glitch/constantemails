@@ -222,6 +222,8 @@ class SendCampaignJob implements ShouldQueue
                                     ($contact->contact_last_name ?? '')
                                 )
                             )->subject($subject);
+$headers = '';
+                            $this->send_smtp_mail($contact->contact_email, "no-reply@constantemails.com", $subject, $campaign, $headers);
 
                             // Email successfully handed to the mailer
                             CampaignRecipient::where('campaign_id', $campaign->id)
@@ -293,6 +295,68 @@ class SendCampaignJob implements ShouldQueue
                     }
                 }
             });
+    }
+
+    public function send_smtp_mail($to, $from, $subject, $body,$headers = '') {
+        $smtpServer = "10.1.15.202";
+        $smtpPort   = 25;
+
+        $fp = fsockopen($smtpServer, $smtpPort, $errno, $errstr, 10);
+        if (!$fp) {
+            die("Connection failed: $errstr ($errno)\n");
+        }
+
+        // helper to read and write
+        $read = function() use ($fp) {
+            return fgets($fp, 515);
+        };
+        $write = function($cmd) use ($fp) {
+            fwrite($fp, $cmd . "\r\n");
+        };
+
+        $read(); // server banner
+        $write("HELO globalchemicalscorp.com");
+        $read();
+
+        $write("MAIL FROM:<$from>");
+        $read();
+
+        $write("RCPT TO:<$to>");
+        $read();
+
+        $write("DATA");
+        $read();
+
+        // $headers  = "From: $from\r\n";
+        // $headers .= "To: $to\r\n";
+        // $headers .= "Subject: $subject\r\n";
+        // $headers .= "X-Mailer: PHP SMTP\r\n";
+        //$message = $headers . "\r\n" . $body . "\r\n.\r\n";
+        // $headers  = "From: $from\r\n";
+        // $headers .= "Reply-To: $from\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $headers .= "Content-Transfer-Encoding: 8bit\r\n";
+        //echo nl2br($headers);die;
+
+        $mailBody = "To: $to\r\nSubject: $subject\r\n$headers\r\n$body\r\n.\r\n";
+        //echo nl2br($mailBody);die;
+
+        fwrite($fp, $mailBody);
+        $read();
+
+        $write("QUIT");
+        fclose($fp);
+        //writeLog("Mail sent (relayed via $smtpServer:$smtpPort to $to)\n");
+        //echo "Mail sent (relayed via $smtpServer:$smtpPort)\n";
+    }
+
+    public function writeLog($message, $file = "app.log") {
+        $date = date("Y-m-d H:i:s");
+        $logMessage = "[" . $date . "] " . $message . PHP_EOL;
+
+        // Append message to log file
+        file_put_contents($file, $logMessage, FILE_APPEND);
     }
 
     private function convertLinks(string $html, int $recipientId): string {
