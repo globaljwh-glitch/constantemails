@@ -374,6 +374,83 @@ class SendCampaignJob implements ShouldQueue
                     }
                 }
             });
+            
+
+            // $campaign = MailCampaign::findOrFail($campaign->id);
+
+            // if (!empty($campaign->additional_recipients)) {
+
+            //     $additionalRecipients = collect(
+            //         preg_split('/[,;\s]+/', $campaign->additional_recipients)
+            //     )
+            //     ->map(fn ($email) => strtolower(trim($email)))
+            //     ->filter()
+            //     ->unique()
+            //     ->values();
+
+            //     $normalContactEmails = collect($contacts)
+            //         ->pluck('contact_email')
+            //         ->map(fn ($email) => strtolower(trim($email)))
+            //         ->filter()
+            //         ->toArray();
+
+            //     $additionalRecipients = $additionalRecipients
+            //         ->reject(fn ($email) => in_array($email, $normalContactEmails))
+            //         ->values();
+
+            //     foreach ($additionalRecipients as $email) {
+
+            //         $this->send_smtp_mail(
+            //             $email,
+            //             'noreply@constantemails.com',
+            //             $subject,
+            //             $html,
+            //             $attachmentPath
+            //         );
+            //     }
+            // }
+
+            $campaign = MailCampaign::findOrFail($campaign->id);
+
+            if (!empty($campaign->additional_recipients)) {
+
+                $additionalRecipients = collect(
+                    preg_split('/[,;\s]+/', $campaign->additional_recipients)
+                )
+                ->map(fn ($email) => strtolower(trim($email)))
+                ->filter(fn ($email) => filter_var($email, FILTER_VALIDATE_EMAIL))
+                ->unique()
+                ->values();
+
+                // Normal campaign contact emails
+                $normalContactEmails = collect($contacts)
+                    ->pluck('contact_email')
+                    ->map(fn ($email) => strtolower(trim($email)))
+                    ->filter()
+                    ->toArray();
+
+                // Remove recipients already included in normal contacts
+                $additionalRecipients = $additionalRecipients
+                    ->reject(fn ($email) => in_array($email, $normalContactEmails))
+                    ->values();
+
+                // Send additional recipients
+                foreach ($additionalRecipients as $email) {
+
+                    $this->send_smtp_mail(
+                        $email,
+                        'noreply@constantemails.com',
+                        $subject,
+                        $html,
+                        $attachmentPath
+                    );
+
+                    Log::info('Additional recipient email sent', [
+                        'campaign_id' => $campaign->id,
+                        'recipient'   => $email,
+                    ]);
+                }
+            }
     }
 
     public function send_smtp_mail(
@@ -940,14 +1017,14 @@ class SendCampaignJob implements ShouldQueue
             $footer .= '
             <tr>
 
-                <td>
+                <td style="padding: 5px 0px;">
 
                     <table cellpadding="0" cellspacing="0">
 							<tr>
 								
 
 
-						<td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:14px; mso-line-height-rule:exactly; margin:0 !important;">
+						<td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
                         This email was sent to
                         <a href="mailto:' . e($recipientEmail) . '">
                             ' . e($recipientEmail) . '
@@ -955,7 +1032,7 @@ class SendCampaignJob implements ShouldQueue
                     </td>
                     </tr>
                     <tr>
-                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:14px; mso-line-height-rule:exactly; margin:0 !important;">
+                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
                         By
                         <a href="mailto:' . e($fromEmail) . '">
                             ' . e($fromEmail) . '
@@ -963,7 +1040,7 @@ class SendCampaignJob implements ShouldQueue
                     </td>
                     </tr>
                     <tr>
-                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:14px; mso-line-height-rule:exactly; margin:0 !important;">
+                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
 
                         <a href="' . e($unsubscribeUrl) . '">
                             Unsubscribe
@@ -998,7 +1075,7 @@ class SendCampaignJob implements ShouldQueue
                     </td>
                     </tr>
                     <tr>
-                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:14px; mso-line-height-rule:exactly; margin:0 !important;">
+                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
                         ' . e($companyDetails) . '
                     </td>
                 </tr>

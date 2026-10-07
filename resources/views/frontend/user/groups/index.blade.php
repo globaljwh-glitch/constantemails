@@ -26,6 +26,11 @@
                     <a href="{{ url()->previous() }}" class="btn btn-default orangeBg text-white">
                         Back
                     </a>
+                    <a
+                        href="{{ route('user.groups.create') }}"
+                        class="btn btn-default orangeBg text-white">
+                        Add Group
+                    </a>
                 </div>
                 <div class="gap-2">
                     <button

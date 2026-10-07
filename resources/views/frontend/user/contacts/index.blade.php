@@ -26,7 +26,16 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
 
     <div>
-        <a href="{{ url()->previous() }}"
+        <!-- <a href="{{ url()->previous() }}"
+        class="btn btn-default orangeBg text-white">
+            Back
+        </a> -->
+
+        <a href="{{ session()->has('campaign_draft')
+                ? route('user.campaigns.groups', [
+                    'campaign' => session('campaign_draft.campaign_id')
+                ])
+                : route('user.groups.index') }}"
         class="btn btn-default orangeBg text-white">
             Back
         </a>
@@ -76,6 +85,7 @@
                     <th width="3%">
                         <input type="checkbox" id="checkAll">
                     </th>
+                    <th width="5%">Sr. No.</th>
                     <th width="17%">Name</th>
                     <th width="">Email</th>
                     <th width="15%">Phone</th>
@@ -86,7 +96,9 @@
             </thead>
 
             <tbody>
-
+            @php
+            $serial_number = 1;
+            @endphp
             @forelse($contacts as $contact)
 
                 <tr>
@@ -96,7 +108,9 @@
                                name="contact_ids[]"
                                value="{{ $contact->id }}">
                     </td>
-
+                    <td>
+                        {{ $serial_number++ }}
+                    </td>
                     <td>
                         {{ $contact->contact_first_name }}
                         {{ $contact->contact_last_name }}
@@ -117,7 +131,13 @@
                     </td>
 
                     <td class="text-center">
-                        <a href="{{ route('user.contacts.edit', $contact) }}">
+                        <!-- <a href="{{ route('user.contacts.edit', $contact) }}">
+                            <i class="fa fa-edit"></i>
+                        </a> -->
+                        <a href="{{ route('user.contacts.edit', [
+                            'contact' => $contact->id,
+                            'group_id' => $group->id
+                        ]) }}">
                             <i class="fa fa-edit"></i>
                         </a>
                     </td>

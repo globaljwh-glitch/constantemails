@@ -46,7 +46,13 @@ class CampaignController extends Controller
         //         ->get(['id', 'email_title']),
         // ]);
         $validated = $request->validate([
-            'email_subject' => 'required|max:255',
+            //'email_subject' => 'required|max:255',
+            'email_subject' => [
+                'required',
+                'max:255',
+                Rule::unique('mail_campaign', 'email_subject')
+                    ->ignore($campaignId, 'id'),
+            ],
             'from_name'     => 'required|max:255',
             'email_title' => [
                 'required',

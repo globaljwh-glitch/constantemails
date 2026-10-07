@@ -134,6 +134,12 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::post('/groups/delete', [GroupController::class, 'bulkDelete'])->name('groups.bulk-delete');
     Route::get('/groups/{group}/contacts', [ContactController::class, 'index'])->name('groups.contacts.index');
 
+    // Route::get('/groups/{group}/contacts/{contact}/edit', [ContactController::class, 'edit'])
+    // ->name('groups.contacts.edit');
+
+    // Route::put('/groups/{group}/contacts/{contact}', [ContactController::class, 'update'])
+    // ->name('groups.contacts.update');
+
     Route::get('/contacts/import', [ContactController::class, 'createImport'])->name('contacts.import');
     Route::post('/contacts/import', [ContactController::class, 'import'])->name('contacts.import.store');
 

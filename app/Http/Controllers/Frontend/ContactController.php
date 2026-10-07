@@ -802,13 +802,14 @@ class ContactController extends Controller
     //         )
     //         ->with('success', 'Contact updated successfully.');
     // }
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, Group $group, Contact $contact)
     {
         abort_if($contact->user_id != auth()->id(), 403);
 
         $request->validate([
-            'group_id' => 'required',
-            'group_id.*' => 'exists:groups,id',
+            //'group_id' => 'required',
+            'group_id' => ['required', 'array', 'min:1'],
+            'group_id.*' => 'exists:contact_groups,id',
 
             'contact_first_name' => 'required',
             'contact_email' => 'required|email',
@@ -827,13 +828,33 @@ class ContactController extends Controller
         // Update contact_group pivot table
         $contact->groups()->sync($request->group_id);
 
-        // Redirect to first selected group
-        return redirect()
-            ->route(
+        if ($request->filled('return_group_id')) {
+
+            $redirect = redirect()->route(
                 'user.groups.contacts.index',
-                ['group' => $request->group_id[0]]
-            )
-            ->with('success', 'Contact updated successfully.');
+                ['group' => $request->return_group_id]
+            );
+
+        } else {
+
+            $redirect = redirect()->route(
+                'user.contacts.assign'
+            );
+        }
+
+        return $redirect->with(
+            'success',
+            'Contact updated successfully.'
+        );
+
+        // $returnGroupId = $request->return_group_id;
+        // // Redirect to first selected group
+        // return redirect()
+        //     ->route(
+        //         'user.groups.contacts.index',
+        //         ['group' => $returnGroupId]
+        //     )
+        //     ->with('success', 'Contact updated successfully.');
     }
 
     /**

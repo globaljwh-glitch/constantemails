@@ -35,14 +35,27 @@
 
             <div class="col-lg-6">
 
-                <select name="group_id"
+                <select name="group_id[]"
                         class="form-control"
-                        required>
+                        required multiple>
+
+                    @php
+                        $selectedGroups = old(
+                            'group_id',
+                            $contact->groups->pluck('id')->toArray()
+                        );
+                    @endphp
 
                     @foreach($groups as $group)
 
-                        <option value="{{ $group->id }}"
+                        <!-- <option value="{{ $group->id }}"
                             {{ old('group_id',$contact->group_id)==$group->id?'selected':'' }}>
+
+                            {{ $group->group_name }}
+
+                        </option> -->
+                        <option value="{{ $group->id }}"
+                            {{ in_array($group->id, $selectedGroups) ? 'selected' : '' }}>
 
                             {{ $group->group_name }}
 
@@ -56,7 +69,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-lg-3"><strong>First Name</strong></div>
             <div class="col-lg-6">
                 <input type="text"
@@ -68,7 +81,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-lg-3"><strong>Last Name</strong></div>
             <div class="col-lg-6">
                 <input type="text"
@@ -79,7 +92,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-lg-3"><strong>Email</strong></div>
             <div class="col-lg-6">
                 <input type="email"
@@ -91,7 +104,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-lg-3"><strong>Phone</strong></div>
             <div class="col-lg-6">
                 <input type="text"
@@ -102,7 +115,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-lg-3"><strong>Company</strong></div>
             <div class="col-lg-6">
                 <input type="text"
@@ -113,7 +126,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-lg-3"><strong>Address</strong></div>
             <div class="col-lg-6">
                 <textarea name="contact_address"
@@ -123,13 +136,14 @@
         </div>
 
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-lg-3"><strong>Area of Interest</strong></div>
             <div class="col-lg-6">
                 <input type="text"
                        name="area_interest"
                        class="form-control"
                        value="{{ old('area_interest',$contact->area_interest) }}">
+                <input type="hidden" name="return_group_id" value="{{ request('group_id') }}">
             </div>
         </div>
 
