@@ -410,47 +410,47 @@ class SendCampaignJob implements ShouldQueue
             //     }
             // }
 
-            $campaign = MailCampaign::findOrFail($campaign->id);
+            // $campaign = MailCampaign::findOrFail($campaign->id);
 
-            if (!empty($campaign->additional_recipients)) {
+            // if (!empty($campaign->additional_recipients)) {
 
-                $additionalRecipients = collect(
-                    preg_split('/[,;\s]+/', $campaign->additional_recipients)
-                )
-                ->map(fn ($email) => strtolower(trim($email)))
-                ->filter(fn ($email) => filter_var($email, FILTER_VALIDATE_EMAIL))
-                ->unique()
-                ->values();
+            //     $additionalRecipients = collect(
+            //         preg_split('/[,;\s]+/', $campaign->additional_recipients)
+            //     )
+            //     ->map(fn ($email) => strtolower(trim($email)))
+            //     ->filter(fn ($email) => filter_var($email, FILTER_VALIDATE_EMAIL))
+            //     ->unique()
+            //     ->values();
 
-                // Normal campaign contact emails
-                $normalContactEmails = collect($contacts)
-                    ->pluck('contact_email')
-                    ->map(fn ($email) => strtolower(trim($email)))
-                    ->filter()
-                    ->toArray();
+            //     // Normal campaign contact emails
+            //     $normalContactEmails = collect($contacts)
+            //         ->pluck('contact_email')
+            //         ->map(fn ($email) => strtolower(trim($email)))
+            //         ->filter()
+            //         ->toArray();
 
-                // Remove recipients already included in normal contacts
-                $additionalRecipients = $additionalRecipients
-                    ->reject(fn ($email) => in_array($email, $normalContactEmails))
-                    ->values();
+            //     // Remove recipients already included in normal contacts
+            //     $additionalRecipients = $additionalRecipients
+            //         ->reject(fn ($email) => in_array($email, $normalContactEmails))
+            //         ->values();
 
-                // Send additional recipients
-                foreach ($additionalRecipients as $email) {
+            //     // Send additional recipients
+            //     foreach ($additionalRecipients as $email) {
 
-                    $this->send_smtp_mail(
-                        $email,
-                        'noreply@constantemails.com',
-                        $subject,
-                        $html,
-                        $attachmentPath
-                    );
+            //         $this->send_smtp_mail(
+            //             $email,
+            //             'noreply@constantemails.com',
+            //             $subject,
+            //             $html,
+            //             $attachmentPath
+            //         );
 
-                    Log::info('Additional recipient email sent', [
-                        'campaign_id' => $campaign->id,
-                        'recipient'   => $email,
-                    ]);
-                }
-            }
+            //         Log::info('Additional recipient email sent', [
+            //             'campaign_id' => $campaign->id,
+            //             'recipient'   => $email,
+            //         ]);
+            //     }
+            // }
     }
 
     public function send_smtp_mail(
