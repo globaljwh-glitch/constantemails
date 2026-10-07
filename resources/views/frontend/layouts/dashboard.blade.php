@@ -12,7 +12,9 @@
             </div>
 
             <div class="col-lg-9 col-md-8">
-                @include('frontend.includes.flash-message')
+                <div class="acoountRightSection {{ request()->routeIs('user.groups.contacts.index') ? 'contactAccountSection' : '' }}">
+                    @include('frontend.includes.flash-message')
+                </div>
                 
                 @yield('dashboard-content')
             </div>
