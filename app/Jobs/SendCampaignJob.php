@@ -999,7 +999,7 @@ class SendCampaignJob implements ShouldQueue
                 cellspacing="0"
                 style="
                         text-align:left;
-                        padding:20px 20px;
+                        
                 "
                 class="email_temp_footer">
             ';
@@ -1015,7 +1015,7 @@ class SendCampaignJob implements ShouldQueue
             $footer .= '
             <tr>
 
-                <td align="center" style="padding: 5px 0px; text-align:center;">
+                <td align="center" style="padding:20px 20px; text-align:center;">
 
                     <table style="width:100%;" cellpadding="0" cellspacing="0" width="100%">
 							<tr>
