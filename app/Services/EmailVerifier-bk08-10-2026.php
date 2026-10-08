@@ -263,20 +263,7 @@ class EmailVerifier
 
             /*
             |--------------------------------------------------------------------------
-            | Catch-all domain
-            |--------------------------------------------------------------------------
-            */
-
-            if ($result['status'] === 'catch_all') {
-
-                $verification->status = 'catch_all';
-
-                break;
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Valid mailbox
+            | Accepted
             |--------------------------------------------------------------------------
             */
 
@@ -323,12 +310,6 @@ class EmailVerifier
 
     /**
      * Perform SMTP recipient verification.
-     *
-     * After the real email is accepted, a random fake
-     * email is tested against the SAME MX server.
-     *
-     * Real accepted + fake rejected = valid
-     * Real accepted + fake accepted = catch_all
      */
     protected function checkSmtp(
         string $host,
@@ -506,7 +487,7 @@ class EmailVerifier
 
         /*
         |--------------------------------------------------------------------------
-        | RCPT TO - REAL EMAIL
+        | RCPT TO
         |--------------------------------------------------------------------------
         */
 
@@ -519,174 +500,7 @@ class EmailVerifier
             $socket
         );
 
-        $realCode = $this->getCode($response);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Real email rejected
-        |--------------------------------------------------------------------------
-        */
-
-        if ($realCode >= 500) {
-
-            fwrite(
-                $socket,
-                "QUIT\r\n"
-            );
-
-            fclose($socket);
-
-            return [
-                'status' => 'rejected',
-                'code' => $realCode,
-                'message' => trim($response),
-            ];
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Real email temporarily rejected
-        |--------------------------------------------------------------------------
-        */
-
-        if ($realCode >= 400 && $realCode < 500) {
-
-            fwrite(
-                $socket,
-                "QUIT\r\n"
-            );
-
-            fclose($socket);
-
-            return [
-                'status' => 'temporary',
-                'code' => $realCode,
-                'message' => trim($response),
-            ];
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Real email must be accepted before catch-all test
-        |--------------------------------------------------------------------------
-        */
-
-        if ($realCode < 200 || $realCode >= 300) {
-
-            fwrite(
-                $socket,
-                "QUIT\r\n"
-            );
-
-            fclose($socket);
-
-            return [
-                'status' => 'unknown',
-                'code' => $realCode,
-                'message' => trim($response),
-            ];
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Generate random fake email
-        |--------------------------------------------------------------------------
-        */
-
-        $fakeEmail = $this->generateFakeEmail(
-            $email
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Reset SMTP transaction
-        |--------------------------------------------------------------------------
-        |
-        | We reset the transaction before testing the fake
-        | address so the fake RCPT test is independent.
-        |
-        */
-
-        fwrite(
-            $socket,
-            "RSET\r\n"
-        );
-
-        $response = $this->readResponse(
-            $socket
-        );
-
-        $resetCode = $this->getCode($response);
-
-        if ($resetCode < 200 || $resetCode >= 400) {
-
-            fwrite(
-                $socket,
-                "QUIT\r\n"
-            );
-
-            fclose($socket);
-
-            return [
-                'status' => 'unknown',
-                'code' => $realCode,
-                'message' =>
-                    'Real email accepted, but catch-all test could not be performed',
-            ];
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | MAIL FROM again
-        |--------------------------------------------------------------------------
-        */
-
-        fwrite(
-            $socket,
-            "MAIL FROM:<{$this->from}>\r\n"
-        );
-
-        $response = $this->readResponse(
-            $socket
-        );
-
-        $fromCode = $this->getCode($response);
-
-        if ($fromCode < 200 || $fromCode >= 400) {
-
-            fwrite(
-                $socket,
-                "QUIT\r\n"
-            );
-
-            fclose($socket);
-
-            return [
-                'status' => 'unknown',
-                'code' => $realCode,
-                'message' =>
-                    'Real email accepted, but fake recipient test could not be performed',
-            ];
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | RCPT TO - RANDOM FAKE EMAIL
-        |--------------------------------------------------------------------------
-        */
-
-        fwrite(
-            $socket,
-            "RCPT TO:<{$fakeEmail}>\r\n"
-        );
-
-        $fakeResponse = $this->readResponse(
-            $socket
-        );
-
-        $fakeCode = $this->getCode(
-            $fakeResponse
-        );
+        $code = $this->getCode($response);
 
         /*
         |--------------------------------------------------------------------------
@@ -703,104 +517,50 @@ class EmailVerifier
 
         /*
         |--------------------------------------------------------------------------
-        | Fake email accepted
+        | Interpret SMTP response
         |--------------------------------------------------------------------------
-        |
-        | If the MX server accepts a random address that almost
-        | certainly does not exist, the domain is probably catch-all.
-        |
         */
 
-        if ($fakeCode >= 200 && $fakeCode < 300) {
-
-            Log::info(
-                'Catch-all domain detected',
-                [
-                    'host' => $host,
-                    'email' => $email,
-                    'fake_email' => $fakeEmail,
-                    'real_code' => $realCode,
-                    'fake_code' => $fakeCode,
-                ]
-            );
-
-            return [
-                'status' => 'catch_all',
-                'code' => $realCode,
-                'message' =>
-                    'Mailbox accepted, but the mail server also accepted a random non-existent address. Domain appears to be catch-all.',
-            ];
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Fake email rejected with 5xx
-        |--------------------------------------------------------------------------
-        |
-        | Real email accepted.
-        | Fake email rejected.
-        |
-        | This is the strongest result we can obtain through
-        | SMTP probing that the mailbox is likely valid.
-        |
-        */
-
-        if ($fakeCode >= 500) {
+        if ($code >= 200 && $code < 300) {
 
             return [
                 'status' => 'accepted',
-                'code' => $realCode,
-                'message' =>
-                    'Email address accepted and random fake address rejected. Mailbox appears valid.',
+                'code' => $code,
+                'message' => trim($response),
             ];
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | Fake email temporarily rejected
-        |--------------------------------------------------------------------------
+        | 4xx = temporary
         */
 
-        if ($fakeCode >= 400 && $fakeCode < 500) {
+        if ($code >= 400 && $code < 500) {
 
             return [
-                'status' => 'unknown',
-                'code' => $realCode,
-                'message' =>
-                    'Email address was accepted, but the catch-all test returned a temporary response.',
+                'status' => 'temporary',
+                'code' => $code,
+                'message' => trim($response),
             ];
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | Anything else
-        |--------------------------------------------------------------------------
+        | 5xx = rejected
         */
+
+        if ($code >= 500) {
+
+            return [
+                'status' => 'rejected',
+                'code' => $code,
+                'message' => trim($response),
+            ];
+        }
 
         return [
             'status' => 'unknown',
-            'code' => $realCode,
-            'message' =>
-                'Email address was accepted, but the catch-all test could not be confirmed.',
+            'code' => $code,
+            'message' => trim($response),
         ];
-    }
-
-    /**
-     * Generate a random fake email address
-     * using the same domain as the real email.
-     */
-    protected function generateFakeEmail(
-        string $email
-    ): string {
-
-        $parts = explode('@', $email);
-
-        $domain = $parts[1];
-
-        return '__verify_' .
-            bin2hex(random_bytes(16)) .
-            '@' .
-            $domain;
     }
 
     /**

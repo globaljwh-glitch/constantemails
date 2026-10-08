@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use App\Services\EmailVerifier;
 use Illuminate\Http\Request;
@@ -34,5 +34,9 @@ class EmailVerificationController extends Controller
             'message' => $result->message,
             'verified_at' => $result->verified_at,
         ]);
+    }
+    public function validateInside()
+    {
+        return view('frontend.user.email-validate.index');
     }
 }

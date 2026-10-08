@@ -8,6 +8,15 @@ use App\Models\Group;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Contact;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Font;
+use Throwable;
+use Illuminate\Support\Facades\Storage; // <-- Add this line
+
+
 use Illuminate\Support\Facades\DB;
 use App\Models\BadMailCategory;
 use App\Models\BadMailList;
@@ -1238,6 +1247,489 @@ class ContactController extends Controller
     public function verify_email()
     {
         return view('frontend.pages.email-verify');
+    }
+    public function usersValidateEmails()
+    {
+        return view('frontend.user.email-validate.index');
+    }
+    public function postUserEmailvalidate(Request $request,EmailVerifier $verifier) 
+    {
+        $request->validate([
+            'email' => [
+                'nullable',
+                'email',
+                'max:254',
+                'required_without:email_file',
+            ],
+
+            'email_file' => [
+                'nullable',
+                'file',
+                'mimes:xlsx,xls,csv',
+                'max:10240',
+                'required_without:email',
+            ],
+        ], [
+            'email.required_without' =>
+                'Please enter an email address or upload an Excel file.',
+
+            'email_file.required_without' =>
+                'Please enter an email address or upload an Excel file.',
+
+            'email_file.mimes' =>
+                'Please upload an XLSX, XLS or CSV file.',
+
+            'email_file.max' =>
+                'The Excel file cannot be larger than 10 MB.',
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Do not allow both
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->filled('email') && $request->hasFile('email_file')) {
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'Please enter either a single email or upload an Excel file, not both.'
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | SINGLE EMAIL
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->filled('email')) {
+
+            try {
+
+                $email = strtolower(trim($request->email));
+
+                $verification = $verifier->verify($email);
+
+                return redirect()
+                    ->route('user.verification.email')
+                    ->with('single_result', [
+                        'email' => $verification->email,
+                        'status' => $verification->status,
+                        'syntax_valid' => $verification->syntax_valid,
+                        'domain_exists' => $verification->domain_exists,
+                        'mx_exists' => $verification->mx_exists,
+                        'smtp_status' => $verification->smtp_status,
+                        'smtp_code' => $verification->smtp_code,
+                        'message' => $verification->message,
+                    ]);
+
+            } catch (Throwable $e) {
+
+                Log::error(
+                    'Single email verification failed',
+                    [
+                        'email' => $request->email,
+                        'error' => $e->getMessage(),
+                    ]
+                );
+
+                return back()
+                    ->withInput()
+                    ->with(
+                        'error',
+                        'Unable to verify the email address.'
+                    );
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | EXCEL FILE
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->hasFile('email_file')) {
+
+            try {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Load uploaded spreadsheet
+                |--------------------------------------------------------------------------
+                */
+
+                $spreadsheet = IOFactory::load(
+                    $request->file('email_file')->getRealPath()
+                );
+
+                $sheet = $spreadsheet->getActiveSheet();
+
+                $rows = $sheet->toArray(
+                    null,
+                    true,
+                    true,
+                    false
+                );
+
+                if (empty($rows)) {
+                    return back()->with(
+                        'error',
+                        'The uploaded Excel file is empty.'
+                    );
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Create result spreadsheet
+                |--------------------------------------------------------------------------
+                */
+
+                $resultSpreadsheet = new Spreadsheet();
+
+                $resultSheet = $resultSpreadsheet->getActiveSheet();
+
+                $resultSheet->setTitle('Verification Results');
+
+                /*
+                |--------------------------------------------------------------------------
+                | Headers
+                |--------------------------------------------------------------------------
+                */
+
+                $headers = [
+                    'First Name',
+                    'Last Name',
+                    'Company',
+                    'City',
+                    'Email',
+                    'Phone',
+                    'Status',
+                    'SMTP Status',
+                    'SMTP Code',
+                    'Message',
+                ];
+
+                $resultSheet->fromArray(
+                    $headers,
+                    null,
+                    'A1'
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Header styling
+                |--------------------------------------------------------------------------
+                */
+
+                $resultSheet
+                    ->getStyle('A1:J1')
+                    ->getFont()
+                    ->setBold(true);
+
+                /*
+                |--------------------------------------------------------------------------
+                | Highlight verification headers
+                |--------------------------------------------------------------------------
+                */
+
+                $resultSheet
+                    ->getStyle('G1:J1')
+                    ->getFill()
+                    ->setFillType(Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('FFFFC000');
+
+                /*
+                |--------------------------------------------------------------------------
+                | Process rows
+                |--------------------------------------------------------------------------
+                */
+
+                $outputRow = 2;
+
+                foreach ($rows as $index => $row) {
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Get email from 5th column
+                    |--------------------------------------------------------------------------
+                    |
+                    | Excel:
+                    |
+                    | 0 = First Name
+                    | 1 = Last Name
+                    | 2 = Company
+                    | 3 = City
+                    | 4 = Email
+                    | 5 = Phone
+                    |
+                    */
+
+                    $email = strtolower(
+                        trim(
+                            (string) ($row[4] ?? '')
+                        )
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Original six columns
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $firstName = $row[0] ?? '';
+                    $lastName  = $row[1] ?? '';
+                    $company   = $row[2] ?? '';
+                    $city      = $row[3] ?? '';
+                    $phone     = $row[5] ?? '';
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Empty email
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if ($email === '') {
+
+                        $status = 'invalid';
+                        $smtpStatus = 'skipped';
+                        $smtpCode = '';
+                        $message = 'Email address is empty.';
+
+                    } else {
+
+                        try {
+
+                            $verification = $verifier->verify($email);
+
+                            $status = $verification->status;
+                            $smtpStatus = $verification->smtp_status;
+                            $smtpCode = $verification->smtp_code;
+                            $message = $verification->message;
+
+                        } catch (Throwable $e) {
+
+                            Log::error(
+                                'Bulk email verification failed',
+                                [
+                                    'email' => $email,
+                                    'error' => $e->getMessage(),
+                                ]
+                            );
+
+                            $status = 'unknown';
+                            $smtpStatus = 'error';
+                            $smtpCode = '';
+                            $message = 'Verification failed.';
+                        }
+                    }
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Write original data + verification result
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $resultSheet->fromArray(
+                        [
+                            $firstName,
+                            $lastName,
+                            $company,
+                            $city,
+                            $email,
+                            $phone,
+                            $status,
+                            $smtpStatus,
+                            $smtpCode,
+                            $message,
+                        ],
+                        null,
+                        'A' . $outputRow
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Highlight verification columns
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $resultSheet
+                        ->getStyle("G{$outputRow}:J{$outputRow}")
+                        ->getFill()
+                        ->setFillType(Fill::FILL_SOLID)
+                        ->getStartColor()
+                        ->setARGB(
+                            match ($status) {
+                                'valid' => 'FFC6EFCE',
+                                'invalid' => 'FFFFC7CE',
+                                'catch_all' => 'FFFFEB9C',
+                                default => 'FFE7E6E6',
+                            }
+                        );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Make status bold
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $resultSheet
+                        ->getStyle("G{$outputRow}")
+                        ->getFont()
+                        ->setBold(true);
+
+                    $outputRow++;
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Auto-size columns
+                |--------------------------------------------------------------------------
+                */
+
+                foreach (range('A', 'J') as $column) {
+                    $resultSheet
+                        ->getColumnDimension($column)
+                        ->setAutoSize(true);
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Limit very wide message column
+                |--------------------------------------------------------------------------
+                */
+
+                $resultSheet
+                    ->getColumnDimension('J')
+                    ->setWidth(45);
+
+                $resultSheet
+                    ->getStyle('J:J')
+                    ->getAlignment()
+                    ->setWrapText(true);
+
+                /*
+                |--------------------------------------------------------------------------
+                | Freeze header
+                |--------------------------------------------------------------------------
+                */
+
+                $resultSheet->freezePane('A2');
+
+                /*
+                |--------------------------------------------------------------------------
+                | Create result directory
+                |--------------------------------------------------------------------------
+                */
+
+                $directory = 'email-verification-results';
+
+                if (!Storage::disk('local')->exists($directory)) {
+                    \Storage::disk('local')->makeDirectory($directory);
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Generate unique file name
+                |--------------------------------------------------------------------------
+                */
+
+                $fileName =
+                    'email-verification-' .
+                    now()->format('Y-m-d-H-i-s') .
+                    '-' .
+                    uniqid() .
+                    '.xlsx';
+
+                $filePath = storage_path(
+                    'app/private/' . $directory . '/' . $fileName
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Save result Excel
+                |--------------------------------------------------------------------------
+                */
+
+                $writer = new Xlsx($resultSpreadsheet);
+
+                $writer->save($filePath);
+
+                /*
+                |--------------------------------------------------------------------------
+                | Only store filename in session
+                |--------------------------------------------------------------------------
+                */
+
+                return redirect()
+                    ->route('user.verification.email')
+                    ->with(
+                        'bulk_result_file',
+                        $fileName
+                    );
+
+            } catch (Throwable $e) {
+
+                Log::error(
+                    'Excel email verification failed',
+                    [
+                        'error' => $e->getMessage(),
+                    ]
+                );
+
+                return back()->with(
+                    'error',
+                    'Unable to process the Excel file.'
+                );
+            }
+        }
+
+        return back()->with(
+            'error',
+            'Please enter an email or upload an Excel file.'
+        );
+    }
+    public function downloadResult($fileName)
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Security: allow only generated XLSX filenames
+        |--------------------------------------------------------------------------
+        */
+
+        if (!preg_match(
+            '/^email-verification-[0-9\-]+-[a-zA-Z0-9]+\.xlsx$/',
+            $fileName
+        )) {
+            abort(404);
+        }
+
+        $filePath = storage_path(
+            'app/private/email-verification-results/' . $fileName
+        );
+
+        if (!file_exists($filePath)) {
+            abort(404);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Download and delete after sending
+        |--------------------------------------------------------------------------
+        */
+
+        return response()
+            ->download(
+                $filePath,
+                $fileName,
+                [
+                    'Content-Type' =>
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]
+            )
+            ->deleteFileAfterSend(true);
     }
     
 }

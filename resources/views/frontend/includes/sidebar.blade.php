@@ -97,6 +97,9 @@
         <li class="account-menu-item {{ request()->routeIs('user.referral') ? 'active' : '' }}">
             <a href="{{ route('user.referral') }}" class="{{ request()->routeIs('user.referral') ? 'activeclass' : '' }}"> <i class="fa fa-users" aria-hidden="true"></i> Refer a friend</a>
         </li>
+        <li class="account-menu-item {{ request()->routeIs('user.verification.email') ? 'active' : '' }}">
+            <a href="{{ route('user.verification.email') }}" class="{{ request()->routeIs('user.verification.email') ? 'activeclass' : '' }}"> <i class="fa fa-check-circle" aria-hidden="true"></i> Email verification</a>
+        </li>
     </ul>
 </div>
 

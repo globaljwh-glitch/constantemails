@@ -10,7 +10,7 @@
         "laravel/cashier": "^16.8",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "phpoffice/phpspreadsheet": "^5.9",
+        "phpoffice/phpspreadsheet": "^5.10",
         "stripe/stripe-php": "^20.3"
     },
     "require-dev": {

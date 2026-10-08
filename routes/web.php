@@ -377,7 +377,12 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 
     Route::post('/referral', [ReferralController::class, 'store'])
         ->name('referral.store');
-
+        
+    Route::get('/email-verification', [ContactController::class, 'usersValidateEmails'])
+        ->name('verification.email');
+    Route::post('/email-verification', [ContactController::class, 'postUserEmailvalidate'])
+        ->name('post.verification.email');
+    Route::get( '/email-verification/download/{fileName}', [ContactController::class, 'downloadResult'] )->name('email.verification.download');
 });
 
 Route::get('/test-logout', function () {
