@@ -761,7 +761,7 @@
 
 
                                                     {{-- EXPORT --}}
-                                                    <!-- <div
+                                                    <div
                                                         style="float:left;"
                                                     >
 
@@ -775,7 +775,7 @@
                                                             an Excel *.csv file?
                                                         </a>
 
-                                                    </div> -->
+                                                    </div>
 
 
                                                     {{-- DELETE --}}

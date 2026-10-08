@@ -1239,5 +1239,33 @@ class ContactController extends Controller
     {
         return view('frontend.pages.email-verify');
     }
+
+    public function forward(Request $request, CampaignRecipient $recipient)
+    {
+        return view('frontend.pages.forward', compact(
+            'recipient',
+            'request'
+        ));
+    }
+
+    public function sendForward(Request $request, CampaignRecipient $recipient)
+    {
+        $validated = $request->validate([
+            'first_name'   => ['required', 'string', 'max:100'],
+            'last_name'    => ['required', 'string', 'max:100'],
+            'friend_email' => ['required', 'email', 'max:255'],
+            'message'      => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        // Get campaign
+        $campaign = MailCampaign::findOrFail($recipient->campaign_id);
+
+        // Your email sending logic will go here.
+
+        return back()->with(
+            'success',
+            'Email has been forwarded successfully.'
+        );
+    }
     
 }

@@ -63,6 +63,10 @@ Route::get('/unsubscribe/{contact}', [ContactController::class, 'unsubscribe'])
 Route::get('/forward/{contact}', [ContactController::class, 'forward'])
     ->middleware('signed')
     ->name('forward');
+Route::post('/forward/{recipient}/send', [
+    ContactController::class,
+    'sendForward'
+    ])->name('forward.send');
 Route::get('/email/click/{recipient}', [CampaignController::class, 'click'])
     ->name('email.track.click');
 Route::get('/email/open/{recipient}', [CampaignController::class, 'trackOpen'])
@@ -265,6 +269,11 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 
     // email stats routes
 
+    Route::get('/email-stats/export', [
+        EmailStatsController::class,
+        'export'
+    ])->name('email-stats.export');
+
     Route::get('/email-stats', [
         EmailStatsController::class,
         'index'
@@ -279,11 +288,6 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
         EmailStatsController::class,
         'itemized'
     ])->name('email-stats.itemized');
-
-    Route::get('/email-stats/export', [
-        EmailStatsController::class,
-        'export'
-    ])->name('email-stats.export');
 
     Route::post('/email-stats/delete', [
         EmailStatsController::class,
