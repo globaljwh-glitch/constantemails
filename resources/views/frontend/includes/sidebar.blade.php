@@ -5,6 +5,9 @@
 @endphp
 <div class="settingSection1">
     <ul class="myaccountList">
+        <li class="account-menu-item">
+            <a target="_blank" href="http://americanmailinglists.com"><i class="fa fa-envelope" aria-hidden="true"></i> American Mailing Lists</a>
+        </li>
         <li class="account-menu-item menu-header {{ $isUserAccountActive ? 'active' : '' }}"><a href="javascript:void(0);" class="positionRelative"><i class="fa fa-solid fa-user"></i> My Account <span>
             <i class="fa {{ $isUserAccountActive ? 'fa-minus' : 'fa-plus' }} menu-toggle-icon" aria-hidden="true"></i></span></a>
             <div class="menu-content" id="accountMenuContent" style="display: {{ $isUserAccountActive ? 'block' : 'none' }};">

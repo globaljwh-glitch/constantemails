@@ -362,6 +362,14 @@ $(document).ready(function () {
 
 });
 </script>
+<style>
+/* ================================
+   Summernote Modal Fix
+================================ */
+.note-modal-content {
+    height: 337px;
+}
+</style>
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

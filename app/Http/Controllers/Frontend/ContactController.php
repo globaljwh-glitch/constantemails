@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Storage; // <-- Add this line
 use Illuminate\Support\Facades\DB;
 use App\Models\BadMailCategory;
 use App\Models\BadMailList;
+use App\Models\MailCampaign;
+use App\Models\CampaignRecipient;
 use App\Services\EmailVerifier;
 use Illuminate\Support\Facades\Log;
 
