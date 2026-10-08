@@ -350,25 +350,19 @@ class EmailStatsController extends Controller
     | EXPORT CSV
     |--------------------------------------------------------------------------
     */
-
-    public function export(Request $request): StreamedResponse
+    public function export(Request $request)
     {
         $userId = auth()->id();
 
-
         /*
         |--------------------------------------------------------------------------
-        | Build same campaign query as history
+        | Build campaign query
         |--------------------------------------------------------------------------
         */
 
         $query = MailCampaign::query()
-            ->where('mail_campaign.user_id', $userId)
-            ->where(
-                'mail_campaign.campaign_status',
-                'completed'
-            );
-
+            ->where('mail_campaign.user_id', $userId);
+            //->where('mail_campaign.campaign_status', 'completed');
 
         /*
         |--------------------------------------------------------------------------
@@ -380,34 +374,28 @@ class EmailStatsController extends Controller
             $request->filled('contact_cat') &&
             $request->contact_cat != '0'
         ) {
-
             $categoryId = $request->contact_cat;
 
             $query->whereExists(function ($subQuery) use ($categoryId) {
 
                 $subQuery->select(DB::raw(1))
-
                     ->from('campaign_group')
-
                     ->join(
                         'contact_groups',
                         'contact_groups.id',
                         '=',
                         'campaign_group.group_id'
                     )
-
                     ->whereColumn(
                         'campaign_group.campaign_id',
                         'mail_campaign.id'
                     )
-
                     ->where(
                         'contact_groups.category_id',
                         $categoryId
                     );
             });
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -416,14 +404,12 @@ class EmailStatsController extends Controller
         */
 
         if ($request->filled('sub')) {
-
             $query->where(
                 'mail_campaign.email_title',
                 'like',
                 '%' . trim($request->sub) . '%'
             );
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -444,7 +430,7 @@ class EmailStatsController extends Controller
                     $query->where(
                         'mail_campaign.schedule_date',
                         '<',
-                        $date->startOfDay()
+                        $date->copy()->startOfDay()
                     );
 
                 } elseif ($request->date_range === 'after') {
@@ -452,7 +438,7 @@ class EmailStatsController extends Controller
                     $query->where(
                         'mail_campaign.schedule_date',
                         '>',
-                        $date->endOfDay()
+                        $date->copy()->endOfDay()
                     );
 
                 } elseif ($request->date_range === 'between') {
@@ -460,47 +446,57 @@ class EmailStatsController extends Controller
                     $query->whereBetween(
                         'mail_campaign.schedule_date',
                         [
-                            $date->startOfDay(),
-                            $date->endOfDay(),
+                            $date->copy()->startOfDay(),
+                            $date->copy()->endOfDay(),
                         ]
                     );
                 }
 
             } catch (\Throwable $e) {
-                // Ignore invalid date.
+                // Ignore invalid date
             }
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Get campaigns
+        |--------------------------------------------------------------------------
+        */
 
         $campaigns = $query
             ->latest('mail_campaign.id')
             ->get();
 
-
         /*
         |--------------------------------------------------------------------------
-        | CSV DOWNLOAD
+        | CSV FILE NAME
         |--------------------------------------------------------------------------
         */
 
-        $fileName =
-            'email-history-' .
+        $fileName = 'email-history-' .
             now()->format('Y-m-d-H-i-s') .
             '.csv';
 
+        /*
+        |--------------------------------------------------------------------------
+        | Generate CSV
+        |--------------------------------------------------------------------------
+        */
 
         return response()->streamDownload(
             function () use ($campaigns) {
 
-                $handle = fopen(
-                    'php://output',
-                    'w'
-                );
+                $handle = fopen('php://output', 'w');
 
+                /*
+                | UTF-8 BOM
+                | Helps Excel correctly detect UTF-8 CSV.
+                */
+                fwrite($handle, "\xEF\xBB\xBF");
 
                 /*
                 |--------------------------------------------------------------------------
-                | CSV HEADER
+                | Header
                 |--------------------------------------------------------------------------
                 */
 
@@ -515,10 +511,9 @@ class EmailStatsController extends Controller
                     'Forwarded',
                 ]);
 
-
                 /*
                 |--------------------------------------------------------------------------
-                | DATA
+                | Records
                 |--------------------------------------------------------------------------
                 */
 
@@ -527,7 +522,6 @@ class EmailStatsController extends Controller
                     $stats = $this->getCampaignStats(
                         $campaign->id
                     );
-
 
                     fputcsv($handle, [
 
@@ -553,13 +547,17 @@ class EmailStatsController extends Controller
                     ]);
                 }
 
+                fflush($handle);
 
                 fclose($handle);
+
             },
             $fileName,
             [
-                'Content-Type' =>
-                    'text/csv; charset=UTF-8',
+                'Content-Type' => 'text/csv; charset=UTF-8',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                'Pragma' => 'no-cache',
             ]
         );
     }
@@ -570,57 +568,6 @@ class EmailStatsController extends Controller
     | GET CAMPAIGN STATISTICS
     |--------------------------------------------------------------------------
     */
-
-    // private function getCampaignStats(int $campaignId)
-    // {
-    //     return DB::table('campaign_recipients')
-    //         ->where('campaign_id', $campaignId)
-    //         ->selectRaw('
-    //             COUNT(*) as total_user,
-
-    //             SUM(
-    //                 CASE
-    //                     WHEN opened_at IS NOT NULL
-    //                     THEN 1
-    //                     ELSE 0
-    //                 END
-    //             ) as viewed_user,
-
-    //             SUM(
-    //                 CASE
-    //                     WHEN clicked_at IS NOT NULL
-    //                     THEN 1
-    //                     ELSE 0
-    //                 END
-    //             ) as embed_link_click_status_user,
-
-    //             SUM(
-    //                 CASE
-    //                     WHEN status = "unsubscribed"
-    //                     THEN 1
-    //                     ELSE 0
-    //                 END
-    //             ) as unsubscribed_user,
-
-    //             SUM(
-    //                 CASE
-    //                     WHEN status = "bounced"
-    //                     THEN 1
-    //                     ELSE 0
-    //                 END
-    //             ) as bounced_user,
-
-    //             SUM(
-    //                 CASE
-    //                     WHEN status = "forwarded"
-    //                     THEN 1
-    //                     ELSE 0
-    //                 END
-    //             ) as forword_to_friend_user
-    //         ')
-    //         ->first();
-    // }
-
     private function getCampaignStats(int $campaignId)
     {
         return DB::table('campaign_recipients')

@@ -1217,6 +1217,432 @@ class SendCampaignJob implements ShouldQueue
 
         $footer .= '</table>';
 
+        $footer = '
+
+<table
+    role="presentation"
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+    style="
+        width:100%;
+        margin:0;
+        padding:0;
+        background-color:#f7f9fc;
+        border-top:1px solid #e2e8f0;
+    "
+>
+    <tr>
+        <td
+            align="center"
+            style="
+                padding:0;
+                margin:0;
+                background-color:#f7f9fc;
+            "
+        >
+
+            <!-- Main Footer Container -->
+            <table
+                role="presentation"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="
+                    width:100%;
+                    max-width:700px;
+                    margin:0 auto;
+                    background-color:#f7f9fc;
+                "
+            >
+
+                <!-- Top Section -->
+                <tr>
+                    <td
+                        style="
+                            padding:24px 25px 18px 25px;
+                            font-family:Arial,Helvetica,sans-serif;
+                        "
+                    >
+
+                        <table
+                            role="presentation"
+                            width="100%"
+                            cellpadding="0"
+                            cellspacing="0"
+                            border="0"
+                        >
+                            <tr>
+
+                                <!-- Recipient Information -->
+                                <td
+                                    width="65%"
+                                    valign="top"
+                                    style="
+                                        padding:0 20px 0 0;
+                                        font-family:Arial,Helvetica,sans-serif;
+                                        color:#334155;
+                                    "
+                                >
+
+                                    <div
+                                        style="
+                                            font-size:11px;
+                                            line-height:17px;
+                                            color:#64748b;
+                                            margin-bottom:3px;
+                                        "
+                                    >
+                                        This email was sent to
+                                    </div>
+
+                                    <div
+                                        style="
+                                            font-size:12px;
+                                            line-height:19px;
+                                            font-weight:bold;
+                                        "
+                                    >
+                                        <a
+                                            href="mailto:' . e($recipientEmail) . '"
+                                            style="
+                                                color:#1266c5;
+                                                text-decoration:none;
+                                            "
+                                        >
+                                            ' . e($recipientEmail) . '
+                                        </a>
+                                    </div>
+
+                                    <div
+                                        style="
+                                            font-size:11px;
+                                            line-height:18px;
+                                            color:#64748b;
+                                            margin-top:4px;
+                                        "
+                                    >
+                                        By
+                                        <a
+                                            href="mailto:' . e($fromEmail) . '"
+                                            style="
+                                                color:#1266c5;
+                                                text-decoration:none;
+                                            "
+                                        >
+                                            ' . e($fromEmail) . '
+                                        </a>
+                                    </div>
+
+                                </td>
+
+
+                                <!-- Constant Emails Branding -->
+                                <td
+                                    width="35%"
+                                    valign="middle"
+                                    align="right"
+                                    style="
+                                        padding:0;
+                                        font-family:Arial,Helvetica,sans-serif;
+                                    "
+                                >
+
+                                    <div
+                                        style="
+                                            font-size:9px;
+                                            line-height:14px;
+                                            color:#64748b;
+                                            margin-bottom:5px;
+                                        "
+                                    >
+                                        Powered by
+                                    </div>
+
+                                    <a
+                                        href="https://constantemails.com"
+                                        target="_blank"
+                                        style="
+                                            text-decoration:none;
+                                            display:inline-block;
+                                        "
+                                    >
+                                        <img
+                                            src="' . asset('assets/frontend/images/logo_email.gif') . '"
+                                            alt="Constant Emails"
+                                            width="140"
+                                            border="0"
+                                            style="
+                                                display:block;
+                                                width:140px;
+                                                max-width:140px;
+                                                height:auto;
+                                                border:0;
+                                                outline:none;
+                                                text-decoration:none;
+                                            "
+                                        >
+                                    </a>
+
+                                    <div
+                                        style="
+                                            font-size:9px;
+                                            line-height:14px;
+                                            color:#94a3b8;
+                                            margin-top:4px;
+                                        "
+                                    >
+                                        Email Marketing Platform
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+
+
+                <!-- Divider -->
+                <tr>
+                    <td
+                        style="
+                            padding:0 25px;
+                        "
+                    >
+                        <table
+                            role="presentation"
+                            width="100%"
+                            cellpadding="0"
+                            cellspacing="0"
+                            border="0"
+                        >
+                            <tr>
+                                <td
+                                    style="
+                                        height:1px;
+                                        line-height:1px;
+                                        font-size:1px;
+                                        background-color:#dbe3ec;
+                                    "
+                                >
+                                    &nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+                <!-- Navigation Links -->
+                <tr>
+                    <td
+                        align="center"
+                        style="
+                            padding:15px 20px 8px 20px;
+                            font-family:Arial,Helvetica,sans-serif;
+                        "
+                    >
+
+                        <a
+                            href="' . e($unsubscribeUrl) . '"
+                            style="
+                                color:#1266c5;
+                                font-size:10px;
+                                line-height:18px;
+                                text-decoration:none;
+                            "
+                        >
+                            Unsubscribe
+                        </a>
+
+                        <span
+                            style="
+                                color:#cbd5e1;
+                                padding:0 7px;
+                                font-size:10px;
+                            "
+                        >
+                            |
+                        </span>
+
+                        <a
+                            href="' . e($forwardUrl) . '"
+                            style="
+                                color:#1266c5;
+                                font-size:10px;
+                                line-height:18px;
+                                text-decoration:none;
+                            "
+                        >
+                            Forward to Friend
+                        </a>
+
+                        <span
+                            style="
+                                color:#cbd5e1;
+                                padding:0 7px;
+                                font-size:10px;
+                            "
+                        >
+                            |
+                        </span>
+
+                        <a
+                            href="' . e($privacyUrl) . '"
+                            style="
+                                color:#1266c5;
+                                font-size:10px;
+                                line-height:18px;
+                                text-decoration:none;
+                            "
+                        >
+                            Privacy Policy
+                        </a>
+
+                        <span
+                            style="
+                                color:#cbd5e1;
+                                padding:0 7px;
+                                font-size:10px;
+                            "
+                        >
+                            |
+                        </span>
+
+                        <a
+                            href="' . e($profileUrl) . '"
+                            style="
+                                color:#1266c5;
+                                font-size:10px;
+                                line-height:18px;
+                                text-decoration:none;
+                            "
+                        >
+                            Update Profile
+                        </a>
+
+                        <img
+                            src="' . e($trackingUrl) . '"
+                            width="1"
+                            height="1"
+                            style="display:inline;border:0;"
+                            alt=""
+                        >
+
+                    </td>
+                </tr>
+
+
+                <!-- Company Address -->
+                ' . (!empty($companyDetails) ? '
+
+                <tr>
+                    <td
+                        align="center"
+                        style="
+                            padding:3px 20px 0 20px;
+                            font-family:Arial,Helvetica,sans-serif;
+                        "
+                    >
+                        <div
+                            style="
+                                font-size:10px;
+                                line-height:17px;
+                                color:#64748b;
+                            "
+                        >
+                            ' . e($companyDetails) . '
+                        </div>
+                    </td>
+                </tr>
+
+                ' : '') . '
+
+
+                <!-- Copyright -->
+                <tr>
+                    <td
+                        align="center"
+                        style="
+                            padding:7px 20px 18px 20px;
+                            font-family:Arial,Helvetica,sans-serif;
+                        "
+                    >
+
+                        <div
+                            style="
+                                font-size:9px;
+                                line-height:15px;
+                                color:#94a3b8;
+                            "
+                        >
+                            &copy; ' . date('Y') . '
+                            Constant Emails. All rights reserved.
+                        </div>
+
+                    </td>
+                </tr>
+
+
+                <!-- Bottom Accent -->
+                <tr>
+                    <td
+                        style="
+                            padding:0;
+                            margin:0;
+                        "
+                    >
+
+                        <table
+                            role="presentation"
+                            width="100%"
+                            cellpadding="0"
+                            cellspacing="0"
+                            border="0"
+                        >
+                            <tr>
+
+                                <td
+                                    width="65%"
+                                    style="
+                                        height:4px;
+                                        line-height:4px;
+                                        font-size:1px;
+                                        background-color:#1266c5;
+                                    "
+                                >
+                                    &nbsp;
+                                </td>
+
+                                <td
+                                    width="35%"
+                                    style="
+                                        height:4px;
+                                        line-height:4px;
+                                        font-size:1px;
+                                        background-color:#f58220;
+                                    "
+                                >
+                                    &nbsp;
+                                </td>
+
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+';
+
         return $footer;
     }
 }
