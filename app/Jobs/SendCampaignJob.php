@@ -1015,14 +1015,14 @@ class SendCampaignJob implements ShouldQueue
             $footer .= '
             <tr>
 
-                <td style="padding: 5px 0px; text-align:center;">
+                <td align="center" style="padding: 5px 0px; text-align:center;">
 
-                    <table style="width:100%;" cellpadding="0" cellspacing="0">
+                    <table style="width:100%;" cellpadding="0" cellspacing="0" width="100%">
 							<tr>
 								
 
 
-						<td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+						<td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
                         This email was sent to
                         <a href="mailto:' . e($recipientEmail) . '">
                             ' . e($recipientEmail) . '
