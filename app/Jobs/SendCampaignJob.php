@@ -1306,13 +1306,13 @@ class SendCampaignJob implements ShouldQueue
                                         "
                                     >
                                         <a
-                                            href="mailto:' . e($contact->contact_email) . '"
+                                            href="mailto:' . e($recipientEmail) . '"
                                             style="
                                                 color:#1266c5;
                                                 text-decoration:none;
                                             "
                                         >
-                                            ' . e($contact->contact_email) . '
+                                            ' . e($recipientEmail) . '
                                         </a>
                                     </div>
 
@@ -1326,13 +1326,13 @@ class SendCampaignJob implements ShouldQueue
                                     >
                                         By
                                         <a
-                                            href="mailto:' . e($campaign->from_email) . '"
+                                            href="mailto:' . e($fromEmail) . '"
                                             style="
                                                 color:#1266c5;
                                                 text-decoration:none;
                                             "
                                         >
-                                            ' . e($campaign->from_email) . '
+                                            ' . e($fromEmail) . '
                                         </a>
                                     </div>
 
@@ -1524,6 +1524,14 @@ class SendCampaignJob implements ShouldQueue
                         >
                             Update Profile
                         </a>
+
+                        <img
+                            src="' . e($trackingUrl) . '"
+                            width="1"
+                            height="1"
+                            style="display:inline;border:0;"
+                            alt=""
+                        >
 
                     </td>
                 </tr>
