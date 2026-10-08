@@ -34,27 +34,52 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 accountInfo">
+                         <!-- xlsx block -->
+                        <h4>General Instructions for multiple emails verification Excel sheet</h4>
+                        <p>
+                            <strong>Step 1:</strong>
+                            It is required that your file follows the header sequence (order)
+                            shown in the image below, and has:
+                        </p>
 
+                        <p>
+                            <b>-</b> <u>NO</u> column headings (e.g., First Name, Last Name, Company, Email, etc...)<br>
+                            <b>-</b> Data <strong>ONLY</strong> on the first 6 columns of your spreadsheet.
+                        </p>
+
+                        <div style="margin: 15px 0 20px 0;">
+                            <img
+                                src="{{ asset('assets/frontend/images/headerSequence.png') }}"
+                                alt="Microsoft Excel 2007-Present File Format"
+                                style="
+                                    max-width: 530px;
+                                    width: 100%;
+                                    height: auto;
+                                    display: block;
+                                "
+                            >
+                        </div>
+                       
     
 
-                        {{-- Error --}}
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
+                    {{-- Error --}}
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
-                        {{-- Validation errors --}}
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul class="mb-0">
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                    {{-- Validation errors --}}
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
 
                         {{-- ========================================================= --}}
@@ -64,16 +89,16 @@
                         <form
                             action="{{ route('user.post.verification.email') }}"
                             method="POST"
-                            enctype="multipart/form-data"   >
+                            enctype="multipart/form-data"  class="validate-email">
 
                             @csrf
 
-                            <div class="row">
+                            <div class="row contactForm align-items-center">
 
                                 {{-- Single Email --}}
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-5 mb-3">
 
-                                    <label class="form-label">
+                                    <label>
                                         Enter Single Email
                                     </label>
 
@@ -90,13 +115,17 @@
                                     </small>
 
                                 </div>
-
+                                {{-- OR Divider --}} 
+                                <div class="col-md-2 mb-3 d-flex justify-content-center"> 
+                                    <div class="or-divider"> <span>OR</span> 
+                                    </div> 
+                                </div>
 
                                 {{-- Excel --}}
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-5 mb-3">
 
-                                    <label class="form-label">
-                                        Upload Excel File
+                                    <label class="form-label fw-bold">
+                                        Upload Excel (For multiple emails)
                                     </label>
 
                                     <input
@@ -127,7 +156,7 @@
 
                             <button
                                 type="submit"
-                                class="btn btn-primary"
+                                class="btn btn-default orangeBg text-white"
                             >
                                 Verify Email(s)
                             </button>
@@ -290,5 +319,16 @@
     </div>
 
 </section>
+<style type="text/css">
+    .validate-email
+    {
+       
+        border: 1px solid #e2e2e2;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .or-divider { display: flex; align-items: center; justify-content: center; width: 100%; } 
+    .or-divider span { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; border: 2px solid #dee2e6; background: #fff; font-weight: 700; font-size: 14px; color: #6c757d; }
 
+</style>
 @endsection
