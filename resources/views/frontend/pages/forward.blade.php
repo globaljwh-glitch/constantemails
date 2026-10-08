@@ -134,7 +134,7 @@
             @endif
 
             <form
-                action="{{ route('forward.send', ['recipient' => $recipient->id]) }}"
+                action="{{ route('forward.send', ['recipient' => $contactId]) }}"
                 method="POST"
                 class="email-friend-form"
             >

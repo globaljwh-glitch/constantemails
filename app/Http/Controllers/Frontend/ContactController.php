@@ -1734,15 +1734,25 @@ class ContactController extends Controller
             ->deleteFileAfterSend(true);
     }
 
-    public function forward(Request $request, CampaignRecipient $recipient)
+    // public function forward(Request $request, CampaignRecipient $recipient)
+    // {
+    //     return view('frontend.pages.forward', compact(
+    //         'recipient',
+    //         'request'
+    //     ));
+    // }
+
+    public function forward(Request $request, $contact)
     {
-        return view('frontend.pages.forward', compact(
-            'recipient',
-            'request'
-        ));
+        $campaignId = $request->query('campaign');
+
+        return view('frontend.pages.forward', [
+            'contactId'  => $contact,
+            'campaignId' => $campaignId,
+        ]);
     }
 
-    public function sendForward(Request $request, CampaignRecipient $recipient)
+    public function sendForward(Request $request, $recipient)
     {
         $validated = $request->validate([
             'first_name'   => ['required', 'string', 'max:100'],
@@ -1751,15 +1761,30 @@ class ContactController extends Controller
             'message'      => ['nullable', 'string', 'max:2000'],
         ]);
 
-        // Get campaign
-        $campaign = MailCampaign::findOrFail($recipient->campaign_id);
+        $contact = Contact::findOrFail($recipient);
 
-        // Your email sending logic will go here.
+        // Send forward email...
 
-        return back()->with(
-            'success',
-            'Email has been forwarded successfully.'
-        );
+        return back()->with('success', 'Email forwarded successfully.');
     }
+    // public function sendForward(Request $request, CampaignRecipient $recipient)
+    // {
+    //     $validated = $request->validate([
+    //         'first_name'   => ['required', 'string', 'max:100'],
+    //         'last_name'    => ['required', 'string', 'max:100'],
+    //         'friend_email' => ['required', 'email', 'max:255'],
+    //         'message'      => ['nullable', 'string', 'max:2000'],
+    //     ]);
+
+    //     // Get campaign
+    //     $campaign = MailCampaign::findOrFail($recipient->campaign_id);
+
+    //     // Your email sending logic will go here.
+
+    //     return back()->with(
+    //         'success',
+    //         'Email has been forwarded successfully.'
+    //     );
+    // }
     
 }
