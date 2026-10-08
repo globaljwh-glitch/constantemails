@@ -1030,7 +1030,7 @@ class SendCampaignJob implements ShouldQueue
                     </td>
                     </tr>
                     <tr>
-                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                    <td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
                         By
                         <a href="mailto:' . e($fromEmail) . '">
                             ' . e($fromEmail) . '
@@ -1038,7 +1038,7 @@ class SendCampaignJob implements ShouldQueue
                     </td>
                     </tr>
                     <tr>
-                    <td style="font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                    <td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
 
                         <a href="' . e($unsubscribeUrl) . '">
                             Unsubscribe
