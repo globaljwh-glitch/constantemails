@@ -157,6 +157,10 @@
                         <a href="{{ route('users.create') }}"> Add User </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('unsubscribed-contacts.index') }}"> Unsubscribed Users </a>
+                    </li>
+
                 </ul>
             </li>
 

@@ -34,6 +34,7 @@ use App\Http\Controllers\Admin\ContactQueryController;
 use App\Http\Controllers\Admin\UserTemplateController;
 
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\UnsubscribedContactController;
 use Illuminate\Support\Facades\URL;
 
 /*
@@ -66,7 +67,7 @@ Route::get('/forward/{contact}', [ContactController::class, 'forward'])
 Route::post('/forward/{recipient}/send', [
     ContactController::class,
     'sendForward'
-    ])->name('forward.send');
+])->name('forward.send');
 Route::get('/email/click/{recipient}', [CampaignController::class, 'click'])
     ->name('email.track.click');
 Route::get('/email/open/{recipient}', [CampaignController::class, 'trackOpen'])
@@ -381,12 +382,12 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 
     Route::post('/referral', [ReferralController::class, 'store'])
         ->name('referral.store');
-        
+
     Route::get('/email-verification', [ContactController::class, 'usersValidateEmails'])
         ->name('verification.email');
     Route::post('/email-verification', [ContactController::class, 'postUserEmailvalidate'])
         ->name('post.verification.email');
-    Route::get( '/email-verification/download/{fileName}', [ContactController::class, 'downloadResult'] )->name('email.verification.download');
+    Route::get('/email-verification/download/{fileName}', [ContactController::class, 'downloadResult'])->name('email.verification.download');
 });
 
 Route::get('/test-logout', function () {
@@ -457,7 +458,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
     Route::resource('campaigns', AdminCampaignController::class)->names('admin.campaigns');
-    
+
     Route::get('/campaigns/{id}/contacts-json', [AdminCampaignController::class, 'getCampaignContacts'])->name('campaigns.contacts.json');
 
     Route::get('/contact-queries', [ContactQueryController::class, 'index'])->name('admin.contact-queries.index');
@@ -468,6 +469,12 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('admin.profile.password');
 
     Route::resource('user-templates', UserTemplateController::class)->names('admin.user-templates')->except(['show']);
+    
+    Route::get('/unsubscribed-contacts', [UnsubscribedContactController::class, 'index'])
+        ->name('unsubscribed-contacts.index');
+
+    Route::post('/unsubscribed-contacts/{id}/subscribe', [UnsubscribedContactController::class, 'subscribe'])
+        ->name('unsubscribed-contacts.subscribe');
 
 
 });
