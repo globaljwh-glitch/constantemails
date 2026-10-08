@@ -999,7 +999,7 @@ class SendCampaignJob implements ShouldQueue
                 cellspacing="0"
                 style="
                         text-align:left;
-                        padding:10px 10px;
+                        padding:20px 20px;
                 "
                 class="email_temp_footer">
             ';
@@ -1068,6 +1068,22 @@ class SendCampaignJob implements ShouldQueue
                     </tr>
                     <tr>
                     <td align="center" style="font-size:9px; padding-top: 12px;">
+
+
+
+
+                        <div
+                            style="
+                                font-size:9px;
+                                
+                                color:#94a3b8;
+                            "
+                        >
+                            &copy; ' . date('Y') . '
+                            Constant Emails. All rights reserved.
+                        </div>
+
+
 
                     <div style="
                         font-size:9px !important;
@@ -1188,10 +1204,18 @@ class SendCampaignJob implements ShouldQueue
                 <td
                     align="center"
                     width="620"
-                    style="font-size:10px;"
                 >
 
-                    ' . e($companyDetails) . '
+                   <div
+                            style="
+                                font-size:9px;
+                                
+                                color:#94a3b8;
+                            "
+                        >
+                            &copy; ' . date('Y') . '
+                            Constant Emails. All rights reserved.
+                        </div>
 
                 </td>
 

@@ -144,7 +144,7 @@
                 <input
                     type="hidden"
                     name="campaign_id"
-                    value="{{ $recipient->campaign_id }}"
+                    value="{{ $campaignId }}"
                 >
 
                 <div class="form-group">
