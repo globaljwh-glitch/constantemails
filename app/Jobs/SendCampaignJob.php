@@ -1014,120 +1014,104 @@ class SendCampaignJob implements ShouldQueue
 
             $footer .= '
             <tr>
-
                 <td align="center" style="padding:20px 20px; text-align:center;">
-
                     <table style="width:100%;" cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								
+						<tr>
+							<td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                                This email was sent to
+                                <a href="mailto:' . e($recipientEmail) . '">
+                                    ' . e($recipientEmail) . '
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                                By
+                                <a href="mailto:' . e($fromEmail) . '">
+                                    ' . e($fromEmail) . '
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                                <a href="' . e($unsubscribeUrl) . '">
+                                    Unsubscribe
+                                </a>
 
+                                |
 
-						<td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
-                        This email was sent to
-                        <a href="mailto:' . e($recipientEmail) . '">
-                            ' . e($recipientEmail) . '
-                        </a>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
-                        By
-                        <a href="mailto:' . e($fromEmail) . '">
-                            ' . e($fromEmail) . '
-                        </a>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                                <a href="' . e($forwardUrl) . '">
+                                    Forward to friend
+                                </a>
 
-                        <a href="' . e($unsubscribeUrl) . '">
-                            Unsubscribe
-                        </a>
+                                |
 
-                        |
+                                <a href="' . e($privacyUrl) . '">
+                                    Privacy policy
+                                </a>
 
-                        <a href="' . e($forwardUrl) . '">
-                            Forward to friend
-                        </a>
+                                <img
+                                    src="' . e($trackingUrl) . '"
+                                    width="1"
+                                    height="1"
+                                    style="display:block;border:0;"
+                                    alt=""
+                                >
 
-                        |
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="font-size:9px; padding-top: 12px;">
 
-                        <a href="' . e($privacyUrl) . '">
-                            Privacy policy
-                        </a>
+                                <div
+                                    style="
+                                        font-size:9px;
+                                        
+                                        color:#94a3b8;
+                                    "
+                                >
+                                    &copy; ' . date('Y') . '
+                                    Constant Emails. All rights reserved.
+                                </div>
 
-                        <img
-                            src="' . e($trackingUrl) . '"
-                            width="1"
-                            height="1"
-                            style="display:block;border:0;"
-                            alt=""
-                        >
+                                <div style="
+                                    font-size:9px !important;
+                                    padding:0 !important;
+                                    margin:1px !important;
+                                ">
+                                    <b>Powered by</b>
+                                </div>
 
-                    </td>
-                    </tr>
-                    <tr>
-                    <td align="center" style="font-size:9px; padding-top: 12px;">
+                                <div style="
+                                    font-size:9px !important;
+                                    padding:0 !important;
+                                    margin:2px !important;
+                                ">
 
+                                    <a href="' . url('/') . '">
 
+                                        <img
+                                            src="' . asset('assets/frontend/images/logo_email.gif') . '"
+                                            alt="Constant Emails"
+                                            border="0"
+                                        >
 
+                                    </a>
+                                </div>
 
-                        <div
-                            style="
-                                font-size:9px;
-                                
-                                color:#94a3b8;
-                            "
-                        >
-                            &copy; ' . date('Y') . '
-                            Constant Emails. All rights reserved.
-                        </div>
-
-
-
-                    <div style="
-                        font-size:9px !important;
-                        padding:0 !important;
-                        margin:1px !important;
-                    ">
-                        <b>Powered by</b>
-                    </div>
-
-                    <div style="
-                        font-size:9px !important;
-                        padding:0 !important;
-                        margin:2px !important;
-                    ">
-
-                        <a href="' . url('/') . '">
-
-                            <img
-                                src="' . asset('assets/frontend/images/logo_email.gif') . '"
-                                alt="Constant Emails"
-                                border="0"
-                            >
-
-                        </a>
-
-                    </div>
-
-                    <div style="
-                        font-size:9px !important;
-                        padding:0 !important;
-                        margin:1px !important;
-                    ">
-                        <b style="color:#75BE06;">
-                            Premiere Email Marketing Engine
-                        </b>
-                    </div>
-
+                                <div style="
+                                    font-size:9px !important;
+                                    padding:0 !important;
+                                    margin:1px !important;
+                                ">
+                                    <b style="color:#75BE06;">
+                                        Premiere Email Marketing Engine
+                                    </b>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                </tr>
-            </table>
-                </td>
-
-                
-
             </tr>
             ';
 
@@ -1141,11 +1125,10 @@ class SendCampaignJob implements ShouldQueue
 
             $footer .= '
             <tr>
-
                 <td
                     align="center"
                     width="620"
-                    style="font-size:10px;"
+                    style="padding:20px 20px; text-align:center; font-size:10px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;"
                 >
 
                     This email was sent to
@@ -1168,7 +1151,7 @@ class SendCampaignJob implements ShouldQueue
 
                 <td
                     align="center"
-                    style="font-size:10px;"
+                    style="padding:20px 20px; text-align:center; font-size:10px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;"
                 >
 
                     <a href="' . e($unsubscribeUrl) . '">
@@ -1203,7 +1186,7 @@ class SendCampaignJob implements ShouldQueue
 
                 <td
                     align="center"
-                    width="620"
+                    width="620" style="font-size:9px; padding-top: 12px;"
                 >
 
                    <div

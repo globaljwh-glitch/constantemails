@@ -447,6 +447,10 @@ class ContactController extends Controller
                 " {$invalid} contacts have invalid/unverified email addresses.";
         }
 
+        $message .= " <a href='". route('user.campaigns.create') ."'>
+            Click Here For Create Campaign
+        </a>";
+
 
         // return redirect()
         //     ->route('user.groups.index')
@@ -1752,6 +1756,22 @@ class ContactController extends Controller
         ]);
     }
 
+    // public function sendForward(Request $request, $recipient)
+    // {
+    //     $validated = $request->validate([
+    //         'first_name'   => ['required', 'string', 'max:100'],
+    //         'last_name'    => ['required', 'string', 'max:100'],
+    //         'friend_email' => ['required', 'email', 'max:255'],
+    //         //'message'      => ['nullable', 'string', 'max:2000'],
+    //     ]);
+
+    //     $contact = Contact::findOrFail($recipient);
+
+    //     // Send forward email...
+
+    //     return back()->with('success', 'Email forwarded successfully.');
+    // }
+
     public function sendForward(Request $request, $recipient)
     {
         $validated = $request->validate([
@@ -1759,32 +1779,443 @@ class ContactController extends Controller
             'last_name'    => ['required', 'string', 'max:100'],
             'friend_email' => ['required', 'email', 'max:255'],
             'message'      => ['nullable', 'string', 'max:2000'],
+            'campaign_id'  => ['required', 'integer', 'exists:mail_campaign,id'],
         ]);
 
+        // Find the contact whose email is being forwarded.
         $contact = Contact::findOrFail($recipient);
 
-        // Send forward email...
+        // Verify the campaign exists.
+        $campaign = MailCampaign::findOrFail($validated['campaign_id']);
 
-        return back()->with('success', 'Email forwarded successfully.');
+        // Prevent forwarding a campaign to its original recipient.
+        if (strtolower(trim($validated['friend_email'])) ===
+            strtolower(trim($contact->contact_email))) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'friend_email' => 'You cannot forward the email to the original recipient.',
+                ]);
+        }
+
+        $friendName = trim(
+            $validated['first_name'] . ' ' . $validated['last_name']
+        );
+
+        $friendEmail = trim($validated['friend_email']);
+
+        $personalMessage = trim($validated['message'] ?? '');
+
+        // Use the campaign subject.
+        $subject = $campaign->email_subject ?: $campaign->email_title;
+
+        // Get the original campaign email content.
+        // Change "message" below if your campaign HTML is stored in another column.
+        $campaignHtml = $campaign->message ?? '';
+
+        if (trim($campaignHtml) === '') {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'friend_email' => 'The original campaign email content is unavailable.',
+                ]);
+        }
+
+        // Optional personal message.
+        $personalMessageHtml = '';
+
+        if ($personalMessage !== '') {
+            $personalMessageHtml = '
+                <table role="presentation" width="100%" cellpadding="0"
+                    cellspacing="0" border="0"
+                    style="margin-bottom:20px;background:#f8fafc;">
+                    <tr>
+                        <td style="padding:15px;font-family:Arial,sans-serif;
+                            font-size:14px;line-height:22px;color:#334155;">
+                            <strong>' . e($friendName) . ' shared this message:</strong>
+                            <p style="margin:8px 0 0;">'
+                                . nl2br(e($personalMessage)) .
+                            '</p>
+                        </td>
+                    </tr>
+                </table>
+            ';
+        } else {
+            $personalMessageHtml = '
+                <p style="font-family:Arial,sans-serif;font-size:14px;
+                    line-height:22px;color:#334155;">
+                    ' . e($friendName) . ' thought you might find this email interesting.
+                </p>
+            ';
+        }
+
+        // Build the forwarded email.
+        $body = '
+            <!DOCTYPE html>
+            <html>
+            <body style="margin:0;padding:20px;background:#ffffff;">
+                <table role="presentation" width="100%" cellpadding="0"
+                    cellspacing="0" border="0">
+                    <tr>
+                        <td style="font-family:Arial,Helvetica,sans-serif;">
+                            ' . $personalMessageHtml . '
+                            <div>' . $campaignHtml . '</div>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+            </html>
+        ';
+
+        // Use the original campaign sender as the From address.
+        $from = $campaign->from_email;
+
+        try {
+            // Use your existing SMTP method.
+            $result = $this->send_smtp_mail(
+                $friendEmail,
+                $from,
+                'Fwd: ' . $subject,
+                $body
+            );
+
+            // If your method returns false on failure, handle it.
+            if ($result === false) {
+                return back()
+                    ->withInput()
+                    ->withErrors([
+                        'friend_email' => 'Unable to send the forwarded email. Please try again.',
+                    ]);
+            }
+
+            return redirect()
+                ->route('forward', [
+                    'contact' => $contact->id,
+                    'campaign' => $campaign->id,
+                ])
+                ->with('success', 'Email forwarded successfully.');
+
+        } catch (\Throwable $e) {
+            Log::error('Forward email failed', [
+                'contact_id' => $contact->id,
+                'campaign_id' => $campaign->id,
+                'friend_email' => $friendEmail,
+                'error' => $e->getMessage(),
+            ]);
+
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'friend_email' => 'Unable to send the email right now. Please try again later.',
+                ]);
+        }
     }
-    // public function sendForward(Request $request, CampaignRecipient $recipient)
-    // {
-    //     $validated = $request->validate([
-    //         'first_name'   => ['required', 'string', 'max:100'],
-    //         'last_name'    => ['required', 'string', 'max:100'],
-    //         'friend_email' => ['required', 'email', 'max:255'],
-    //         'message'      => ['nullable', 'string', 'max:2000'],
-    //     ]);
+    
+    public function send_smtp_mail(
+    $to,
+    $from,
+    $subject,
+    $body,
+    $attachmentPath = null
+    ) {
+        $smtpServer = '10.1.15.202';
+        $smtpPort   = 25;
 
-    //     // Get campaign
-    //     $campaign = MailCampaign::findOrFail($recipient->campaign_id);
+        $errno  = 0;
+        $errstr = '';
 
-    //     // Your email sending logic will go here.
+        $fp = fsockopen(
+            $smtpServer,
+            $smtpPort,
+            $errno,
+            $errstr,
+            10
+        );
 
-    //     return back()->with(
-    //         'success',
-    //         'Email has been forwarded successfully.'
-    //     );
-    // }
+        if (!$fp) {
+            throw new \Exception(
+                "SMTP connection failed: {$errstr} ({$errno})"
+            );
+        }
+
+        stream_set_timeout($fp, 30);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Read SMTP response
+        |--------------------------------------------------------------------------
+        */
+        $readResponse = function () use ($fp) {
+
+            $response = '';
+
+            while (($line = fgets($fp, 515)) !== false) {
+
+                $response .= $line;
+
+                // End of multiline SMTP response
+                if (isset($line[3]) && $line[3] === ' ') {
+                    break;
+                }
+            }
+
+            return $response;
+        };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Send SMTP command
+        |--------------------------------------------------------------------------
+        */
+        $sendCommand = function ($command) use ($fp, $readResponse) {
+
+            fwrite($fp, $command . "\r\n");
+
+            return $readResponse();
+        };
+
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP Greeting
+        |--------------------------------------------------------------------------
+        */
+        $response = $readResponse();
+
+        if (substr($response, 0, 1) !== '2') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP greeting failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | HELO
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            'HELO constantemails.com'
+        );
+
+        if (substr($response, 0, 3) !== '250') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP HELO failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | MAIL FROM
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            "MAIL FROM:<{$from}>"
+        );
+
+        if (substr($response, 0, 3) !== '250') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP MAIL FROM failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RCPT TO
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            "RCPT TO:<{$to}>"
+        );
+
+        if (
+            substr($response, 0, 3) !== '250' &&
+            substr($response, 0, 3) !== '251'
+        ) {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP RCPT TO failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand('DATA');
+
+        if (substr($response, 0, 3) !== '354') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP DATA failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | MIME Boundary
+        |--------------------------------------------------------------------------
+        */
+        $boundary = '=_ConstantEmails_' . md5(
+            uniqid((string) mt_rand(), true)
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Email Headers
+        |--------------------------------------------------------------------------
+        */
+        $message  = "Date: " . date('r') . "\r\n";
+        $message .= "From: {$from}\r\n";
+        $message .= "To: {$to}\r\n";
+        $message .= "Subject: {$subject}\r\n";
+        $message .= "MIME-Version: 1.0\r\n";
+
+        /*
+        |--------------------------------------------------------------------------
+        | Attachment
+        |--------------------------------------------------------------------------
+        */
+        if ($attachmentPath && file_exists($attachmentPath)) {
+
+            $fileName = basename($attachmentPath);
+
+            $mimeType = mime_content_type($attachmentPath);
+
+            if (!$mimeType) {
+                $mimeType = 'application/octet-stream';
+            }
+
+            $message .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | HTML Body
+            |--------------------------------------------------------------------------
+            */
+            $message .= "--{$boundary}\r\n";
+            $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: 8bit\r\n";
+            $message .= "\r\n";
+
+            // Prevent SMTP termination issues
+            $body = str_replace(
+                ["\r\n.", "\n."],
+                ["\r\n..", "\n.."],
+                $body
+            );
+
+            $message .= $body;
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | Attachment
+            |--------------------------------------------------------------------------
+            */
+            $fileContent = file_get_contents($attachmentPath);
+
+            if ($fileContent === false) {
+
+                fclose($fp);
+
+                throw new \Exception(
+                    "Unable to read attachment: {$attachmentPath}"
+                );
+            }
+
+            $encodedFile = chunk_split(
+                base64_encode($fileContent),
+                76,
+                "\r\n"
+            );
+
+            $message .= "--{$boundary}\r\n";
+            $message .= "Content-Type: {$mimeType}; name=\"{$fileName}\"\r\n";
+            $message .= "Content-Disposition: attachment; filename=\"{$fileName}\"\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n";
+            $message .= "\r\n";
+            $message .= $encodedFile;
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | End MIME
+            |--------------------------------------------------------------------------
+            */
+            $message .= "--{$boundary}--\r\n";
+
+        } else {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Normal HTML Email Without Attachment
+            |--------------------------------------------------------------------------
+            */
+            $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: 8bit\r\n";
+            $message .= "\r\n";
+
+            $body = str_replace(
+                ["\r\n.", "\n."],
+                ["\r\n..", "\n.."],
+                $body
+            );
+
+            $message .= $body;
+            $message .= "\r\n";
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP End of DATA
+        |--------------------------------------------------------------------------
+        */
+        $message .= ".\r\n";
+
+        fwrite($fp, $message);
+
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP Response
+        |--------------------------------------------------------------------------
+        */
+        $response = $readResponse();
+
+        if (substr($response, 0, 3) !== '250') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP message rejected: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | QUIT
+        |--------------------------------------------------------------------------
+        */
+        fwrite($fp, "QUIT\r\n");
+
+        $readResponse();
+
+        fclose($fp);
+
+        return true;
+    }
     
 }

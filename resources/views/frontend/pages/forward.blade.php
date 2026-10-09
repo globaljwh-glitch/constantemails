@@ -3,115 +3,260 @@
 @section('content')
 
 <style>
-    .email-to-friend-section {
-        padding: 55px 0 80px;
-        min-height: 650px;
+
+    .forward-page {
+    max-width: 760px;
+    margin: 35px auto;
+    padding: 0 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #334155;
+}
+
+.forward-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 28px 32px;
+}
+
+.forward-title {
+    margin: 0;
+    color: #f15b55;
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.forward-subtitle {
+    color: #64748b;
+    font-size: 13px;
+    margin: 8px 0 25px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.forward-form-group {
+    display: grid;
+    grid-template-columns: 155px minmax(0, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: start;
+}
+
+.forward-form-group label {
+    font-size: 13px;
+    padding-top: 11px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.optional-label {
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.forward-input-wrap {
+    min-width: 0;
+}
+
+.forward-input-wrap .form-control {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d7dee7;
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #334155;
+    background: #fff;
+    box-shadow: none;
+}
+
+.forward-input-wrap input.form-control {
+    height: 42px;
+}
+
+.forward-input-wrap textarea.form-control {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.forward-input-wrap .form-control:focus {
+    border-color: #f58220;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(245, 130, 32, 0.12);
+}
+
+.forward-input-wrap .form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.forward-error {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.forward-actions {
+    margin-left: 170px;
+    margin-top: 5px;
+}
+
+.forward-submit {
+    border: 0;
+    border-radius: 4px;
+    background: #f58220;
+    color: #fff;
+    padding: 11px 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.forward-submit:hover {
+    background: #df7015;
+}
+
+@media (max-width: 575px) {
+    .forward-page {
+        margin: 20px auto;
+        padding: 0 12px;
     }
 
-    .email-to-friend-wrapper {
-        max-width: 650px;
-        margin: 0 auto;
+    .forward-card {
+        padding: 22px 18px;
     }
 
-    .email-to-friend-title {
-        color: #f12626;
-        font-size: 24px;
-        font-weight: 400;
-        padding-bottom: 18px;
-        margin-bottom: 45px;
-        border-bottom: 1px solid #eeeeee;
+    .forward-form-group {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        margin-bottom: 16px;
     }
 
-    .email-friend-form .form-group {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 15px;
+    .forward-form-group label {
+        padding-top: 0;
     }
 
-    .email-friend-form label {
-        width: 165px;
-        padding-top: 9px;
-        margin-bottom: 0;
-        font-size: 14px;
-        color: #333;
-        font-weight: 400;
+    .forward-actions {
+        margin-left: 0;
     }
-
-    .email-friend-form .form-control {
-        width: 315px;
-        height: 42px;
-        border: 1px solid #e1e1e1;
-        border-radius: 0;
-        box-shadow: none;
-    }
-
-    .email-friend-form textarea.form-control {
-        height: 165px;
-        resize: vertical;
-    }
-
-    .email-friend-form .form-control:focus {
-        border-color: #f12626;
-        box-shadow: none;
-    }
-
-    .email-friend-submit {
-        margin-left: 165px;
-        margin-top: 18px;
-    }
-
-    .email-friend-submit .btn {
-        background: #f99b28;
-        border: 0;
-        color: #fff;
-        padding: 7px 15px;
-        border-radius: 2px;
-        text-transform: lowercase;
-    }
-
-    .email-friend-submit .btn:hover {
-        background: #e88a17;
-        color: #fff;
-    }
-
-    .invalid-feedback {
-        display: block;
-        width: 315px;
-        margin-left: 165px;
-    }
-
-    @media (max-width: 767px) {
-
-        .email-to-friend-wrapper {
-            padding: 0 20px;
-        }
-
-        .email-friend-form .form-group {
-            display: block;
-        }
-
-        .email-friend-form label {
-            display: block;
-            width: 100%;
-            margin-bottom: 7px;
-        }
-
-        .email-friend-form .form-control {
-            width: 100%;
-        }
-
-        .email-friend-submit {
-            margin-left: 0;
-        }
-
-        .invalid-feedback {
-            width: 100%;
-            margin-left: 0;
-        }
-    }
+}
 </style>
 
 <section class="email-to-friend-section">
+
+<div class="container">
+<div class="forward-page">
+    <div class="forward-card">
+        <h2 class="forward-title">Email to a Friend</h2>
+        <p class="forward-subtitle">
+            Share this email with someone who might find it useful.
+        </p>
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+        <form
+            action="{{ route('forward.send', ['recipient' => $contactId]) }}"
+            method="POST"
+            class="email-friend-form"
+        >
+            @csrf
+
+            <input
+                type="hidden"
+                name="campaign_id"
+                value="{{ $campaignId }}"
+            >
+
+            <div class="forward-form-group">
+                <label for="first_name">First Name</label>
+                <div class="forward-input-wrap">
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        value="{{ old('first_name') }}"
+                        class="form-control @error('first_name') is-invalid @enderror"
+                        required
+                    >
+                    @error('first_name')
+                        <div class="forward-error">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="forward-form-group">
+                <label for="last_name">Last Name</label>
+                <div class="forward-input-wrap">
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        value="{{ old('last_name') }}"
+                        class="form-control @error('last_name') is-invalid @enderror"
+                        required
+                    >
+                    @error('last_name')
+                        <div class="forward-error">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="forward-form-group">
+                <label for="friend_email">Friend's Email</label>
+                <div class="forward-input-wrap">
+                    <input
+                        type="email"
+                        id="friend_email"
+                        name="friend_email"
+                        value="{{ old('friend_email') }}"
+                        class="form-control @error('friend_email') is-invalid @enderror"
+                        required
+                    >
+                    @error('friend_email')
+                        <div class="forward-error">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- <div class="forward-form-group">
+                <label for="message">
+                    Message <span class="optional-label">(Optional)</span>
+                </label>
+                <div class="forward-input-wrap">
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="4"
+                        maxlength="2000"
+                        class="form-control @error('message') is-invalid @enderror"
+                        placeholder="Add a personal message (optional)"
+                    >{{ old('message') }}</textarea>
+                    @error('message')
+                        <div class="forward-error">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div> -->
+
+            <div class="forward-actions">
+                <button type="submit" class="forward-submit">
+                    Send Email
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- <section class="email-to-friend-section">
 
     <div class="container">
 
@@ -249,6 +394,6 @@
 
     </div>
 
-</section>
+</section> -->
 
 @endsection

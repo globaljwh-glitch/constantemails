@@ -62,7 +62,7 @@ Route::get('/unsubscribe/{contact}', [ContactController::class, 'unsubscribe'])
     ->middleware('signed')
     ->name('unsubscribe');
 Route::get('/forward/{contact}', [ContactController::class, 'forward'])
-    ->middleware('signed')
+    //->middleware('signed')
     ->name('forward');
 Route::post('/forward/{recipient}/send', [
     ContactController::class,
