@@ -2,6 +2,10 @@
 
 @section('title', 'My Image Gallery')
 
+@php
+    $pageTitle = 'My Image Gallery';
+@endphp
+
 @section('content')
 
     @include('frontend.includes.banner', ['title' => 'Image Gallery'])

@@ -1,5 +1,9 @@
 @extends('frontend.layouts.dashboard')
 
+@php
+    $pageTitle = 'Template List';
+@endphp
+
 @section('dashboard-content')
 
 <div class="acoountRightSection">

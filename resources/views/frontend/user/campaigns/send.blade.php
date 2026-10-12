@@ -1,5 +1,9 @@
 @extends('frontend.layouts.dashboard')
 
+@php
+    $pageTitle = 'Email Scheduling';
+@endphp
+
 @section('dashboard-content')
 
 <div class="acoountRightSection">

@@ -2,12 +2,16 @@
 
 @section('title', 'Dashboard')
 
+@php
+    $pageTitle = 'My Account';
+@endphp
+
 @section('content')
 
 @include('frontend.includes.banner', [
     'title' => 'Account Details'
 ])
-<section class="homeBanner smallPadding">
+<!-- <section class="homeBanner smallPadding">
   <div class="container">
     <div class="row">
         {{-- Heading --}}
@@ -22,7 +26,7 @@
         </div>
     </div>
   </div>
-</section>
+</section> -->
 <section class="contentContainer smallContainer">
   <div class="container">
     <div class="row">

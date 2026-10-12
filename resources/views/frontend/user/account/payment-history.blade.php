@@ -2,6 +2,10 @@
 
 @section('title', 'Payment History')
 
+@php
+    $pageTitle = 'Payment History';
+@endphp
+
 @section('content')
 
     @include('frontend.includes.banner', ['title' => 'Payment History'])

@@ -2,6 +2,10 @@
 
 @section('title', 'Email History and Statistics')
 
+@php
+    $pageTitle = 'Email History and Statistics';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

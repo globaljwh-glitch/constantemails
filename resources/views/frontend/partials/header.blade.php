@@ -161,3 +161,16 @@ window.onclick = function(event) {
   }
 }
 </script>
+@if (request()->is('user/*'))
+    <section class="homeBanner smallPadding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>
+                        {{ $pageTitle ?? 'My Account' }}
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+@endif

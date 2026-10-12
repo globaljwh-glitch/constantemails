@@ -2,6 +2,10 @@
 
 @section('title', 'Update Profile')
 
+@php
+    $pageTitle = 'Update Profile';
+@endphp
+
 @section('content')
 
 @include('frontend.includes.banner', [

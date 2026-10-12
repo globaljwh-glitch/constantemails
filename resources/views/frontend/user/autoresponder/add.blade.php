@@ -2,6 +2,10 @@
 
 @section('title', 'Add Auto Responder')
 
+@php
+    $pageTitle = 'Add Auto Responder';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

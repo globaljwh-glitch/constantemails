@@ -2,6 +2,10 @@
 
 @section('title', 'Email Validate')
 
+@php
+    $pageTitle = 'Email Validate';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

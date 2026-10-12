@@ -2,6 +2,10 @@
 
 @section('title', 'Itemized Email Report')
 
+@php
+    $pageTitle = 'Itemized Email Report';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

@@ -2,6 +2,10 @@
 
 @section('title', 'Change Password')
 
+@php
+    $pageTitle = 'Change Password';
+@endphp
+
 @section('content')
 
 @include('frontend.includes.banner', [

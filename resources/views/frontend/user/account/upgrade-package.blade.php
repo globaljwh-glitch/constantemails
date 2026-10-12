@@ -2,6 +2,10 @@
 
 @section('title', 'Upgrade Package')
 
+@php
+    $pageTitle = 'Upgrade Package';
+@endphp
+
 @section('content')
 
     @include('frontend.includes.banner', ['title' => 'Upgrade Package'])

@@ -1,5 +1,9 @@
 @extends('frontend.layouts.dashboard')
 
+@php
+    $pageTitle = 'Contact Group List';
+@endphp
+
 @section('dashboard-content')
 
 <div class="acoountRightSection">

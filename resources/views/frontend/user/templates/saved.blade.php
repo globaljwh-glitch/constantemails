@@ -2,6 +2,10 @@
 
 @section('title', 'My Saved Templates')
 
+@php
+    $pageTitle = 'My Saved Templates';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

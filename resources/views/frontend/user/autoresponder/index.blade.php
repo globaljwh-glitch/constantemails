@@ -2,6 +2,10 @@
 
 @section('title', 'Autoresponders')
 
+@php
+    $pageTitle = 'Autoresponders';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

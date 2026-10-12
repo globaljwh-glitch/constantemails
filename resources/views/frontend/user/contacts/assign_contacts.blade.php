@@ -2,6 +2,10 @@
 
 @section('title', 'Assign Contacts')
 
+@php
+    $pageTitle = 'Assign Contacts';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

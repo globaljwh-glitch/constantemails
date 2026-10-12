@@ -2,6 +2,10 @@
 
 @section('title', 'My Email Campaigns')
 
+@php
+    $pageTitle = 'Email Campaign';
+@endphp
+
 @section('dashboard-content')
 
 @once

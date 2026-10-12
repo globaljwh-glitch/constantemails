@@ -2,6 +2,10 @@
 
 @section('title', 'Refer a Friend')
 
+@php
+    $pageTitle = 'Refer a Friend';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

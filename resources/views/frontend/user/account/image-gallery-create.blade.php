@@ -2,6 +2,10 @@
 
 @section('title', 'Upload Image')
 
+@php
+    $pageTitle = 'Upload Image';
+@endphp
+
 @section('content')
 
     @include('frontend.includes.banner', ['title' => 'Upload Image'])

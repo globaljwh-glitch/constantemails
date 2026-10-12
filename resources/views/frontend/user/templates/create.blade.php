@@ -9,6 +9,10 @@
     >
 @endpush
 
+@php
+    $pageTitle = 'Add Template';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

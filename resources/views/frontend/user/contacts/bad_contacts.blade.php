@@ -2,6 +2,10 @@
 
 @section('title', 'Bad Contacts Report')
 
+@php
+    $pageTitle = 'Bad Contacts Report';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

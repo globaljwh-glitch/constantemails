@@ -24,6 +24,7 @@ use App\Models\MailCampaign;
 use App\Models\CampaignRecipient;
 use App\Services\EmailVerifier;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class ContactController extends Controller
 {
@@ -1888,12 +1889,23 @@ class ContactController extends Controller
                     ]);
             }
 
-            return redirect()
-                ->route('forward', [
-                    'contact' => $contact->id,
-                    'campaign' => $campaign->id,
-                ])
-                ->with('success', 'Email forwarded successfully.');
+            // return redirect()
+            //     ->route('forward', [
+            //         'contact' => $contact->id,
+            //         'campaign' => $campaign->id,
+            //     ])
+            //     ->with('success', 'Email forwarded successfully.');
+
+            return redirect()->to(
+                URL::temporarySignedRoute(
+                    'forward',
+                    now()->addDays(7),
+                    [
+                        'contact' => $contact->id,
+                        'campaign' => $campaign->id,
+                    ]
+                )
+            )->with('success', 'Email forwarded successfully.');
 
         } catch (\Throwable $e) {
             Log::error('Forward email failed', [

@@ -2,6 +2,10 @@
 
 @section('title', 'Join Mailing List')
 
+@php
+    $pageTitle = 'Join Mailing List';
+@endphp
+
 @section('content')
 
 <section class="contentContainer">

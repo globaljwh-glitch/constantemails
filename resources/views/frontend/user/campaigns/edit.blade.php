@@ -2,6 +2,10 @@
 
 @section('title', 'Edit Email Campaign')
 
+@php
+    $pageTitle = 'Edit Email Campaign';
+@endphp
+
 @section('dashboard-content')
 
 <div class="acoountRightSection">
