@@ -1868,13 +1868,13 @@ class ContactController extends Controller
         ';
 
         // Use the original campaign sender as the From address.
-        $from = $campaign->from_email;
+        //$from = $campaign->from_email;
 
         try {
             // Use your existing SMTP method.
             $result = $this->send_smtp_mail(
                 $friendEmail,
-                $from,
+                'noreply@constantemails.com',
                 'Fwd: ' . $subject,
                 $body
             );
