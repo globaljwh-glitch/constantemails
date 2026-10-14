@@ -539,7 +539,7 @@ class CampaignController extends Controller
         */
         SendCampaignJob::dispatch($campaign)
             ->delay($scheduledAt);
-            
+
         $result = $this->sendAdditionalRecipients($campaign->id);
 
         session()->forget('campaign_draft');
@@ -873,6 +873,313 @@ class CampaignController extends Controller
             'skipped' => $skipped,
             'failed' => $failed,
         ];
+    }
+
+    public function send_smtp_mail(
+    $to,
+    $from,
+    $subject,
+    $body,
+    $attachmentPath = null
+    ) {
+        $smtpServer = '10.1.15.202';
+        $smtpPort   = 25;
+
+        $errno  = 0;
+        $errstr = '';
+
+        $fp = fsockopen(
+            $smtpServer,
+            $smtpPort,
+            $errno,
+            $errstr,
+            10
+        );
+
+        if (!$fp) {
+            throw new \Exception(
+                "SMTP connection failed: {$errstr} ({$errno})"
+            );
+        }
+
+        stream_set_timeout($fp, 30);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Read SMTP response
+        |--------------------------------------------------------------------------
+        */
+        $readResponse = function () use ($fp) {
+
+            $response = '';
+
+            while (($line = fgets($fp, 515)) !== false) {
+
+                $response .= $line;
+
+                // End of multiline SMTP response
+                if (isset($line[3]) && $line[3] === ' ') {
+                    break;
+                }
+            }
+
+            return $response;
+        };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Send SMTP command
+        |--------------------------------------------------------------------------
+        */
+        $sendCommand = function ($command) use ($fp, $readResponse) {
+
+            fwrite($fp, $command . "\r\n");
+
+            return $readResponse();
+        };
+
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP Greeting
+        |--------------------------------------------------------------------------
+        */
+        $response = $readResponse();
+
+        if (substr($response, 0, 1) !== '2') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP greeting failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | HELO
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            'HELO constantemails.com'
+        );
+
+        if (substr($response, 0, 3) !== '250') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP HELO failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | MAIL FROM
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            "MAIL FROM:<{$from}>"
+        );
+
+        if (substr($response, 0, 3) !== '250') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP MAIL FROM failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RCPT TO
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand(
+            "RCPT TO:<{$to}>"
+        );
+
+        if (
+            substr($response, 0, 3) !== '250' &&
+            substr($response, 0, 3) !== '251'
+        ) {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP RCPT TO failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA
+        |--------------------------------------------------------------------------
+        */
+        $response = $sendCommand('DATA');
+
+        if (substr($response, 0, 3) !== '354') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP DATA failed: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | MIME Boundary
+        |--------------------------------------------------------------------------
+        */
+        $boundary = '=_ConstantEmails_' . md5(
+            uniqid((string) mt_rand(), true)
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Email Headers
+        |--------------------------------------------------------------------------
+        */
+        $message  = "Date: " . date('r') . "\r\n";
+        $message .= "From: {$from}\r\n";
+        $message .= "To: {$to}\r\n";
+        $message .= "Subject: {$subject}\r\n";
+        $message .= "MIME-Version: 1.0\r\n";
+
+        /*
+        |--------------------------------------------------------------------------
+        | Attachment
+        |--------------------------------------------------------------------------
+        */
+        if ($attachmentPath && file_exists($attachmentPath)) {
+
+            $fileName = basename($attachmentPath);
+
+            $mimeType = mime_content_type($attachmentPath);
+
+            if (!$mimeType) {
+                $mimeType = 'application/octet-stream';
+            }
+
+            $message .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | HTML Body
+            |--------------------------------------------------------------------------
+            */
+            $message .= "--{$boundary}\r\n";
+            $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: 8bit\r\n";
+            $message .= "\r\n";
+
+            // Prevent SMTP termination issues
+            $body = str_replace(
+                ["\r\n.", "\n."],
+                ["\r\n..", "\n.."],
+                $body
+            );
+
+            $message .= $body;
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | Attachment
+            |--------------------------------------------------------------------------
+            */
+            $fileContent = file_get_contents($attachmentPath);
+
+            if ($fileContent === false) {
+
+                fclose($fp);
+
+                throw new \Exception(
+                    "Unable to read attachment: {$attachmentPath}"
+                );
+            }
+
+            $encodedFile = chunk_split(
+                base64_encode($fileContent),
+                76,
+                "\r\n"
+            );
+
+            $message .= "--{$boundary}\r\n";
+            $message .= "Content-Type: {$mimeType}; name=\"{$fileName}\"\r\n";
+            $message .= "Content-Disposition: attachment; filename=\"{$fileName}\"\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n";
+            $message .= "\r\n";
+            $message .= $encodedFile;
+            $message .= "\r\n";
+
+            /*
+            |--------------------------------------------------------------------------
+            | End MIME
+            |--------------------------------------------------------------------------
+            */
+            $message .= "--{$boundary}--\r\n";
+
+        } else {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Normal HTML Email Without Attachment
+            |--------------------------------------------------------------------------
+            */
+            $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: 8bit\r\n";
+            $message .= "\r\n";
+
+            $body = str_replace(
+                ["\r\n.", "\n."],
+                ["\r\n..", "\n.."],
+                $body
+            );
+
+            $message .= $body;
+            $message .= "\r\n";
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP End of DATA
+        |--------------------------------------------------------------------------
+        */
+        $message .= ".\r\n";
+
+        fwrite($fp, $message);
+
+        /*
+        |--------------------------------------------------------------------------
+        | SMTP Response
+        |--------------------------------------------------------------------------
+        */
+        $response = $readResponse();
+
+        if (substr($response, 0, 3) !== '250') {
+
+            fclose($fp);
+
+            throw new \Exception(
+                "SMTP message rejected: {$response}"
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | QUIT
+        |--------------------------------------------------------------------------
+        */
+        fwrite($fp, "QUIT\r\n");
+
+        $readResponse();
+
+        fclose($fp);
+
+        return true;
     }
 
 }
