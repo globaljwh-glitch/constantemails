@@ -140,14 +140,7 @@ class CampaignController extends Controller
     {
         abort_if($campaign->user_id != auth()->id(), 403);
 
-        // $validated = $request->validate([
-        //     'email_subject' => 'required|max:255',
-        //     'from_name'     => 'required|max:255',
-        //     'email_title'   => 'required|max:255',
-        // ]);
-
-
-         $campaignId = session('campaign_draft.campaign_id');
+        $campaignId = session('campaign_draft.campaign_id');
             // dd([
             //     'campaign_id_from_session' => session('campaign_draft.campaign_id'),
             //     'email_title_from_request' => $request->email_title,
@@ -199,23 +192,6 @@ class CampaignController extends Controller
         );
     }
 
-    // public function saveGroups(Request $request, MailCampaign $campaign)
-    // {
-    //     $request->validate([
-    //         'group_ids'   => 'required|array|min:1',
-    //         'group_ids.*' => 'exists:contact_groups,id'
-    //     ]);
-
-    //     $campaign->groups()->sync($request->group_ids);
-
-    //     session()->put('campaign_draft.group_ids', $request->group_ids);
-
-    //     return redirect()->route(
-    //         'user.campaigns.templates',
-    //         $campaign
-    //     );
-    // }
-
     public function saveGroups(Request $request, MailCampaign $campaign)
     {
         $request->validate([
@@ -251,22 +227,6 @@ class CampaignController extends Controller
             $campaign
         );
     }
-
-    // public function templates(MailCampaign $campaign)
-    // {
-    //     abort_if($campaign->user_id != auth()->id(), 403);
-
-    //     $defaultTemplates = Template::where('status', 'Active')->get();
-
-    //     $userTemplates = MailTemplate::where('status', 'Active')
-    //         ->where('user_id', auth()->id()) // if your table has user_id
-    //         ->get();
-
-    //     return view(
-    //         'frontend.user.campaigns.templates',
-    //         compact('campaign', 'defaultTemplates', 'userTemplates')
-    //     );
-    // }
 
     public function saveTemplate(Request $request, MailCampaign $campaign)
     {
@@ -469,151 +429,6 @@ class CampaignController extends Controller
         return view('frontend.user.campaigns.send', compact('campaign'));
     }
 
-    // public function sendCampaign(Request $request, MailCampaign $campaign)
-    // {
-    //     abort_if($campaign->user_id != auth()->id(), 403);
-
-    //     $rules = [
-    //         'scheduler' => 'required|in:send_now,schedule_now',
-    //     ];
-
-    //     if ($request->scheduler == 'schedule_now') {
-
-    //         $rules['schedule_date'] = 'required|date|after_or_equal:today';
-    //         $rules['schedule_hour'] = 'required|integer|min:0|max:23';
-    //         $rules['schedule_minute'] = 'required|integer|min:0|max:59';
-    //     }
-
-    //     $validated = $request->validate($rules);
-
-    //     $campaign->update($validated);
-
-    //     if ($validated['scheduler'] == 'send_now') {
-
-    //         // Build recipient snapshot
-    //         DB::transaction(function () use ($campaign, $validated) {
-
-    //             $this->processCampaign($campaign);
-
-    //             $campaign->update([
-    //                 'campaign_status' => 'queued',
-    //             ]);
-
-    //             // Queue sending
-            
-    //             SendCampaignJob::dispatch($campaign);
-    //         });
-
-    //         return redirect()
-    //             ->route('user.campaigns.index')
-    //             ->with('success', 'Campaign has been queued for sending.');
-    //     }
-
-    //     $this->processCampaign($campaign);
-
-    //     // Schedule
-    //     $campaign->update([
-    //         'campaign_status' => 'queued',
-    //     ]);
-
-    //     return redirect()
-    //         ->route('user.campaigns.index')
-    //         ->with('success', 'Campaign has been scheduled successfully.');
-    // }
-
-    // public function sendCampaign(Request $request, MailCampaign $campaign)
-    // {
-    //     abort_if($campaign->user_id != auth()->id(), 403);
-
-    //     $rules = [
-    //         'scheduler' => 'required|in:send_now,schedule_now',
-    //     ];
-
-    //     if ($request->scheduler === 'schedule_now') {
-    //         $rules['schedule_date'] = 'required|date|after_or_equal:today';
-    //         $rules['schedule_hour'] = 'required|integer|min:0|max:23';
-    //         $rules['schedule_minute'] = 'required|integer|min:0|max:59';
-    //     }
-
-    //     $validated = $request->validate($rules);
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Save schedule information
-    //     |--------------------------------------------------------------------------
-    //     */
-
-    //     $campaign->update([
-    //         'scheduler'      => $validated['scheduler'],
-    //         'schedule_date'  => $validated['schedule_date'] ?? null,
-    //         'schedule_hour'  => $validated['schedule_hour'] ?? null,
-    //         'schedule_minute'=> $validated['schedule_minute'] ?? null,
-    //     ]);
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Create recipient snapshot
-    //     |--------------------------------------------------------------------------
-    //     */
-
-    //     $this->processCampaign($campaign);
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | SEND NOW
-    //     |--------------------------------------------------------------------------
-    //     */
-
-    //     if ($validated['scheduler'] === 'send_now') {
-
-    //         $campaign->update([
-    //             'campaign_status' => 'queued',
-    //         ]);
-
-    //         SendCampaignJob::dispatch($campaign);
-
-    //         return redirect()
-    //             ->route('user.campaigns.index')
-    //             ->with('success', 'Campaign has been queued for sending.');
-    //     }
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | SCHEDULE
-    //     |--------------------------------------------------------------------------
-    //     */
-
-    //     $scheduledAt = Carbon::create(
-    //         $validated['schedule_date'],
-    //         $validated['schedule_hour'],
-    //         $validated['schedule_minute'],
-    //         0
-    //     );
-
-    //     if ($scheduledAt->isPast()) {
-    //         return back()
-    //             ->withErrors([
-    //                 'schedule_date' => 'The scheduled time must be in the future.',
-    //             ])
-    //             ->withInput();
-    //     }
-
-    //     $campaign->update([
-    //         'campaign_status' => 'queued',
-    //     ]);
-
-    //     SendCampaignJob::dispatch($campaign)
-    //         ->delay($scheduledAt);
-
-    //     return redirect()
-    //         ->route('user.campaigns.index')
-    //         ->with(
-    //             'success',
-    //             'Campaign scheduled successfully for ' .
-    //             $scheduledAt->format('d M Y h:i A')
-    //         );
-	// }
-
     public function sendCampaign(Request $request, MailCampaign $campaign)
     {
         abort_if($campaign->user_id != auth()->id(), 403);
@@ -649,6 +464,7 @@ class CampaignController extends Controller
             // Dispatch immediately
             SendCampaignJob::dispatch($campaign);
 
+            $result = $this->sendAdditionalRecipients($campaign->id);
             session()->forget('campaign_draft');
             
             return redirect()
@@ -723,6 +539,8 @@ class CampaignController extends Controller
         */
         SendCampaignJob::dispatch($campaign)
             ->delay($scheduledAt);
+            
+        $result = $this->sendAdditionalRecipients($campaign->id);
 
         session()->forget('campaign_draft');
 
@@ -795,143 +613,6 @@ class CampaignController extends Controller
             }
         });
     }
-
-    // protected function processCampaign(MailCampaign $campaign): void
-    // {
-    //     try {
-
-    //         Log::info('PROCESS CAMPAIGN STARTED', [
-    //             'campaign_id' => $campaign->id,
-    //             'user_id' => $campaign->user_id,
-    //         ]);
-
-    //         $campaign->load('groups.contacts');
-
-    //         Log::info('CAMPAIGN GROUPS LOADED', [
-    //             'campaign_id' => $campaign->id,
-    //             'group_count' => $campaign->groups->count(),
-    //             'group_ids' => $campaign->groups->pluck('id')->toArray(),
-    //         ]);
-
-    //         if ($campaign->groups->isEmpty()) {
-
-    //             Log::warning('CAMPAIGN HAS NO GROUPS', [
-    //                 'campaign_id' => $campaign->id,
-    //             ]);
-
-    //             throw ValidationException::withMessages([
-    //                 'groups' => 'Please select at least one contact group.',
-    //             ]);
-    //         }
-
-    //         DB::transaction(function () use ($campaign) {
-
-    //             Log::info('CAMPAIGN TRANSACTION STARTED', [
-    //                 'campaign_id' => $campaign->id,
-    //             ]);
-
-    //             $recipients = [];
-
-    //             foreach ($campaign->groups as $group) {
-
-    //                 Log::info('PROCESSING GROUP', [
-    //                     'campaign_id' => $campaign->id,
-    //                     'group_id' => $group->id,
-    //                     'group_name' => $group->name ?? null,
-    //                     'contact_count' => $group->contacts->count(),
-    //                 ]);
-
-    //                 foreach ($group->contacts as $contact) {
-
-    //                     Log::info('PROCESSING CONTACT', [
-    //                         'campaign_id' => $campaign->id,
-    //                         'group_id' => $group->id,
-    //                         'contact_id' => $contact->id,
-    //                         'email' => $contact->contact_email,
-    //                     ]);
-
-    //                     if (empty($contact->contact_email)) {
-
-    //                         Log::warning('CONTACT EMAIL EMPTY', [
-    //                             'campaign_id' => $campaign->id,
-    //                             'contact_id' => $contact->id,
-    //                         ]);
-
-    //                         continue;
-    //                     }
-
-    //                     // Prevent duplicate email addresses
-    //                     $email = strtolower(trim($contact->contact_email));
-
-    //                     $recipients[$email] = $contact;
-    //                 }
-    //             }
-
-    //             Log::info('RECIPIENTS PREPARED', [
-    //                 'campaign_id' => $campaign->id,
-    //                 'recipient_count' => count($recipients),
-    //                 'emails' => array_keys($recipients),
-    //             ]);
-
-    //             foreach ($recipients as $contact) {
-
-    //                 try {
-
-    //                     $recipient = CampaignRecipient::create([
-    //                         'campaign_id' => $campaign->id,
-    //                         'contact_id'  => $contact->id,
-    //                         'email'       => $contact->contact_email,
-    //                         'first_name'  => $contact->contact_first_name,
-    //                         'last_name'   => $contact->contact_last_name,
-    //                         'status'      => 'queued',
-    //                         'queued_at'   => now(),
-    //                     ]);
-
-    //                     Log::info('CAMPAIGN RECIPIENT CREATED', [
-    //                         'campaign_id' => $campaign->id,
-    //                         'recipient_id' => $recipient->id,
-    //                         'contact_id' => $contact->id,
-    //                         'email' => $contact->contact_email,
-    //                     ]);
-
-    //                 } catch (\Throwable $e) {
-
-    //                     Log::error('CAMPAIGN RECIPIENT CREATE FAILED', [
-    //                         'campaign_id' => $campaign->id,
-    //                         'contact_id' => $contact->id,
-    //                         'email' => $contact->contact_email,
-    //                         'error' => $e->getMessage(),
-    //                         'file' => $e->getFile(),
-    //                         'line' => $e->getLine(),
-    //                     ]);
-
-    //                     throw $e;
-    //                 }
-    //             }
-
-    //             Log::info('CAMPAIGN TRANSACTION COMPLETED', [
-    //                 'campaign_id' => $campaign->id,
-    //                 'recipient_count' => count($recipients),
-    //             ]);
-    //         });
-
-    //         Log::info('PROCESS CAMPAIGN FINISHED SUCCESSFULLY', [
-    //             'campaign_id' => $campaign->id,
-    //         ]);
-
-    //     } catch (\Throwable $e) {
-
-    //         Log::error('PROCESS CAMPAIGN FAILED', [
-    //             'campaign_id' => $campaign->id,
-    //             'error' => $e->getMessage(),
-    //             'file' => $e->getFile(),
-    //             'line' => $e->getLine(),
-    //             'trace' => $e->getTraceAsString(),
-    //         ]);
-
-    //         throw $e;
-    //     }
-    // }
 
     public function templates(MailCampaign $campaign)
     {
@@ -1049,6 +730,149 @@ class CampaignController extends Controller
             ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
             ->header('Pragma', 'no-cache')
             ->header('Expires', '0');
+    }
+
+    public function sendAdditionalRecipients($campaignId)
+    {
+        // 1. Get campaign
+        $campaign = MailCampaign::findOrFail($campaignId);
+
+        // 2. Check additional recipients
+        if (empty($campaign->additional_recipients)) {
+            return [
+                'success' => true,
+                'message' => 'No additional recipients found.',
+                'sent' => 0,
+                'skipped' => 0,
+            ];
+        }
+
+        // 3. Get final campaign HTML and subject
+        $html = $campaign->message;
+        $subject = $campaign->email_subject;
+        $from = $campaign->from_email ?: 'noreply@constantemails.com';
+
+        if (empty($html)) {
+            throw new \RuntimeException(
+                'Campaign email content is empty.'
+            );
+        }
+
+        // 4. Parse comma-separated email addresses
+        $additionalEmails = collect(
+            preg_split(
+                '/[,;\r\n]+/',
+                $campaign->additional_recipients
+            )
+        )
+            ->map(fn ($email) => strtolower(trim($email)))
+            ->filter(fn ($email) => filter_var(
+                $email,
+                FILTER_VALIDATE_EMAIL
+            ))
+            ->unique()
+            ->values();
+
+        // 5. Get all email addresses belonging to selected groups
+        $groupEmails = DB::table('campaign_group')
+            ->join(
+                'contact_group',
+                'campaign_group.group_id',
+                '=',
+                'contact_group.group_id'
+            )
+            ->join(
+                'contact_lists',
+                'contact_group.contact_id',
+                '=',
+                'contact_lists.id'
+            )
+            ->where('campaign_group.campaign_id', $campaign->id)
+            ->pluck('contact_lists.contact_email')
+            ->map(fn ($email) => strtolower(trim($email)))
+            ->filter()
+            ->unique()
+            ->flip();
+
+        $sent = 0;
+        $skipped = 0;
+        $failed = 0;
+
+        // 6. Send only to addresses not already in selected groups
+        foreach ($additionalEmails as $email) {
+
+            // Skip if this email already belongs to a selected group
+            if ($groupEmails->has($email)) {
+                $skipped++;
+                continue;
+            }
+
+            // 7. Create or retrieve tracking record
+            $recipient = CampaignRecipient::firstOrCreate(
+                [
+                    'campaign_id' => $campaign->id,
+                    'email' => $email,
+                ],
+                [
+                    'status' => 'queued',
+                    'queued_at' => now(),
+                ]
+            );
+
+            // Avoid sending the same campaign twice to this email
+            if ($recipient->status === 'sent') {
+                $skipped++;
+                continue;
+            }
+
+            try {
+
+                $recipient->update([
+                    'status' => 'sending',
+                    'error_message' => null,
+                ]);
+
+                // 8. Send using your existing SMTP method
+                $this->send_smtp_mail(
+                    $email,
+                    $from,
+                    $subject,
+                    $html
+                );
+
+                // 9. Update tracking status after successful SMTP response
+                $recipient->update([
+                    'status' => 'sent',
+                    'sent_at' => now(),
+                    'error_message' => null,
+                ]);
+
+                $sent++;
+
+            } catch (\Throwable $e) {
+
+                $recipient->update([
+                    'status' => 'failed',
+                    'error_message' => $e->getMessage(),
+                ]);
+
+                $failed++;
+
+                \Log::error('Additional campaign recipient failed', [
+                    'campaign_id' => $campaign->id,
+                    'email' => $email,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return [
+            'success' => $failed === 0,
+            'message' => 'Additional recipients processed.',
+            'sent' => $sent,
+            'skipped' => $skipped,
+            'failed' => $failed,
+        ];
     }
 
 }
