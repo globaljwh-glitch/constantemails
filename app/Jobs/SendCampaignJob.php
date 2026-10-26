@@ -460,7 +460,7 @@ class SendCampaignJob implements ShouldQueue
     $body,
     $attachmentPath = null
     ) {
-        $smtpServer = '10.1.15.202';
+        $smtpServer = '10.1.14.11';
         $smtpPort   = 25;
 
         $errno  = 0;
