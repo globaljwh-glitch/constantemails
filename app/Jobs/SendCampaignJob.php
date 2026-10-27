@@ -1056,6 +1056,12 @@ class SendCampaignJob implements ShouldQueue
 
                                 |
 
+                                <a href="#">
+                                    Contact Us
+                                </a>
+
+                                |
+
                                 <a href="' . e($privacyUrl) . '">
                                     Privacy policy
                                 </a>
@@ -1172,6 +1178,12 @@ class SendCampaignJob implements ShouldQueue
 
                     <a href="' . e($forwardUrl) . '">
                         Forward to friend
+                    </a>
+
+                    |
+
+                    <a href="#">
+                        Contact Us
                     </a>
 
                     |
