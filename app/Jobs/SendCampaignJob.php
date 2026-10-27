@@ -460,8 +460,18 @@ class SendCampaignJob implements ShouldQueue
     $body,
     $attachmentPath = null
     ) {
-        $smtpServer = '10.1.14.11';
-        $smtpPort   = 25;
+        // $smtpServer = '10.1.14.11';
+        // $smtpPort   = 25;
+        $smtpServers = config('mail.smtp_servers', ['10.1.14.11']);
+
+        if (empty($smtpServers)) {
+            throw new \RuntimeException('No SMTP servers configured.');
+        }
+
+        // Randomly select an SMTP server for this email
+        $smtpServer = $smtpServers[array_rand($smtpServers)];
+
+        $smtpPort = (int) config('mail.mailers.smtp.port', 25);
 
         $errno  = 0;
         $errstr = '';

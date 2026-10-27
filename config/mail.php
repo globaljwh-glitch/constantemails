@@ -98,6 +98,10 @@ return [
         ],
 
     ],
+    
+    'smtp_servers' => array_values(array_filter(
+        array_map('trim', explode(',', env('SMTP_SERVERS', '10.1.14.11')))
+    )),
 
     /*
     |--------------------------------------------------------------------------
