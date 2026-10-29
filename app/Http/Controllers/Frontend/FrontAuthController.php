@@ -97,7 +97,8 @@ class FrontAuthController extends Controller
 
             $fromEmail = config('mail.from.address');
             $toEmail = $user->email;
-            $subject = $mail->envelope()->subject;
+            $subject = 'Verify Your Email';
+            //$subject = $mail->envelope()->subject;
 
             // Render the email HTML
             $body = $mail->content()->view
