@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmailMail;
+use Illuminate\Support\Facades\View;
 
 class FrontAuthController extends Controller
 {
@@ -93,24 +94,47 @@ class FrontAuthController extends Controller
             //     new VerifyEmailMail($user)
             // );
             // Send verification email using custom SMTP function
-            $mail = new VerifyEmailMail($user);
 
-            $fromEmail = config('mail.from.address');
-            $toEmail = $user->email;
-            $subject = 'Verify Your Email';
-            //$subject = $mail->envelope()->subject;
 
-            // Render the email HTML
-            $body = $mail->content()->view
-                ? view($mail->content()->view, $mail->content()->with)->render()
-                : '';
 
-            $this->send_smtp_mail(
-                $toEmail,
-                $fromEmail,
-                $subject,
-                $body
-            );
+            // $mail = new VerifyEmailMail($user);
+
+            // $fromEmail = config('mail.from.address');
+            // $toEmail = $user->email;
+            // $subject = 'Verify Your Email';
+            // //$subject = $mail->envelope()->subject;
+
+            // // Render the email HTML
+            // $body = $mail->content()->view
+            //     ? view($mail->content()->view, $mail->content()->with)->render()
+            //     : '';
+
+            // $this->send_smtp_mail(
+            //     $toEmail,
+            //     $fromEmail,
+            //     $subject,
+            //     $body
+            // );
+
+            
+
+// Send verification email using custom SMTP function
+$toEmail = $user->email;
+$fromEmail = env('MAIL_FROM_ADDRESS', config('mail.from.address'));
+$subject = 'Verify Your Email Address';
+
+// Render the existing verification email template
+$body = View::make('emails.verify-email', [
+    'user' => $user,
+])->render();
+
+// Send using your round-robin SMTP function
+$this->send_smtp_mail(
+    $toEmail,
+    $fromEmail,
+    $subject,
+    $body
+);
 
             return redirect()
                 ->route('register')
