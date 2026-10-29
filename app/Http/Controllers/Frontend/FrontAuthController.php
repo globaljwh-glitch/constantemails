@@ -55,7 +55,9 @@ class FrontAuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'username'   => 'required|string|max:100|unique:users,username',
+            //'username'   => 'required|string|max:100|unique:users,username',
+            'username'   => 'required|string|max:100',
+            'last_name'  => 'required|string|max:100',
             'email'      => 'required|email|max:255|unique:users,email',
             'password'   => 'required|min:8|confirmed',
             'package_id' => 'required|exists:registration_packages,id',
@@ -73,6 +75,7 @@ class FrontAuthController extends Controller
 
             $user = User::create([
                 'name'              => ucfirst($request->username),
+                'last_name'         => ucfirst($request->last_name),
                 'username'          => $request->username,
                 'email'             => $request->email,
                 'password'          => Hash::make($request->password),
@@ -86,8 +89,26 @@ class FrontAuthController extends Controller
             DB::commit();
 
             // Send verification email
-            Mail::to($user->email)->send(
-                new VerifyEmailMail($user)
+            // Mail::to($user->email)->send(
+            //     new VerifyEmailMail($user)
+            // );
+            // Send verification email using custom SMTP function
+            $mail = new VerifyEmailMail($user);
+
+            $fromEmail = config('mail.from.address');
+            $toEmail = $user->email;
+            $subject = $mail->envelope()->subject;
+
+            // Render the email HTML
+            $body = $mail->content()->view
+                ? view($mail->content()->view, $mail->content()->with)->render()
+                : '';
+
+            $this->send_smtp_mail(
+                $toEmail,
+                $fromEmail,
+                $subject,
+                $body
             );
 
             return redirect()

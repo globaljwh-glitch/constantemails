@@ -71,10 +71,22 @@
                                     <input type="text"
                                         name="username"
                                         class="form-control @error('username') is-invalid @enderror"
-                                        placeholder="Username"
+                                        placeholder="First Name"
                                         value="{{ old('username') }}">
 
                                     @error('username')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text"
+                                        name="last_name"
+                                        class="form-control @error('last_name') is-invalid @enderror"
+                                        placeholder="Last Name"
+                                        value="{{ old('last_name') }}">
+
+                                    @error('last_name')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
