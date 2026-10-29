@@ -10,6 +10,7 @@ use App\Models\Payment;
 use App\Mail\PasswordChangedMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
@@ -110,9 +111,28 @@ class UserController extends Controller
             'user_id' => $user->id,
             'email' => $user->email,
         ]);
-        Mail::to($user->email)->send(
-            new PasswordChangedMail($user)
-        );
+        // Mail::to($user->email)->send(
+        //     new PasswordChangedMail($user)
+        // );
+
+        // Send verification email using custom SMTP function
+$toEmail = $user->email;
+$fromEmail = env('MAIL_FROM_ADDRESS', config('mail.from.address'));
+$subject = 'Your password has been changed';
+
+// Render the existing verification email template
+$body = View::make('emails.password-changed', [
+    'user' => $user,
+])->render();
+
+// Send using your round-robin SMTP function
+$this->send_smtp_mail(
+    $toEmail,
+    $fromEmail,
+    $subject,
+    $body
+);
+
         // Mail::to($user->email)->queue(
         //     new PasswordChangedMail($user)
         // );
