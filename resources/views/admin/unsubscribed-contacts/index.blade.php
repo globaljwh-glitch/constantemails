@@ -5,8 +5,8 @@
 @push('styles')
     <style>
         /* =========================
-                   Page Table
-                ========================= */
+                               Page Table
+                            ========================= */
 
         .unsubscribed-table {
             margin-bottom: 0 !important;
@@ -58,8 +58,8 @@
 
 
         /* =========================
-                   Status Badge
-                ========================= */
+                               Status Badge
+                            ========================= */
 
         .unsubscribe-badge {
             display: inline-block;
@@ -74,8 +74,8 @@
 
 
         /* =========================
-                   Subscribe Button
-                ========================= */
+                               Subscribe Button
+                            ========================= */
 
         .btn-subscribe {
             background: #111827;
@@ -103,8 +103,8 @@
 
 
         /* =========================
-                   Header Counter
-                ========================= */
+                               Header Counter
+                            ========================= */
 
         .unsubscribed-count {
             background: #111827 !important;
@@ -117,8 +117,8 @@
 
 
         /* =========================
-                   Pagination
-                ========================= */
+                               Pagination
+                            ========================= */
 
         .pagination-section {
             display: flex;
@@ -152,8 +152,8 @@
 
 
         /* =========================
-                   Empty State
-                ========================= */
+                               Empty State
+                            ========================= */
 
         .empty-state {
             padding: 55px 20px;
@@ -189,8 +189,8 @@
 
 
         /* =========================
-                   Alert
-                ========================= */
+                               Alert
+                            ========================= */
 
         .admin-alert {
             border: 0;
@@ -314,6 +314,7 @@
                                     <th class="text-left">Name</th>
                                     <th class="text-left">Email</th>
                                     <th>Phone</th>
+                                    <th>Date </th>
                                     <th>Status</th>
                                     <th width="150">Action</th>
                                 </tr>
@@ -354,7 +355,12 @@
                                                                         {{ $contact->contact_phone ?? '-' }}
                                                                     </span>
                                                                 </td>
+                                                                {{-- Status --}}
+                                                                <td>
 
+                                                                    {{ $contact->created_at ? $contact->created_at->format('d M, Y') : 'N/A' }}
+
+                                                                </td>
 
                                                                 {{-- Status --}}
                                                                 <td>

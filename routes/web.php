@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\UserTemplateController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\UnsubscribedContactController;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Admin\CampaignnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -457,6 +458,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
+    Route::get('/campaigns/{campaign}/edit', [CampaignnController::class, 'edit'])->name('campaigns.edit');
+    Route::post('/campaigns/{campaign}/update', [CampaignnController::class, 'update'])->name('campaigns.update');
+    Route::post('/campaigns/upload-image', [CampaignnController::class, 'uploadImage'])->name('campaigns.upload-image');
+
     Route::resource('campaigns', AdminCampaignController::class)->names('admin.campaigns');
 
     Route::get('/campaigns/{id}/contacts-json', [AdminCampaignController::class, 'getCampaignContacts'])->name('campaigns.contacts.json');
@@ -469,7 +474,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('admin.profile.password');
 
     Route::resource('user-templates', UserTemplateController::class)->names('admin.user-templates')->except(['show']);
-    
+
     Route::get('/unsubscribed-contacts', [UnsubscribedContactController::class, 'index'])
         ->name('unsubscribed-contacts.index');
 

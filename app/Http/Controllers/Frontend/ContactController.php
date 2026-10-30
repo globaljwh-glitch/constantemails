@@ -64,61 +64,166 @@ class ContactController extends Controller
     /**
      * Store manually added contact.
      */
-    public function store(Request $request)
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+
+    //         'group_id'=>'required|exists:contact_groups,id',
+
+    //         'contact_first_name'=>'required|max:255',
+
+    //         'contact_last_name'=>'nullable|max:255',
+
+    //         'contact_email'=>'required|email',
+
+    //         'contact_phone'=>'nullable|max:100',
+
+    //         'contact_company_name'=>'nullable|max:255',
+
+    //         'contact_address'=>'nullable',
+
+    //         'area_interest'=>'nullable',
+
+    //     ]);
+
+    //     Contact::create([
+
+    //         'user_id'=>auth()->id(),
+
+    //         'group_id'=>$request->group_id,
+
+    //         'contact_first_name'=>$request->contact_first_name,
+
+    //         'contact_last_name'=>$request->contact_last_name,
+
+    //         'contact_company_name'=>$request->contact_company_name,
+
+    //         'contact_address'=>$request->contact_address,
+
+    //         'area_interest'=>$request->area_interest,
+
+    //         'contact_email'=>$request->contact_email,
+
+    //         'contact_phone'=>$request->contact_phone,
+
+    //         'status'=>1,
+
+    //         'user_status'=>'opt-in',
+
+    //     ]);
+
+    //     return redirect()
+
+    //         ->route('user.groups.contacts.index',$request->group_id)
+
+    //         ->with('success','Contact added successfully.');
+
+    // }
+
+    
+    public function store(Request $request, EmailVerifier $verifier)
     {
         $request->validate([
-
-            'group_id'=>'required|exists:contact_groups,id',
-
-            'contact_first_name'=>'required|max:255',
-
-            'contact_last_name'=>'nullable|max:255',
-
-            'contact_email'=>'required|email',
-
-            'contact_phone'=>'nullable|max:100',
-
-            'contact_company_name'=>'nullable|max:255',
-
-            'contact_address'=>'nullable',
-
-            'area_interest'=>'nullable',
-
+            'group_id'              => 'required|exists:contact_groups,id',
+            'contact_first_name'    => 'required|max:255',
+            'contact_last_name'     => 'nullable|max:255',
+            'contact_email'         => 'required|email',
+            'contact_phone'         => 'nullable|max:100',
+            'contact_company_name'  => 'nullable|max:255',
+            'contact_address'       => 'nullable',
+            'area_interest'         => 'nullable',
         ]);
 
-        Contact::create([
+        DB::beginTransaction();
 
-            'user_id'=>auth()->id(),
+        try {
 
-            'group_id'=>$request->group_id,
+            //$emailStatus = 'invalid';
+            $contactStatus = 0;
+            $userStatus = 'opt-out';
 
-            'contact_first_name'=>$request->contact_first_name,
 
-            'contact_last_name'=>$request->contact_last_name,
+            try {
 
-            'contact_company_name'=>$request->contact_company_name,
+                $verification = $verifier->verify($request->contact_email);
 
-            'contact_address'=>$request->contact_address,
 
-            'area_interest'=>$request->area_interest,
+                /*
+                |--------------------------------------------------------------------------
+                | Only "valid" emails are treated as valid
+                |--------------------------------------------------------------------------
+                */
 
-            'contact_email'=>$request->contact_email,
+                if ($verification->status === 'valid') {
 
-            'contact_phone'=>$request->contact_phone,
+                    //$emailStatus = 'valid';
 
-            'status'=>1,
+                    $contactStatus = 1;
 
-            'user_status'=>'opt-in',
+                    $userStatus = 'opt-in';
+                }
 
-        ]);
+            } catch (\Throwable $e) {
 
-        return redirect()
+                /*
+                |--------------------------------------------------------------------------
+                | Verification failed technically
+                |--------------------------------------------------------------------------
+                */
 
-            ->route('user.groups.contacts.index',$request->group_id)
+                // Log::error('Email verification failed during import', [
+                //     'email' => $email,
+                //     'user_id' => Auth::id(),
+                //     'error' => $e->getMessage(),
+                // ]);
 
-            ->with('success','Contact added successfully.');
+                //$emailStatus = 'invalid';
 
+                $contactStatus = 0;
+
+                $userStatus = 'opt-out';
+            }
+
+            $contact = Contact::create([
+                'user_id'              => auth()->id(),
+                'group_id'             => $request->group_id,
+                'contact_first_name'   => $request->contact_first_name,
+                'contact_last_name'    => $request->contact_last_name,
+                'contact_company_name' => $request->contact_company_name,
+                'contact_address'      => $request->contact_address,
+                'area_interest'        => $request->area_interest,
+                'contact_email'        => $request->contact_email,
+                'contact_phone'        => $request->contact_phone,
+                'status'               => $contactStatus,
+                'user_status'          => $userStatus, //'opt-in',
+            ]);
+
+            // Insert relation into contact_group pivot table
+            // DB::table('contact_group')->insert([
+            //     'contact_id' => $contact->id,
+            //     'group_id'   => $request->group_id,
+            // ]);
+            $contact->groups()->attach($request->group_id);
+
+            DB::commit();
+
+            return redirect()
+                ->route('user.groups.contacts.index', $request->group_id)
+                ->with('success', 'Contact added successfully.');
+
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            \Log::error('Contact creation failed', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return back()->withInput()
+                ->with('error', 'Unable to add contact. Please try again.');
+        }
     }
+
 
     /**
      * Show Import Contacts page.
@@ -745,80 +850,7 @@ class ContactController extends Controller
     /**
      * Update Contact.
      */
-    // public function update(Request $request, Contact $contact)
-    // {
-    //     abort_if($contact->user_id != auth()->id(),403);
-
-    //     $request->validate([
-
-    //         'group_id'=>'required',
-
-    //         'contact_first_name'=>'required',
-
-    //         'contact_email'=>'required|email',
-
-    //     ]);
-
-    //     $contact->update([
-
-    //         'group_id'=>$request->group_id,
-
-    //         'contact_first_name'=>$request->contact_first_name,
-
-    //         'contact_last_name'=>$request->contact_last_name,
-
-    //         'contact_company_name'=>$request->contact_company_name,
-
-    //         'contact_address'=>$request->contact_address,
-
-    //         'area_interest'=>$request->area_interest,
-
-    //         'contact_email'=>$request->contact_email,
-
-    //         'contact_phone'=>$request->contact_phone,
-
-    //     ]);
-
-    //     return redirect()
-
-    //         //->route('user.groups.contacts.index',$contact->group_id)
-    //         ->route('user.groups.contacts.index', ['group' => $contact->group_id])
-    //         ->with('success','Contact updated successfully.');
-    // }
-
-    // public function update(Request $request, Contact $contact)
-    // {
-    //     abort_if($contact->user_id != auth()->id(), 403);
-
-    //     $request->validate([
-    //         'group_id' => 'required|exists:groups,id',
-    //         'contact_first_name' => 'required',
-    //         'contact_email' => 'required|email',
-    //     ]);
-
-    //     $contact->update([
-    //         'contact_first_name' => $request->contact_first_name,
-    //         'contact_last_name' => $request->contact_last_name,
-    //         'contact_company_name' => $request->contact_company_name,
-    //         'contact_address' => $request->contact_address,
-    //         'area_interest' => $request->area_interest,
-    //         'contact_email' => $request->contact_email,
-    //         'contact_phone' => $request->contact_phone,
-    //     ]);
-
-    //     // Update contact_group pivot
-    //     $contact->groups()->sync([
-    //         $request->group_id
-    //     ]);
-
-    //     return redirect()
-    //         ->route(
-    //             'user.groups.contacts.index',
-    //             ['group' => $request->group_id]
-    //         )
-    //         ->with('success', 'Contact updated successfully.');
-    // }
-    public function update(Request $request, Group $group, Contact $contact)
+    public function update(Request $request, Group $group, Contact $contact, EmailVerifier $verifier)
     {
         abort_if($contact->user_id != auth()->id(), 403);
 
@@ -831,6 +863,52 @@ class ContactController extends Controller
             'contact_email' => 'required|email',
         ]);
 
+        //$emailStatus = 'invalid';
+            $contactStatus = 0;
+            $userStatus = 'opt-out';
+
+
+            try {
+
+                $verification = $verifier->verify($request->contact_email);
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Only "valid" emails are treated as valid
+                |--------------------------------------------------------------------------
+                */
+
+                if ($verification->status === 'valid') {
+
+                    //$emailStatus = 'valid';
+
+                    $contactStatus = 1;
+
+                    $userStatus = 'opt-in';
+                }
+
+            } catch (\Throwable $e) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Verification failed technically
+                |--------------------------------------------------------------------------
+                */
+
+                // Log::error('Email verification failed during import', [
+                //     'email' => $email,
+                //     'user_id' => Auth::id(),
+                //     'error' => $e->getMessage(),
+                // ]);
+
+                //$emailStatus = 'invalid';
+
+                $contactStatus = 0;
+
+                $userStatus = 'opt-out';
+            }
+
         $contact->update([
             'contact_first_name' => $request->contact_first_name,
             'contact_last_name' => $request->contact_last_name,
@@ -839,6 +917,8 @@ class ContactController extends Controller
             'area_interest' => $request->area_interest,
             'contact_email' => $request->contact_email,
             'contact_phone' => $request->contact_phone,
+            'status'        => $contactStatus,
+            'user_status'   => $userStatus, //'opt-in',
         ]);
 
         // Update contact_group pivot table
@@ -863,14 +943,6 @@ class ContactController extends Controller
             'Contact updated successfully.'
         );
 
-        // $returnGroupId = $request->return_group_id;
-        // // Redirect to first selected group
-        // return redirect()
-        //     ->route(
-        //         'user.groups.contacts.index',
-        //         ['group' => $returnGroupId]
-        //     )
-        //     ->with('success', 'Contact updated successfully.');
     }
 
     /**

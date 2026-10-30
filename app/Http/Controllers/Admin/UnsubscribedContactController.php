@@ -5,22 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\ContactList;
 
 class UnsubscribedContactController extends Controller
 {
     /**
      * Display unsubscribed contacts.
      */
-    public function index()
-    {
-        $contacts = DB::table('contact_lists')
-            ->where('status', 1)
-            ->where('user_status', 'opt-out')
-            ->orderByDesc('updated_at')
-            ->paginate(8);
+   public function index()
+{
+    $contacts = ContactList::where('status', 1)
+        ->where('user_status', 'opt-out')
+        ->orderByDesc('updated_at')
+        ->paginate(8);
 
-        return view('admin.unsubscribed-contacts.index', compact('contacts'));
-    }
+    return view('admin.unsubscribed-contacts.index', compact('contacts'));
+}
 
     /**
      * Subscribe a contact again.
