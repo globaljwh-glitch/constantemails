@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
-
+use Laravel\Sanctum\HasApiTokens;   // <-- Add this
 class User extends Authenticatable
 {
 
-    use HasFactory, Notifiable, Billable;
+    use HasFactory, Notifiable, Billable,HasApiTokens;   // <-- Include HasApiTokens here
 
     /**
      * The attributes that are mass assignable.
