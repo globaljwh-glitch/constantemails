@@ -11,7 +11,7 @@ class ContactInquiryController extends Controller
     public function store(Request $request)
     {
         // Expected captcha answer (from session or other mechanism)
-        $expectedAnswer = session('captcha_num1', 0) + session('captcha_num2', 0);
+        //$expectedAnswer = session('captcha_num1', 0) + session('captcha_num2', 0);
 
         $validatedData = $request->validate([
             'first_name'          => 'required|string|max:50',
@@ -27,14 +27,7 @@ class ContactInquiryController extends Controller
             'products_interested' => 'required|string|max:255',
             'application'         => 'required|string',
             'final_application'   => 'required|string|max:1000',
-            'captcha'             => [
-                'required', 'integer',
-                function ($attribute, $value, $fail) use ($expectedAnswer) {
-                    if ((int)$value !== $expectedAnswer) {
-                        $fail('The security check equation solution typed was incorrect.');
-                    }
-                },
-            ],
+            
         ]);
 
         // Save to DB
@@ -51,12 +44,12 @@ class ContactInquiryController extends Controller
                                 $html,
                                 $attachmentPath=NULL
                             );
-        // Reset captcha values for next request
-        session()->forget(['captcha_num1', 'captcha_num2']);
-        session([
-            'captcha_num1' => rand(2, 9),
-            'captcha_num2' => rand(1, 9)
-        ]);
+        // // Reset captcha values for next request
+        // session()->forget(['captcha_num1', 'captcha_num2']);
+        // session([
+        //     'captcha_num1' => rand(2, 9),
+        //     'captcha_num2' => rand(1, 9)
+        // ]);
 
         // Return JSON response for API
         return response()->json([
