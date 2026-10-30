@@ -3,19 +3,56 @@
 @section('title', 'Contact Us Queries | Constant Emails')
 
 @push('styles')
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.min.css">
+    
     <style>
         .table td, .table th {
-            border-top: 1px solid #080908;
+            border-top: 1px solid #ebedf2;
             vertical-align: middle;
+            padding: 14px 16px;
         }
         .table th {
-            color: #000000 !important;
+            background-color: #fafbfc;
+            color: #515365 !important;
             font-weight: 700 !important;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+        .query-name-link {
+            color: #2196f3 !important;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .query-name-link:hover {
+            color: #0d6efd !important;
+            text-decoration: underline;
         }
         .pagination-section nav {
             display: flex;
             justify-content: flex-end;
             margin-top: 20px;
+        }
+        /* Custom SweetAlert Modal Styling */
+        .swal2-popup .query-detail-box {
+            text-align: left;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 1px solid #e9ecef;
+        }
+        .swal2-popup .query-detail-row {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .swal2-popup .query-detail-row strong {
+            color: #3b3f5c;
+            display: inline-block;
+            width: 130px;
         }
     </style>
 @endpush
@@ -60,7 +97,7 @@
                                     <div class="input-group-append">
                                         <button class="btn btn-dark" type="submit" style="border-radius: 0 4px 4px 0;">Search</button>
                                         @if(request('search')) 
-                                            <a href="{{ route('admin.contact-queries.index') }}" class="btn btn-danger">Clear</a> 
+                                            <a href="{{ route('admin.contact-queries.index') }}" class="btn btn-danger ml-2" style="border-radius: 4px;">Clear</a> 
                                         @endif
                                     </div>
                                 </div>
@@ -71,7 +108,7 @@
 
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped mb-4">
+                        <table class="table table-bordered table-hover mb-4">
                             <thead>
                                 <tr>
                                     <th class="align-center" style="width: 50px;">#</th>
@@ -81,14 +118,27 @@
                                     <th>Comments</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Date</th>
-                                    <!-- <th class="text-center" style="width: 100px;">Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($queries as $key => $q)
                                     <tr>
                                         <td class="align-center">{{ ($queries->currentPage() - 1) * $queries->perPage() + $key + 1 }}</td>
-                                        <td><strong>{{ $q->first_name }} {{ $q->last_name }}</strong></td>
+                                        <td>
+                                            <!-- Clickable Name Triggering Professional Popup Modal -->
+                                            <a href="javascript:void(0);" 
+                                               class="query-name-link"
+                                               data-firstname="{{ $q->first_name }}"
+                                               data-lastname="{{ $q->last_name ?? '' }}"
+                                               data-email="{{ $q->email }}"
+                                               data-phone="{{ $q->phone ?? 'N/A' }}"
+                                               data-org="{{ $q->organization ?? 'N/A' }}"
+                                               data-comments="{{ $q->comments }}"
+                                               data-status="{{ ucfirst($q->status ?? 'New') }}"
+                                               data-date="{{ \Carbon\Carbon::parse($q->created_at)->format('d M, Y h:i A') }}">
+                                                {{ $q->first_name }} {{ $q->last_name }}
+                                            </a>
+                                        </td>
                                         <td>
                                             {{ $q->email }}<br>
                                             <small class="text-muted">{{ $q->phone ?? 'N/A' }}</small>
@@ -96,24 +146,15 @@
                                         <td>{{ $q->organization ?? 'N/A' }}</td>
                                         <td>{{ Str::limit($q->comments, 40) }}</td>
                                         <td class="text-center">
-                                            <span class="badge badge-pill badge-{{ $q->status == 'Replied' ? 'success' : 'warning' }}">
-                                                {{ ucfirst($q->status ?? 'Pending') }}
+                                            <span class="badge badge-pill badge-{{ in_array($q->status, ['replied', 'closed']) ? 'success' : 'warning' }}">
+                                                {{ ucfirst($q->status ?? 'New') }}
                                             </span>
                                         </td>
                                         <td class="text-center">{{ \Carbon\Carbon::parse($q->created_at)->format('d M, Y') }}</td>
-                                        <!-- <td class="align-center">
-                                            <form action="{{ route('admin.contact-queries.destroy', $q->id) }}" method="POST" class="d-inline delete-form">
-                                                @csrf 
-                                                @method('DELETE')
-                                                <button type="button" class="btn-delete-item" style="border: none; background: none; padding: 0;" data-toggle="tooltip" title="Delete">
-                                                    <i class="flaticon-delete-fill fs-20 text-danger"></i>
-                                                </button>
-                                            </form>
-                                        </td> -->
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="text-center py-4">No contact queries found.</td>
+                                        <td colspan="7" class="text-center py-4">No contact queries found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -129,18 +170,45 @@
 @endsection
 
 @push('scripts')
+    <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
 
-            $(document).on('click', '.btn-delete-item', function (e) {
-                e.preventDefault();
-                let form = $(this).closest('form');
+            // On click Name open professional popup modal
+            $(document).on('click', '.query-name-link', function () {
+                let firstName = $(this).data('firstname');
+                let lastName = $(this).data('lastname');
+                let email = $(this).data('email');
+                let phone = $(this).data('phone');
+                let org = $(this).data('org');
+                let comments = $(this).data('comments');
+                let status = $(this).data('status');
+                let date = $(this).data('date');
+
                 Swal.fire({
-                    title: 'Are you sure?', text: "This query will be permanently deleted!", icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#e7515a', cancelButtonColor: '#3b3f5c', confirmButtonText: 'Yes, delete it!'
-                }).then((result) => { if (result.isConfirmed) form.submit(); });
+                    title: '<span style="font-size: 20px; color: #3b3f5c;">Query Details</span>',
+                    html: `
+                        <div class="query-detail-box">
+                            <div class="query-detail-row"><strong>Full Name:</strong> ${firstName} ${lastName}</div>
+                            <div class="query-detail-row"><strong>Email Address:</strong> ${email}</div>
+                            <div class="query-detail-row"><strong>Phone Number:</strong> ${phone}</div>
+                            <div class="query-detail-row"><strong>Organization:</strong> ${org}</div>
+                            <div class="query-detail-row"><strong>Status:</strong> <span class="badge badge-info">${status}</span></div>
+                            <div class="query-detail-row"><strong>Date Submitted:</strong> ${date}</div>
+                            <div class="query-detail-row" style="margin-top: 15px;"><strong>Comments / Message:</strong></div>
+                            <div style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #ced4da; margin-top: 5px; max-height: 150px; overflow-y: auto; text-align: left; font-size: 13px; color: #495057;">
+                                ${comments}
+                            </div>
+                        </div>
+                    `,
+                    icon: 'info',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#3b3f5c',
+                    width: '600px',
+                    padding: '20px'
+                });
             });
         });
     </script>
