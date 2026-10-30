@@ -6,7 +6,7 @@ use App\Models\ContactInquiry;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\LeadSubmissionMail;
 
-class ContactInquiryController extends Controller
+class ContactEnquiryController extends Controller
 {
     public function store(Request $request)
     {
