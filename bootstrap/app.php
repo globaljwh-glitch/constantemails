@@ -14,9 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
-        $middleware->alias([
+        // $middleware->alias([
+        //     'admin' => AdminMiddleware::class,
+        // ]);
+         $middleware->alias([
             'admin' => AdminMiddleware::class,
-        ]);
+        'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
+        'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
+    ]);
         $middleware->api(prepend: [
         \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         \Illuminate\Http\Middleware\HandleCors::class, // built-in CORS handler
