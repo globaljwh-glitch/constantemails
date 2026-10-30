@@ -195,6 +195,7 @@
                                     <th class="text-center">Duration</th>
                                     <th class="text-center">Access Level</th>
                                     <th class="text-center">Status</th>
+                                    <th class="text-center">Date Created</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -225,7 +226,7 @@
                                                 <span class="badge badge-danger shadow-none badge-pill">Deleted</span>
                                             @endif
                                         </td>
-
+<td class="text-center">{{ $package->created_at ? $package->created_at->format('d M, Y') : 'N/A' }}</td>
                                         <td class="align-center">
                                             <ul class="table-controls mb-0">
                                                 <!-- Edit Button -->
