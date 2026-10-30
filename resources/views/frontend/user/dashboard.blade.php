@@ -50,8 +50,13 @@
           {{-- Heading --}}
           <div class="row">
             <div class="col-lg-12">
-              <div class="borderBottom">
-                <h2>Profile Details</h2>
+              <div class="borderBottom d-flex justify-content-between align-items-center">
+                  <h2 class="mb-0">Profile Details</h2>
+
+                  <a href="{{ route('user.account.profile') }}"
+                    class="btn btn-outline-primary btn-sm">
+                      Edit Profile
+                  </a>
               </div>
             </div>
           </div>

@@ -50,11 +50,11 @@
 
                             <option value="">Select File Type</option>
 
-                            <option value="csv">CSV File</option>
+                            <!-- <option value="csv">CSV File</option> -->
 
                             <!-- <option value="xls">Microsoft Excel (97-2003)</option> -->
 
-                            <option value="xlsx">Microsoft Excel (2007+)</option>
+                            <option value="xlsx">Microsoft Excel</option>
 
                         </select>
 

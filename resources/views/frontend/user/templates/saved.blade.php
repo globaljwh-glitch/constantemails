@@ -66,6 +66,13 @@
 
                     <div class="text-right mb-3">
 
+                        @if(session()->has('campaign_draft'))
+                            <a href="{{ url('user/campaigns/' . session('campaign_draft.campaign_id') . '/templates') }}"
+                            class="btn btn-primary">
+                                Continue Campaign
+                            </a>
+                        @endif
+
                         <a
                             href="{{ route('user.saved-templates.create') }}"
                             class="btn btn-success"

@@ -104,6 +104,18 @@
                                     @enderror
                                 </div>
 
+                                <div class="col-md-6">
+                                    <input type="text"
+                                        name="company_phone"
+                                        class="form-control @error('company_phone') is-invalid @enderror"
+                                        placeholder="Phone"
+                                        value="{{ old('company_phone') }}">
+
+                                    @error('company_phone')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
                                 <!-- Password -->
                                 <div class="col-md-6">
                                     <input type="password"
@@ -127,6 +139,18 @@
                                         @error('password_confirmation')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text"
+                                        name="company_name"
+                                        class="form-control @error('company_name') is-invalid @enderror"
+                                        placeholder="Company Name"
+                                        value="{{ old('company_name') }}">
+
+                                    @error('company_name')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
 
                                 <!-- Package -->

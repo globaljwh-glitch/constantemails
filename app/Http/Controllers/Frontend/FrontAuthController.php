@@ -59,6 +59,8 @@ class FrontAuthController extends Controller
             //'username'   => 'required|string|max:100|unique:users,username',
             'username'   => 'required|string|max:100',
             'last_name'  => 'required|string|max:100',
+            'company_phone' => 'required|string|max:100',
+            'company_name'  => 'required|string|max:100',
             'email'      => 'required|email|max:255|unique:users,email',
             'password'   => 'required|min:8|confirmed',
             'package_id' => 'required|exists:registration_packages,id',
@@ -79,6 +81,8 @@ class FrontAuthController extends Controller
                 'last_name'         => ucfirst($request->last_name),
                 'username'          => $request->username,
                 'email'             => $request->email,
+                'company_name'      => $request->company_name,
+                'comapny_phone'     => $request->comapny_phone,
                 'password'          => Hash::make($request->password),
                 'package_id'        => $package->id,
                 'status'            => 'Deactive',
@@ -116,25 +120,23 @@ class FrontAuthController extends Controller
             //     $body
             // );
 
-            
+            // Send verification email using custom SMTP function
+            $toEmail = $user->email;
+            $fromEmail = env('MAIL_FROM_ADDRESS', config('mail.from.address'));
+            $subject = 'Verify Your Email Address';
 
-// Send verification email using custom SMTP function
-$toEmail = $user->email;
-$fromEmail = env('MAIL_FROM_ADDRESS', config('mail.from.address'));
-$subject = 'Verify Your Email Address';
+            // Render the existing verification email template
+            $body = View::make('emails.verify-email', [
+                'user' => $user,
+            ])->render();
 
-// Render the existing verification email template
-$body = View::make('emails.verify-email', [
-    'user' => $user,
-])->render();
-
-// Send using your round-robin SMTP function
-$this->send_smtp_mail(
-    $toEmail,
-    $fromEmail,
-    $subject,
-    $body
-);
+            // Send using your round-robin SMTP function
+            $this->send_smtp_mail(
+                $toEmail,
+                $fromEmail,
+                $subject,
+                $body
+            );
 
             return redirect()
                 ->route('register')
