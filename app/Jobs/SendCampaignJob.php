@@ -1027,11 +1027,11 @@ class SendCampaignJob implements ShouldQueue
                 <td bgcolor="#f7f7f7" align="center" style="padding:20px 20px; text-align:center;">
                     <table style="width:100%;" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
-                            <td align="center" style="text-align:center; font-size:12px !important; padding:0px 0 5px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
-                                <table width="150px" style="width:150px;" cellpadding="0" cellspacing="0">
+                            <td align="center" style="text-align:center; font-size:12px !important; padding:0px 0 10px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0px !important;">
+                                <table width="180px" style="width:180px;" cellpadding="0" cellspacing="0">
                                     <tr>
-                                        <td bgcolor="#a3be02" style="text-align:center; font-size:12px !important; padding:7px 10px 7px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
-                                            <a style="color:#ffffff; text-decoration:none;" href="' . e($forwardUrl) . '">Contact Us</a>
+                                        <td bgcolor="#a3be02" style="text-align:center; font-size:12px !important; padding:97px 10px 9px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
+                                            <a style="color:#ffffff; text-decoration: none;" href="' . e($forwardUrl) . '">Contact Us</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -1146,16 +1146,16 @@ class SendCampaignJob implements ShouldQueue
 
             $footer .= '
             <tr>
-                <td align="center" style="text-align:center; font-size:12px !important; padding:0px 0 5px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
-                    <table width="150px" style="width:150px;" cellpadding="0" cellspacing="0">
+                <td align="center" style="text-align:center; font-size:12px !important; padding:0px 0 10px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0px !important;">
+                    <table width="180px" style="width:180px;" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td bgcolor="#a3be02" style="text-align:center; font-size:12px !important; padding:7px 10px 7px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
-                                <a style="color:#ffffff; text-decoration:none;" href="' . e($forwardUrl) . '">Contact Us</a>
+                            <td bgcolor="#a3be02" style="text-align:center; font-size:12px !important; padding:97px 10px 9px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
+                                <a style="color:#ffffff; text-decoration: none;" href="' . e($forwardUrl) . '">Contact Us</a>
                             </td>
                         </tr>
                     </table>
                 </td>
-            </tr>
+            </tr> 
             <tr>
                 <td
                     align="center"
