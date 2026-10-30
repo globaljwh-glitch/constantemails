@@ -1,4 +1,5 @@
 <?php
+
 return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
@@ -6,9 +7,7 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'http://10.1.14.2', // Server A’s origin
-        'https://constantreach.com/', // Server A’s origin
-        'http://constantreach.test/', // add if testing locally
+        'https://constantreach.com', // allow your frontend domain
     ],
 
     'allowed_origins_patterns' => [],
