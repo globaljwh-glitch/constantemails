@@ -1030,8 +1030,8 @@ class SendCampaignJob implements ShouldQueue
                             <td align="center" style="text-align:center; font-size:12px !important; padding:0px 0 10px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0px !important;">
                                 <table width="180px" style="width:180px;" cellpadding="0" cellspacing="0">
                                     <tr>
-                                        <td bgcolor="#a3be02" style="text-align:center; font-size:12px !important; padding:97px 10px 9px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
-                                            <a style="color:#ffffff; text-decoration: none;" href="' . e($forwardUrl) . '">Contact Us</a>
+                                        <td bgcolor="#a3be02" style="text-align:center; font-size:14px !important; padding:9px 10px 9px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
+                                            <a style="color:#ffffff; font-size:14px !important; text-decoration: none;" href="' . e($forwardUrl) . '">Contact Us</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -1149,13 +1149,13 @@ class SendCampaignJob implements ShouldQueue
                 <td align="center" style="text-align:center; font-size:12px !important; padding:0px 0 10px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0px !important;">
                     <table width="180px" style="width:180px;" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td bgcolor="#a3be02" style="text-align:center; font-size:12px !important; padding:97px 10px 9px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
-                                <a style="color:#ffffff; text-decoration: none;" href="' . e($forwardUrl) . '">Contact Us</a>
+                            <td bgcolor="#a3be02" style="text-align:center; font-size:14px !important; padding:9px 10px 9px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
+                                <a style="color:#ffffff; font-size:14px !important; text-decoration: none;" href="' . e($forwardUrl) . '">Contact Us</a>
                             </td>
                         </tr>
                     </table>
                 </td>
-            </tr> 
+            </tr>
             <tr>
                 <td
                     align="center"
