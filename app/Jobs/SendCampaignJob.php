@@ -1011,7 +1011,7 @@ class SendCampaignJob implements ShouldQueue
                         text-align:left;
                         
                 "
-                class="email_temp_footer">
+                class="email_temp_footer" bgcolor="#f7f7f7">
             ';
 
         /*
@@ -1024,10 +1024,21 @@ class SendCampaignJob implements ShouldQueue
 
             $footer .= '
             <tr>
-                <td align="center" style="padding:20px 20px; text-align:center;">
+                <td bgcolor="#f7f7f7" align="center" style="padding:20px 20px; text-align:center;">
                     <table style="width:100%;" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td style="text-align:center; font-size:12px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                                <table width="150px" style="width:150px;" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td bgcolor="#a3be02" style="text-align:center; font-size:12px !important; padding:7px 10px 7px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
+                                            <a style="color:#ffffff;" href="' . e($forwardUrl) . '">Contact Us</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
 						<tr>
-							<td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+							<td style="text-align:center; font-size:12px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
                                 This email was sent to
                                 <a href="mailto:' . e($recipientEmail) . '">
                                     ' . e($recipientEmail) . '
@@ -1035,7 +1046,7 @@ class SendCampaignJob implements ShouldQueue
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                            <td style="text-align:center; font-size:12px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
                                 By
                                 <a href="mailto:' . e($fromEmail) . '">
                                     ' . e($fromEmail) . '
@@ -1043,7 +1054,7 @@ class SendCampaignJob implements ShouldQueue
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:center; font-size:10px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                            <td style="text-align:center; font-size:12px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
                                 <a href="' . e($unsubscribeUrl) . '">
                                     Unsubscribe
                                 </a>
@@ -1052,12 +1063,6 @@ class SendCampaignJob implements ShouldQueue
 
                                 <a href="' . e($forwardUrl) . '">
                                     Forward to friend
-                                </a>
-
-                                |
-
-                                <a href="#">
-                                    Contact Us
                                 </a>
 
                                 |
@@ -1077,21 +1082,10 @@ class SendCampaignJob implements ShouldQueue
                             </td>
                         </tr>
                         <tr>
-                            <td align="center" style="font-size:9px; padding-top: 12px;">
-
-                                <div
-                                    style="
-                                        font-size:9px;
-                                        
-                                        color:#94a3b8;
-                                    "
-                                >
-                                    &copy; ' . date('Y') . '
-                                    Constant Emails. All rights reserved.
-                                </div>
+                            <td align="center" style="font-size:11px; padding-top: 12px;">
 
                                 <div style="
-                                    font-size:9px !important;
+                                    font-size:11px !important;
                                     padding:0 !important;
                                     margin:1px !important;
                                 ">
@@ -1099,7 +1093,7 @@ class SendCampaignJob implements ShouldQueue
                                 </div>
 
                                 <div style="
-                                    font-size:9px !important;
+                                    font-size:11px !important;
                                     padding:0 !important;
                                     margin:2px !important;
                                 ">
@@ -1116,13 +1110,24 @@ class SendCampaignJob implements ShouldQueue
                                 </div>
 
                                 <div style="
-                                    font-size:9px !important;
+                                    font-size:11px !important;
                                     padding:0 !important;
                                     margin:1px !important;
                                 ">
                                     <b style="color:#75BE06;">
                                         Premiere Email Marketing Engine
                                     </b>
+                                </div>
+
+                                <div
+                                    style="
+                                        font-size:11px;
+                                        
+                                        color:#94a3b8;
+                                    "
+                                >
+                                    &copy; ' . date('Y') . '
+                                    Constant Emails. All rights reserved.
                                 </div>
                             </td>
                         </tr>
@@ -1141,10 +1146,21 @@ class SendCampaignJob implements ShouldQueue
 
             $footer .= '
             <tr>
+                <td style="text-align:center; font-size:12px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                    <table width="150px" style="width:150px;" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td bgcolor="#a3be02" style="text-align:center; font-size:12px !important; padding:7px 10px 7px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
+                                <a style="color:#ffffff;" href="' . e($forwardUrl) . '">Contact Us</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
                 <td
                     align="center"
                     width="620"
-                    style="padding:20px 20px; text-align:center; font-size:10px !important; line-height:17px !important; mso-line-height-rule:exactly; margin:0 !important;"
+                    style="padding:20px 20px; text-align:center; font-size:12px !important; line-height:17px !important; mso-line-height-rule:exactly; margin:0 !important;"
                 >
 
                     This email was sent to
@@ -1167,7 +1183,7 @@ class SendCampaignJob implements ShouldQueue
 
                 <td
                     align="center"
-                    style="text-align:center; font-size:10px !important; mso-line-height-rule:exactly; margin:0 !important;"
+                    style="text-align:center; font-size:12px !important; mso-line-height-rule:exactly; margin:0 !important;"
                 >
 
                     <a href="' . e($unsubscribeUrl) . '">
@@ -1178,12 +1194,6 @@ class SendCampaignJob implements ShouldQueue
 
                     <a href="' . e($forwardUrl) . '">
                         Forward to friend
-                    </a>
-
-                    |
-
-                    <a href="#">
-                        Contact Us
                     </a>
 
                     |
@@ -1208,12 +1218,12 @@ class SendCampaignJob implements ShouldQueue
 
                 <td
                     align="center"
-                    width="620" style="font-size:9px; padding-top: 12px;"
+                    width="620" style="font-size:11px; padding-top: 12px;"
                 >
 
                    <div
                             style="
-                                font-size:9px;
+                                font-size:11px;
                                 
                                 color:#94a3b8;
                             "
