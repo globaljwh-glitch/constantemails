@@ -4,6 +4,10 @@
 
 @section('content')
 
+@push('scripts')
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endpush
+
 {{-- ================================
      Contact Banner
 ================================ --}}
@@ -318,6 +322,21 @@
                                         {{ $message }}
                                     </span>
 
+                                @enderror
+
+                            </div>
+
+                            {{-- Google reCAPTCHA --}}
+                            <div class="col-md-12 col-lg-12 mb-3">
+
+                                <div class="g-recaptcha"
+                                    data-sitekey="{{ config('services.recaptcha.site_key') }}">
+                                </div>
+
+                                @error('g-recaptcha-response')
+                                    <span class="contactFieldError">
+                                        {{ $message }}
+                                    </span>
                                 @enderror
 
                             </div>

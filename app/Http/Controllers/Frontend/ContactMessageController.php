@@ -7,6 +7,7 @@ use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
 
 class ContactMessageController extends Controller
 {
@@ -60,6 +61,36 @@ class ContactMessageController extends Controller
                 'max:5000',
             ],
         ]);
+
+
+        $captchaResponse = $request->input('g-recaptcha-response');
+
+        if (!$captchaResponse) {
+            return back()
+                ->withErrors([
+                    'g-recaptcha-response' => 'Please verify that you are not a robot.'
+                ])
+                ->withInput();
+        }
+
+        $captchaVerification = Http::asForm()
+            ->timeout(10)
+            ->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret'   => config('services.recaptcha.secret_key'),
+                'response' => $captchaResponse,
+                'remoteip' => $request->ip(),
+            ]);
+
+        if (
+            !$captchaVerification->successful() ||
+            !$captchaVerification->json('success')
+        ) {
+            return back()
+                ->withErrors([
+                    'g-recaptcha-response' => 'Google reCAPTCHA verification failed. Please try again.'
+                ])
+                ->withInput();
+        }
 
         /*
         |--------------------------------------------------------------------------
