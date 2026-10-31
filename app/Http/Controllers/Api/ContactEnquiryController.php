@@ -36,7 +36,10 @@ class ContactEnquiryController extends Controller
         // Send notification email
         //Mail::to('gurpalsingh@jwhglobal.com')->send(new LeadSubmissionMail($validatedData));
         $subject='New Corporate Pipeline Lead Inquiry Received';
-        $html= new LeadSubmissionMail($validatedData);
+        //$html= new LeadSubmissionMail($validatedData);
+        $html = view('emails.lead_submission', [
+    'formData' => $validatedData])->render();
+
         $this->send_smtp_mail(
                                 'gurpalsingh@jwhglobal.com',
                                 'noreply@constantemails.com',
