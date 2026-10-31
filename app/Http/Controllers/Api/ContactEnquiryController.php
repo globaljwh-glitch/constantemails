@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ContactInquiry;
+use App\Models\ContactEnquiry;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\LeadSubmissionMail;
 
@@ -31,7 +31,7 @@ class ContactEnquiryController extends Controller
         ]);
 
         // Save to DB
-        $contact = ContactInquiry::create($validatedData);
+        $contact = ContactEnquiry::create($validatedData);
 
         // Send notification email
         //Mail::to('gurpalsingh@jwhglobal.com')->send(new LeadSubmissionMail($validatedData));

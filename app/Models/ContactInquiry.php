@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ContactInquiry extends Model
+class ContactEnquiry extends Model
 {
     // The explicit database target mapping name
-    protected $table = 'contact_inquiries';
+    protected $table = 'contact_enquiries';
 
     // Whitelist entry fields to protect bulk column processing operations
     protected $fillable = [
