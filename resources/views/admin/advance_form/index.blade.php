@@ -119,7 +119,7 @@
                                     <th>Application</th>
                                     <th>Comment</th>
                                     <th class="text-center">Date</th>
-                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Option</th>
                                     
                                 </tr>
                             </thead>
