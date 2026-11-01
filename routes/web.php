@@ -469,6 +469,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/contact-queries', [ContactQueryController::class, 'index'])->name('admin.contact-queries.index');
     Route::delete('/contact-queries/{id}', [ContactQueryController::class, 'destroy'])->name('admin.contact-queries.destroy');
 
+    Route::get('/advance-form-queries', [ContactQueryController::class, 'advanceFormEnqueries'])->name('admin.advance-enqueries');
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile');
     Route::post('/profile/update-details', [ProfileController::class, 'updateDetails'])->name('admin.profile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('admin.profile.password');

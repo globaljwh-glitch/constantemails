@@ -245,8 +245,23 @@
                         <a href="{{ route('admin.contact-queries.index') }}"> All Queries </a>
                     </li>
                     <!-- <li>
-            <a href="{{ route('settings.index') }}"> View Settings </a>
-        </li> -->
+              <a href="{{ route('settings.index') }}"> View Settings </a> </li> -->
+                </ul>
+            </li>
+            <li class="menu">
+                <a href="#advance-form-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="flaticon-menu-4"></i>
+                        <span>Advance Form Queries</span>
+                    </div>
+                    <div>
+                        <i class="flaticon-right-arrow"></i>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="advance-form-menu" data-parent="#accordionExample">
+                    <li>
+                        <a href="{{ route('admin.advance-enqueries') }}"> All Queries </a>
+                    </li>
                 </ul>
             </li>
             <li class="menu">

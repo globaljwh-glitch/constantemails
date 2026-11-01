@@ -33,4 +33,23 @@ class ContactQueryController extends Controller
         DB::table('contacts')->where('id', $id)->delete();
         return redirect()->route('admin.contact-queries.index')->with('success', 'Contact query deleted successfully!');
     }
+
+    public function advanceFormEnqueries(Request $request)
+    {
+        $query = DB::table('contact_enquiries'); // Assuming your table name is 'contacts'
+
+        // Handle Search
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'LIKE', "%{$search}%")
+                    ->orWhere('last_name', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $queries = $query->latest()->paginate(10);
+
+        return view('admin.advance_form.index', compact('queries'));
+    }
 }
