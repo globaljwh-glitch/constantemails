@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\CampaignRecipient;
 use Illuminate\Support\Facades\URL;
 use App\Models\User;
+use App\Services\EmailQuotaService;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -25,7 +26,7 @@ class SendCampaignJob implements ShouldQueue
         $this->campaign = $campaign;
     }
 
-    public function handle(): void
+    public function handle(EmailQuotaService $quotaService): void
     {
         // Always get the latest campaign data from DB
         $campaign = $this->campaign->fresh();
@@ -56,6 +57,9 @@ class SendCampaignJob implements ShouldQueue
             'campaign_id' => $campaign->id,
             'group_ids' => $groupIds->toArray(),
         ]);
+
+        // Reserve campaign quota before sending
+        $usage = $quotaService->processCampaignQuota($campaign);
 
         $contacts = Contact::whereHas('groups', function ($query) use ($groupIds) {
             $query->whereIn('contact_groups.id', $groupIds);
@@ -314,6 +318,9 @@ class SendCampaignJob implements ShouldQueue
                                 $attachmentPath
                             );
 
+                            // Mark quota as successfully used
+                            $quotaService->markEmailSent($recipient->id);
+
                             /*
                             |--------------------------------------------------------------------------
                             | Mark Recipient Sent
@@ -336,6 +343,7 @@ class SendCampaignJob implements ShouldQueue
 
                         } catch (\Throwable $e) {
 
+                            $quotaService->releaseEmailReservation($recipient->id);
                             CampaignRecipient::where('campaign_id', $campaign->id)
                                 ->where('contact_id', $contact->id)
                                 ->update([
