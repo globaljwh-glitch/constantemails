@@ -23,9 +23,10 @@
   </style>
 </head>
 <body>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f1f5f9">
+
+  <table width="680" cellpadding="0" cellspacing="0" border="0" bgcolor="#f1f5f9" style="width:680px;margin: 0px auto;">
     <tr>
-      <td padding="40px 20px" align="center">
+      <td padding="40px 20px">
         <div class="email-container">
           
           <!-- Header -->
@@ -39,7 +40,8 @@
             <!-- Section 1 -->
             
             <table class="info-table">
-              <tr><td colspan="2"><div class="section-title">Sender Profile</div></td></tr>
+              <tr><td colspan="2" align="center" class="section-title">Sender Profile</td>
+              </tr>
               <tr>
                 <td class="label">Full Name</td>
                 <td class="value">{{ $formData['first_name'] }} {{ $formData['last_name'] }}</td>
@@ -61,7 +63,7 @@
             <!-- Section 2 -->
             
             <table class="info-table">
-              <tr><td colspan="2"><div class="section-title">Geographic Location</div></td></tr>
+              <tr><td colspan="2" align="center" class="section-title">Geographic Location</td></tr>
               <tr>
                 <td class="label">Street Address</td>
                 <td class="value">{{ $formData['address'] }}</td>
@@ -83,7 +85,7 @@
             <!-- Section 3 -->
 
             <table class="info-table">
-              <tr><td colspan="2"><div class="section-title">Target Segment Metrics</div></td></tr>
+              <tr><td colspan="2" align="center" class="section-title">Target Segment Metrics</td></tr>
               <tr>
                 <td class="label">Market Segment</td>
                 <td class="value" style="font-weight: 600; color: #4f46e5;">{{ $formData['application'] }}</td>
