@@ -22,7 +22,7 @@
     .footer { background-color: #f8fafc; padding: 24px; text-align: center; font-size: 12px; color: #94a3b8; }
   </style>
 </head>
-<body>
+<body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; ">
 
   <table width="680" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f1f5f9" style="width:680px;margin: 0px auto;">
     <tr>
@@ -30,7 +30,7 @@
         <div class="email-container">
           
           <!-- Header -->
-          <div class="header" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); padding: 32px; text-align: center; ">
+          <div class="header" style="background-color: #4f46e5; padding: 32px; text-align: center; ">
             <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">New Business Inquiry Logged</h1>
           </div>
 
