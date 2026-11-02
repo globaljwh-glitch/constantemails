@@ -39,14 +39,26 @@ class ContactEnquiryController extends Controller
         //$html= new LeadSubmissionMail($validatedData);
         $html = view('emails.lead_submission', [
     'formData' => $validatedData])->render();
+        // $to=['gurpalsingh@jwhglobal.com','kamalsharma@jwhglobal.com'];
 
-        $this->send_smtp_mail(
-                                'gurpalsingh@jwhglobal.com',
-                                'noreply@constantemails.com',
-                                $subject,
-                                $html,
-                                $attachmentPath=NULL
-                            );
+        // $this->send_smtp_mail(
+        //                         'gurpalsingh@jwhglobal.com',
+        //                         'noreply@constantemails.com',
+        //                         $subject,
+        //                         $html,
+        //                         $attachmentPath=NULL
+        //                     );
+        $to = ['gurpalsingh@jwhglobal.com', 'kamalsharma@jwhglobal.com'];
+
+        foreach ($to as $email) {
+            $this->send_smtp_mail(
+                $email,
+                'noreply@constantemails.com',
+                $subject,
+                $html,
+                NULL
+            );
+        }
         // // Reset captcha values for next request
         // session()->forget(['captcha_num1', 'captcha_num2']);
         // session([
