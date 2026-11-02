@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmailMail;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\URL;
 
 class FrontAuthController extends Controller
 {
@@ -578,29 +579,82 @@ class FrontAuthController extends Controller
     |--------------------------------------------------------------------------
     */
 
+    // public function sendResetLink(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //     ]);
+
+    //     $status = Password::sendResetLink(
+    //         $request->only('email')
+    //     );
+
+    //     if ($status === Password::RESET_LINK_SENT) {
+
+    //         return back()->with(
+    //             'status',
+    //             'Password reset link has been sent to your email address.'
+    //         );
+    //     }
+
+    //     return back()
+    //         ->withInput($request->only('email'))
+    //         ->withErrors([
+    //             'email' => __($status),
+    //         ]);
+    // }
+
     public function sendResetLink(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
         ]);
 
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        $user = User::where('email', $request->email)->first();
 
-        if ($status === Password::RESET_LINK_SENT) {
-
-            return back()->with(
-                'status',
-                'Password reset link has been sent to your email address.'
-            );
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'We could not find a user with that email address.',
+            ]);
         }
 
-        return back()
-            ->withInput($request->only('email'))
-            ->withErrors([
-                'email' => __($status),
-            ]);
+        // Generate Laravel password reset token
+        $token = Password::broker()->createToken($user);
+
+        // Generate reset URL
+        $resetUrl = url(route('password.reset', [
+            'token' => $token,
+            'email' => $user->email,
+        ], false));
+
+        $subject = 'Password Reset Request';
+
+        $body = "
+            <h2>Password Reset</h2>
+            <p>Hello {$user->name},</p>
+            <p>We received a request to reset your password.</p>
+            <p>
+                <a href='{$resetUrl}'>
+                    Reset Your Password
+                </a>
+            </p>
+            <p>If you did not request a password reset, please ignore this email.</p>
+        ";
+
+        // Call your existing custom SMTP method
+        $from = env('MAIL_FROM_ADDRESS', config('mail.from.address'));
+
+        $this->send_smtp_mail(
+            $user->email,
+            $from,
+            $subject,
+            $body
+        );
+
+        return back()->with(
+            'status',
+            'Password reset link has been sent to your email address.'
+        );
     }
 
     public function resetPassword(Request $request)

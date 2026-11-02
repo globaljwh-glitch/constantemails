@@ -27,15 +27,29 @@ class UserEmailUsage extends Model
     /**
      * Return -1 for unlimited packages.
      */
+    // public function remainingEmails(): int
+    // {
+    //     if ($this->email_limit === -1) {
+    //         return -1;
+    //     }
+
+    //     return max(
+    //         0,
+    //         $this->email_limit - $this->emails_sent - $this->emails_reserved
+    //     );
+    // }
+
     public function remainingEmails(): int
     {
-        if ($this->email_limit === -1) {
+        if ((int) $this->email_limit === -1) {
             return -1;
         }
 
         return max(
             0,
-            $this->email_limit - $this->emails_sent - $this->emails_reserved
+            (int) $this->email_limit
+            - (int) $this->emails_sent
+            - (int) $this->emails_reserved
         );
     }
 }

@@ -173,7 +173,7 @@
               <div class="col-md-12">
                 <div class="packageDetailBox mt-4">
                   <h4 class="mb-0">Package Type : <span class="text-red">
-                      <strong>{{ $user->package_type ?? 'Free' }}</strong>
+                      <strong>{{ ucfirst($package->package_name ?? 'Free') }}</strong>
                     </span>
                   </h4>
                 </div>
@@ -206,7 +206,7 @@
                 </div> -->
 
                 <div class="packageDetailBox mt-4">
-                    <h4>Contact Remaining</h4>
+                    <h4>Email Remaining</h4>
 
                     <h6>
                         <span class="text-red">
@@ -214,15 +214,15 @@
                                 {{ $only_mail === -1 ? 'Unlimited' : $only_mail }}
                             </strong>
                         </span>
-                        contacts remaining to upload.
+                        Email remaining to send.
                     </h6>
 
                     <div class="progress mb-2">
                         <div
                             class="progress-bar progress-bar-striped bg-danger"
                             role="progressbar"
-                            style="width: {{ $contactPercentage }}%"
-                            aria-valuenow="{{ $contactPercentage }}"
+                            style="width: {{ $emailPercentage }}%"
+                            aria-valuenow="{{ $emailPercentage }}"
                             aria-valuemin="0"
                             aria-valuemax="100">
                         </div>

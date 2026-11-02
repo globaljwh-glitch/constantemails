@@ -51,15 +51,6 @@
         <!-- <li class="account-menu-item {{ request()->routeIs('user.contacts.bad-report') ? 'active' : '' }}">
             <a href="{{ route('user.contacts.bad-report') }}" class="{{ request()->routeIs('user.contacts.bad-report*') ? 'activeclass' : '' }}"><i class="fa fa-solid fa-user"></i> Bad Contacts Report</a>
         </li> -->
-        <li class="account-menu-item {{ request()->routeIs('user.campaigns.*') ? 'active' : '' }}">
-            <a href="{{ route('user.campaigns.create') }}" class="{{ request()->routeIs('user.campaigns.*') ? 'activeclass' : '' }}"><i class="fa fa-envelope" aria-hidden="true"></i> Create An Email Campaign</a>
-        </li>
-        <li class="account-menu-item {{ request()->routeIs('user.email-stats.index') ? 'active' : '' }}">
-            <a href="{{ route('user.email-stats.index') }}" class="{{ request()->routeIs('user.email-stats.index') ? 'activeclass' : '' }}"><i class="fa fa-history" aria-hidden="true"></i> Campaign History</a>
-        </li>
-        <li class="account-menu-item {{ request()->routeIs('user.saved-templates.*') ? 'active' : '' }}">
-            <a href="{{ route('user.saved-templates.index') }}" class="{{ request()->routeIs('user.saved-templates.*') ? 'activeclass' : '' }}"><i class="fa fa-folder" aria-hidden="true"></i> Manage Custom Templates</a>
-        </li>
         <li class="account-menu-item menu-header {{ $isContactslistActive ? 'active' : '' }}">
             <a href="javascript:void(0);" class="positionRelative">
                 <i class="fa fa-address-book" aria-hidden="true"></i> Contacts List 
@@ -69,20 +60,29 @@
             <!-- Change display: none; to dynamic PHP condition below -->
             <div class="menu-content" id="contactsMenuContent" style="display: {{ $isContactslistActive? 'block' : 'none' }};">
                 <ul>
+                    <li class="{{ request()->routeIs('user.contacts.import') ? 'active' : '' }}">
+                        <a href="{{ route('user.contacts.import') }}" class="{{ request()->routeIs('user.contacts.import') ? 'activeclass' : '' }}">Add Contacts</a>
+                    </li>
                     <li class="{{ request()->routeIs('user.groups.index') ? 'active' : '' }}">
                         <a href="{{ route('user.groups.index') }}" class="{{ request()->routeIs('user.groups.index') ? 'activeclass' : '' }}">Manage your Contact List</a>
                     </li>
                     <li class="{{ request()->routeIs('user.groups.create') ? 'active' : '' }}">
                         <a href="{{ route('user.groups.create') }}" class="{{ request()->routeIs('user.groups.create') ? 'activeclass' : '' }}">Add/Create a Group</a>
                     </li>
-                    <li class="{{ request()->routeIs('user.contacts.import') ? 'active' : '' }}">
-                        <a href="{{ route('user.contacts.import') }}" class="{{ request()->routeIs('user.contacts.import') ? 'activeclass' : '' }}">Add Contacts</a>
-                    </li>
                     <li class="{{ request()->routeIs('user.contacts.assign') ? 'active' : '' }}">
                         <a href="{{ route('user.contacts.assign') }}" class="{{ request()->routeIs('user.contacts.assign') ? 'activeclass' : '' }}">Assign Contacts you've added to existing Contact Groups</a>
                     </li>
                 </ul>
             </div>
+        </li>
+        <li class="account-menu-item {{ request()->routeIs('user.campaigns.*') ? 'active' : '' }}">
+            <a href="{{ route('user.campaigns.create') }}" class="{{ request()->routeIs('user.campaigns.*') ? 'activeclass' : '' }}"><i class="fa fa-envelope" aria-hidden="true"></i> Create An Email Campaign</a>
+        </li>
+        <li class="account-menu-item {{ request()->routeIs('user.email-stats.index') ? 'active' : '' }}">
+            <a href="{{ route('user.email-stats.index') }}" class="{{ request()->routeIs('user.email-stats.index') ? 'activeclass' : '' }}"><i class="fa fa-history" aria-hidden="true"></i> Campaign History</a>
+        </li>
+        <li class="account-menu-item {{ request()->routeIs('user.saved-templates.*') ? 'active' : '' }}">
+            <a href="{{ route('user.saved-templates.index') }}" class="{{ request()->routeIs('user.saved-templates.*') ? 'activeclass' : '' }}"><i class="fa fa-folder" aria-hidden="true"></i> Manage Custom Templates</a>
         </li>
         <li class="account-menu-item {{ request()->routeIs('user.autoresponders.index') ? 'active' : '' }}">
             <a href="{{ route('user.autoresponders.index') }}" class="{{ request()->routeIs('user.autoresponders.index') ? 'activeclass' : '' }}"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> My Auto Responders</a>
