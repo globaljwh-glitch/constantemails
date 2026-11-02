@@ -1847,6 +1847,13 @@ class ContactController extends Controller
 
     public function sendForward(Request $request, $recipient)
     {
+        $loggedInUser = auth()->user();
+
+        $senderFirstName = ucfirst($loggedInUser->name);
+        $senderLastName  = ucfirst($loggedInUser->last_name);
+
+        $senderName = trim($senderFirstName . ' ' . $senderLastName);
+
         $validated = $request->validate([
             'first_name'   => ['required', 'string', 'max:100'],
             'last_name'    => ['required', 'string', 'max:100'],
@@ -1905,7 +1912,7 @@ class ContactController extends Controller
                     <tr>
                         <td style="padding:15px;font-family:Arial,sans-serif;
                             font-size:14px;line-height:22px;color:#334155;">
-                            <strong>' . e($friendName) . ' shared this message:</strong>
+                            <strong>' . e($senderName) . ' shared this message:</strong>
                             <p style="margin:8px 0 0;">'
                                 . nl2br(e($personalMessage)) .
                             '</p>
@@ -1917,7 +1924,7 @@ class ContactController extends Controller
             $personalMessageHtml = '
                 <p style="font-family:Arial,sans-serif;font-size:14px;
                     line-height:22px;color:#334155;">
-                    ' . e($friendName) . ' thought you might find this email interesting.
+                    ' . e($senderName) . ' thought you might find this email interesting.
                 </p>
             ';
         }
