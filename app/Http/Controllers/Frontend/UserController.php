@@ -117,6 +117,7 @@ class UserController extends Controller
 
         return view('frontend.user.dashboard', compact(
             'user',
+            'package',
             'only_mail',
             'emailLimit',
             'emailsSent',

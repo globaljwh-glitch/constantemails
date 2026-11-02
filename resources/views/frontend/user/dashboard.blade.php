@@ -173,7 +173,7 @@
               <div class="col-md-12">
                 <div class="packageDetailBox mt-4">
                   <h4 class="mb-0">Package Type : <span class="text-red">
-                      <strong>{{ $user->package_type ?? 'Free' }}</strong>
+                      <strong>{{ $package->name ?? 'Free' }}</strong>
                     </span>
                   </h4>
                 </div>
