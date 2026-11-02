@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\MailCampaign;
+use App\Models\User;
 use App\Models\UserEmailUsage;
+use App\Models\CampaignRecipient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use RuntimeException;
@@ -10,93 +13,143 @@ use RuntimeException;
 class EmailQuotaService
 {
     /**
-     * Get or create the current monthly quota period.
+     * Get/create monthly usage and reserve all pending campaign recipients.
      */
-    public function getCurrentUsage(
-        int $userId,
-        ?int $packageId,
-        int $packageLimit
+    public function processCampaignQuota(
+        MailCampaign $campaign
     ): UserEmailUsage {
 
-        return DB::transaction(function () use (
-            $userId,
-            $packageId,
-            $packageLimit
-        ) {
+        return DB::transaction(function () use ($campaign) {
+
+            // Lock user to prevent concurrent first-time usage creation.
+            $user = User::whereKey($campaign->user_id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            // Get user's assigned active package.
+            $package = DB::table('registration_packages')
+                ->where('id', $user->package_id)
+                ->where('status', 'Active')
+                ->first();
+
+            if (!$package) {
+                throw new RuntimeException(
+                    'Your assigned package is not active.'
+                );
+            }
 
             $now = now();
 
-            $usage = UserEmailUsage::where('user_id', $userId)
+            // Get current monthly usage.
+            $usage = UserEmailUsage::where('user_id', $user->id)
                 ->where('period_started_at', '<=', $now)
                 ->where('period_ends_at', '>', $now)
                 ->latest('period_started_at')
                 ->lockForUpdate()
                 ->first();
 
-            if ($usage) {
-                return $usage;
+            // Create the first monthly usage record.
+            if (!$usage) {
+
+                $usage = UserEmailUsage::create([
+                    'user_id'          => $user->id,
+                    'package_id'       => $package->id,
+                    'email_limit'      => (int) $package->package_emails,
+                    'emails_sent'      => 0,
+                    'emails_reserved'  => 0,
+                    'period_started_at'=> $now,
+                    'period_ends_at'   => Carbon::instance($now)
+                        ->addMonthNoOverflow(),
+                ]);
             }
 
-            return UserEmailUsage::create([
-                'user_id' => $userId,
-                'package_id' => $packageId,
-                'email_limit' => $packageLimit,
-                'emails_sent' => 0,
-                'emails_reserved' => 0,
-                'period_started_at' => $now,
-                'period_ends_at' => Carbon::instance($now)
-                    ->addMonthNoOverflow(),
-            ]);
+            /*
+             * Get only recipients that have not already been reserved.
+             * Existing reservations are retained on queue retries.
+             */
+            $recipients = CampaignRecipient::where(
+                    'campaign_id',
+                    $campaign->id
+                )
+                ->where('status', 'queued')
+                ->whereNull('quota_usage_id')
+                ->lockForUpdate()
+                ->get(['id']);
+
+            $emailCount = $recipients->count();
+
+            if ($emailCount > 0) {
+
+                $remaining = $usage->remainingEmails();
+
+                // -1 means unlimited.
+                if (
+                    $remaining !== -1 &&
+                    $emailCount > $remaining
+                ) {
+                    throw new RuntimeException(
+                        'Insufficient email credits. You need ' .
+                        $emailCount . ' emails, but only ' .
+                        $remaining . ' are available.'
+                    );
+                }
+
+                $recipientIds = $recipients->pluck('id')->all();
+
+                CampaignRecipient::whereIn('id', $recipientIds)
+                    ->whereNull('quota_usage_id')
+                    ->update([
+                        'quota_usage_id' => $usage->id,
+                        'quota_released_at' => null,
+                        'updated_at' => now(),
+                    ]);
+
+                $usage->increment(
+                    'emails_reserved',
+                    $emailCount
+                );
+            }
+
+            /*
+             * If this is a queue retry, recipients may already have
+             * reservations. Do not reserve them again.
+             */
+            return $usage->fresh();
+
         }, 5);
     }
 
     /**
-     * Reserve email credits before dispatching campaign jobs.
+     * Mark one recipient as successfully accepted by SMTP.
+     * Idempotent: a retry cannot count the same recipient twice.
      */
-    public function reserve(
-        int $usageId,
-        int $emailCount
-    ): UserEmailUsage {
+    public function markEmailSent(int $recipientId): void
+    {
+        DB::transaction(function () use ($recipientId) {
 
-        return DB::transaction(function () use ($usageId, $emailCount) {
-
-            $usage = UserEmailUsage::whereKey($usageId)
+            $recipient = CampaignRecipient::whereKey($recipientId)
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            if ($usage->period_ends_at->isPast()) {
+            if ($recipient->quota_counted_at) {
+                return;
+            }
+
+            if (!$recipient->quota_usage_id) {
                 throw new RuntimeException(
-                    'Your monthly email quota has expired.'
+                    'Recipient has no quota reservation.'
                 );
             }
 
-            if ($emailCount <= 0) {
+            if ($recipient->quota_released_at) {
                 throw new RuntimeException(
-                    'No eligible recipients found.'
+                    'Recipient quota reservation was already released.'
                 );
             }
 
-            if ($emailCount > $usage->remainingEmails()) {
-                throw new RuntimeException(
-                    'Insufficient email credits. Remaining emails: ' .
-                    $usage->remainingEmails()
-                );
-            }
-
-            $usage->increment('emails_reserved', $emailCount);
-
-            return $usage->fresh();
-        }, 5);
-    }
-
-    /**
-     * Mark one reserved email as successfully accepted by SMTP.
-     */
-    public function markSent(int $usageId): void
-    {
-        DB::transaction(function () use ($usageId) {
-
-            $usage = UserEmailUsage::whereKey($usageId)
+            $usage = UserEmailUsage::whereKey(
+                $recipient->quota_usage_id
+            )
                 ->lockForUpdate()
                 ->firstOrFail();
 
@@ -106,27 +159,50 @@ class EmailQuotaService
                 );
             }
 
-            $usage->emails_reserved--;
-            $usage->emails_sent++;
+            $usage->decrement('emails_reserved');
+            $usage->increment('emails_sent');
 
-            $usage->save();
+            $recipient->update([
+                'quota_counted_at' => now(),
+            ]);
+
         }, 5);
     }
 
     /**
-     * Release one reserved credit when SMTP sending fails.
+     * Release one reservation after an SMTP failure.
+     * Idempotent: a reservation cannot be released twice.
      */
-    public function release(int $usageId): void
+    public function releaseEmailReservation(int $recipientId): void
     {
-        DB::transaction(function () use ($usageId) {
+        DB::transaction(function () use ($recipientId) {
 
-            $usage = UserEmailUsage::whereKey($usageId)
+            $recipient = CampaignRecipient::whereKey($recipientId)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if (
+                !$recipient->quota_usage_id ||
+                $recipient->quota_counted_at ||
+                $recipient->quota_released_at
+            ) {
+                return;
+            }
+
+            $usage = UserEmailUsage::whereKey(
+                $recipient->quota_usage_id
+            )
                 ->lockForUpdate()
                 ->firstOrFail();
 
             if ($usage->emails_reserved > 0) {
                 $usage->decrement('emails_reserved');
             }
+
+            $recipient->update([
+                'quota_released_at' => now(),
+            ]);
+
         }, 5);
     }
 }

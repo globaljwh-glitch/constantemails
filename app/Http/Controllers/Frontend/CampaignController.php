@@ -448,6 +448,33 @@ class CampaignController extends Controller
         /*
         * SEND NOW
         */
+        // if ($validated['scheduler'] === 'send_now') {
+
+        //     $campaign->update([
+        //         'scheduler'       => 'send_now',
+        //         'schedule_date'   => null,
+        //         'schedule_hour'   => null,
+        //         'schedule_minute' => null,
+        //         'campaign_status' => 'queued',
+        //     ]);
+
+        //     // Create recipient snapshot
+        //     $this->processCampaign($campaign);
+
+        //     // Dispatch immediately
+        //     SendCampaignJob::dispatch($campaign);
+
+        //     $result = $this->sendAdditionalRecipients($campaign->id);
+        //     session()->forget('campaign_draft');
+            
+        //     return redirect()
+        //         ->route('user.campaigns.index')
+        //         ->with(
+        //             'success',
+        //             'Campaign has been queued for sending.'
+        //         );
+        // }
+
         if ($validated['scheduler'] === 'send_now') {
 
             $campaign->update([
@@ -458,21 +485,17 @@ class CampaignController extends Controller
                 'campaign_status' => 'queued',
             ]);
 
-            // Create recipient snapshot
+            // Create recipient snapshot, including additional recipients.
             $this->processCampaign($campaign);
 
-            // Dispatch immediately
+            // Send everything through the same queue job.
             SendCampaignJob::dispatch($campaign);
 
-            $result = $this->sendAdditionalRecipients($campaign->id);
             session()->forget('campaign_draft');
-            
+
             return redirect()
                 ->route('user.campaigns.index')
-                ->with(
-                    'success',
-                    'Campaign has been queued for sending.'
-                );
+                ->with('success', 'Campaign has been queued for sending.');
         }
 
         /*
@@ -532,23 +555,38 @@ class CampaignController extends Controller
         /*
         * Create recipient snapshot
         */
-        $this->processCampaign($campaign);
+        //$this->processCampaign($campaign);
 
         /*
         * Dispatch campaign job for future execution
         */
+        // SendCampaignJob::dispatch($campaign)
+        //     ->delay($scheduledAt);
+
+        // $result = $this->sendAdditionalRecipients($campaign->id);
+
+        // session()->forget('campaign_draft');
+
+        // \Log::info('Campaign scheduled', [
+        //     'campaign_id' => $campaign->id,
+        //     'scheduled_at' => $scheduledAt->toDateTimeString(),
+        //     'timezone' => config('app.timezone'),
+        // ]);
+
+        // return redirect()
+        //     ->route('user.campaigns.index')
+        //     ->with(
+        //         'success',
+        //         'Campaign scheduled successfully for ' .
+        //         $scheduledAt->format('d M Y h:i A')
+        //     );
+
+        $this->processCampaign($campaign);
+
         SendCampaignJob::dispatch($campaign)
             ->delay($scheduledAt);
 
-        $result = $this->sendAdditionalRecipients($campaign->id);
-
         session()->forget('campaign_draft');
-
-        \Log::info('Campaign scheduled', [
-            'campaign_id' => $campaign->id,
-            'scheduled_at' => $scheduledAt->toDateTimeString(),
-            'timezone' => config('app.timezone'),
-        ]);
 
         return redirect()
             ->route('user.campaigns.index')
@@ -559,57 +597,174 @@ class CampaignController extends Controller
             );
     }
 
+    // protected function processCampaign(MailCampaign $campaign): void
+    // {
+    //     $campaign->load('groups.contacts');
+
+    //     if ($campaign->groups->isEmpty()) {
+    //         throw ValidationException::withMessages([
+    //             'groups' => 'Please select at least one contact group.',
+    //         ]);
+    //     }
+
+    //     DB::transaction(function () use ($campaign) {
+
+    //         // Remove old recipient snapshot
+    //         //$campaign->recipients()->delete();
+
+    //         $recipients = [];
+
+    //         foreach ($campaign->groups as $group) {
+
+    //             foreach ($group->contacts as $contact) {
+
+    //                 if (empty($contact->contact_email)) {
+    //                     continue;
+    //                 }
+
+    //                 // Prevent duplicate email addresses
+    //                 $email = strtolower(trim($contact->contact_email));
+
+    //                 $recipients[$email] = $contact;
+    //             }
+    //         }
+
+    //         foreach ($recipients as $contact) {
+
+    //             CampaignRecipient::create([
+    //                 'campaign_id' => $campaign->id,
+    //                 'contact_id'  => $contact->id,
+    //                 'email'       => $contact->contact_email,
+    //                 'first_name'  => $contact->contact_first_name,
+    //                 'last_name'   => $contact->contact_last_name,
+    //                 //'status'      => 'queued',
+    //                 //'queued_at'   => now(),
+
+    //                 'status' => $contact->user_status === 'opt-out'
+    //                     ? 'unsubscribed'
+    //                     : 'queued',
+
+    //                 'queued_at' => $contact->user_status === 'opt-out'
+    //                     ? null
+    //                     : now(),
+    //             ]);
+    //         }
+    //     });
+    // }
+
     protected function processCampaign(MailCampaign $campaign): void
     {
         $campaign->load('groups.contacts');
 
         if ($campaign->groups->isEmpty()) {
-            throw ValidationException::withMessages([
+            throw \Illuminate\Validation\ValidationException::withMessages([
                 'groups' => 'Please select at least one contact group.',
             ]);
         }
 
         DB::transaction(function () use ($campaign) {
 
-            // Remove old recipient snapshot
-            //$campaign->recipients()->delete();
-
-            $recipients = [];
+            $groupEmails = [];
 
             foreach ($campaign->groups as $group) {
 
                 foreach ($group->contacts as $contact) {
 
-                    if (empty($contact->contact_email)) {
+                    if (
+                        empty($contact->contact_email) ||
+                        $contact->user_status !== 'opt-in'
+                    ) {
                         continue;
                     }
 
-                    // Prevent duplicate email addresses
                     $email = strtolower(trim($contact->contact_email));
 
-                    $recipients[$email] = $contact;
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        continue;
+                    }
+
+                    $groupEmails[$email] = true;
+
+                    $recipient = CampaignRecipient::firstOrCreate(
+                        [
+                            'campaign_id' => $campaign->id,
+                            'email' => $email,
+                        ],
+                        [
+                            'contact_id' => $contact->id,
+                            'first_name' => $contact->contact_first_name,
+                            'last_name' => $contact->contact_last_name,
+                            'status' => 'queued',
+                            'queued_at' => now(),
+                        ]
+                    );
+
+                    // Do not reset previously sent recipients.
+                    if (
+                        !$recipient->wasRecentlyCreated &&
+                        !in_array($recipient->status, ['sent', 'sending'])
+                    ) {
+                        $recipient->update([
+                            'contact_id' => $contact->id,
+                            'first_name' => $contact->contact_first_name,
+                            'last_name' => $contact->contact_last_name,
+                            'status' => 'queued',
+                            'queued_at' => now(),
+                        ]);
+                    }
                 }
             }
 
-            foreach ($recipients as $contact) {
+            /*
+            * Additional recipients
+            */
+            if (!empty($campaign->additional_recipients)) {
 
-                CampaignRecipient::create([
-                    'campaign_id' => $campaign->id,
-                    'contact_id'  => $contact->id,
-                    'email'       => $contact->contact_email,
-                    'first_name'  => $contact->contact_first_name,
-                    'last_name'   => $contact->contact_last_name,
-                    //'status'      => 'queued',
-                    //'queued_at'   => now(),
+                $additionalEmails = collect(
+                    preg_split(
+                        '/[,;\r\n]+/',
+                        $campaign->additional_recipients
+                    )
+                )
+                    ->map(fn ($email) => strtolower(trim($email)))
+                    ->filter(fn ($email) => filter_var(
+                        $email,
+                        FILTER_VALIDATE_EMAIL
+                    ))
+                    ->unique()
+                    ->values();
 
-                    'status' => $contact->user_status === 'opt-out'
-                        ? 'unsubscribed'
-                        : 'queued',
+                foreach ($additionalEmails as $email) {
 
-                    'queued_at' => $contact->user_status === 'opt-out'
-                        ? null
-                        : now(),
-                ]);
+                    // Skip addresses already included in selected groups.
+                    if (isset($groupEmails[$email])) {
+                        continue;
+                    }
+
+                    $recipient = CampaignRecipient::firstOrCreate(
+                        [
+                            'campaign_id' => $campaign->id,
+                            'email' => $email,
+                        ],
+                        [
+                            'contact_id' => null,
+                            'first_name' => null,
+                            'last_name' => null,
+                            'status' => 'queued',
+                            'queued_at' => now(),
+                        ]
+                    );
+
+                    if (
+                        !$recipient->wasRecentlyCreated &&
+                        !in_array($recipient->status, ['sent', 'sending'])
+                    ) {
+                        $recipient->update([
+                            'status' => 'queued',
+                            'queued_at' => now(),
+                        ]);
+                    }
+                }
             }
         });
     }
