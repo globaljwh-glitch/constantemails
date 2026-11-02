@@ -11,17 +11,54 @@ use App\Mail\PasswordChangedMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     /**
      * User Dashboard
      */
+    // public function dashboard()
+    // {
+    //     $user = auth()->user();
+
+    //     return view('frontend.user.dashboard', compact('user'));
+    // }
+
     public function dashboard()
     {
         $user = auth()->user();
 
-        return view('frontend.user.dashboard', compact('user'));
+        // Get assigned package
+        $package = DB::table('registration_packages')
+            ->where('id', $user->package_id)
+            ->where('status', 'Active')
+            ->first();
+
+        $contactLimit = (int) ($package->package_emails ?? 0);
+
+        // Count uploaded contacts
+        $uploadedContacts = DB::table('contact_lists')
+            ->where('user_id', $user->id)
+            ->count();
+
+        // Calculate remaining contacts
+        $only_mail = $contactLimit === -1
+            ? -1
+            : max(0, $contactLimit - $uploadedContacts);
+
+        // Calculate percentage used
+        $contactPercentage = $contactLimit > 0
+            ? min(100, ($uploadedContacts / $contactLimit) * 100)
+            : 0;
+
+        return view('frontend.user.dashboard', compact(
+            'user',
+            'only_mail',
+            'contactLimit',
+            'uploadedContacts',
+            'contactPercentage'
+        ));
     }
 
     /**

@@ -192,7 +192,7 @@
             </div>
             <div class="row">
               <div class="col-md-6 col-lg-6">
-                <div class="packageDetailBox mt-4">
+                <!-- <div class="packageDetailBox mt-4">
                   <h4>Contact Remaining</h4>
                   <h6>
                     <span class="text-red">
@@ -203,7 +203,36 @@
                     <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                   <a href="{{ route('pricing') }}" class="custom-btn1 transparent-btn">Add more emails?</a>
+                </div> -->
+
+                <div class="packageDetailBox mt-4">
+                    <h4>Contact Remaining</h4>
+
+                    <h6>
+                        <span class="text-red">
+                            <strong>
+                                {{ $only_mail === -1 ? 'Unlimited' : $only_mail }}
+                            </strong>
+                        </span>
+                        contacts remaining to upload.
+                    </h6>
+
+                    <div class="progress mb-2">
+                        <div
+                            class="progress-bar progress-bar-striped bg-danger"
+                            role="progressbar"
+                            style="width: {{ $contactPercentage }}%"
+                            aria-valuenow="{{ $contactPercentage }}"
+                            aria-valuemin="0"
+                            aria-valuemax="100">
+                        </div>
+                    </div>
+
+                    <a href="{{ route('pricing') }}" class="custom-btn1 transparent-btn">
+                        Add more emails?
+                    </a>
                 </div>
+
               </div>
               <div class="col-md-6 col-lg-6">
                 <div class="packageDetailBox mt-4">
