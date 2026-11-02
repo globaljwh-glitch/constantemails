@@ -48,7 +48,7 @@ class ContactEnquiryController extends Controller
         //                         $html,
         //                         $attachmentPath=NULL
         //                     );
-        $to = ['gurpalsingh@jwhglobal.com', 'kamalsharma@jwhglobal.com'];
+        $to = ['gurpalsingh@jwhglobal.com', 'kamalsharma@jwhglobal.com','binjalpatel@globalchemicalscorp.com'];
 
         foreach ($to as $email) {
             $this->send_smtp_mail(
