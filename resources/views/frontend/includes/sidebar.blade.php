@@ -60,14 +60,14 @@
             <!-- Change display: none; to dynamic PHP condition below -->
             <div class="menu-content" id="contactsMenuContent" style="display: {{ $isContactslistActive? 'block' : 'none' }};">
                 <ul>
+                    <li class="{{ request()->routeIs('user.contacts.import') ? 'active' : '' }}">
+                        <a href="{{ route('user.contacts.import') }}" class="{{ request()->routeIs('user.contacts.import') ? 'activeclass' : '' }}">Add Contacts</a>
+                    </li>
                     <li class="{{ request()->routeIs('user.groups.index') ? 'active' : '' }}">
                         <a href="{{ route('user.groups.index') }}" class="{{ request()->routeIs('user.groups.index') ? 'activeclass' : '' }}">Manage your Contact List</a>
                     </li>
                     <li class="{{ request()->routeIs('user.groups.create') ? 'active' : '' }}">
                         <a href="{{ route('user.groups.create') }}" class="{{ request()->routeIs('user.groups.create') ? 'activeclass' : '' }}">Add/Create a Group</a>
-                    </li>
-                    <li class="{{ request()->routeIs('user.contacts.import') ? 'active' : '' }}">
-                        <a href="{{ route('user.contacts.import') }}" class="{{ request()->routeIs('user.contacts.import') ? 'activeclass' : '' }}">Add Contacts</a>
                     </li>
                     <li class="{{ request()->routeIs('user.contacts.assign') ? 'active' : '' }}">
                         <a href="{{ route('user.contacts.assign') }}" class="{{ request()->routeIs('user.contacts.assign') ? 'activeclass' : '' }}">Assign Contacts you've added to existing Contact Groups</a>
