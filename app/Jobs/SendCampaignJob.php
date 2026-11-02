@@ -1039,7 +1039,7 @@ class SendCampaignJob implements ShouldQueue
                                 <table width="180px" style="width:180px;" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td bgcolor="#a3be02" style="text-align:center; font-size:14px !important; padding:9px 10px 9px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
-                                            <a style="color:#ffffff; font-size:14px !important; text-decoration: none;" href="' . e($forwardUrl) . '">Contact Us</a>
+                                            <a style="color:#ffffff; font-size:14px !important; text-decoration: none;" href="https://constantreach.com/">Contact Us</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -1158,7 +1158,7 @@ class SendCampaignJob implements ShouldQueue
                     <table width="180px" style="width:180px;" cellpadding="0" cellspacing="0">
                         <tr>
                             <td bgcolor="#a3be02" style="text-align:center; font-size:14px !important; padding:9px 10px 9px 10px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
-                                <a style="color:#ffffff; font-size:14px !important; text-decoration: none;" href="' . e($forwardUrl) . '">Contact Us</a>
+                                <a style="color:#ffffff; font-size:14px !important; text-decoration: none;" href="https://constantreach.com/">Contact Us</a>
                             </td>
                         </tr>
                     </table>
