@@ -30,7 +30,7 @@
           <tr>
             <td padding="0px">
 
-              <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#ffffff" style="width:600px;margin: 0px auto;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#ffffff" style="width:100%;">
                 <tr>
                   <td align="center" style="background-color: #4f46e5; padding: 32px; text-align: center;">
                     <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">New Business Inquiry Logged</h1>
