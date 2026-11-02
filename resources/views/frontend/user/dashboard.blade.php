@@ -206,7 +206,7 @@
                 </div> -->
 
                 <div class="packageDetailBox mt-4">
-                    <h4>Contact Remaining</h4>
+                    <h4>Email Remaining</h4>
 
                     <h6>
                         <span class="text-red">
@@ -214,7 +214,7 @@
                                 {{ $only_mail === -1 ? 'Unlimited' : $only_mail }}
                             </strong>
                         </span>
-                        contacts remaining to upload.
+                        Email remaining to send.
                     </h6>
 
                     <div class="progress mb-2">

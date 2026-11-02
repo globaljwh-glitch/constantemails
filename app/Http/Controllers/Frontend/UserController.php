@@ -83,7 +83,7 @@ class UserController extends Controller
         // Get assigned package
         $package = DB::table('registration_packages')
             ->where('id', $user->package_id)
-            ->where('status', 'Active')
+            //->where('status', 'Active')
             ->first();
 
         $emailLimit = (int) ($package->package_emails ?? 0);
