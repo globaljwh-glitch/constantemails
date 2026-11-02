@@ -11,17 +11,86 @@ use App\Mail\PasswordChangedMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
+use App\Models\UserEmailUsage;
 
 class UserController extends Controller
 {
     /**
      * User Dashboard
      */
+    // public function dashboard()
+    // {
+    //     $user = auth()->user();
+
+    //     return view('frontend.user.dashboard', compact('user'));
+    // }
+
     public function dashboard()
     {
         $user = auth()->user();
 
-        return view('frontend.user.dashboard', compact('user'));
+        // Get assigned package
+        $package = DB::table('registration_packages')
+            ->where('id', $user->package_id)
+            ->where('status', 'Active')
+            ->first();
+
+        // $contactLimit = (int) ($package->package_emails ?? 0);
+
+        // // Count uploaded contacts
+        // $uploadedContacts = DB::table('contact_lists')
+        //     ->where('user_id', $user->id)
+        //     ->count();
+
+        // // Calculate remaining contacts
+        // $only_mail = $contactLimit === -1
+        //     ? -1
+        //     : max(0, $contactLimit - $uploadedContacts);
+
+        // // Calculate percentage used
+        // $contactPercentage = $contactLimit > 0
+        //     ? min(100, ($uploadedContacts / $contactLimit) * 100)
+        //     : 0;
+
+        $contactLimit = (int) ($package->package_emails ?? 0);
+
+        $uploadedContacts = DB::table('contact_lists')
+            ->where('user_id', $user->id)
+            ->count();
+
+        $usage = UserEmailUsage::where('user_id', $user->id)
+            ->where('period_started_at', '<=', now())
+            ->where('period_ends_at', '>', now())
+            ->latest('period_started_at')
+            ->first();
+
+        $emailsSent = (int) ($usage->emails_sent ?? 0);
+        $emailsReserved = (int) ($usage->emails_reserved ?? 0);
+
+        if ($contactLimit === -1) {
+            $only_mail = -1;
+            $contactPercentage = 0;
+        } else {
+            $only_mail = max(
+                0,
+                $contactLimit - $uploadedContacts - $emailsSent - $emailsReserved
+            );
+
+            $usedLimit = $uploadedContacts + $emailsSent + $emailsReserved;
+
+            $contactPercentage = $contactLimit > 0
+                ? min(100, ($usedLimit / $contactLimit) * 100)
+                : 0;
+        }
+
+        return view('frontend.user.dashboard', compact(
+            'user',
+            'only_mail',
+            'contactLimit',
+            'uploadedContacts',
+            'contactPercentage'
+        ));
     }
 
     /**
