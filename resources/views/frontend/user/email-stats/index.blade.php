@@ -515,14 +515,14 @@
 
 
                                             {{-- BOUNCED --}}
-                                            <td
+                                            <!-- <td
                                                 align="left"
                                                 class="arial_11_000"
                                             >
                                                 <strong>
                                                     Sent
                                                 </strong>
-                                            </td>
+                                            </td> -->
 
 
                                             {{-- FORWARDED --}}
@@ -686,12 +686,12 @@
 
 
                                                 {{-- BOUNCED --}}
-                                                <td
+                                                <!-- <td
                                                     class="arial_13_000"
                                                     align="center"
                                                 >
                                                     {{ $sent }}
-                                                </td>
+                                                </td> -->
 
 
                                                 {{-- FORWARDED --}}
