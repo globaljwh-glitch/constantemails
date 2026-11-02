@@ -27,7 +27,7 @@
   <table width="680" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f1f5f9" style="width:680px;margin: 0px auto;">
     <tr>
       <td padding="40px 20px">
-        <div class="email-container">
+        <div class="email-container" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
           
           <!-- Header -->
           <div class="header" style="background-color: #4f46e5; padding: 32px; text-align: center; ">
