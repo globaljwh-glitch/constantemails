@@ -24,14 +24,14 @@
 </head>
 <body>
 
-  <table width="680" cellpadding="0" cellspacing="0" border="0" bgcolor="#f1f5f9" style="width:680px;margin: 0px auto;">
+  <table width="680" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f1f5f9" style="width:680px;margin: 0px auto;">
     <tr>
       <td padding="40px 20px">
         <div class="email-container">
           
           <!-- Header -->
-          <div class="header">
-            <h1>New Business Inquiry Logged</h1>
+          <div class="header" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); padding: 32px; text-align: center; ">
+            <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">New Business Inquiry Logged</h1>
           </div>
 
           <!-- Content -->
