@@ -41,7 +41,7 @@
                 <!-- Content -->
                 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
                   <tr>
-                    <td style="padding:30px;">
+                    <td style="padding:10px 30px 30px 30px;">
                       <!-- Section 1 -->
                       
                       <table class="info-table">
@@ -114,7 +114,7 @@
                 </table>
 
                 <!-- Footer -->
-                <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#ffffff" style="width:600px;margin: 0px auto;">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#ffffff" style="width:100%;">
                 <tr>
                   <td align="center" style="background-color: #4f46e5; padding: 20px; text-align: center; font-size: 11px; color: #ffffff;">
                     This is an automated operational alert sent from your application workspace backend.<br>
