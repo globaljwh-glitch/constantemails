@@ -39,86 +39,89 @@
               </table>
 
                 <!-- Content -->
-                <div class="content">
-                  
-                  <!-- Section 1 -->
-                  
-                  <table class="info-table">
-                    <tr>
-                      <td colspan="2" align="center" class="section-title">Sender Profile</td>
-                    </tr>
-                    <tr>
-                      <td class="label">Full Name</td>
-                      <td class="value">{{ $formData['first_name'] }} {{ $formData['last_name'] }}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">Email Address</td>
-                      <td class="value"><a href="mailto:{{ $formData['email'] }}" style="color: #4f46e5; text-decoration: none;">{{ $formData['email'] }}</a></td>
-                    </tr>
-                    <tr>
-                      <td class="label">Phone Line</td>
-                      <td class="value">{{ $formData['phone'] }}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">Company Profile</td>
-                      <td class="value">{{ $formData['company'] ?? 'N/A' }}</td>
-                    </tr>
-                  </table>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+                  <tr>
+                    <td style="padding:30px;">
+                      <!-- Section 1 -->
+                      
+                      <table class="info-table">
+                        <tr>
+                          <td colspan="2" align="center" class="section-title">Sender Profile</td>
+                        </tr>
+                        <tr>
+                          <td class="label">Full Name</td>
+                          <td class="value">{{ $formData['first_name'] }} {{ $formData['last_name'] }}</td>
+                        </tr>
+                        <tr>
+                          <td class="label">Email Address</td>
+                          <td class="value"><a href="mailto:{{ $formData['email'] }}" style="color: #4f46e5; text-decoration: none;">{{ $formData['email'] }}</a></td>
+                        </tr>
+                        <tr>
+                          <td class="label">Phone Line</td>
+                          <td class="value">{{ $formData['phone'] }}</td>
+                        </tr>
+                        <tr>
+                          <td class="label">Company Profile</td>
+                          <td class="value">{{ $formData['company'] ?? 'N/A' }}</td>
+                        </tr>
+                      </table>
 
-                  <!-- Section 2 -->
-                  
-                  <table class="info-table">
-                    <tr><td colspan="2" align="center" class="section-title">Geographic Location</td></tr>
-                    <tr>
-                      <td class="label">Street Address</td>
-                      <td class="value">{{ $formData['address'] }}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">City Details</td>
-                      <td class="value">{{ $formData['city'] }}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">State / Region</td>
-                      <td class="value">{{ $formData['state'] }} ({{ $formData['zip'] }})</td>
-                    </tr>
-                    <tr>
-                      <td class="label">Country Origin</td>
-                      <td class="value">{{ $formData['country'] }}</td>
-                    </tr>
-                  </table>
+                      <!-- Section 2 -->
+                      
+                      <table class="info-table">
+                        <tr><td colspan="2" align="center" class="section-title">Geographic Location</td></tr>
+                        <tr>
+                          <td class="label">Street Address</td>
+                          <td class="value">{{ $formData['address'] }}</td>
+                        </tr>
+                        <tr>
+                          <td class="label">City Details</td>
+                          <td class="value">{{ $formData['city'] }}</td>
+                        </tr>
+                        <tr>
+                          <td class="label">State / Region</td>
+                          <td class="value">{{ $formData['state'] }} ({{ $formData['zip'] }})</td>
+                        </tr>
+                        <tr>
+                          <td class="label">Country Origin</td>
+                          <td class="value">{{ $formData['country'] }}</td>
+                        </tr>
+                      </table>
 
-                  <!-- Section 3 -->
+                      <!-- Section 3 -->
 
-                  <table class="info-table">
-                    <tr><td colspan="2" align="center" class="section-title">Target Segment Metrics</td></tr>
-                    <tr>
-                      <td class="label">Market Segment</td>
-                      <td class="value" style="font-weight: 600; color: #4f46e5;">{{ $formData['application'] }}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">Products Interested</td>
-                      <td class="value">{{ $formData['products_interested'] }}</td>
-                    </tr>
-                  </table>
+                      <table class="info-table">
+                        <tr><td colspan="2" align="center" class="section-title">Target Segment Metrics</td></tr>
+                        <tr>
+                          <td class="label">Market Segment</td>
+                          <td class="value" style="font-weight: 600; color: #4f46e5;">{{ $formData['application'] }}</td>
+                        </tr>
+                        <tr>
+                          <td class="label">Products Interested</td>
+                          <td class="value">{{ $formData['products_interested'] }}</td>
+                        </tr>
+                      </table>
 
-                  <!-- Section 4 -->
-                  <table class="info-table">
-                    <tr><td colspan="2" align="center" class="section-title">Application Summary</td></tr>
-                    <tr>
-                      <td colspan="2" class="label">{{ $formData['final_application'] }}</td>
-                    </tr>
-                  </table>
-                  
-
-                </div>
+                      <!-- Section 4 -->
+                      <table class="info-table">
+                        <tr><td colspan="2" align="center" class="section-title">Application Summary</td></tr>
+                        <tr>
+                          <td colspan="2" class="label">{{ $formData['final_application'] }}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
 
                 <!-- Footer -->
-                <div class="footer">
-                  This is an automated operational alert sent from your application workspace backend.<br>
-                  &copy; {{ date('Y') }} Your Brand CRM. All rights reserved.
-                </div>
-
-
+                <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#ffffff" style="width:600px;margin: 0px auto;">
+                <tr>
+                  <td align="center" style="background-color: #4f46e5; padding: 20px; text-align: center; font-size: 11px; color: #ffffff;">
+                    This is an automated operational alert sent from your application workspace backend.<br>
+                  &copy; {{ date('Y') }} Constant Emails. All rights reserved.
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
