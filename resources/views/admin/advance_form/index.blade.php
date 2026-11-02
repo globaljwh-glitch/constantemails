@@ -139,7 +139,7 @@
                                 <td>{{ $q->application ?? 'N/A' }}</td>
                                 <td>{{ Str::limit($q->final_application, 40) }}</td>
                                 
-                                <td class="text-center">{{ \Carbon\Carbon::parse($q->created_at)->format('d M, Y') }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($q->created_at)->format('F j, Y - h:i A') }}</td>
                                 <td>
                                   <a href="javascript:void(0);" 
                                      class="query-name-link"
