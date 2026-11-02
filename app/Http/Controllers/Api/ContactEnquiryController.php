@@ -39,6 +39,7 @@ class ContactEnquiryController extends Controller
         //$html= new LeadSubmissionMail($validatedData);
         $html = view('emails.lead_submission', [
     'formData' => $validatedData])->render();
+        //$to=['gurpalsingh@jwhglobal.com','kamalsharma@jwhglobal.com'];
 
         $this->send_smtp_mail(
                                 'gurpalsingh@jwhglobal.com',
