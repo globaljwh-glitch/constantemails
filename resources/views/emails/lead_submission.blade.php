@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New Business Inquiry Logged</title>
   <style>
-    body { margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
+    /*body { margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
     table { border-collapse: collapse; border-spacing: 0; }
     img { border: 0; max-width: 100%; height: auto; }
     .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
@@ -19,7 +19,7 @@
     .info-table td.label { width: 35%; color: #64748b; font-weight: 600; }
     .info-table td.value { color: #0f172a; }
     .panel { background-color: #f8fafc; border-left: 4px solid #4f46e5; padding: 16px; border-radius: 0 8px 8px 0; margin-top: 12px; font-size: 14px; color: #334155; line-height: 1.5; }
-    .footer { background-color: #f8fafc; padding: 24px; text-align: center; font-size: 12px; color: #94a3b8; }
+    .footer { background-color: #f8fafc; padding: 24px; text-align: center; font-size: 12px; color: #94a3b8; }*/
   </style>
 </head>
 <body>
@@ -37,8 +37,9 @@
           <div class="content">
             
             <!-- Section 1 -->
-            <div class="section-title">Sender Profile</div>
+            
             <table class="info-table">
+              <tr><td colspan="2"><div class="section-title">Sender Profile</div></td></tr>
               <tr>
                 <td class="label">Full Name</td>
                 <td class="value">{{ $formData['first_name'] }} {{ $formData['last_name'] }}</td>
@@ -58,8 +59,9 @@
             </table>
 
             <!-- Section 2 -->
-            <div class="section-title">Geographic Location</div>
+            
             <table class="info-table">
+              <tr><td colspan="2"><div class="section-title">Geographic Location</div></td></tr>
               <tr>
                 <td class="label">Street Address</td>
                 <td class="value">{{ $formData['address'] }}</td>
@@ -79,8 +81,9 @@
             </table>
 
             <!-- Section 3 -->
-            <div class="section-title">Target Segment Metrics</div>
+
             <table class="info-table">
+              <tr><td colspan="2"><div class="section-title">Target Segment Metrics</div></td></tr>
               <tr>
                 <td class="label">Market Segment</td>
                 <td class="value" style="font-weight: 600; color: #4f46e5;">{{ $formData['application'] }}</td>
