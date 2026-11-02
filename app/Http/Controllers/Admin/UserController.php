@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $packages = RegistrationPackage::where('status', 'Active')->get();
+        $packages = RegistrationPackage::get();
         return view('admin.users.form', compact('packages'));
     }
 
@@ -119,7 +119,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $packages = RegistrationPackage::where('status', 'Active')->get();
+        $packages = RegistrationPackage::get();
 
         // Map database 'name' column back to form's 'first_name' field for editing
         $user->first_name = $user->name;

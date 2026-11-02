@@ -29,7 +29,7 @@ class PackageController extends Controller
             'package_name' => 'required|string|max:255|unique:registration_packages,package_name',
             'stripe_id' => 'nullable|string|max:255', // Added Stripe ID validation
             'package_price' => 'nullable|numeric|min:0',
-            'package_emails' => 'required|integer|min:0',
+            'package_emails' => 'required',
             'duration' => 'required|integer|min:0',
             'access_level' => 'required|in:admin,user',
             'status' => 'required|in:Active,Deactive,Deleted',
