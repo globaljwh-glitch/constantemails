@@ -5,13 +5,15 @@
 @push('styles')
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.min.css">
-    
+
     <style>
-        .table td, .table th {
+        .table td,
+        .table th {
             border-top: 1px solid #ebedf2;
             vertical-align: middle;
             padding: 14px 16px;
         }
+
         .table th {
             background-color: #fafbfc;
             color: #515365 !important;
@@ -20,6 +22,7 @@
             font-size: 11px;
             letter-spacing: 1px;
         }
+
         .query-name-link {
             color: #2196f3 !important;
             font-weight: 700;
@@ -27,15 +30,18 @@
             text-decoration: none;
             transition: color 0.2s;
         }
+
         .query-name-link:hover {
             color: #0d6efd !important;
             text-decoration: underline;
         }
+
         .pagination-section nav {
             display: flex;
             justify-content: flex-end;
             margin-top: 20px;
         }
+
         /* Custom SweetAlert Modal Styling */
         .swal2-popup .query-detail-box {
             text-align: left;
@@ -45,14 +51,16 @@
             margin-top: 10px;
             border: 1px solid #e9ecef;
         }
+
         .swal2-popup .query-detail-row {
             margin-bottom: 10px;
             font-size: 14px;
         }
+
         .swal2-popup .query-detail-row strong {
             color: #3b3f5c;
             display: inline-block;
-            width: 130px;
+            width: 160px;
         }
     </style>
 @endpush
@@ -90,14 +98,19 @@
                         <div class="col-xl-4 col-md-4 col-sm-12 col-12">
                             <h4>Advance Form Queries List</h4>
                         </div>
-                        <div class="col-xl-8 col-md-8 col-sm-12 col-12 d-flex justify-content-end align-items-center mt-sm-0 mt-3 pr-4">
-                            <form action="{{ route('admin.advance-enqueries') }}" method="GET" class="mr-3" style="max-width: 300px; width: 100%;">
+                        <div
+                            class="col-xl-8 col-md-8 col-sm-12 col-12 d-flex justify-content-end align-items-center mt-sm-0 mt-3 pr-4">
+                            <form action="{{ route('admin.advance-enqueries') }}" method="GET" class="mr-3"
+                                style="max-width: 300px; width: 100%;">
                                 <div class="input-group">
-                                    <input type="text" name="search" class="form-control" placeholder="Search queries..." value="{{ request('search') }}">
+                                    <input type="text" name="search" class="form-control" placeholder="Search queries..."
+                                        value="{{ request('search') }}">
                                     <div class="input-group-append">
-                                        <button class="btn btn-dark" type="submit" style="border-radius: 0 4px 4px 0;">Search</button>
-                                        @if(request('search')) 
-                                            <a href="{{ route('admin.advance-enqueries') }}" class="btn btn-danger ml-2" style="border-radius: 4px;">Clear</a> 
+                                        <button class="btn btn-dark" type="submit"
+                                            style="border-radius: 0 4px 4px 0;">Search</button>
+                                        @if(request('search'))
+                                            <a href="{{ route('admin.advance-enqueries') }}" class="btn btn-danger ml-2"
+                                                style="border-radius: 4px;">Clear</a>
                                         @endif
                                     </div>
                                 </div>
@@ -114,56 +127,55 @@
                                     <th class="align-center" style="width: 50px;">#</th>
                                     <th>Name</th>
                                     <th>Email & Phone</th>
+                                    <th>Campaign & Sender</th>
                                     <th>Organization</th>
                                     <th>Product Interested</th>
-                                    <th>Application</th>
                                     <th>Comment</th>
                                     <th class="text-center">Date</th>
                                     <th class="text-center">Option</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
-                              @forelse($queries as $key => $q)
-                              <tr>
-                                <td class="align-center">{{ ($queries->currentPage() - 1) * $queries->perPage() + $key + 1 }}</td>
-                                <td>
-                                    {{ $q->first_name }} {{ $q->last_name }}
-                                </td>
-                                <td>
-                                    {{ $q->email }}<br>
-                                    <small class="text-muted">{{ $q->phone ?? 'N/A' }}</small>
-                                </td>
-                                <td>{{ $q->company ?? 'N/A' }}</td>
-                                <td>{{ $q->products_interested ?? 'N/A' }}</td>
-                                <td>{{ $q->application ?? 'N/A' }}</td>
-                                <td>{{ Str::limit($q->final_application, 40) }}</td>
-                                
-                                <td class="text-center">{{ \Carbon\Carbon::parse($q->created_at)->format('F j, Y - h:i A') }}</td>
-                                <td>
-                                  <a href="javascript:void(0);" 
-                                     class="query-name-link"
-                                     data-firstname="{{ $q->first_name }}"
-                                     data-lastname="{{ $q->last_name ?? '' }}"
-                                     data-email="{{ $q->email }}"
-                                     data-phone="{{ $q->phone ?? 'N/A' }}"
-                                     data-org="{{ $q->company ?? 'N/A' }}"
-                                     data-product="{{ $q->products_interested ?? 'N/A' }}"
-                                     data-address="{{ $q->address .', '.$q->city.', '.$q->state.', '.$q->zip.', '.$q->country }}"
-
-                                     data-comments="{{ $q->final_application }}"
-                                      data-application="{{ $q->application }}"
-
-                                     data-date="{{ \Carbon\Carbon::parse($q->created_at)->format('d M, Y h:i A') }}">
-                                      View
-                                  </a>
-                                </td>
-                              </tr>
-                              @empty
-                                  <tr>
-                                      <td colspan="7" class="text-center py-4">No  queries found.</td>
-                                  </tr>
-                              @endforelse
+                                @forelse($queries as $key => $q)
+                                    <tr>
+                                        <td class="align-center">
+                                            {{ ($queries->currentPage() - 1) * $queries->perPage() + $key + 1 }}</td>
+                                        <td>{{ $q->first_name }} {{ $q->last_name }}</td>
+                                        <td>
+                                            {{ $q->email }}<br>
+                                            <small class="text-muted">{{ $q->phone ?? 'N/A' }}</small>
+                                        </td>
+                                        <td>
+                                            <span
+                                                class="badge badge-primary">{{ $q->campaign_name ?? 'Direct / None' }}</span><br>
+                                            <small class="text-muted">User: {{ $q->user_name ?? 'System' }}  ({{ $q->user_email ?? 'System' }})</small>
+                                        </td>
+                                        <td>{{ $q->company ?? 'N/A' }}</td>
+                                        <td>{{ $q->products_interested ?? 'N/A' }}</td>
+                                        <td>{{ Str::limit($q->final_application, 40) }}</td>
+                                        <td class="text-center">
+                                            {{ \Carbon\Carbon::parse($q->created_at)->format('F j, Y - h:i A') }}</td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0);" class="query-name-link"
+                                                data-firstname="{{ $q->first_name }}" data-lastname="{{ $q->last_name ?? '' }}"
+                                                data-email="{{ $q->email }}" data-phone="{{ $q->phone ?? 'N/A' }}"
+                                                data-org="{{ $q->company ?? 'N/A' }}"
+                                                data-campaign="{{ $q->campaign_name ?? 'Direct / None' }}"
+                                                data-username="{{ $q->user_name ?? 'System' }}"
+                                                data-useremail="{{ $q->user_email ?? 'N/A' }}"
+                                                data-product="{{ $q->products_interested ?? 'N/A' }}"
+                                                data-comments="{{ $q->final_application }}"
+                                                data-application="{{ $q->application ?? 'N/A' }}"
+                                                data-date="{{ \Carbon\Carbon::parse($q->created_at)->format('d M, Y h:i A') }}">
+                                                View Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="9" class="text-center py-4">No queries found.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -183,40 +195,44 @@
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
 
-            // On click Name open professional popup modal
+            // On click View open professional popup modal
             $(document).on('click', '.query-name-link', function () {
                 let firstName = $(this).data('firstname');
                 let lastName = $(this).data('lastname');
                 let email = $(this).data('email');
                 let phone = $(this).data('phone');
                 let org = $(this).data('org');
+                let campaign = $(this).data('campaign');
+                let userName = $(this).data('username');
+                let userEmail = $(this).data('useremail');
                 let comments = $(this).data('comments');
                 let product = $(this).data('product');
-                let address = $(this).data('address');
                 let date = $(this).data('date');
                 let application = $(this).data('application');
 
                 Swal.fire({
-                    title: '<span style="font-size: 20px; color: #3b3f5c;">Query Details</span>',
+                    title: '<span style="font-size: 20px; color: #3b3f5c;">Advanced Query Details</span>',
                     html: `
-                        <div class="query-detail-box">
-                            <div class="query-detail-row"><strong>Full Name:</strong> ${firstName} ${lastName}</div>
-                            <div class="query-detail-row"><strong>Email Address:</strong> ${email}</div>
-                            <div class="query-detail-row"><strong>Phone Number:</strong> ${phone}</div>
-                            <div class="query-detail-row"><strong>Company:</strong> ${org}</div>
-                            <div class="query-detail-row"><strong>Application and Use of Product :</strong> ${application}</div>
-                            <div class="query-detail-row"><strong>Products interested in? :</strong> <span class="badge badge-info">${product}</span></div>
-                            <div class="query-detail-row"><strong>Date Submitted:</strong> ${date}</div>
-                            <div class="query-detail-row" style="margin-top: 15px;"><strong>Final Application:</strong></div>
-                            <div style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #ced4da; margin-top: 5px; max-height: 150px; overflow-y: auto; text-align: left; font-size: 13px; color: #495057;">
-                                ${comments}
+                            <div class="query-detail-box">
+                                <div class="query-detail-row"><strong>Full Name:</strong> ${firstName} ${lastName}</div>
+                                <div class="query-detail-row"><strong>Email Address:</strong> ${email}</div>
+                                <div class="query-detail-row"><strong>Phone Number:</strong> ${phone}</div>
+                                <div class="query-detail-row"><strong>Company:</strong> ${org}</div>
+                                <div class="query-detail-row"><strong>Campaign Name:</strong> <span class="badge badge-primary">${campaign}</span></div>
+                                <div class="query-detail-row"><strong>Campaign User:</strong> ${userName} (${userEmail})</div>
+                                <div class="query-detail-row"><strong>Application/Use:</strong> ${application}</div>
+                                <div class="query-detail-row"><strong>Products Interested:</strong> <span class="badge badge-info">${product}</span></div>
+                                <div class="query-detail-row"><strong>Date Submitted:</strong> ${date}</div>
+                                <div class="query-detail-row" style="margin-top: 15px;"><strong>Final Application Message:</strong></div>
+                                <div style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #ced4da; margin-top: 5px; max-height: 150px; overflow-y: auto; text-align: left; font-size: 13px; color: #495057;">
+                                    ${comments}
+                                </div>
                             </div>
-                        </div>
-                    `,
+                        `,
                     icon: 'info',
                     confirmButtonText: 'Close',
                     confirmButtonColor: '#3b3f5c',
-                    width: '600px',
+                    width: '650px',
                     padding: '20px'
                 });
             });
