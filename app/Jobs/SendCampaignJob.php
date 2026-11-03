@@ -1013,9 +1013,9 @@ class SendCampaignJob implements ShouldQueue
 
         $footer .= '
             
-            <table style="width:680px" cellpadding="0" cellspacing="0" width="680">
+            <table style="width:680px; margin:0px auto;" cellpadding="0" cellspacing="0" width="680" align="center">
                 <tr>
-                    <td align="center" style="padding:25px 20px; text-align:center; font-size:12px !important; padding:0px 0 10px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0px !important;">
+                    <td align="center" style="text-align:center; font-size:12px !important; padding:25px 20px 25px 20px !important; line-height:17px; mso-line-height-rule:exactly; margin:0px !important;">
                         <table align="center" width="250px" style="margin:0px auto; width:250px;" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td bgcolor="#a3be02" style="text-align:center; font-size:14px !important; padding:12px 15px 12px 15px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
@@ -1160,17 +1160,7 @@ class SendCampaignJob implements ShouldQueue
             */
 
             $footer .= '
-            <tr>
-                <td align="center" style="text-align:center; font-size:12px !important; padding:0px 0 10px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0px !important;">
-                    <table align="center" width="250px" style="margin:0px auto; width:250px;" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td bgcolor="#a3be02" style="text-align:center; font-size:14px !important; padding:12px 15px 12px 15px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
-                                <a style="color:#ffffff; font-size:18px !important; text-decoration: none;" href="https://constantreach.com/">Contact Us</a>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+            
             <tr>
                 <td
                     align="center"
