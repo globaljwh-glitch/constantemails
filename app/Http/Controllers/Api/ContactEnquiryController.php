@@ -18,7 +18,7 @@ class ContactEnquiryController extends Controller
         //     //'message' => 'Information recorded and mail dispatched successfully!',
         //     'message'    => $request->all()
         // ]);
-        Log::info('Contact enquiry saved', $request->all());
+        \Log::info('Contact enquiry saved', $request->all());
         $validatedData = $request->validate([
             
             'first_name'          => 'required|string|max:50',
