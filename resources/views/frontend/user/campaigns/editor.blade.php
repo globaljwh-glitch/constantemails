@@ -198,7 +198,7 @@ Remember, this will not be displayed in your email. This is the name with which 
             </div>
 
             {{-- Save Template --}}
-            <!-- <div class="row mb-4">
+            <div class="row mb-4">
 
                 <div class="col-md-5">
                     <strong>Would you like to save this template to reuse it in the future?</strong>
@@ -230,7 +230,7 @@ Remember, this will not be displayed in your email. This is the name with which 
 
                 </div>
 
-            </div> -->
+            </div>
 
             {{-- Campaign Footer --}}
             <div class="row mb-5">
