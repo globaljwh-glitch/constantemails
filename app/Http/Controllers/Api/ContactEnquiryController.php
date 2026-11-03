@@ -13,11 +13,11 @@ class ContactEnquiryController extends Controller
         // Expected captcha answer (from session or other mechanism)
         //$expectedAnswer = session('captcha_num1', 0) + session('captcha_num2', 0);
         //dd($request->all());
-        return response()->json([
-            //'success' => false,
-            //'message' => 'Information recorded and mail dispatched successfully!',
-            'message'    => $request->all()
-        ], 201);
+        // return response()->json([
+        //     //'success' => false,
+        //     //'message' => 'Information recorded and mail dispatched successfully!',
+        //     'message'    => $request->all()
+        // ], 201);
         $validatedData = $request->validate([
             'first_name'          => 'required|string|max:50',
             'last_name'           => 'required|string|max:50',
@@ -32,11 +32,12 @@ class ContactEnquiryController extends Controller
             'products_interested' => 'required|string|max:255',
             'application'         => 'required|string',
             'final_application'   => 'required|string|max:1000',
-            'campaign_id'         => 'required|string'
+            'campaign_id'         => 'string'
             
         ]);
 
         // Save to DB
+
         $contact = ContactEnquiry::create($validatedData);
 
         // Send notification email
