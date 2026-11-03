@@ -75,7 +75,7 @@
                         <strong>Note:</strong> You can use the following tags to insert dynamic values
                         into your email content:
                         <strong class="text-danger">
-                            [name], [first_name], [last_name], [company], [email]
+                            [name], [first_name], [last_name], [company], [email], [phone], [address]
                         </strong>
                     </p>
                 </label>

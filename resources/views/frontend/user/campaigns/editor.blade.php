@@ -112,7 +112,13 @@ Remember, this will not be displayed in your email. This is the name with which 
             <div class="row mb-4">
 
                 <div class="col-md-12">
-
+                    <p class="mt-2">
+                        <strong>Note:</strong> You can use the following tags to insert dynamic values
+                        into your email content:
+                        <strong class="text-danger">
+                            [name], [first_name], [last_name], [company], [email], [phone], [address]
+                        </strong>
+                    </p>
                         <textarea
                             id="editor"
                             name="message"
