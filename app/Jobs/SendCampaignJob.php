@@ -1089,7 +1089,7 @@ class SendCampaignJob implements ShouldQueue
                         <table align="center" width="250px" style="margin:0px auto; width:250px;" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td bgcolor="#a3be02" style="text-align:center; font-size:14px !important; padding:12px 15px 12px 15px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
-                                    <a style="color:#ffffff; font-size:18px !important; text-decoration: none;" href="https://constantreach.com/">Contact Us</a>
+                                    <a style="color:#ffffff; font-size:18px !important; text-decoration: none;" href="https://constantreach.com/' . base64_encode($campaign->id) . '">Contact Us</a>
                                 </td>
                             </tr>
                         </table>
