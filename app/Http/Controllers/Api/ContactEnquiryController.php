@@ -19,6 +19,7 @@ class ContactEnquiryController extends Controller
         //     'message'    => $request->all()
         // ], 201);
         $validatedData = $request->validate([
+            'campaign_id'=> 'required|string',
             'first_name'          => 'required|string|max:50',
             'last_name'           => 'required|string|max:50',
             'email'               => 'required|email|max:100',
@@ -32,7 +33,7 @@ class ContactEnquiryController extends Controller
             'products_interested' => 'required|string|max:255',
             'application'         => 'required|string',
             'final_application'   => 'required|string|max:1000',
-            'campaign_id'         => 'string'
+            
             
         ]);
 
