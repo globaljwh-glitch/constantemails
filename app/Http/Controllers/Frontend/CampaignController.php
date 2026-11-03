@@ -467,14 +467,27 @@ class CampaignController extends Controller
         $campaign->groups()->sync($validated['group_ids']);
 
         // Optional: Save as user's reusable template
-        if ($validated['save_option']) {
+        // if ($validated['save_option']) {
 
-            MailTemplate::create([
-                'user_id'               => auth()->id(),
+        //     MailTemplate::create([
+        //         'user_id'               => auth()->id(),
+        //         'mail_template_name'    => $campaign->email_title,
+        //         'mail_template_content' => $campaign->message,
+        //         'mail_template_image'   => null,
+        //         'status'                => 'Active',
+        //     ]);
+        // }
+
+        if (
+            $request->save_option == '1' &&
+            $campaign->template_type === 'user'
+        ) {
+            SaveTemplate::create([
+                'user_id'          => auth()->id(),
                 'mail_template_name'    => $campaign->email_title,
-                'mail_template_content' => $campaign->message,
+                'mail_template_content' => $request->template_content,
                 'mail_template_image'   => null,
-                'status'                => 'Active',
+                'status'           => 'Active',
             ]);
         }
 
