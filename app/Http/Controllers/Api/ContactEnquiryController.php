@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\ContactEnquiry;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\LeadSubmissionMail;
-
+use App\Models\MailCampaign;
 class ContactEnquiryController extends Controller
 {
     public function store(Request $request)
@@ -38,6 +38,21 @@ class ContactEnquiryController extends Controller
         //Mail::to('gurpalsingh@jwhglobal.com')->send(new LeadSubmissionMail($validatedData));
         $subject='New Corporate Pipeline Lead Inquiry Received';
         //$html= new LeadSubmissionMail($validatedData);
+        $to = ['gurpalsingh@jwhglobal.com','binjalpatel@globalchemicalscorp.com'];
+        if(isset($validatedData['campaign_id']) && $validatedData['campaign_id'] !='')
+        {
+            $campaign = MailCampaign::with('user')->find($validatedData['campaign_id']);
+
+            if ($campaign) {
+                $userId = $campaign->user_id;
+                $user = $campaign->user;
+
+                // Access user details
+                $userName = $user?->name;
+                $userEmail = $user?->email;
+                $to[]=$userEmail;
+            }
+        }
         $html = view('emails.lead_submission', [
     'formData' => $validatedData])->render();
         // $to=['gurpalsingh@jwhglobal.com','kamalsharma@jwhglobal.com'];
@@ -49,7 +64,7 @@ class ContactEnquiryController extends Controller
         //                         $html,
         //                         $attachmentPath=NULL
         //                     );
-        $to = ['gurpalsingh@jwhglobal.com', 'kamalsharma@jwhglobal.com','binjalpatel@globalchemicalscorp.com'];
+        
 
         foreach ($to as $email) {
             $this->send_smtp_mail(
