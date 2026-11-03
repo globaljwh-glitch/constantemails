@@ -17,6 +17,7 @@ use App\Models\SaveTemplate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class CampaignController extends Controller
 {
@@ -321,6 +322,64 @@ class CampaignController extends Controller
 
             // Convert CSS rules into inline styles
             $inlinedHtml = $cssToInline->convert($templateContent);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Convert Base64 images to public image URLs
+            |--------------------------------------------------------------------------
+            */
+
+            $inlinedHtml = preg_replace_callback(
+                '/<img\b[^>]*>/i',
+                function ($matches) {
+
+                    $imgTag = $matches[0];
+
+                    // Find Base64 image source
+                    if (!preg_match(
+                        '/src=["\']data:image\/(png|jpeg|jpg|gif|webp);base64,([^"\']+)["\']/i',
+                        $imgTag,
+                        $imageMatches
+                    )) {
+                        return $imgTag;
+                    }
+
+                    $extension = strtolower($imageMatches[1]);
+                    $base64 = $imageMatches[2];
+
+                    // Normalize extension
+                    if ($extension === 'jpeg') {
+                        $extension = 'jpg';
+                    }
+
+                    $imageData = base64_decode($base64, true);
+
+                    if ($imageData === false) {
+                        return $imgTag;
+                    }
+
+                    // Generate unique filename
+                    $filename = Str::uuid() . '.' . $extension;
+
+                    $path = 'campaign-images/' . $filename;
+
+                    // Save image to public storage
+                    Storage::disk('public')->put($path, $imageData);
+
+                    // Generate public HTTPS URL
+                    $imageUrl = Storage::disk('public')->url($path);
+
+                    // Replace Base64 source with public URL
+                    return preg_replace(
+                        '/src=["\']data:image\/(png|jpeg|jpg|gif|webp);base64,[^"\']+["\']/i',
+                        'src="' . $imageUrl . '"',
+                        $imgTag,
+                        1
+                    );
+
+                },
+                $inlinedHtml
+            );
 
             /*
             |--------------------------------------------------------------------------

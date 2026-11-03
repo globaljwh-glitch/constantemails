@@ -167,13 +167,6 @@ class SendCampaignJob implements ShouldQueue
                             ['contact' => $contact->id]
                         );
 
-                        // $footer = view('frontend.partials.campaign-footer', [
-                        //     'footer' => $campaign->footer ?? null,
-                        //     'unsubscribeUrl' => $unsubscribeUrl,
-                        // ])->render();
-
-                        // $html .= $footer;
-
                         // Converting links to tracking urls 
                         $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
                             ->where('contact_id', $contact->id)
@@ -213,74 +206,8 @@ class SendCampaignJob implements ShouldQueue
                         }  
 
                         /*
-                         * Send email old method
+                         * Send email logic
                          */
-                        // Mail::html($html, function ($mail) use (
-                        //     $contact,
-                        //     $subject,
-                        //     $campaign
-                        // ) {
-
-                        //     $mail->to(
-                        //         $contact->contact_email,
-                        //         trim(
-                        //             ($contact->contact_first_name ?? '') . ' ' .
-                        //             ($contact->contact_last_name ?? '')
-                        //         )
-                        //     )->subject($subject);
-                         
-                        //     // $headers = '';
-                        //     // $this->send_smtp_mail($contact->contact_email, "noreply@constantemails.com", $subject, $campaign, $headers);
-
-                        //     // Email successfully handed to the mailer
-                        //     CampaignRecipient::where('campaign_id', $campaign->id)
-                        //         ->where('contact_id', $contact->id)
-                        //         ->update([
-                        //             'status' => 'sent',
-                        //             'sent_at' => now(),
-                        //             'updated_at' => now(),
-                        //         ]);
-
-                                
-                        //     /*
-                        //     |--------------------------------------------------------------------------
-                        //     | Attach Campaign File
-                        //     |--------------------------------------------------------------------------
-                        //     */
-                        //     if ($campaign->attachment) {
-
-                        //         // $attachmentPath = storage_path(
-                        //         //     'app/public/' . $campaign->attachment
-                        //         // );
-                        //         $attachmentPath = Storage::disk('public')->path(
-                        //             $campaign->attachment
-                        //         );
-
-                        //         if (file_exists($attachmentPath)) {
-
-                        //             $mail->attach($attachmentPath);
-
-                        //             Log::info('Campaign attachment added', [
-                        //                 'campaign_id' => $campaign->id,
-                        //                 'recipient' => $contact->contact_email,
-                        //                 'attachment' => $attachmentPath,
-                        //             ]);
-
-                        //         } else {
-
-                        //             Log::warning(
-                        //                 'Campaign attachment file not found',
-                        //                 [
-                        //                     'campaign_id' => $campaign->id,
-                        //                     'attachment' => $attachmentPath,
-                        //                 ]
-                        //             );
-                        //         }
-                        //     }
-
-                        // });
-
-                        // New code for send mail
                         try {
 
                             $attachmentPath = null;
@@ -384,6 +311,149 @@ class SendCampaignJob implements ShouldQueue
                     }
                 }
             });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Send Additional Recipients
+            |--------------------------------------------------------------------------
+            */
+
+            $additionalRecipients = CampaignRecipient::where('campaign_id', $campaign->id)
+                ->whereNull('contact_id')
+                ->where('status', 'queued')
+                ->where('quota_usage_id', $usage->id)
+                ->orderBy('id')
+                ->get();
+
+            foreach ($additionalRecipients as $recipient) {
+
+                try {
+
+                    // Replace template variables (no contact information available)
+                    $replacements = [
+                        '[name]'         => '',
+                        '[first_name]'   => '',
+                        '[last_name]'    => '',
+                        '[email]'        => $recipient->email,
+                        '[company]'      => '',
+                        '[address]'      => '',
+                        '[area_interest]' => '',
+                        '[phone]'        => '',
+                    ];
+
+                    // Prepare subject
+                    $subject = strtr(
+                        $campaign->email_subject,
+                        $replacements
+                    );
+
+                    // Prepare HTML
+                    $html = str_replace(
+                        ['\\"', "\\'"],
+                        ['"', "'"],
+                        $campaign->message
+                    );
+
+                    $html = strtr($html, $replacements);
+
+                    // Convert relative image URLs to absolute URLs
+                    $html = preg_replace_callback(
+                        '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
+                        function ($matches) {
+                            return $matches[1]
+                                . asset('/' . $matches[2])
+                                . $matches[3];
+                        },
+                        $html
+                    );
+
+                    /*
+                    * Add campaign footer.
+                    *
+                    * Additional recipients have contact_id = NULL,
+                    * so do not generate the normal contact-based unsubscribe URL.
+                    */
+                    $newfooter = $this->buildEmailFooter(
+                        $campaign,
+                        $recipient,
+                        null
+                    );
+
+                    $html .= $newfooter;
+
+                    // Convert links for click tracking
+                    $html = $this->convertLinks(
+                        $html,
+                        $recipient->id
+                    );
+
+                    // Add open tracking pixel
+                    $trackingPixel = '<img src="' .
+                        route('email.track.open', [
+                            'recipient' => $recipient->id
+                        ]) .
+                        '" width="1" height="1" style="display:block;border:0;" alt="">';
+
+                    $html .= $trackingPixel;
+
+                    // Get campaign attachment
+                    $attachmentPath = null;
+
+                    if ($campaign->attachment) {
+
+                        $attachmentPath = Storage::disk('public')->path(
+                            $campaign->attachment
+                        );
+
+                        if (!file_exists($attachmentPath)) {
+                            $attachmentPath = null;
+                        }
+                    }
+
+                    // Send email
+                    $this->send_smtp_mail(
+                        $recipient->email,
+                        'noreply@constantemails.com',
+                        $subject,
+                        $html,
+                        $attachmentPath
+                    );
+
+                    // Count successful SMTP acceptance
+                    $quotaService->markEmailSent($recipient->id);
+
+                    // Update recipient status
+                    $recipient->update([
+                        'status'        => 'sent',
+                        'sent_at'       => now(),
+                        'error_message' => null,
+                    ]);
+
+                    Log::info('Additional recipient email sent successfully', [
+                        'campaign_id' => $campaign->id,
+                        'recipient_id' => $recipient->id,
+                        'email' => $recipient->email,
+                    ]);
+
+                } catch (\Throwable $e) {
+
+                    // Release reserved quota if sending failed
+                    $quotaService->releaseEmailReservation($recipient->id);
+
+                    $recipient->update([
+                        'status'        => 'failed',
+                        'error_message' => $e->getMessage(),
+                    ]);
+
+                    Log::error('Additional recipient email failed', [
+                        'campaign_id' => $campaign->id,
+                        'recipient_id' => $recipient->id,
+                        'email' => $recipient->email,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            }
             
 
             // $campaign = MailCampaign::findOrFail($campaign->id);
