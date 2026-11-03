@@ -27,7 +27,7 @@ class ContactEnquiryController extends Controller
             'products_interested' => 'required|string|max:255',
             'application'         => 'required|string',
             'final_application'   => 'required|string|max:1000',
-            'campaign_id'         => 'required|string'
+            //'campaign_id'         => 'required|string'
             
         ]);
 
