@@ -13,11 +13,11 @@ class ContactEnquiryController extends Controller
         // Expected captcha answer (from session or other mechanism)
         //$expectedAnswer = session('captcha_num1', 0) + session('captcha_num2', 0);
         //dd($request->all());
-        // return response()->json([
-        //     //'success' => false,
-        //     //'message' => 'Information recorded and mail dispatched successfully!',
-        //     'message'    => $request->all()
-        // ], 201);
+        return response()->json([
+            'success' => false,
+            //'message' => 'Information recorded and mail dispatched successfully!',
+            'message'    => $request->all()
+        ]);
         $validatedData = $request->validate([
             'campaign_id'=> 'required|string',
             'first_name'          => 'required|string|max:50',
