@@ -1083,7 +1083,7 @@ class SendCampaignJob implements ShouldQueue
         $footer = '';
 
         $campaignId = Crypt::encryptString($campaign->id);
-        $camp_id = '?campaign_id=' . urlencode($campaignId);
+        $camp_id = '?camp_id=' . urlencode($campaignId);
 
         $footer .= '
             
