@@ -83,7 +83,7 @@ class FrontAuthController extends Controller
                 'username'          => $request->username,
                 'email'             => $request->email,
                 'company_name'      => $request->company_name,
-                'comapny_phone'     => $request->comapny_phone,
+                'company_phone'     => $request->company_phone,
                 'password'          => Hash::make($request->password),
                 'package_id'        => $package->id,
                 'status'            => 'Deactive',

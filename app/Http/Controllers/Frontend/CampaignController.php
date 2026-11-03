@@ -517,7 +517,7 @@ class CampaignController extends Controller
                 $validated['schedule_date'] . ' ' .
                 str_pad($validated['schedule_hour'], 2, '0', STR_PAD_LEFT) . ':' .
                 str_pad($validated['schedule_minute'], 2, '0', STR_PAD_LEFT),
-                config('app.timezone')
+                'America/New_York'
             );
 
         } catch (\Throwable $e) {
@@ -532,7 +532,8 @@ class CampaignController extends Controller
         /*
         * Check scheduled time against current time
         */
-        if ($scheduledAt->lte(now(config('app.timezone')))) {
+        if ($scheduledAt->copy()->utc()->lte(now('UTC'))) {
+        //if ($scheduledAt->lte(now(config('app.timezone')))) {
 
             return back()
                 ->withErrors([
