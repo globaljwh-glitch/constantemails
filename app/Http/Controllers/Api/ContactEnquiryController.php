@@ -19,7 +19,7 @@ class ContactEnquiryController extends Controller
         //     'message'    => $request->all()
         // ], 201);
         $validatedData = $request->validate([
-            'campaign_id'=> 'required|string',
+            'campaign_id'=> 'string',
             'first_name'          => 'required|string|max:50',
             'last_name'           => 'required|string|max:50',
             'email'               => 'required|email|max:100',
@@ -38,7 +38,10 @@ class ContactEnquiryController extends Controller
         ]);
 
         // Save to DB
-
+        dd([
+            'campaign_id' => $validatedData['campaign_id'] ?? 'MISSING',
+            'all_data' => $validatedData,
+        ]);
         $contact = ContactEnquiry::create($validatedData);
 
         // Send notification email
