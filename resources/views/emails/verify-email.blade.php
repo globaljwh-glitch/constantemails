@@ -13,8 +13,12 @@
             <table cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tbody>
                     <tr>
-                        <td height="60" align="left" width="350" valign="middle" style="padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;"><a href="https://constantemails.com/"><img height="54" border="0" width="" src="https://constantemails.com/assets/frontend/images/logo.jpg" alt="" /></a></td>
-                        <td align="right" width="" valign="middle" style="padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;"><a href="https://constantemails.com/login"><img height="" border="0" width="" src="https://constantemails.com/assets/frontend/images/btn-login-green.png" alt="" /></a></td>
+                        <td height="60" align="left" width="350" valign="middle" style="padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;">
+                            <a href="https://constantemails.com/">
+                                <img src="https://constantemails.com/assets/frontend/images/logo.jpg" height="54" border="0" width="" alt="" />
+                            </a>
+                        </td>
+                        <!-- <td align="right" width="" valign="middle" style="padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;"><a href="https://constantemails.com/login"><img height="" border="0" width="" src="https://constantemails.com/assets/frontend/images/btn-login-green.png" alt="" /></a></td> -->
                     </tr>
                 </tbody>
             </table>
