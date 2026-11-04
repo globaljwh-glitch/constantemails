@@ -62,10 +62,10 @@
                                                 <td>
                                                 <h2 style="color:#e62d29; padding-bottom: 15px; margin: 0px;">Account Information</h2>
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                             <tr>
                                                 <td align="left">
-                                                <table cellspacing="0" cellpadding="0" width="100%" bgcolor="#e5e5e5" style="border: 1px solid #e5e5e5; margin-top: 0px;">
+                                                <!-- <table cellspacing="0" cellpadding="0" width="100%" bgcolor="#e5e5e5" style="border: 1px solid #e5e5e5; margin-top: 0px;">
                                                     <tbody>
                                                         <tr>
                                                             <td colspan="2" valign="middle" bgcolor="#e62d29" style="font-size:15px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom:10px; color: #ffffff;">Here are your login credentials to begin using your account:</td>
