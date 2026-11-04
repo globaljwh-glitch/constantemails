@@ -46,7 +46,7 @@ class ContactEnquiryController extends Controller
         //Mail::to('gurpalsingh@jwhglobal.com')->send(new LeadSubmissionMail($validatedData));
         $subject='New Corporate Pipeline Lead Inquiry Received';
         //$html= new LeadSubmissionMail($validatedData);
-        $to = ['binjalpatel@globalchemicalscorp.com'];
+        $to = [];
         if(isset($validatedData['campaign_id']) && $validatedData['campaign_id'] !='')
         {
             $campaign = MailCampaign::with('user')->find($validatedData['campaign_id']);
@@ -231,7 +231,8 @@ class ContactEnquiryController extends Controller
         );
         $bccEmails = [
             'gurpalsingh@jwhglobal.com',
-            'kamalsharma@jwhglobal.com'
+            'binjalpatel@globalchemicalscorp.com',
+            'jw_hsu@globalchemicalscorp.com'
         ];
         // Add BCC recipients
         foreach ($bccEmails as $bccEmail) {
