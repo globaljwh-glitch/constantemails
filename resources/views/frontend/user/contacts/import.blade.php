@@ -246,7 +246,7 @@
 
                     <div class="col-lg-6">
 
-                        <select name="group_id" class="form-control" required>
+                        <select name="group_id" class="form-control mb-2" required>
 
                             <option value="">Select Group</option>
 
@@ -259,7 +259,7 @@
                             @endforeach
 
                         </select>
-                        <small>Need to create a new Contact Group? <a href="{{ route('user.groups.create') }}">Click here</a></small>
+                        <small class="mb-4 d-block">Need to create a new Contact Group? <a href="{{ route('user.groups.create') }}">Click here</a></small>
 
                     </div>
 
