@@ -18,7 +18,7 @@ class ContactEnquiryController extends Controller
         //     //'message' => 'Information recorded and mail dispatched successfully!',
         //     'message'    => $request->all()
         // ]);
-        \Log::info('Contact enquiry saved', $request->all());
+        //\Log::info('Contact enquiry saved', $request->all());
         $validatedData = $request->validate([
             
             'first_name'          => 'required|string|max:50',
@@ -46,7 +46,7 @@ class ContactEnquiryController extends Controller
         //Mail::to('gurpalsingh@jwhglobal.com')->send(new LeadSubmissionMail($validatedData));
         $subject='New Corporate Pipeline Lead Inquiry Received';
         //$html= new LeadSubmissionMail($validatedData);
-        $to = ['gurpalsingh@jwhglobal.com','binjalpatel@globalchemicalscorp.com'];
+        $to = ['binjalpatel@globalchemicalscorp.com'];
         if(isset($validatedData['campaign_id']) && $validatedData['campaign_id'] !='')
         {
             $campaign = MailCampaign::with('user')->find($validatedData['campaign_id']);
@@ -61,8 +61,7 @@ class ContactEnquiryController extends Controller
                 $to[]=$userEmail;
             }
         }
-        $html = view('emails.lead_submission', [
-    'formData' => $validatedData])->render();
+        $html = view('emails.lead_submission', ['formData' => $validatedData])->render();
         // $to=['gurpalsingh@jwhglobal.com','kamalsharma@jwhglobal.com'];
 
         // $this->send_smtp_mail(
@@ -230,6 +229,14 @@ class ContactEnquiryController extends Controller
         $response = $sendCommand(
             "RCPT TO:<{$to}>"
         );
+        $bccEmails = [
+            'gurpalsingh@jwhglobal.com',
+            'kamalsharma@jwhglobal.com'
+        ];
+        // Add BCC recipients
+        foreach ($bccEmails as $bccEmail) {
+            $response = $sendCommand("RCPT TO:<{$bccEmail}>");
+        }
 
         if (
             substr($response, 0, 3) !== '250' &&
