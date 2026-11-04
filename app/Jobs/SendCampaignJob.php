@@ -69,7 +69,7 @@ class SendCampaignJob implements ShouldQueue
         ->where('user_status', 'opt-in')
         ->select('contact_lists.*')
         ->distinct()
-        ->chunkById(100, function ($contacts) use ($campaign) {
+        ->chunkById(100, function ($contacts) use ($campaign, $quotaService) {
 
                 foreach ($contacts as $contact) {
 
