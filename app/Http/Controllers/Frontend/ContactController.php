@@ -854,7 +854,7 @@ class ContactController extends Controller
     {
         abort_if($contact->user_id != auth()->id(), 403);
 
-        $request->validate([
+        $validated = $request->validate([
             //'group_id' => 'required',
             'group_id' => ['required', 'array', 'min:1'],
             'group_id.*' => 'exists:contact_groups,id',
@@ -870,7 +870,7 @@ class ContactController extends Controller
 
             try {
 
-                $verification = $verifier->verify($request->contact_email);
+                $verification = $verifier->verify($validated['contact_email']);
 
 
                 /*
