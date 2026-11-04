@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
 class ContactMessageController extends Controller
 {
@@ -170,12 +171,17 @@ class ContactMessageController extends Controller
             //     }
             // );
 
-            
-            $adminEmail = config(
-                'mail.contact_email',
-                env('MAIL_FROM_ADDRESS', config('mail.from.address'))
-            );
 
+            $adminEmail = DB::table('settings')
+                ->where('key', 'admin_email')
+                ->value('value');
+
+            if(empty($adminEmail)) {
+                $adminEmail = config(
+                    'mail.contact_email',
+                    env('MAIL_FROM_ADDRESS', config('mail.from.address'))
+                );
+            }
             $fromEmail = env('MAIL_FROM_ADDRESS', config('mail.from.address'));
 
             // Email 1: Notify admin about the contact form submission
