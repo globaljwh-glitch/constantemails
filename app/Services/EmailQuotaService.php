@@ -448,18 +448,193 @@ class EmailQuotaService
     //     }, 5);
     // }
 
+    // public function processCampaignQuota(
+    //     MailCampaign $campaign
+    // ): UserEmailUsage {
+
+    //     return DB::transaction(function () use ($campaign) {
+
+    //         // 1. Lock user to prevent concurrent usage creation.
+    //         $user = User::whereKey($campaign->user_id)
+    //             ->lockForUpdate()
+    //             ->firstOrFail();
+
+    //         // 2. Get the user's currently assigned package.
+    //         $package = DB::table('registration_packages')
+    //             ->where('id', $user->package_id)
+    //             ->where('status', '!=', 'Deleted')
+    //             ->first();
+
+    //         if (!$package) {
+    //             throw new RuntimeException(
+    //                 'Your assigned package is not active.'
+    //             );
+    //         }
+
+    //         $now = now();
+    //         $usage = null;
+
+    //         /*
+    //         * 3. Check whether this campaign already has
+    //         * a quota usage record.
+    //         */
+    //         $campaignUsageIds = CampaignRecipient::where(
+    //                 'campaign_id',
+    //                 $campaign->id
+    //             )
+    //             ->whereNotNull('quota_usage_id')
+    //             ->distinct()
+    //             ->pluck('quota_usage_id');
+
+    //         if ($campaignUsageIds->count() > 1) {
+    //             throw new RuntimeException(
+    //                 'This campaign has reservations linked to multiple usage records. Please investigate before sending.'
+    //             );
+    //         }
+
+    //         /*
+    //         * RULE 4:
+    //         * Existing campaign reservations must remain
+    //         * linked to their original usage record.
+    //         */
+    //         if ($campaignUsageIds->count() === 1) {
+
+    //             $usage = UserEmailUsage::whereKey(
+    //                 $campaignUsageIds->first()
+    //             )
+    //                 ->where('user_id', $user->id)
+    //                 ->lockForUpdate()
+    //                 ->firstOrFail();
+
+    //         } else {
+
+    //             /*
+    //             * 4. New campaign without existing reservations.
+    //             * Get the latest usage record for this user.
+    //             */
+    //             $latestUsage = UserEmailUsage::where(
+    //                     'user_id',
+    //                     $user->id
+    //                 )
+    //                 ->latest('period_started_at')
+    //                 ->lockForUpdate()
+    //                 ->first();
+
+    //             /*
+    //             * RULE 1:
+    //             * Same package and active billing period.
+    //             * Reuse existing usage.
+    //             */
+    //             if ($latestUsage) {
+
+    //                 $samePackage = (int) $latestUsage->package_id
+    //                     === (int) $user->package_id;
+
+    //                 $periodActive =
+    //                     Carbon::parse($latestUsage->period_started_at)
+    //                         ->lte($now)
+    //                     &&
+    //                     Carbon::parse($latestUsage->period_ends_at)
+    //                         ->gt($now);
+
+    //                 if ($samePackage && $periodActive) {
+    //                     $usage = $latestUsage;
+    //                 }
+    //             }
+
+    //             /*
+    //             * RULE 2:
+    //             * Different package ID.
+    //             *
+    //             * RULE 3:
+    //             * Same package but expired billing period.
+    //             *
+    //             * Also handles first-time usage creation.
+    //             */
+    //             if (!$usage) {
+
+    //                 $usage = UserEmailUsage::create([
+    //                     'user_id'           => $user->id,
+    //                     'package_id'        => $package->id,
+    //                     'email_limit'       => (int) $package->package_emails,
+    //                     'emails_sent'       => 0,
+    //                     'emails_reserved'   => 0,
+    //                     'period_started_at' => $now,
+    //                     'period_ends_at'    => $now->copy()
+    //                         ->addMonthNoOverflow(),
+    //                 ]);
+    //             }
+    //         }
+
+    //         /*
+    //         * 5. Get queued recipients that have not
+    //         * already been assigned a quota reservation.
+    //         */
+    //         $recipients = CampaignRecipient::where(
+    //                 'campaign_id',
+    //                 $campaign->id
+    //             )
+    //             ->where('status', 'queued')
+    //             ->whereNull('quota_usage_id')
+    //             ->lockForUpdate()
+    //             ->get(['id']);
+
+    //         $emailCount = $recipients->count();
+
+    //         if ($emailCount > 0) {
+
+    //             // 6. Calculate available credits.
+    //             $remaining = $usage->remainingEmails();
+
+    //             // -1 means unlimited.
+    //             if (
+    //                 $remaining !== -1 &&
+    //                 $emailCount > $remaining
+    //             ) {
+    //                 throw new RuntimeException(
+    //                     'Insufficient email credits. You need ' .
+    //                     $emailCount . ' emails, but only ' .
+    //                     $remaining . ' are available.'
+    //                 );
+    //             }
+
+    //             $recipientIds = $recipients->pluck('id')->all();
+
+    //             // 7. Assign reservations to the correct usage record.
+    //             CampaignRecipient::whereIn('id', $recipientIds)
+    //                 ->whereNull('quota_usage_id')
+    //                 ->update([
+    //                     'quota_usage_id'    => $usage->id,
+    //                     'quota_released_at' => null,
+    //                     'updated_at'        => now(),
+    //                 ]);
+
+    //             // 8. Increase reserved email count.
+    //             $usage->increment(
+    //                 'emails_reserved',
+    //                 $emailCount
+    //             );
+    //         }
+
+    //         // 9. Return the selected usage record.
+    //         return $usage->fresh();
+
+    //     }, 5);
+    // }
+
+    
     public function processCampaignQuota(
         MailCampaign $campaign
     ): UserEmailUsage {
 
         return DB::transaction(function () use ($campaign) {
 
-            // 1. Lock user to prevent concurrent usage creation.
+            // 1. Lock user.
             $user = User::whereKey($campaign->user_id)
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            // 2. Get the user's currently assigned package.
+            // 2. Get currently assigned package.
             $package = DB::table('registration_packages')
                 ->where('id', $user->package_id)
                 ->where('status', '!=', 'Deleted')
@@ -472,86 +647,181 @@ class EmailQuotaService
             }
 
             $now = now();
-            $usage = null;
 
-            /*
-            * 3. Check whether this campaign already has
-            * a quota usage record.
-            */
-            $campaignUsageIds = CampaignRecipient::where(
+            // 3. Lock all recipients belonging to this campaign.
+            $recipients = CampaignRecipient::where(
                     'campaign_id',
                     $campaign->id
                 )
+                ->lockForUpdate()
+                ->get();
+
+            // Find existing usage IDs.
+            $campaignUsageIds = $recipients
                 ->whereNotNull('quota_usage_id')
-                ->distinct()
-                ->pluck('quota_usage_id');
+                ->pluck('quota_usage_id')
+                ->unique()
+                ->values();
 
             if ($campaignUsageIds->count() > 1) {
                 throw new RuntimeException(
-                    'This campaign has reservations linked to multiple usage records. Please investigate before sending.'
+                    'Campaign has reservations linked to multiple usage records.'
                 );
             }
 
+            $usage = null;
+
             /*
-            * RULE 4:
-            * Existing campaign reservations must remain
-            * linked to their original usage record.
+            * 4. Check whether this campaign already has a reservation.
             */
             if ($campaignUsageIds->count() === 1) {
 
-                $usage = UserEmailUsage::whereKey(
-                    $campaignUsageIds->first()
-                )
+                $oldUsage = UserEmailUsage::whereKey(
+                        $campaignUsageIds->first()
+                    )
                     ->where('user_id', $user->id)
                     ->lockForUpdate()
                     ->firstOrFail();
 
+                /*
+                * Check whether this campaign has already sent
+                * any emails successfully.
+                */
+                $alreadySent = $recipients->contains(function ($recipient) {
+                    return $recipient->quota_counted_at !== null;
+                });
+
+                /*
+                * If emails have already been sent, preserve
+                * the original usage record.
+                */
+                if ($alreadySent) {
+
+                    $usage = $oldUsage;
+
+                } else {
+
+                    /*
+                    * No emails sent yet.
+                    * Compare old usage package with current package.
+                    */
+                    if (
+                        (int) $oldUsage->package_id ===
+                        (int) $user->package_id
+                    ) {
+
+                        $usage = $oldUsage;
+
+                    } else {
+
+                        /*
+                        * Package changed before sending started.
+                        * Get or create current package usage.
+                        */
+                        $usage = UserEmailUsage::where('user_id', $user->id)
+                            ->where('package_id', $user->package_id)
+                            ->where('period_started_at', '<=', $now)
+                            ->where('period_ends_at', '>', $now)
+                            ->latest('period_started_at')
+                            ->lockForUpdate()
+                            ->first();
+
+                        if (!$usage) {
+
+                            $usage = UserEmailUsage::create([
+                                'user_id'           => $user->id,
+                                'package_id'        => $package->id,
+                                'email_limit'       => (int) $package->package_emails,
+                                'emails_sent'       => 0,
+                                'emails_reserved'   => 0,
+                                'period_started_at' => $now,
+                                'period_ends_at'    => $now->copy()
+                                    ->addMonthNoOverflow(),
+                            ]);
+                        }
+
+                        /*
+                        * Transfer only active queued reservations.
+                        * Do not transfer sent or released reservations.
+                        */
+                        $queuedRecipients = $recipients
+                            ->where('status', 'queued')
+                            ->where('quota_usage_id', $oldUsage->id)
+                            ->whereNull('quota_counted_at')
+                            ->whereNull('quota_released_at');
+
+                        $transferCount = $queuedRecipients->count();
+
+                        if ($transferCount > 0) {
+
+                            // Check availability in the new package.
+                            $remaining = $usage->remainingEmails();
+
+                            if (
+                                $remaining !== -1 &&
+                                $transferCount > $remaining
+                            ) {
+                                throw new RuntimeException(
+                                    'Insufficient email credits. You need ' .
+                                    $transferCount . ' emails, but only ' .
+                                    $remaining . ' are available.'
+                                );
+                            }
+
+                            $recipientIds = $queuedRecipients
+                                ->pluck('id')
+                                ->all();
+
+                            // Release old reservations.
+                            $oldUsage->decrement(
+                                'emails_reserved',
+                                $transferCount
+                            );
+
+                            // Assign reservations to new usage.
+                            CampaignRecipient::whereIn('id', $recipientIds)
+                                ->update([
+                                    'quota_usage_id'    => $usage->id,
+                                    'quota_released_at' => null,
+                                    'updated_at'        => now(),
+                                ]);
+
+                            // Reserve against new package.
+                            $usage->increment(
+                                'emails_reserved',
+                                $transferCount
+                            );
+                        }
+                    }
+                }
+
             } else {
 
                 /*
-                * 4. New campaign without existing reservations.
-                * Get the latest usage record for this user.
+                * 5. No existing campaign reservation.
+                * Find latest usage record for the user.
                 */
-                $latestUsage = UserEmailUsage::where(
-                        'user_id',
-                        $user->id
-                    )
+                $latestUsage = UserEmailUsage::where('user_id', $user->id)
                     ->latest('period_started_at')
                     ->lockForUpdate()
                     ->first();
 
                 /*
-                * RULE 1:
-                * Same package and active billing period.
-                * Reuse existing usage.
+                * RULE 1: Same package + active billing period.
+                * RULE 2: Different package.
+                * RULE 3: Expired billing period.
                 */
-                if ($latestUsage) {
+                if (
+                    $latestUsage &&
+                    (int) $latestUsage->package_id ===
+                        (int) $user->package_id &&
+                    Carbon::parse($latestUsage->period_started_at)->lte($now) &&
+                    Carbon::parse($latestUsage->period_ends_at)->gt($now)
+                ) {
 
-                    $samePackage = (int) $latestUsage->package_id
-                        === (int) $user->package_id;
+                    $usage = $latestUsage;
 
-                    $periodActive =
-                        Carbon::parse($latestUsage->period_started_at)
-                            ->lte($now)
-                        &&
-                        Carbon::parse($latestUsage->period_ends_at)
-                            ->gt($now);
-
-                    if ($samePackage && $periodActive) {
-                        $usage = $latestUsage;
-                    }
-                }
-
-                /*
-                * RULE 2:
-                * Different package ID.
-                *
-                * RULE 3:
-                * Same package but expired billing period.
-                *
-                * Also handles first-time usage creation.
-                */
-                if (!$usage) {
+                } else {
 
                     $usage = UserEmailUsage::create([
                         'user_id'           => $user->id,
@@ -567,10 +837,10 @@ class EmailQuotaService
             }
 
             /*
-            * 5. Get queued recipients that have not
-            * already been assigned a quota reservation.
+            * 6. Reserve any remaining queued recipients
+            * that have never been assigned a usage record.
             */
-            $recipients = CampaignRecipient::where(
+            $newRecipients = CampaignRecipient::where(
                     'campaign_id',
                     $campaign->id
                 )
@@ -579,14 +849,12 @@ class EmailQuotaService
                 ->lockForUpdate()
                 ->get(['id']);
 
-            $emailCount = $recipients->count();
+            $emailCount = $newRecipients->count();
 
             if ($emailCount > 0) {
 
-                // 6. Calculate available credits.
                 $remaining = $usage->remainingEmails();
 
-                // -1 means unlimited.
                 if (
                     $remaining !== -1 &&
                     $emailCount > $remaining
@@ -598,9 +866,8 @@ class EmailQuotaService
                     );
                 }
 
-                $recipientIds = $recipients->pluck('id')->all();
+                $recipientIds = $newRecipients->pluck('id')->all();
 
-                // 7. Assign reservations to the correct usage record.
                 CampaignRecipient::whereIn('id', $recipientIds)
                     ->whereNull('quota_usage_id')
                     ->update([
@@ -609,18 +876,17 @@ class EmailQuotaService
                         'updated_at'        => now(),
                     ]);
 
-                // 8. Increase reserved email count.
                 $usage->increment(
                     'emails_reserved',
                     $emailCount
                 );
             }
 
-            // 9. Return the selected usage record.
             return $usage->fresh();
 
         }, 5);
     }
+
 
     /**
      * Mark one recipient as successfully accepted by SMTP.
