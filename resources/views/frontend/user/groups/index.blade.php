@@ -152,6 +152,10 @@
 
     </form>
 
+    <div class="mt-3 d-flex justify-content-center">
+        {{ $groups->links('pagination::bootstrap-4') }}
+    </div>
+
     <p>
         Were you uploading a file?
         <a href="{{ route('user.contacts.import') }}">Click Here</a>
