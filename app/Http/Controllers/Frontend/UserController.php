@@ -76,20 +76,73 @@ class UserController extends Controller
     //     ));
     // }
 
+    // public function dashboard()
+    // {
+    //     $user = auth()->user();
+
+    //     // Get assigned package
+    //     $package = DB::table('registration_packages')
+    //         ->where('id', $user->package_id)
+    //         //->where('status', 'Active')
+    //         ->first();
+
+    //     $emailLimit = (int) ($package->package_emails ?? 0);
+
+    //     // Get current monthly email usage
+    //     $usage = UserEmailUsage::where('user_id', $user->id)
+    //         ->where('period_started_at', '<=', now())
+    //         ->where('period_ends_at', '>', now())
+    //         ->latest('period_started_at')
+    //         ->first();
+
+    //     $emailsSent = (int) ($usage->emails_sent ?? 0);
+    //     $emailsReserved = (int) ($usage->emails_reserved ?? 0);
+
+    //     // Calculate remaining emails
+    //     if ($emailLimit === -1) {
+    //         $only_mail = -1;
+    //         $emailPercentage = 0;
+    //     } else {
+    //         $only_mail = max(
+    //             0,
+    //             $emailLimit - $emailsSent - $emailsReserved
+    //         );
+
+    //         $usedLimit = $emailsSent + $emailsReserved;
+
+    //         $emailPercentage = $emailLimit > 0
+    //             ? min(100, ($usedLimit / $emailLimit) * 100)
+    //             : 0;
+    //     }
+
+    //     return view('frontend.user.dashboard', compact(
+    //         'user',
+    //         'package',
+    //         'only_mail',
+    //         'emailLimit',
+    //         'emailsSent',
+    //         'emailsReserved',
+    //         'emailPercentage'
+    //     ));
+    // }
+
+    
     public function dashboard()
     {
         $user = auth()->user();
 
-        // Get assigned package
+        // Get currently assigned package.
         $package = DB::table('registration_packages')
             ->where('id', $user->package_id)
-            //->where('status', 'Active')
+            ->where('status', '!=', 'Deleted')
             ->first();
 
         $emailLimit = (int) ($package->package_emails ?? 0);
 
-        // Get current monthly email usage
+        // Get usage for the currently assigned package
+        // and active billing period only.
         $usage = UserEmailUsage::where('user_id', $user->id)
+            ->where('package_id', $user->package_id)
             ->where('period_started_at', '<=', now())
             ->where('period_ends_at', '>', now())
             ->latest('period_started_at')
@@ -98,11 +151,15 @@ class UserController extends Controller
         $emailsSent = (int) ($usage->emails_sent ?? 0);
         $emailsReserved = (int) ($usage->emails_reserved ?? 0);
 
-        // Calculate remaining emails
+        // Calculate remaining emails.
         if ($emailLimit === -1) {
+
+            // Unlimited package.
             $only_mail = -1;
             $emailPercentage = 0;
+
         } else {
+
             $only_mail = max(
                 0,
                 $emailLimit - $emailsSent - $emailsReserved
