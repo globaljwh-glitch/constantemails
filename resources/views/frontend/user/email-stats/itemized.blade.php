@@ -105,6 +105,10 @@
 
                     </div>
 
+                    <div class="mt-3 d-flex justify-content-center">
+                        {{ $recipients->links('pagination::bootstrap-4') }}
+                    </div>
+
                     <div class="mt-3">
 
                         <a
