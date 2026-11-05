@@ -30,7 +30,7 @@ class ContactQueryController extends Controller
 
     public function destroy($id)
     {
-        DB::table('contacts')->where('id', $id)->delete();
+        DB::table('contact_messages')->where('id', $id)->delete();
         return redirect()->route('admin.contact-queries.index')->with('success', 'Contact query deleted successfully!');
     }
 

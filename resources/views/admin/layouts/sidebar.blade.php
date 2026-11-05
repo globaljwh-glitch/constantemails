@@ -53,28 +53,7 @@
                 </ul>
             </li>
 
-            <li class="menu">
-                <a href="#components" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <i class="flaticon-3d-cube"></i>
-                        <span>Manage Resources</span>
-                    </div>
-                    <div>
-                        <i class="flaticon-right-arrow"></i>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled" id="components" data-parent="#accordionExample">
-                    <li>
-                        <a href="{{ route('resource-categories.index') }}"> Resource Category </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('resource-articles.create') }}"> Add Article </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('resource-articles.index') }}"> All Articles </a>
-                    </li>
-                </ul>
-            </li>
+
 
             <li class="menu">
                 <a href="#component" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -97,7 +76,7 @@
                 </ul>
             </li>
 
-            <li class="menu">
+            <!-- <li class="menu">
                 <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-copy-line"></i>
@@ -119,7 +98,7 @@
                         <a href="{{ route('cms-articles.create') }}"> Add Article </a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
             <li class="menu">
                 <a href="#elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -233,7 +212,7 @@
             <li class="menu">
                 <a href="#contact-us-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
-                        <i class="flaticon-menu-4"></i>
+                        <i class="flaticon-copy-line"></i>
                         <span>Contact Us</span>
                     </div>
                     <div>
@@ -251,7 +230,7 @@
             <li class="menu">
                 <a href="#advance-form-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
-                        <i class="flaticon-menu-4"></i>
+                        <i class="flaticon-computer-5"></i>
                         <span>Advance Form Queries</span>
                     </div>
                     <div>
@@ -305,7 +284,28 @@
                 </ul>
             </li> -->
 
-
+            <li class="menu">
+                <a href="#components" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="flaticon-3d-cube"></i>
+                        <span>Manage Resources</span>
+                    </div>
+                    <div>
+                        <i class="flaticon-right-arrow"></i>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="components" data-parent="#accordionExample">
+                    <li>
+                        <a href="{{ route('resource-categories.index') }}"> Resource Category </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('resource-articles.create') }}"> Add Article </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('resource-articles.index') }}"> All Articles </a>
+                    </li>
+                </ul>
+            </li>
 
 
 
