@@ -104,12 +104,18 @@ class UserController extends Controller
                 'status'
             ]);
 
-            // Map form's 'first_name' directly to the database 'name' column
+
             $data['name'] = $request->first_name;
             $data['password'] = Hash::make($request->password);
             $data['account_type'] = 'user';
 
-            User::create($data);
+
+            $user = User::create($data);
+
+
+            app(\App\Services\EmailQuotaService::class)
+                ->createPackageUsage($user);
+
             return redirect()->route('users.index')->with('success', 'User created successfully!');
         } catch (\Exception $e) {
             Log::error('User creation failed: ' . $e->getMessage());
@@ -198,7 +204,7 @@ class UserController extends Controller
                 'status'
             ]);
 
-            // Map form's 'first_name' to database 'name' column
+           
             $data['name'] = $request->first_name;
 
             if ($request->filled('password')) {
@@ -206,6 +212,11 @@ class UserController extends Controller
             }
 
             $user->update($data);
+
+           
+            if ($user->wasChanged('package_id')) {
+                app(\App\Services\EmailQuotaService::class)->createPackageUsage($user);
+            }
 
             return redirect()->route('users.index')->with('success', 'User updated successfully!');
         } catch (\Exception $e) {
