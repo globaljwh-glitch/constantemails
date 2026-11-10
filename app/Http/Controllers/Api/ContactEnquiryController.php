@@ -31,6 +31,7 @@ class ContactEnquiryController extends Controller
             'zip'                 => 'required|string|max:20',
             'country'             => 'required|string|max:100',
             'company'             => 'nullable|string|max:100',
+            'company_business_type'=>'required|string|max:255',
             'products_interested' => 'required|string|max:255',
             'application'         => 'required|string',
             'final_application'   => 'required|string|max:1000',
