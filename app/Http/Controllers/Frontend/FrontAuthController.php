@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmailMail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Http;
 
 class FrontAuthController extends Controller
 {
@@ -67,6 +68,35 @@ class FrontAuthController extends Controller
             'package_id' => 'required|exists:registration_packages,id',
             'terms'      => 'accepted',
         ]);
+
+        $captchaResponse = $request->input('g-recaptcha-response');
+
+        if (!$captchaResponse) {
+            return back()
+                ->withErrors([
+                    'g-recaptcha-response' => 'Please verify that you are not a robot.'
+                ])
+                ->withInput();
+        }
+
+        $captchaVerification = Http::asForm()
+            ->timeout(10)
+            ->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret'   => config('services.recaptcha.secret_key'),
+                'response' => $captchaResponse,
+                'remoteip' => $request->ip(),
+            ]);
+
+        if (
+            !$captchaVerification->successful() ||
+            !$captchaVerification->json('success')
+        ) {
+            return back()
+                ->withErrors([
+                    'g-recaptcha-response' => 'Google reCAPTCHA verification failed. Please try again.'
+                ])
+                ->withInput();
+        }
 
         DB::beginTransaction();
 
@@ -717,6 +747,10 @@ class FrontAuthController extends Controller
                     'email' => 'This verification link has expired.',
                 ]);
         }
+        
+        // Create usage record for the newly assigned package
+        app(\App\Services\EmailQuotaService::class)
+            ->createPackageUsage($user);
 
         $user->update([
             'status' => 'Active',
