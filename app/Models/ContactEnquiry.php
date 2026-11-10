@@ -15,6 +15,7 @@ class ContactEnquiry extends Model
         'zip',
         'country',
         'company',
+        'company_business_type',
         'products_interested',
         'application',
         'final_application',
