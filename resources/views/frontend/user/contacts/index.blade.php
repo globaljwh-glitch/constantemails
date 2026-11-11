@@ -113,6 +113,11 @@
             @php
             $serial_number = 1;
             @endphp
+
+            @php
+                $serial_number = ($contacts->currentPage() - 1) * $contacts->perPage() + 1;
+            @endphp
+            
             @forelse($contacts as $contact)
 
                 <tr>
@@ -124,6 +129,7 @@
                     </td>
                     <td>
                         {{ $serial_number++ }}
+                        
                     </td>
                     <td>
                         {{ $contact->contact_first_name }}
