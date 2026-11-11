@@ -110,9 +110,6 @@
             </thead>
 
             <tbody>
-            @php
-            $serial_number = 1;
-            @endphp
 
             @php
                 $serial_number = ($contacts->currentPage() - 1) * $contacts->perPage() + 1;

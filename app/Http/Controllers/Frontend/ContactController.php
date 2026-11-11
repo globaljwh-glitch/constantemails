@@ -37,7 +37,7 @@ class ContactController extends Controller
 
         $contacts = $group->contacts()
             ->orderBy('contact_first_name')
-            ->paginate(2);
+            ->paginate(20);
 
         return view(
             'frontend.user.contacts.index',
