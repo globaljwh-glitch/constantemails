@@ -335,6 +335,21 @@
 
             });
 
+
+            $('form').on('submit', function () {
+
+                const $editor = $('#template_content');
+
+                // If Summernote is in Code View, switch back to Design View
+                if ($editor.next('.note-editor').find('.note-codable').is(':visible')) {
+                    $editor.summernote('codeview.deactivate');
+                }
+
+                // Sync editor content with textarea
+                $editor.val($editor.summernote('code'));
+
+            });
+
         });
 
     </script>

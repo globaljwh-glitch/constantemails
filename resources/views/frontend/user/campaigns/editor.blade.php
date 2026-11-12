@@ -277,7 +277,7 @@ Remember, this will not be displayed in your email. This is the name with which 
 
                 </a>
 
-                <button class="btn btn-success">
+                <button type="submit" class="btn btn-success">
 
                     Save & Next
 
@@ -368,6 +368,20 @@ $(document).ready(function () {
                 'redo'
             ]]
         ]
+    });
+
+    $('form').on('submit', function () {
+
+        const $editor = $('#editor');
+
+        // If Summernote is in Code View, switch back to Design View
+        if ($editor.next('.note-editor').find('.note-codable').is(':visible')) {
+            $editor.summernote('codeview.deactivate');
+        }
+
+        // Sync editor content with textarea
+        $editor.val($editor.summernote('code'));
+
     });
 
 });

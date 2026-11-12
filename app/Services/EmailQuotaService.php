@@ -989,7 +989,7 @@ class EmailQuotaService
                         ->addMonthNoOverflow(),
                 ]);
 
-                Log::info('New package usage record created', [
+                \Log::info('New package usage record created', [
                     'user_id'    => $user->id,
                     'package_id' => $package->id,
                     'usage_id'   => $currentUsage->id,
@@ -1086,7 +1086,7 @@ class EmailQuotaService
                 );
             }
 
-            Log::info('Campaign quota processed', [
+            \Log::info('Campaign quota processed', [
                 'campaign_id' => $campaign->id,
                 'user_id'     => $user->id,
                 'package_id'  => $package->id,
