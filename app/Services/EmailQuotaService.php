@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserEmailUsage;
 use App\Models\CampaignRecipient;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
 use RuntimeException;
 
