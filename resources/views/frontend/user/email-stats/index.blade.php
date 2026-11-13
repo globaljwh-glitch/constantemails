@@ -445,7 +445,7 @@
                                                 >
 
                                             </td>
-
+                                            <td>#</td>
 
                                             {{-- TRACKING EMAIL --}}
                                             <td
@@ -552,6 +552,10 @@
 
 
                                     <tbody>
+
+                                        @php
+                                            $serial_number = ($campaigns->currentPage() - 1) * $campaigns->perPage() + 1;
+                                        @endphp
                                         @forelse($campaigns as $campaign)
 
                                             @php
@@ -611,7 +615,9 @@
                                                     >
 
                                                 </td>
-
+                                                <td>
+                                                    {{ $serial_number++ }}
+                                                </td>
 
                                                 {{-- EMAIL TITLE --}}
                                                 <td align="left">
@@ -819,7 +825,7 @@
 
                         @if(isset($campaigns) && method_exists($campaigns, 'links'))
 
-                            <div class="email-stats-pagination mt-3">
+                            <div class="email-stats-pagination mt-3 d-flex justify-content-center">
                                 {{ $campaigns->appends(request()->query())->links() }}
                             </div>
 

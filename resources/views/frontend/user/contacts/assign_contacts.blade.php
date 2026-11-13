@@ -211,7 +211,9 @@
                                                     style="border:none;"
                                                 >
                                             </th>
-
+                                            <th width="5%" class="arial_12_000_b">
+                                                #
+                                            </th>
                                             <th width="18%" class="arial_12_000_b">
                                                 Contact Name
                                             </th>
@@ -238,7 +240,9 @@
 
 
                                     <tbody>
-
+                                        @php
+                                            $serial_number = ($contacts->currentPage() - 1) * $contacts->perPage() + 1;
+                                        @endphp
                                         @foreach($contacts as $contact)
 
                                             <tr class="bgeefbff">
@@ -254,7 +258,9 @@
                                                     >
 
                                                 </td>
-
+                                                <td>
+                                                    {{ $serial_number++ }}
+                                                </td>
 
                                                 {{-- Contact Name --}}
                                                 <td class="arial_11_000">
@@ -378,8 +384,8 @@
 
                             @if(method_exists($contacts, 'links'))
 
-                                <div class="mt-3">
-                                    {{ $contacts->links() }}
+                                <div class="mt-3 d-flex justify-content-center">
+                                    {{ $contacts->links('pagination::bootstrap-4') }}
                                 </div>
 
                             @endif

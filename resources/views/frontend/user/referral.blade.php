@@ -202,6 +202,7 @@
                                     <thead>
 
                                         <tr>
+                                            <th>#</th>
                                             <th>Email</th>
                                             <th>Date</th>
                                             <th>Status</th>
@@ -211,10 +212,15 @@
 
                                     <tbody>
 
+                                        @php
+                                            $serial_number = ($referrals->currentPage() - 1) * $referrals->perPage() + 1;
+                                        @endphp
                                         @foreach($referrals as $referral)
 
                                             <tr>
-
+                                                <td>
+                                                    {{ $serial_number++ }}
+                                                </td>
                                                 <td>
                                                     {{ $referral->refereEmail }}
                                                 </td>
@@ -264,6 +270,14 @@
                             </div>
 
                         </div>
+
+                        @if(isset($referrals) && method_exists($referrals, 'links'))
+
+                            <div class="email-stats-pagination mt-3 d-flex justify-content-center">
+                                {{ $referrals->appends(request()->query())->links() }}
+                            </div>
+
+                        @endif
 
                     @endif
 

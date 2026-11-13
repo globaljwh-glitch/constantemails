@@ -190,7 +190,7 @@
                                                         >
 
                                                     </td>
-
+                                                    <td>#</td>
 
                                                     {{-- TEMPLATE NAME --}}
                                                     <td
@@ -227,6 +227,10 @@
 
                                             <tbody>
 
+                                                @php
+                                                    $serial_number = ($templates->currentPage() - 1) * $templates->perPage() + 1;
+                                                @endphp
+
                                                 @forelse($templates as $template)
 
                                                     <tr class="bgeefbff">
@@ -250,7 +254,9 @@
                                                         {{-- =================================================
                                                              TEMPLATE NAME
                                                         ================================================== --}}
-
+                                                        <td>
+                                                            {{ $serial_number++ }}
+                                                        </td>
                                                         <td
                                                             width="50%"
                                                             colspan="2"
@@ -379,10 +385,8 @@
 
                     @if(isset($templates) && method_exists($templates, 'links'))
 
-                        <div class="mt-3">
-
-                            {{ $templates->links() }}
-
+                        <div class="mt-3 d-flex justify-content-center">
+                            {{ $templates->links('pagination::bootstrap-4') }}
                         </div>
 
                     @endif

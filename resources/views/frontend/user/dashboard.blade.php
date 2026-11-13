@@ -221,7 +221,7 @@
                         <div
                             class="progress-bar progress-bar-striped bg-danger"
                             role="progressbar"
-                            style="width: {{ $emailPercentage }}%"
+                            style="width: {{ $only_mail === -1 ? '20' : $emailPercentage }}%"
                             aria-valuenow="{{ $emailPercentage }}"
                             aria-valuemin="0"
                             aria-valuemax="100">

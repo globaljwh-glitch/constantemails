@@ -82,9 +82,9 @@
             <thead class="bg84bfd8">
                 <tr>
                     <th width="5%">
-                        <!-- <input type="checkbox" id="checkAll"> -->
-                        
+                        <!-- <input type="checkbox" id="checkAll"> -->  
                     </th>
+                    <th>#</th>
                     <th>Group Name</th>
                     <th>Group Category</th>
                     <th class="text-center">Status</th>
@@ -96,6 +96,10 @@
 
             <tbody>
 
+                @php
+                    $serial_number = ($groups->currentPage() - 1) * $groups->perPage() + 1;
+                @endphp
+                
                 @forelse($groups as $group)
 
                     <tr>
@@ -105,7 +109,7 @@
                                    name="group_ids[]"
                                    value="{{ $group->id }}">
                         </td>
-
+                        <td>{{ $serial_number++ }}</td>
                         <td>{{ $group->group_name }}</td>
 
                         <td>{{ $group->category->name ?? '-' }}</td>

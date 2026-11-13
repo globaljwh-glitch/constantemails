@@ -17,7 +17,7 @@ class ReferralController extends Controller
     {
         $referrals = Referral::where('user_id', auth()->id())
             ->latest('submittedAt')
-            ->get();
+            ->paginate(10);
 
         return view(
             'frontend.user.referral',

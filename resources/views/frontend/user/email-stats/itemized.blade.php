@@ -40,6 +40,7 @@
 
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Status</th>
@@ -52,9 +53,16 @@
 
                             <tbody>
 
+                                @php
+                                    $serial_number = ($recipients->currentPage() - 1) * $recipients->perPage() + 1;
+                                @endphp
+
                                 @forelse($recipients as $recipient)
 
                                     <tr>
+                                        <td>
+                                            {{ $serial_number++ }}
+                                        </td>
 
                                         <td>
                                             {{ trim(
