@@ -26,35 +26,129 @@
             Add Contact
         </a>
     </div> -->
+{{-- Filter Section --}}
+<div class="mb-3">
+    <form method="GET" action="{{ url()->current() }}">
+        <div class="row align-items-end">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="col-md-3">
+                <label for="search">Search Name / Email</label>
+                <input
+                    type="text"
+                    name="search"
+                    id="search"
+                    class="form-control"
+                    placeholder="Enter name or email"
+                    value="{{ request('search') }}"
+                >
+            </div>
+
+            <div class="col-md-2">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="form-control">
+                    <option value="">All Status</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>
+                        Active
+                    </option>
+                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>
+                        Inactive
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a href="{{ url()->current() }}" class="btn btn-secondary">Reset</a>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+{{-- Back and Main Action Buttons --}}
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
 
     <div>
-        <!-- <a href="{{ url()->previous() }}"
-        class="btn btn-default orangeBg text-white">
-            Back
-        </a> -->
-
         <a href="{{ session()->has('campaign_draft')
                 ? route('user.campaigns.groups', [
                     'campaign' => session('campaign_draft.campaign_id')
                 ])
                 : route('user.groups.index') }}"
-        class="btn btn-default orangeBg text-white">
+           class="btn btn-default orangeBg text-white">
             Back
         </a>
-</div>
-<div>
+    </div>
+
+    <div>
         <a href="{{ route('user.campaigns.create') }}"
-        class="btn btn-primary">
+           class="btn btn-primary">
             Create Campaign
         </a>
+
         <a href="{{ route('user.contacts.create', ['group_id' => $group->id]) }}"
-        class="btn btn-primary">
+           class="btn btn-primary">
             Add Contact
         </a>
-</div>
     </div>
+
+</div>
+    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+        <form method="GET" action="{{ url()->current() }}" class="mb-3">
+            <div class="row align-items-end">
+
+                <div class="col-md-5">
+                    <label for="search">Search Name / Email</label>
+                    <input
+                        type="text"
+                        name="search"
+                        id="search"
+                        class="form-control"
+                        placeholder="Enter name or email"
+                        value="{{ request('search') }}"
+                    >
+                </div>
+
+                <div class="col-md-3">
+                    <label for="status">Status</label>
+                    <select name="status" id="status" class="form-control">
+                        <option value="">All Status</option>
+                        <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>
+                            Active
+                        </option>
+                        <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>
+                            Inactive
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <a href="{{ url()->current() }}" class="btn btn-secondary">Reset</a>
+                </div>
+
+            </div>
+        </form>
+        <div>
+            <a href="{{ session()->has('campaign_draft')
+                    ? route('user.campaigns.groups', [
+                        'campaign' => session('campaign_draft.campaign_id')
+                    ])
+                    : route('user.groups.index') }}"
+            class="btn btn-default orangeBg text-white">
+                Back
+            </a>
+        </div>
+        <div>
+            <a href="{{ route('user.campaigns.create') }}"
+            class="btn btn-primary">
+                Create Campaign
+            </a>
+            <a href="{{ route('user.contacts.create', ['group_id' => $group->id]) }}"
+            class="btn btn-primary">
+                Add Contact
+            </a>
+        </div>
+    </div> -->
 
     <form method="POST">
         @csrf

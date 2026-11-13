@@ -31,13 +31,52 @@ class ContactController extends Controller
     /**
      * Display contacts.
      */
-    public function index(Group $group)
+    public function index11(Group $group)
     {
         abort_if($group->user_id != auth()->id(), 403);
 
         $contacts = $group->contacts()
             ->orderBy('contact_first_name')
             ->paginate(20);
+
+        return view(
+            'frontend.user.contacts.index',
+            compact('group', 'contacts')
+        );
+    }
+
+    public function index(Request $request, Group $group)
+    {
+        abort_if($group->user_id != auth()->id(), 403);
+
+        $query = $group->contacts();
+
+        // Search by name or email
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('contact_first_name', 'LIKE', "%{$search}%")
+                ->orWhere('contact_last_name', 'LIKE', "%{$search}%")
+                ->orWhereRaw(
+                    "CONCAT(contact_first_name, ' ', contact_last_name) LIKE ?",
+                    ["%{$search}%"]
+                )
+                ->orWhere('contact_email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Filter by status
+        if ($request->filled('status')) {
+            $status = $request->status === 'active' ? 1 : 0;
+
+            $query->where('status', $status);
+        }
+
+        $contacts = $query
+            ->orderBy('contact_first_name')
+            ->paginate(20)
+            ->withQueryString();
 
         return view(
             'frontend.user.contacts.index',
