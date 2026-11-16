@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-5 col-md-6">
-        <div class="logo"> <a class="logo" href="{{ route('home') }}"><img src="{{ asset('assets/frontend/images/logo.jpg') }}" alt="Constant Email" class="imgResponsive"></a></div>
+        <div class="logo"> <a class="logo" href="{{ route('home') }}"><img src="{{ asset('assets/frontend/images/logo.png') }}" alt="Constant Email" class="imgResponsive"></a></div>
       </div>
       <div class="col-lg-7 col-md-6 text-right"> 
   
