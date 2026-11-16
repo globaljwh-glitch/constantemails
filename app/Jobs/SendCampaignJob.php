@@ -1189,8 +1189,8 @@ class SendCampaignJob implements ShouldQueue
 
                                     <a href="' . url('/') . '">
 
-                                        <img
-                                            src="' . asset('assets/frontend/images/logo_email.gif') . '"
+                                        <img width="139px"
+                                            src="' . asset('assets/frontend/images/logo.png') . '"
                                             alt="Constant Emails"
                                             border="0"
                                         >
