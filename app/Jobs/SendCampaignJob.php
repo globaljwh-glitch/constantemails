@@ -1193,7 +1193,7 @@ class SendCampaignJob implements ShouldQueue
                                             src="' . asset('assets/frontend/images/logo.png') . '"
                                             alt="Constant Emails"
                                             border="0"
-                                            style="display:block; width:139px; max-width:100%; height:auto;"
+                                            style="width:139px !important; max-width:139px !important; height:auto !important;"
                                         >
 
                                     </a>
