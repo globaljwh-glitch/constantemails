@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Crypt;
 
 class SendCampaignJob implements ShouldQueue
 {
+    public $timeout = 540;
+    public $tries = 3;
     use Queueable;
 
     public MailCampaign $campaign;
