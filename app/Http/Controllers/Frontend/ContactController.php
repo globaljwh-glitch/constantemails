@@ -859,14 +859,6 @@ class ContactController extends Controller
     }
 
     /**
-     * Export contacts.
-     */
-    public function export()
-    {
-        //
-    }
-
-    /**
      * Show Edit Contact page.
      */
     public function edit(Contact $contact)
@@ -2358,4 +2350,66 @@ class ContactController extends Controller
         return true;
     }
     
+
+    public function export(Request $request, Group $group)
+    {
+        abort_if($group->user_id != auth()->id(), 403);
+
+        $query = $group->contacts();
+
+        // Search by name or email
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('contact_first_name', 'LIKE', "%{$search}%")
+                    ->orWhere('contact_last_name', 'LIKE', "%{$search}%")
+                    ->orWhere('contact_email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Filter by status
+        if ($request->filled('status')) {
+            $status = $request->status === 'active' ? 1 : 0;
+            $query->where('status', $status);
+        }
+
+        $filename = 'contacts-' . $group->id . '.xls';
+
+        return response()->streamDownload(function () use ($query) {
+
+            $output = fopen('php://output', 'w');
+
+            // Excel column headings
+            // fputcsv($output, [
+            //     'First Name',
+            //     'Last Name',
+            //     'Company',
+            //     'Address',
+            //     'Email',
+            //     'Phone'
+            // ], "\t");
+
+            // Export contacts in chunks
+            $query->orderBy('id')->chunk(500, function ($contacts) use ($output) {
+
+                foreach ($contacts as $contact) {
+                    fputcsv($output, [
+                        $contact->contact_first_name,
+                        $contact->contact_last_name,
+                        $contact->contact_company_name,
+                        $contact->contact_address,
+                        $contact->contact_email,
+                        $contact->contact_phone,
+                    ], "\t");
+                }
+
+            });
+
+            fclose($output);
+
+        }, $filename, [
+            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
+        ]);
+    }
 }

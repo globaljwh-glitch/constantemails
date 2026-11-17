@@ -1204,7 +1204,7 @@ class SendCampaignJob implements ShouldQueue
                                     padding:0 !important;
                                     margin:1px !important;
                                 ">
-                                    <b style="color:#75BE06;">
+                                    <b style="color:#1a5dff;">
                                         Premiere Email Marketing Engine
                                     </b>
                                 </div>

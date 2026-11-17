@@ -275,6 +275,16 @@
         {{ $contacts->links('pagination::bootstrap-4') }}
     </div>
 
+    <div class="mt-3 mb-4">
+        <a href="{{ route('user.contacts.export', array_merge(
+            ['group' => $group->id],
+            request()->only(['search', 'status'])
+        )) }}"
+        class="btn btn-success">
+            <i class="fa fa-file-excel-o"></i> Export Contacts
+        </a>
+    </div>
+
     
 </div>
 

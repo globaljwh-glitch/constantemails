@@ -102,6 +102,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/verify-email/{token}', [FrontAuthController::class, 'verifyEmail'])->name('verify.email');
 });
 
+Route::get(
+    '/groups/{group}/contacts/export',
+    [ContactController::class, 'export']
+)->name('user.contacts.export');
 /*
 |--------------------------------------------------------------------------
 | Protected User Routes
