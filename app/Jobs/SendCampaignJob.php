@@ -240,18 +240,13 @@ class SendCampaignJob implements ShouldQueue
                             $user = User::find($this->campaign->user_id);
 
                             $fromName = trim(
-                                ($user->first_name ?? '') . ' ' .
+                                ($user->name ?? '') . ' ' .
                                 ($user->last_name ?? '')
                             );
 
                             if (empty($fromName)) {
                                 $fromName = 'ConstantEmails';
                             }
-                            // $user = auth()->user();
-
-                            // $lastName = filled($user->last_name) ? $user->last_name : '';
-
-                            // $fromName = trim($user->name . ' ' . $lastName);
 
                             /*
                             |--------------------------------------------------------------------------
@@ -434,7 +429,7 @@ class SendCampaignJob implements ShouldQueue
                     $user = User::find($this->campaign->user_id);
 
                     $fromName = trim(
-                        ($user->first_name ?? '') . ' ' .
+                        ($user->name ?? '') . ' ' .
                         ($user->last_name ?? '')
                     );
 
