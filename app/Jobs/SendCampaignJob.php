@@ -727,7 +727,8 @@ class SendCampaignJob implements ShouldQueue
         |--------------------------------------------------------------------------
         */
         $message  = "Date: " . date('r') . "\r\n";
-        $message .= "From: {$from}\r\n";
+        //$message .= "From: {$from}\r\n";
+        $message .= "From: \"{$fromName}\" <{$from}>\r\n";
         $message .= "To: {$to}\r\n";
         $message .= "Subject: {$subject}\r\n";
         $message .= "MIME-Version: 1.0\r\n";
