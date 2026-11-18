@@ -237,11 +237,21 @@ class SendCampaignJob implements ShouldQueue
                                 }
                             }
 
-                            $user = auth()->user();
+                            $user = User::find($this->campaign->user_id);
 
-                            $lastName = filled($user->last_name) ? $user->last_name : '';
+                            $fromName = trim(
+                                ($user->first_name ?? '') . ' ' .
+                                ($user->last_name ?? '')
+                            );
 
-                            $fromName = trim($user->name . ' ' . $lastName);
+                            if (empty($fromName)) {
+                                $fromName = 'ConstantEmails';
+                            }
+                            // $user = auth()->user();
+
+                            // $lastName = filled($user->last_name) ? $user->last_name : '';
+
+                            // $fromName = trim($user->name . ' ' . $lastName);
 
                             /*
                             |--------------------------------------------------------------------------
@@ -421,11 +431,16 @@ class SendCampaignJob implements ShouldQueue
                         }
                     }
 
-                    $user = auth()->user();
+                    $user = User::find($this->campaign->user_id);
 
-                    $lastName = filled($user->last_name) ? $user->last_name : '';
+                    $fromName = trim(
+                        ($user->first_name ?? '') . ' ' .
+                        ($user->last_name ?? '')
+                    );
 
-                    $fromName = trim($user->name . ' ' . $lastName);
+                    if (empty($fromName)) {
+                        $fromName = 'ConstantEmails';
+                    }
                     
                     // Send email
                     $this->send_smtp_mail(
