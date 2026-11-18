@@ -51,15 +51,15 @@ class CampaignController extends Controller
             'email_subject' => [
                 'required',
                 'max:255',
-                Rule::unique('mail_campaign', 'email_subject')
-                    ->ignore($campaignId, 'id'),
+                //Rule::unique('mail_campaign', 'email_subject')
+                    //->ignore($campaignId, 'id'),
             ],
             'from_name'     => 'required|max:255',
             'email_title' => [
                 'required',
                 'max:255',
-                Rule::unique('mail_campaign', 'email_title')
-                ->ignore($campaignId, 'id'),
+                //Rule::unique('mail_campaign', 'email_title')
+                //->ignore($campaignId, 'id'),
             ],
             'from_email'    => 'required|email',
         ]);
@@ -157,8 +157,8 @@ class CampaignController extends Controller
             'email_title' => [
                 'required',
                 'max:255',
-                Rule::unique('mail_campaign', 'email_title')
-                ->ignore($campaignId, 'id'),
+                //Rule::unique('mail_campaign', 'email_title')
+                //->ignore($campaignId, 'id'),
             ],
         ]);
 

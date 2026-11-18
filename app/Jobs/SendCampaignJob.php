@@ -237,6 +237,12 @@ class SendCampaignJob implements ShouldQueue
                                 }
                             }
 
+                            $user = auth()->user();
+
+                            $lastName = filled($user->last_name) ? $user->last_name : '';
+
+                            $fromName = trim($user->name . ' ' . $lastName);
+
                             /*
                             |--------------------------------------------------------------------------
                             | Send Email
@@ -244,7 +250,8 @@ class SendCampaignJob implements ShouldQueue
                             */
                             $this->send_smtp_mail(
                                 $contact->contact_email,
-                                'noreply@constantemails.com',
+                                //'noreply@constantemails.com',
+                                $fromName . ' <noreply@constantemails.com>',
                                 $subject,
                                 $html,
                                 $attachmentPath
@@ -414,10 +421,16 @@ class SendCampaignJob implements ShouldQueue
                         }
                     }
 
+                    $user = auth()->user();
+
+                    $lastName = filled($user->last_name) ? $user->last_name : '';
+
+                    $fromName = trim($user->name . ' ' . $lastName);
+                    
                     // Send email
                     $this->send_smtp_mail(
                         $recipient->email,
-                        'noreply@constantemails.com',
+                        $fromName . ' <noreply@constantemails.com>',
                         $subject,
                         $html,
                         $attachmentPath
@@ -648,8 +661,11 @@ class SendCampaignJob implements ShouldQueue
         | MAIL FROM
         |--------------------------------------------------------------------------
         */
+        // $response = $sendCommand(
+        //     "MAIL FROM:<{$from}>"
+        // );
         $response = $sendCommand(
-            "MAIL FROM:<{$from}>"
+            "{$from}"
         );
 
         if (substr($response, 0, 3) !== '250') {
