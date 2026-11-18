@@ -250,11 +250,11 @@ class SendCampaignJob implements ShouldQueue
                             */
                             $this->send_smtp_mail(
                                 $contact->contact_email,
-                                //'noreply@constantemails.com',
-                                $fromName . ' <noreply@constantemails.com>',
+                                'noreply@constantemails.com',
                                 $subject,
                                 $html,
-                                $attachmentPath
+                                $attachmentPath,
+                                $fromName
                             );
 
                             // Mark quota as successfully used
@@ -430,10 +430,11 @@ class SendCampaignJob implements ShouldQueue
                     // Send email
                     $this->send_smtp_mail(
                         $recipient->email,
-                        $fromName . ' <noreply@constantemails.com>',
+                        'noreply@constantemails.com',
                         $subject,
                         $html,
-                        $attachmentPath
+                        $attachmentPath,
+                        $fromName
                     );
 
                     // Count successful SMTP acceptance
@@ -554,7 +555,7 @@ class SendCampaignJob implements ShouldQueue
     $from,
     $subject,
     $body,
-    $attachmentPath = null
+    $attachmentPath = null, $fromName
     ) {
         // $smtpServer = '10.1.14.11';
         // $smtpPort   = 25;
@@ -661,11 +662,8 @@ class SendCampaignJob implements ShouldQueue
         | MAIL FROM
         |--------------------------------------------------------------------------
         */
-        // $response = $sendCommand(
-        //     "MAIL FROM:<{$from}>"
-        // );
         $response = $sendCommand(
-            "{$from}"
+            "MAIL FROM:<{$from}>"
         );
 
         if (substr($response, 0, 3) !== '250') {
