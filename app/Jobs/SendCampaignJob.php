@@ -326,14 +326,6 @@ class SendCampaignJob implements ShouldQueue
                     }
                 }
             });
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Send Additional Recipients
-            |--------------------------------------------------------------------------
-            */
-
                         
             /*
             |--------------------------------------------------------------------------
@@ -371,22 +363,64 @@ class SendCampaignJob implements ShouldQueue
                     * Find the corresponding recipient record.
                     * This record is required for quota and tracking.
                     */
+                    // $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
+                    //     ->whereNull('contact_id')
+                    //     ->where('email', $email)
+                    //     ->where('status', 'queued')
+                    //     ->where('quota_usage_id', $usage->id)
+                    //     ->first();
+
+                    // if (!$recipient) {
+                    //     Log::warning('Additional recipient record not found or not queued', [
+                    //         'campaign_id' => $campaign->id,
+                    //         'email' => $email,
+                    //         'usage_id' => $usage->id,
+                    //     ]);
+
+                    //     continue;
+                    // }
+
+                    // Check whether recipient already exists
                     $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
-                        ->whereNull('contact_id')
+                        //->whereNull('contact_id')
                         ->where('email', $email)
-                        ->where('status', 'queued')
-                        ->where('quota_usage_id', $usage->id)
                         ->first();
 
-                    if (!$recipient) {
-                        Log::warning('Additional recipient record not found or not queued', [
+                    // if (!$recipient) {
+                    //     Log::warning('Additional recipient record not found', [
+                    //         'campaign_id' => $campaign->id,
+                    //         'email' => $email,
+                    //     ]);
+
+                    //     continue;
+                    // }
+
+                    // Prevent duplicate emails
+                    if ($recipient->status === 'sent' || $recipient->quota_counted_at !== null) {
+                        Log::info('Additional recipient already sent. Skipping.', [
                             'campaign_id' => $campaign->id,
+                            'recipient_id' => $recipient->id,
                             'email' => $email,
-                            'usage_id' => $usage->id,
                         ]);
 
                         continue;
                     }
+
+                    // Only process queued recipients with the correct quota reservation
+                    // if (
+                    //     $recipient->status !== 'queued' ||
+                    //     (int) $recipient->quota_usage_id !== (int) $usage->id
+                    // ) {
+                    //     Log::warning('Additional recipient is not eligible for sending', [
+                    //         'campaign_id' => $campaign->id,
+                    //         'recipient_id' => $recipient->id,
+                    //         'email' => $email,
+                    //         'status' => $recipient->status,
+                    //         'quota_usage_id' => $recipient->quota_usage_id,
+                    //     ]);
+
+                    //     continue;
+                    // }
 
                     // Replace template variables
                     $replacements = [
@@ -430,7 +464,7 @@ class SendCampaignJob implements ShouldQueue
                     * Add campaign footer.
                     * Additional recipients have no contact_id.
                     */
-                    $newfooter = $this->buildEmailFooter(
+                    $newfooter = $this->buildEmailFooterAdditional(
                         $campaign,
                         $recipient,
                         null
@@ -527,153 +561,153 @@ class SendCampaignJob implements ShouldQueue
 
 // old code below
 
-            $additionalRecipients = CampaignRecipient::where('campaign_id', $campaign->id)
-                ->whereNull('contact_id')
-                ->where('status', 'queued')
-                ->where('quota_usage_id', $usage->id)
-                ->orderBy('id')
-                ->get();
+            // $additionalRecipients = CampaignRecipient::where('campaign_id', $campaign->id)
+            //     ->whereNull('contact_id')
+            //     ->where('status', 'queued')
+            //     ->where('quota_usage_id', $usage->id)
+            //     ->orderBy('id')
+            //     ->get();
 
-            foreach ($additionalRecipients as $recipient) {
+            // foreach ($additionalRecipients as $recipient) {
 
-                try {
+            //     try {
 
-                    // Replace template variables (no contact information available)
-                    $replacements = [
-                        '[name]'         => '',
-                        '[first_name]'   => '',
-                        '[last_name]'    => '',
-                        '[email]'        => $recipient->email,
-                        '[company]'      => '',
-                        '[address]'      => '',
-                        '[area_interest]' => '',
-                        '[phone]'        => '',
-                    ];
+            //         // Replace template variables (no contact information available)
+            //         $replacements = [
+            //             '[name]'         => '',
+            //             '[first_name]'   => '',
+            //             '[last_name]'    => '',
+            //             '[email]'        => $recipient->email,
+            //             '[company]'      => '',
+            //             '[address]'      => '',
+            //             '[area_interest]' => '',
+            //             '[phone]'        => '',
+            //         ];
 
-                    // Prepare subject
-                    $subject = strtr(
-                        $campaign->email_subject,
-                        $replacements
-                    );
+            //         // Prepare subject
+            //         $subject = strtr(
+            //             $campaign->email_subject,
+            //             $replacements
+            //         );
 
-                    // Prepare HTML
-                    $html = str_replace(
-                        ['\\"', "\\'"],
-                        ['"', "'"],
-                        $campaign->message
-                    );
+            //         // Prepare HTML
+            //         $html = str_replace(
+            //             ['\\"', "\\'"],
+            //             ['"', "'"],
+            //             $campaign->message
+            //         );
 
-                    $html = strtr($html, $replacements);
+            //         $html = strtr($html, $replacements);
 
-                    // Convert relative image URLs to absolute URLs
-                    $html = preg_replace_callback(
-                        '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
-                        function ($matches) {
-                            return $matches[1]
-                                . asset('/' . $matches[2])
-                                . $matches[3];
-                        },
-                        $html
-                    );
+            //         // Convert relative image URLs to absolute URLs
+            //         $html = preg_replace_callback(
+            //             '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
+            //             function ($matches) {
+            //                 return $matches[1]
+            //                     . asset('/' . $matches[2])
+            //                     . $matches[3];
+            //             },
+            //             $html
+            //         );
 
-                    /*
-                    * Add campaign footer.
-                    *
-                    * Additional recipients have contact_id = NULL,
-                    * so do not generate the normal contact-based unsubscribe URL.
-                    */
-                    $newfooter = $this->buildEmailFooter(
-                        $campaign,
-                        $recipient,
-                        null
-                    );
+            //         /*
+            //         * Add campaign footer.
+            //         *
+            //         * Additional recipients have contact_id = NULL,
+            //         * so do not generate the normal contact-based unsubscribe URL.
+            //         */
+            //         $newfooter = $this->buildEmailFooter(
+            //             $campaign,
+            //             $recipient,
+            //             null
+            //         );
 
-                    $html .= $newfooter;
+            //         $html .= $newfooter;
 
-                    // Convert links for click tracking
-                    $html = $this->convertLinks(
-                        $html,
-                        $recipient->id
-                    );
+            //         // Convert links for click tracking
+            //         $html = $this->convertLinks(
+            //             $html,
+            //             $recipient->id
+            //         );
 
-                    // Add open tracking pixel
-                    $trackingPixel = '<img src="' .
-                        route('email.track.open', [
-                            'recipient' => $recipient->id
-                        ]) .
-                        '" width="1" height="1" style="display:block;border:0;" alt="">';
+            //         // Add open tracking pixel
+            //         $trackingPixel = '<img src="' .
+            //             route('email.track.open', [
+            //                 'recipient' => $recipient->id
+            //             ]) .
+            //             '" width="1" height="1" style="display:block;border:0;" alt="">';
 
-                    $html .= $trackingPixel;
+            //         $html .= $trackingPixel;
 
-                    // Get campaign attachment
-                    $attachmentPath = null;
+            //         // Get campaign attachment
+            //         $attachmentPath = null;
 
-                    if ($campaign->attachment) {
+            //         if ($campaign->attachment) {
 
-                        $attachmentPath = Storage::disk('public')->path(
-                            $campaign->attachment
-                        );
+            //             $attachmentPath = Storage::disk('public')->path(
+            //                 $campaign->attachment
+            //             );
 
-                        if (!file_exists($attachmentPath)) {
-                            $attachmentPath = null;
-                        }
-                    }
+            //             if (!file_exists($attachmentPath)) {
+            //                 $attachmentPath = null;
+            //             }
+            //         }
 
-                    $user = User::find($this->campaign->user_id);
+            //         $user = User::find($this->campaign->user_id);
 
-                    $fromName = trim(
-                        ($user->name ?? '') . ' ' .
-                        ($user->last_name ?? '')
-                    );
+            //         $fromName = trim(
+            //             ($user->name ?? '') . ' ' .
+            //             ($user->last_name ?? '')
+            //         );
 
-                    if (empty($fromName)) {
-                        $fromName = 'ConstantEmails';
-                    }
+            //         if (empty($fromName)) {
+            //             $fromName = 'ConstantEmails';
+            //         }
                     
-                    // Send email
-                    $this->send_smtp_mail(
-                        $recipient->email,
-                        'noreply@constantemails.com',
-                        $subject,
-                        $html,
-                        $attachmentPath,
-                        $fromName
-                    );
+            //         // Send email
+            //         $this->send_smtp_mail(
+            //             $recipient->email,
+            //             'noreply@constantemails.com',
+            //             $subject,
+            //             $html,
+            //             $attachmentPath,
+            //             $fromName
+            //         );
 
-                    // Count successful SMTP acceptance
-                    $quotaService->markEmailSent($recipient->id);
+            //         // Count successful SMTP acceptance
+            //         $quotaService->markEmailSent($recipient->id);
 
-                    // Update recipient status
-                    $recipient->update([
-                        'status'        => 'sent',
-                        'sent_at'       => now(),
-                        'error_message' => null,
-                    ]);
+            //         // Update recipient status
+            //         $recipient->update([
+            //             'status'        => 'sent',
+            //             'sent_at'       => now(),
+            //             'error_message' => null,
+            //         ]);
 
-                    Log::info('Additional recipient email sent successfully', [
-                        'campaign_id' => $campaign->id,
-                        'recipient_id' => $recipient->id,
-                        'email' => $recipient->email,
-                    ]);
+            //         Log::info('Additional recipient email sent successfully', [
+            //             'campaign_id' => $campaign->id,
+            //             'recipient_id' => $recipient->id,
+            //             'email' => $recipient->email,
+            //         ]);
 
-                } catch (\Throwable $e) {
+            //     } catch (\Throwable $e) {
 
-                    // Release reserved quota if sending failed
-                    $quotaService->releaseEmailReservation($recipient->id);
+            //         // Release reserved quota if sending failed
+            //         $quotaService->releaseEmailReservation($recipient->id);
 
-                    $recipient->update([
-                        'status'        => 'failed',
-                        'error_message' => $e->getMessage(),
-                    ]);
+            //         $recipient->update([
+            //             'status'        => 'failed',
+            //             'error_message' => $e->getMessage(),
+            //         ]);
 
-                    Log::error('Additional recipient email failed', [
-                        'campaign_id' => $campaign->id,
-                        'recipient_id' => $recipient->id,
-                        'email' => $recipient->email,
-                        'error' => $e->getMessage(),
-                    ]);
-                }
-            }
+            //         Log::error('Additional recipient email failed', [
+            //             'campaign_id' => $campaign->id,
+            //             'recipient_id' => $recipient->id,
+            //             'email' => $recipient->email,
+            //             'error' => $e->getMessage(),
+            //         ]);
+            //     }
+            // }
             
 
             // $campaign = MailCampaign::findOrFail($campaign->id);
@@ -1189,6 +1223,288 @@ class SendCampaignJob implements ShouldQueue
         libxml_clear_errors();
 
         return $html;
+    }
+
+    private function buildEmailFooterAdditional($campaign, $recipient, $unsubscribeUrl): string
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Company information
+        |--------------------------------------------------------------------------
+        | Change these according to where you store your company settings.
+        |--------------------------------------------------------------------------
+        */
+
+        $user = User::find($campaign->user_id);
+
+        $companyAddress = $user->company_address ?? '';
+        $city           = $user->city ?? '';
+        $state          = $user->state ?? '';
+        $zip            = $user->zip ?? '';
+
+        $companyDetails = implode(' | ', array_filter([
+            $companyAddress,
+            $city,
+            $state,
+            $zip,
+        ], fn ($value) => !empty(trim($value ?? ''))));
+
+        // $companyAddress = config('app.company_address', '');
+        // $city           = config('app.company_city', '');
+        // $state          = config('app.company_state', '');
+        // $zip             = config('app.company_zip', '');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sender
+        |--------------------------------------------------------------------------
+        */
+
+        $fromEmail = $campaign->from_email ?? config('mail.from.address');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Recipient
+        |--------------------------------------------------------------------------
+        */
+
+        $recipientEmail = $recipient->email;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Unsubscribe URL
+        |--------------------------------------------------------------------------
+        */
+
+        // $unsubscribeUrl = route('campaign.unsubscribe', [
+        //     'campaign' => $campaign->id,
+        //     'contact'  => $recipient->contact_id,
+        // ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Forward to friend
+        |--------------------------------------------------------------------------
+        */
+
+        // $forwardUrl = URL::signedRoute('forward', [
+        //     'contact'  => $recipient->contact_id,
+        //     'campaign' => $campaign->id,
+        // ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Privacy Policy
+        |--------------------------------------------------------------------------
+        */
+
+        $privacyUrl = route('privacy');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update Profile
+        |--------------------------------------------------------------------------
+        */
+
+        //$profileUrl = route('user.account.profile');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Tracking pixel
+        |--------------------------------------------------------------------------
+        */
+
+        // $trackingUrl = route('email.track.click', [
+        //     'campaign' => $campaign->id,
+        //     'contact'  => $recipient->contact_id,
+        // ]);
+
+        $trackingUrl = '';
+
+        /*
+        |--------------------------------------------------------------------------
+        | Footer
+        |--------------------------------------------------------------------------
+        */
+
+        $footer = '';
+
+        //$campaignId = Crypt::encryptString($campaign->id);
+        //$camp_id = '?camp_id=' . urlencode($campaignId);
+
+        $footer .= '
+            
+            <table style="width:680px; margin:0px auto;" cellpadding="0" cellspacing="0" width="680" align="center">
+                <tr>
+                    <td align="center" style="text-align:center; font-size:12px !important; padding:25px 20px 25px 20px !important; line-height:17px; mso-line-height-rule:exactly; margin:0px !important;">
+                        <table align="center" width="250px" style="margin:0px auto; width:250px;" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td bgcolor="#a3be02" style="text-align:center; font-size:14px !important; padding:12px 15px 12px 15px !important; line-height:17px; color:#ffffff; mso-line-height-rule:exactly; margin:0 !important;">
+                                    <a style="color:#ffffff; font-size:18px !important; text-decoration: none;" href="https://constantreach.com/?camp_id=' . $campaign->id . '">Contact Us</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%"
+                border="0"
+                align="center"
+                cellpadding="0"
+                cellspacing="0"
+                style="
+                        text-align:left;
+                        
+                "
+                class="email_temp_footer" bgcolor="#f7f7f7">
+            ';
+
+        /*
+        |--------------------------------------------------------------------------
+        | Campaign footer enabled
+        |--------------------------------------------------------------------------
+        */
+
+        if ($campaign->campaign_footer == 1) {
+
+            $footer .= '
+            <tr>
+                <td bgcolor="#f7f7f7" align="center" style="padding:20px 20px; text-align:center;">
+                    <table style="width:680px" cellpadding="0" cellspacing="0" width="680">
+                        
+						<tr>
+							<td style="text-align:center; font-size:12px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                                This email was sent to
+                                <a href="mailto:' . e($recipientEmail) . '">
+                                    ' . e($recipientEmail) . '
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center; font-size:12px !important; padding:0px 0 0px 0px !important; line-height:17px; mso-line-height-rule:exactly; margin:0 !important;">
+                                By
+                                <a href="mailto:' . e($fromEmail) . '">
+                                    ' . e($fromEmail) . '
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="font-size:11px; padding-top: 12px;">
+
+                                <div style="
+                                    font-size:11px !important;
+                                    padding:0 !important;
+                                    margin:1px !important;
+                                ">
+                                    <b>Powered by</b>
+                                </div>
+
+                                <div style="
+                                    font-size:11px !important;
+                                    padding:0 !important;
+                                    margin:2px !important;
+                                ">
+
+                                    <a href="' . url('/') . '">
+
+                                        <img width="139"
+                                            src="' . asset('assets/frontend/images/logo.png') . '"
+                                            alt="Constant Emails"
+                                            border="0"
+                                            style="width:139px !important; max-width:139px !important; height:auto !important;"
+                                        >
+
+                                    </a>
+                                </div>
+
+                                <div style="
+                                    font-size:11px !important;
+                                    padding:0 !important;
+                                    margin:1px !important;
+                                ">
+                                    <b style="color:#1a5dff;">
+                                        Premiere Email Marketing Engine
+                                    </b>
+                                </div>
+
+                                <div
+                                    style="
+                                        font-size:11px;
+                                        
+                                        color:#94a3b8;
+                                    "
+                                >
+                                    &copy; ' . date('Y') . '
+                                    Constant Emails. All rights reserved.
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            ';
+
+        } else {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Footer disabled
+            |--------------------------------------------------------------------------
+            */
+
+            $footer .= '
+            
+            <tr>
+                <td
+                    align="center"
+                    width="620"
+                    style="padding:20px 20px; text-align:center; font-size:12px !important; line-height:17px !important; mso-line-height-rule:exactly; margin:0 !important;"
+                >
+
+                    This email was sent to
+
+                    <a href="mailto:' . e($recipientEmail) . '">
+                        ' . e($recipientEmail) . '
+                    </a>
+
+                    by
+
+                    <a href="mailto:' . e($fromEmail) . '">
+                        ' . e($fromEmail) . '
+                    </a>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td
+                    align="center"
+                    width="620" style="font-size:11px; padding-top: 12px;"
+                >
+
+                   <div
+                            style="
+                                font-size:11px;
+                                
+                                color:#94a3b8;
+                            "
+                        >
+                            &copy; ' . date('Y') . '
+                            Constant Emails. All rights reserved.
+                        </div>
+
+                </td>
+
+            </tr>
+            ';
+        }
+
+        $footer .= '</table>';
+
+        return $footer;
     }
 
     private function buildEmailFooter($campaign, $recipient, $unsubscribeUrl): string
