@@ -9,7 +9,7 @@
             <!-- px-4 creates a perfect, even gap on the left and right -->
             <li class="nav-item w-100 text-center px-4 py-3">
                 <a href="{{ route('admin.dashboard') }}" class="navbar-brand d-block m-0 p-0 w-100">
-                    <img src="{{ asset('assets/admin/assets/img/logo-3.jpg') }}" alt="logo" class="img-fluid mx-auto"
+                    <img src="{{ asset('assets/admin/assets/img/logo.png') }}" alt="logo" class="img-fluid mx-auto"
                         style="width: 100% !important; height: auto !important; max-height: 90px !important; object-fit: contain;">
                 </a>
             </li>

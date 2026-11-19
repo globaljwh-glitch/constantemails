@@ -7,7 +7,7 @@
         <div class="chat-box-header">
             <div class="media">
                 <i class="flaticon-chat-fill-1 chat align-self-center mr-3"></i>
-                <img src="{{  asset('assets/admin/assets/img/logo-3.jpg') }}" class="rounded-circle mr-2 mt-2" alt="user">
+                <img src="{{  asset('assets/admin/assets/img/logo.png') }}" class="rounded-circle mr-2 mt-2" alt="user">
                 <div class="media-body">
                     <h6 class="mt-2 mb-1">Constant Email Admin</h6>
                     <p>How May I help you ?</p>

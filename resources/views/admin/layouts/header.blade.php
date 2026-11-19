@@ -4,7 +4,7 @@
         <a href="javascript:void(0);" class="nav-link sidebarCollapse" data-placement="bottom">
             <i class="flaticon-menu-line-2"></i>
         </a>
-        <a href="index.html" class=""> <img src="{{  asset('assets/admin/assets/img/logo-3.jpg') }}" class="img-fluid"
+        <a href="index.html" class=""> <img src="{{  asset('assets/admin/assets/img/logo.png') }}" class="img-fluid"
                 alt="logo"></a>
     </div>
     <ul class="nav navbar-nav">

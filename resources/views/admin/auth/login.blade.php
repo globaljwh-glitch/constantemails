@@ -131,7 +131,7 @@
                 <div class="login-card text-left">
 
                     <div class="text-center mb-4">
-                        <img alt="logo" src="{{ asset('assets/admin/assets/img/logo-3.jpg') }}" class="theme-logo">
+                        <img alt="logo" src="{{ asset('assets/admin/assets/img/logo.png') }}" class="theme-logo">
                         <h4 class="mt-3 font-weight-bold" style="color: #2d3748;">Admin Sign In</h4>
                         <p class="welcome-text">Access your admin dashboard</p>
                     </div>

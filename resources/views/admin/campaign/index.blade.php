@@ -134,6 +134,7 @@
                                     <th class="align-center" style="width: 60px;">#</th>
                                     <th>Campaign Title</th>
                                     <th>Email Subject</th>
+                                    <th class="text-center">Sender</th>
                                     <th class="text-center">Date Created</th>
                                     <!-- <th class="text-center">Send Status</th> -->
                                     <th class="text-center">Status</th>
@@ -148,6 +149,11 @@
                                         </td>
                                         <td><span class="campaign-name">{{ $campaign->email_title }}</span></td>
                                         <td>{{ $campaign->email_subject ?? 'N/A' }}</td>
+                                        <td class="text-center">
+                                            {{ trim((ucfirst($campaign->user->name) ?? '') . ' ' . (ucfirst($campaign->user->last_name) ?? '')) }}
+                                            <br>
+                                            <small class="text-muted">{{ $campaign->user->email }}</small>
+                                        </td>
                                         <td class="text-center">{{ $campaign->created_at->format('d M, Y') }}</td>
                                         <!-- <td class="text-center">
                                                     @if($campaign->send_status == 1)
