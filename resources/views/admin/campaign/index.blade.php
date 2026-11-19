@@ -173,6 +173,9 @@
                                         <td class="text-center">
                                             @php
                                                 $status = $campaign->campaign_status ?? 'Draft';
+                                                if ($status == 'processing' || $status == 'completed') {
+                                                    $status = 'Sent';
+                                                }
                                                 $badgeColor = match (strtolower($status)) {
                                                     'active', 'sent', 'completed' => 'success',
                                                     'scheduled', 'in progress', 'queued' => 'info',

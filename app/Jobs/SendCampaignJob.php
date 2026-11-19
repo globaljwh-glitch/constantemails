@@ -326,7 +326,11 @@ class SendCampaignJob implements ShouldQueue
                     }
                 }
             });
-                        
+               
+            $campaign->update([
+                'campaign_status' => 'completed',
+            ]);
+
             /*
             |--------------------------------------------------------------------------
             | Process Additional Recipients
