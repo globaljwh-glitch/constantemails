@@ -150,9 +150,17 @@
                                         <td><span class="campaign-name">{{ $campaign->email_title }}</span></td>
                                         <td>{{ $campaign->email_subject ?? 'N/A' }}</td>
                                         <td class="text-center">
-                                            {{ trim((ucfirst($campaign->user->name) ?? '') . ' ' . (ucfirst($campaign->user->last_name) ?? '')) }}
-                                            <br>
-                                            <small class="text-muted">{{ $campaign->user->email }}</small>
+                                            @if($campaign->user)
+                                                {{ trim(ucfirst($campaign->user->name ?? '') . ' ' . ucfirst($campaign->user->last_name ?? '')) }}
+                                                <br>
+                                                <small class="text-muted">
+                                                    {{ $campaign->user->email ?? 'N/A' }}
+                                                </small>
+                                            @else
+                                                N/A
+                                                <br>
+                                                <small class="text-muted">User not found</small>
+                                            @endif
                                         </td>
                                         <td class="text-center">{{ $campaign->created_at->format('d M, Y') }}</td>
                                         <!-- <td class="text-center">
