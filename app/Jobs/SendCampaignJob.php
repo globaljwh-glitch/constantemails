@@ -334,6 +334,199 @@ class SendCampaignJob implements ShouldQueue
             |--------------------------------------------------------------------------
             */
 
+                        
+            /*
+            |--------------------------------------------------------------------------
+            | Process Additional Recipients
+            |--------------------------------------------------------------------------
+            */
+
+            // Get comma-separated emails directly from mail_campaign table
+            $additionalEmails = array_filter(
+                array_map(
+                    'trim',
+                    explode(',', $campaign->additional_recipients ?? '')
+                )
+            );
+
+            // Normalize and remove duplicate emails
+            $additionalEmails = array_unique(
+                array_map('strtolower', $additionalEmails)
+            );
+
+            foreach ($additionalEmails as $email) {
+
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    Log::warning('Invalid additional recipient email', [
+                        'campaign_id' => $campaign->id,
+                        'email' => $email,
+                    ]);
+
+                    continue;
+                }
+
+                try {
+
+                    /*
+                    * Find the corresponding recipient record.
+                    * This record is required for quota and tracking.
+                    */
+                    $recipient = CampaignRecipient::where('campaign_id', $campaign->id)
+                        ->whereNull('contact_id')
+                        ->where('email', $email)
+                        ->where('status', 'queued')
+                        ->where('quota_usage_id', $usage->id)
+                        ->first();
+
+                    if (!$recipient) {
+                        Log::warning('Additional recipient record not found or not queued', [
+                            'campaign_id' => $campaign->id,
+                            'email' => $email,
+                            'usage_id' => $usage->id,
+                        ]);
+
+                        continue;
+                    }
+
+                    // Replace template variables
+                    $replacements = [
+                        '[name]'          => $email,
+                        '[first_name]'    => '',
+                        '[last_name]'     => '',
+                        '[email]'         => $email,
+                        '[company]'       => '',
+                        '[address]'       => '',
+                        '[area_interest]' => '',
+                        '[phone]'         => '',
+                    ];
+
+                    // Prepare subject
+                    $subject = strtr(
+                        $campaign->email_subject,
+                        $replacements
+                    );
+
+                    // Prepare HTML
+                    $html = str_replace(
+                        ['\\"', "\\'"],
+                        ['"', "'"],
+                        $campaign->message
+                    );
+
+                    $html = strtr($html, $replacements);
+
+                    // Convert relative image URLs to absolute URLs
+                    $html = preg_replace_callback(
+                        '/(<img[^>]+src=["\'])\/([^"\']+)(["\'])/i',
+                        function ($matches) {
+                            return $matches[1]
+                                . asset('/' . $matches[2])
+                                . $matches[3];
+                        },
+                        $html
+                    );
+
+                    /*
+                    * Add campaign footer.
+                    * Additional recipients have no contact_id.
+                    */
+                    $newfooter = $this->buildEmailFooter(
+                        $campaign,
+                        $recipient,
+                        null
+                    );
+
+                    $html .= $newfooter;
+
+                    // Convert links for click tracking
+                    $html = $this->convertLinks(
+                        $html,
+                        $recipient->id
+                    );
+
+                    // Add open tracking pixel
+                    $trackingPixel = '<img src="' .
+                        route('email.track.open', [
+                            'recipient' => $recipient->id
+                        ]) .
+                        '" width="1" height="1" style="display:block;border:0;" alt="">';
+
+                    $html .= $trackingPixel;
+
+                    // Get campaign attachment
+                    $attachmentPath = null;
+
+                    if ($campaign->attachment) {
+
+                        $attachmentPath = Storage::disk('public')->path(
+                            $campaign->attachment
+                        );
+
+                        if (!file_exists($attachmentPath)) {
+                            $attachmentPath = null;
+                        }
+                    }
+
+                    // Get campaign owner
+                    $user = User::find($campaign->user_id);
+
+                    $fromName = trim(
+                        ($user->name ?? '') . ' ' .
+                        ($user->last_name ?? '')
+                    );
+
+                    if (empty($fromName)) {
+                        $fromName = 'ConstantEmails';
+                    }
+
+                    // Send email
+                    $this->send_smtp_mail(
+                        $email,
+                        'noreply@constantemails.com',
+                        $subject,
+                        $html,
+                        $attachmentPath,
+                        $fromName
+                    );
+
+                    // Count successful SMTP acceptance
+                    $quotaService->markEmailSent($recipient->id);
+
+                    // Update recipient status
+                    $recipient->update([
+                        'status'        => 'sent',
+                        'sent_at'       => now(),
+                        'error_message' => null,
+                    ]);
+
+                    Log::info('Additional recipient email sent successfully', [
+                        'campaign_id' => $campaign->id,
+                        'recipient_id' => $recipient->id,
+                        'email' => $email,
+                    ]);
+
+                } catch (\Throwable $e) {
+
+                    // Release reserved quota if sending failed
+                    if (isset($recipient)) {
+                        $quotaService->releaseEmailReservation($recipient->id);
+
+                        $recipient->update([
+                            'status'        => 'failed',
+                            'error_message' => $e->getMessage(),
+                        ]);
+                    }
+
+                    Log::error('Additional recipient email failed', [
+                        'campaign_id' => $campaign->id,
+                        'email' => $email,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            }
+
+// old code below
+
             $additionalRecipients = CampaignRecipient::where('campaign_id', $campaign->id)
                 ->whereNull('contact_id')
                 ->where('status', 'queued')
