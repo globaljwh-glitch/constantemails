@@ -162,7 +162,7 @@
                                                 <small class="text-muted">User not found</small>
                                             @endif
                                         </td>
-                                        <td class="text-center">{{ $campaign->created_at->format('d M, Y') }}</td>
+                                        <td class="text-center" style="width: 140px !important; max-width: 140px !important;">{{ $campaign->created_at->format('d M, Y') }}</td>
                                         <!-- <td class="text-center">
                                                     @if($campaign->send_status == 1)
                                                         <span
@@ -194,7 +194,7 @@
                                             <span
                                                 class="badge badge-{{ $badgeColor }} shadow-none badge-pill">{{ ucfirst($status) }}</span>
                                         </td>
-                                        <td class="align-center">
+                                        <td class="align-center" style="width: 60px; max-width: 60px;">
                                             <ul class="table-controls mb-0">
                                                 <!-- Eye Button to View Contacts Modal -->
                                                 <li>
@@ -227,7 +227,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center py-4">No campaigns found.</td>
+                                        <td colspan="7" class="text-center py-4">No campaigns found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
