@@ -363,6 +363,12 @@ class ContactController extends Controller
         $skipped = 0;
         $invalid = 0;
 
+        // Check maximum 1000 rows
+        if (count($rows) > 1000) {
+            return redirect()
+                ->route('user.groups.contacts.index', ['group' => $group->id])
+                ->with('error', 'You cannot import more than 1000 contacts in a group. Please upload a file with 1000 or fewer rows.');
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -1022,13 +1028,17 @@ class ContactController extends Controller
 
     public function bulkDelete(Request $request)
     {
-        Contact::where('user_id',auth()->id())
+        $query = Contact::where('user_id', auth()->id())
+        ->whereIn('id', $request->contact_ids ?? []);
+        
+        $deletedCount = $query->count();
 
-            ->whereIn('id',$request->contact_ids ?? [])
+        $query->delete();
 
-            ->delete();
-
-        return back()->with('success','Contacts deleted successfully.');
+        return back()->with(
+            'success',
+            "{$deletedCount} contacts deleted successfully."
+        );
     }
 
     public function assignContacts()
