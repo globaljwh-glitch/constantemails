@@ -340,7 +340,11 @@
                                 @enderror
 
                             </div>
-
+                            <div class="col-md-12 col-lg-12">
+                                <p class="terms-text" style="text-align: justify;">
+                                    By clicking 'Submit' you agree to accept our Terms & Conditions, opt-in our mailing list and consent to us collecting and using your data entered herein for purposes of processing your inquiry and conducting further communications with you and transacting business with your organization. Visit our privacy policy for more information on how we may use, process and share your data and how you can unsubscribe or opt out from future marketing communications with us. Our products and services are intended for responsible commercial users and you represent and warrant to us that the email address you provided is authentic business email address assigned to you by the company that you represent. Any false inquiry and/or fraudulent representation will be reported to government authorities for investigation and your data will also be forwarded to the company being falsely represented for immediate legal action.
+                                </p>
+                            </div>
 
                             {{-- Submit --}}
                             <div class="col-md-12 col-lg-12">
